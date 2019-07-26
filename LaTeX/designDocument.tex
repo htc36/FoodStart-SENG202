@@ -1,0 +1,38 @@
+\documentclass[a4paper,twoside,titlepage]{article}
+
+\usepackage{a4wide}
+\usepackage{hyperref}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{pifont}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\lstloadlanguages{XML,XSLT,Java}
+\usepackage{verbatim,moreverb}
+
+\newcounter{rownumbers}
+\preto\tabular{\setcounter{rownumbers}{0}}
+\newcommand\rownumber{\stepcounter{rownumbers}\arabic{rownumbers}}
+
+\title{Design Document}
+\author{Alex Hobson, Hamish O'Keeffe, Lydia Looi, Harry Collard, Alan Wang, Frankie Oprenario}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	
+	\newpage
+	\renewcommand{\abstractname}{Executive Summary}
+	\begin{abstract}
+		The client requires our team to produce a Pop-Up Point Of Food Sale system, where the main functionalities include importing existing data files, processing and displaying them in a simple to use GUI where the employees and business owners can interact with and add any new data. Another important feature is the sales screen where employees can take orders, where the corresponding items are removed that the customer orders, automatic checks will be established to make sure that the menu items ingredients will all be in stock, if not an error will be displayed. The main stakeholders are the business owner, employees and developers, these will be the stakeholders that interact with the program most and it is vital that the system is simple enough for the employees to use and also coded in a logical way in order for developers to easily update parts of the system without having to refactor big chunks. The business owner also needs to achieve complex tasks in a simple manner such as deciding what stock to bring to a specific event. 
+	\end{abstract}
+	
+	\include{buisness}
+	\include{requirements}
+\end{document}
