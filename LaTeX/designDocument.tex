@@ -9,6 +9,7 @@
 \usepackage{longtable}
 \usepackage{listings}
 \usepackage{pdflscape}
+\usepackage{geometry}
 \usepackage{afterpage}
 \usepackage{enumitem}
 \usepackage{etoolbox}
@@ -17,6 +18,7 @@
 
 \newcounter{rownumbers}
 \preto\tabular{\setcounter{rownumbers}{0}}
+\preto\longtable{\setcounter{rownumbers}{0}}
 \newcommand\rownumber{\stepcounter{rownumbers}\arabic{rownumbers}}
 
 \title{Design Document}

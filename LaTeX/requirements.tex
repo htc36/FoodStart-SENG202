@@ -58,23 +58,22 @@ Event Organisers & People or companies that can potentially hire a food truck bu
 	\caption{Stock Use Case}
 	\label{fig:stockcase}
 \end{figure}
-\clearpage% Flush earlier floats (otherwise order might not be correct)
-\thispagestyle{empty}% empty page style (?)
-\begin{landscape}% Landscape page
+\newgeometry{margin=2cm}
+\begin{landscape}
 \subsection{Textual Use Cases}
-\begin{longtable}{|p{.05\textwidth}|p{.11\textwidth}|p{.05\textwidth}|p{.1\textwidth}|p{.3\textwidth}|p{.3\textwidth}|p{.1\textwidth}|}
-	\hline \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{|c|}{\textbf{Actor}} & \multicolumn{1}{|c|}{\textbf{Preconditions}} & \multicolumn{1}{|c|}{\textbf{Basic Flow}} & \multicolumn{1}{|c|}{\textbf{Exceptional Flow}} & \multicolumn{1}{|c|}{\textbf{Post Conditions}}\\ \hline 
+\begin{longtable}{|p{.04\textwidth}|p{.11\textwidth}|p{.05\textwidth}|p{.1\textwidth}|p{.25\textwidth}|p{.25\textwidth}|p{.1\textwidth}|}
+	\hline \multicolumn{1}{|p{.04\textwidth}}{\textbf{ID}} & \multicolumn{1}{|p{.11\textwidth}}{\textbf{Name}} & \multicolumn{1}{|p{.05\textwidth}}{\textbf{Actor}} & \multicolumn{1}{|p{.1\textwidth}}{\textbf{Pre conditions}} & \multicolumn{1}{|p{.25\textwidth}}{\textbf{Basic Flow}} & \multicolumn{1}{|p{.25\textwidth}}{\textbf{Exceptional Flow}} & \multicolumn{1}{|p{.1\textwidth}|}{\textbf{Post Conditions}}\\ \hline 
 	\endfirsthead
 	
 	\multicolumn{3}{c}%
 	{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-	\hline \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{|c|}{\textbf{Name}} & \multicolumn{1}{|c|}{\textbf{Actor}} & \multicolumn{1}{|c|}{\textbf{Preconditions}} & \multicolumn{1}{|c|}{\textbf{Basic Flow}} & \multicolumn{1}{|c|}{\textbf{Exceptional Flow}} & \multicolumn{1}{|c|}{\textbf{Post Conditions}}\\ \hline 
+	\hline \multicolumn{1}{|p{.04\textwidth}}{\textbf{ID}} & \multicolumn{1}{|p{.11\textwidth}}{\textbf{Name}} & \multicolumn{1}{|p{.05\textwidth}}{\textbf{Actor}} & \multicolumn{1}{|p{.1\textwidth}}{\textbf{Pre conditions}} & \multicolumn{1}{|p{.25\textwidth}}{\textbf{Basic Flow}} & \multicolumn{1}{|p{.25\textwidth}}{\textbf{Exceptional Flow}} & \multicolumn{1}{|p{.1\textwidth}|}{\textbf{Post Conditions}}\\ \hline 
 	\endhead
 	
 	\hline
 	\endlastfoot
 	
-	 \rownumber & Display Recipes & Employee & Recipe exists & 
+	\rownumber & Display Recipes & Employee & Recipe exists & 
 	\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
 		\item User clicks on the display recipe button
 		\item The screen shows a list of ingredients in each recipe and the required amount of each ingredient
@@ -84,32 +83,47 @@ Event Organisers & People or companies that can potentially hire a food truck bu
 		\item The screen shows an error saying that no recipe exists
 		\item User clicks return button to return to the previous screen
 	\end{enumerate} & \\\hline
+
 	 \rownumber & Edit Recipes & Employee & Recipe exists & 
-\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
-	\item User clicks on the edit recipe button
-	\item The screen shows a data input screen
-	\item The user may change the name, ingredients, and amount of ingredient in recipe
-	\item The user clicks a save recipe button
-	\item The user is returned to the previous screen
-\end{enumerate} & If no recipes exist:\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
-	\item User clicks on the edit recipe button
-	\item The screen shows a data input screen
-	\item The user inputs a recipe name
-	\item The user enters the ingredients needed and the required amount
-	\item The user clicks a save recipe button
-	\item The user is returned to the previous screen
-\end{enumerate} & \\\hline
-	 \rownumber & Display Recipes & Employee & Recipe exists & 
-\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
-	\item User clicks on the display recipe button
-	\item The screen shows a list of ingredients in each recipe and the required amount of each ingredient
-	\item User clicks return button to return to the previous screen
-\end{enumerate} & If no recipes exist:\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
-	\item User clicks on the display recipe button
-	\item The screen shows an error saying that no recipe exists
-	\item User clicks return button to return to the previous screen
-\end{enumerate} & \\\hline
+	\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
+		\item User clicks on the edit recipe button
+		\item The screen shows a data input screen
+		\item The user may change the name, ingredients, and amount of ingredient in recipe
+		\item The user clicks a save recipe button
+		\item The user is returned to the previous screen
+	\end{enumerate} & If no recipes exist:\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
+		\item User clicks on the edit recipe button
+		\item The screen shows a data input screen
+		\item The user inputs a recipe name
+		\item The user enters the ingredients needed and the required amount
+		\item The user clicks a save recipe button
+		\item The user is returned to the previous screen
+	\end{enumerate} & \\\hline
+
+	 \rownumber & Display Menu & Employee & Menu exists & 
+	\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
+		\item User clicks on the display menu button
+		\item The screen shows the menu as a list of recipes
+		\item User clicks return button to return to the previous screen
+	\end{enumerate} & If no recipes exist:\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
+		\item User clicks on the display menu button
+		\item The screen shows an error saying that no menu exists
+		\item User clicks return button to return to the previous screen
+	\end{enumerate} & \\\hline
+
+	 \rownumber & Edit Menu & Employee & Menu exists & 
+	\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
+		\item User clicks on the edit menu button
+		\item The screen shows the menu editor screen
+		\item The user can then add and remove recipes from the menu
+		\item User clicks return button to return to the previous screen
+	\end{enumerate} & If no recipes exist:\begin{enumerate}[wide, labelwidth=!, labelindent=0pt, nosep, topsep=0pt, parsep=0pt]
+		\item User clicks on the edit menu button
+		\item The screen shows an error saying that no menu exists
+		\item User clicks return button to return to the previous screen
+	\end{enumerate} & \\\hline
+
 \end{longtable}
 \end{landscape}
-\clearpage% Flush page
+\restoregeometry
 
