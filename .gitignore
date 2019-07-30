@@ -20,3 +20,4 @@ LaTeX/*.log
 LaTeX/*.toc
 LaTeX/*.out
 LaTeX/*.gz
+LaTeX/*.taux
