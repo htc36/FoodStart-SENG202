@@ -3,12 +3,22 @@
 Feature: Order feature.
     Some example scenarios involving orders
 
-    Scenario: Basic burger
-        Given The truck is open for business
-        When I order a beefburger
-        Then I will be charged $10
+    Scenario: Hamburger order
+        Given An employee is taking a customer’s order
+        When A hamburger is ordered
+        Then The total charge will be $5.00
 
-        Scenario: Multiple items
-        Given The truck is open for business
-        When I order a cheeseburger and chips
-        Then I will be charged $18.50
+    Scenario: Multiple orders
+        Given An employee is taking a customer’s order  
+        When A hamburger and chips is ordered
+        Then The total charge will be $8.50
+
+    Scenario: 2x the same item
+        Given An employee is taking a customer’s order
+        When A 8x Hamburger
+        Then THe total charge will be $40.00
+
+        
+
+
+
