@@ -15,9 +15,3 @@ target/jacoco.exec
 .DS_store
 dependency-reduced-pom.xml
 launch.json
-LaTeX/*.aux
-LaTeX/*.log
-LaTeX/*.toc
-LaTeX/*.out
-LaTeX/*.gz
-LaTeX/*.taux
