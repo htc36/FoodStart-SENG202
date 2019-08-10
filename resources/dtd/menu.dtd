@@ -3,11 +3,10 @@
 <!ELEMENT menu (title, description, (item*))>
 <!ELEMENT title (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
-<!ELEMENT item (item_id, name, item_description, recipe_id?)>
-<!ATTLIST item is_prepared (yes|no) #REQUIRED>
+<!ELEMENT item (item_id, name, item_description, recipes)>
+<!ELEMENT recipes (recipe_id*)>
 <!-- If is_prepared is true, recipe_id should be defined-->
 <!ELEMENT item_id (#PCDATA)>
-<!ATTLIST item_id serves CDATA "1">
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT item_description (name)>
 <!ELEMENT recipe_id (#PCDATA)>
