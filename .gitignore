@@ -9,9 +9,13 @@ target/site/jacoco
 target/site/*
 target/javadoc-bundle-options
 target/jacoco.exec
-.settings
+.settings/
 .classpath
 .project
+.idea/
+*.iml
+*.iws
+*.ipr
 .DS_store
 dependency-reduced-pom.xml
 launch.json
