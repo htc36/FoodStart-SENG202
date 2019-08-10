@@ -10,7 +10,7 @@
 <!ELEMENT day (#PCDATA)>
 <!ELEMENT cost (#PCDATA)>
 <!ELEMENT recipes (recipe+)>
-<!ELEMENT recipe (recipe_id, ingredients?, price>
+<!ELEMENT recipe (recipe_id, ingredients?, price)>
 <!ELEMENT recipe_id (#PCDATA)>
 <!ELEMENT ingredients (ingredient_id+)>
 <!ELEMENT ingredient_id (#PCDATA)>
