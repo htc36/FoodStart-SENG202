@@ -1,9 +1,0 @@
-<!--DTD file for representing inventory-->
-<!-- note: do we need redundant info or just item id's?-->
-<!ELEMENT inventory (item*)>
-<!ELEMENT item (id, name, kitchen_stock, truck_stock)>
-<!ATTLIST item type (ingredient|beverage|other) #REQUIRED>
-<!ELEMENT id (#PCDATA)>
-<!ELEMENT name (#PCDATA)>
-<!ELEMENT kitchen_stock (#PCDATA)>
-<!ELEMENT truck_stock (#PCDATA)>
