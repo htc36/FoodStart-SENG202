@@ -1,6 +1,7 @@
 <!-- DTD for representing menu -->
 <!-- FOREIGN KEYS: item_id, recipe_id-->
-<!ELEMENT menu (title, description, (item*))>
+<!ELEMENT menu (menu_id, title, description, (item*))>
+<!ELEMENT menu_id (#PCDATA)>
 <!ELEMENT title (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT item (item_id, name, item_description, recipes)>
