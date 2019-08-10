@@ -8,5 +8,4 @@
 <!ELEMENT ingredient (ingredient_id, quantity)>
 <!ELEMENT ingredient_id (#PCDATA)>
 <!ELEMENT quantity (#PCDATA)>
-<!ELEMENT method (step+)>
-<!ELEMENT step (#PCDATA)>
+<!ELEMENT method (#PCDATA)>
