@@ -45,4 +45,15 @@ public class AppTest
     	
     	assertEquals(testNum, 202);
     }
+    
+    /**
+     * A nonsense test written by Lydia
+     */
+    
+    @Test
+    public void testHarryWroteThis() {
+    	int tester = 584;
+    	assertEquals(tester, 584);
+    }
 }
+
