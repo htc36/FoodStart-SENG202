@@ -34,4 +34,15 @@ public class AppTest
     	
     	assertEquals(whoWroteThisTest, "Alex");
     }
+    
+    /**
+     * A nonsense test written by Lydia
+     */
+    
+    @Test
+    public void testLydiaWroteThis() {
+    	int testNum = 202;
+    	
+    	assertEquals(testNum, 202);
+    }
 }
