@@ -47,7 +47,7 @@ public class AppTest
     }
     
     /**
-     * A nonsense test written by Lydia
+     * Harrys tester case
      */
     
     @Test
