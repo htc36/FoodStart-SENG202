@@ -55,5 +55,14 @@ public class AppTest
     	int tester = 584;
     	assertEquals(tester, 584);
     }
+    
+    /** 
+     * Alan's test case
+     */
+    @Test
+    public void alanTest() {
+    	int i = 5;
+    	assertTrue(i == 5);
+    }
 }
 
