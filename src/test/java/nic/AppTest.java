@@ -23,4 +23,15 @@ public class AppTest
     public void testNothing() {
         assertEquals("This does basically nothing", "This does basically nothing");
     }
+    
+    /**
+     * Tests if Alex is the one who wrote this test
+     */
+    
+    @Test
+    public void testWhoWroteThisTest() {
+    	String whoWroteThisTest = "Alex";
+    	
+    	assertEquals(whoWroteThisTest, "Alex");
+    }
 }
