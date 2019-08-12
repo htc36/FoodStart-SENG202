@@ -64,5 +64,16 @@ public class AppTest
     	int i = 5;
     	assertTrue(i == 5);
     }
+    
+    /**
+     * Frankie's tester case
+     */
+    
+    @Test
+    public void testForFrankie() {
+    	int tester = 9876;
+    	assertEquals(tester, 9876);
+    }
+    
 }
 
