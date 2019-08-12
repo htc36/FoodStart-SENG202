@@ -1,21 +1,27 @@
-Feature: Supplier feature. 
+Feature: Supplier feature.  
     Some example scenarios involving suppliers 
-    Scenario: Missing email 
+    
+    Scenario: Missing fields (FR9) 
         Given Supplier Funky Kumquat has no URL 
         When The Funky Kumquat is loaded 
-        Then a notification is given 
+        Then A notification is given 
 
-    Scenario: Adding Supplier 
+    Scenario: Adding a supplier (FR10) 
         Given There are no current suppliers 
         When A user adds a supplier 
         Then There is one supplier in the list 
 
-    Scenario: Adding existing supplier 
+    Scenario: Adding an existing supplier (FR10) 
         Given The manager needs to add a supplier manually 
         When The supplier being added already exists 
         Then A notification is given, and the supplier is not added 
 
-    Scenario: Removing a supplier 
+    Scenario: Removing a supplier (FR10) 
         Given The supplier is no longer be needed 
         When It is removed from the list of suppliers 
         Then It is removed from the database and cannot be viewed on the list 
+
+    Scenario: View suppliers (FR16) 
+        Given The manager wants to view the suppliers 
+        When a specific supplier is selected  
+        Then Relevant information is shown such as ingredients supplied by supplier 
