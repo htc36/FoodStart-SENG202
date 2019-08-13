@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ingredients SYSTEM "../dtd/sales.dtd">
+<sales>
+	<sale>
+		<id>0</id>
+		<name>Alex</name>
+		<date>
+			<year>2019</year>
+			<month>8</month>
+			<day>13</day>
+		</date>
+		<cost>4.5</cost>
+		<recipes>
+			<recipe>
+				<recipe_id>0</recipe_id>
+				<price>4.5</price>
+			</recipe>
+		</recipes>
+	</sale>
+</sales>

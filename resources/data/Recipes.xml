@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE menu SYSTEM "../dtd/recipes.dtd">
+<recipes>
+	<recipe>
+		<recipe_id>0</recipe_id>
+		<name>Small cheese burger</name>
+		<ingredients>
+			<ingredient>
+				<ingredient_id>1</ingredient_id>
+				<quantity>1</quantity>
+			</ingredient>
+			<ingredient>
+				<ingredient_id>0</ingredient_id>
+				<quantity>50</quantity>
+			</ingredient>
+		</ingredients>
+		<method>Put the cheese between the buns and serve it</method>
+		<price>4.5</price>
+	</recipe>
+	<recipe>
+		<recipe_id>0</recipe_id>
+		<name>Large cheese burger</name>
+		<ingredients>
+			<ingredient>
+				<ingredient_id>1</ingredient_id>
+				<quantity>1</quantity>
+			</ingredient>
+			<ingredient>
+				<ingredient_id>0</ingredient_id>
+				<quantity>150</quantity>
+			</ingredient>
+		</ingredients>
+		<method>Put the cheese between the buns and serve it</method>
+		<price>6</price>
+	</recipe>
+</recipes>
