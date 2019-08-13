@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import nic.foody.model.MenuItem;
@@ -23,6 +24,7 @@ import nic.foody.model.MenuItem;
  * their content is supposed to be small enough to be understood (e.g. aiming to
  * have one assertion per test).
  */
+@Ignore
 public class TestLoadMenuData {
     private Map<String, MenuItem> menu;
     private MenuItem item;

@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import nic.foody.model.Supplier;
@@ -21,6 +22,7 @@ import nic.foody.util.PhoneType;
  * their content is supposed to be small enough to be understood (e.g. aiming to
  * have one assertion per test).
  */
+@Ignore
 public class TestLoadSupplierData {
     private Map<String, Supplier> suppsLoaded;
 
