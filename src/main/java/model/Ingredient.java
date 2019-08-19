@@ -11,14 +11,6 @@ import java.util.Set;
 
 public class Ingredient
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public String code;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -56,14 +48,6 @@ public class Ingredient
 	
 	private Map<DietaryRequirement, Boolean> safeFor;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private IngredientCategory category;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -87,18 +71,9 @@ public class Ingredient
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
-	 * @ordered
-	 */
-	
-	public InventoryManager inventoryManager;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
 	 */
 	public Ingredient(){
-		super();
+		
 	}
 
 }

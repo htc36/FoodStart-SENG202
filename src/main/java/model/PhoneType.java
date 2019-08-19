@@ -7,5 +7,5 @@ package model;
  */
 public enum PhoneType
 {
-	;
+	MOBILE, WORK, HOME;
 }

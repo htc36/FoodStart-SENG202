@@ -76,15 +76,6 @@ public class Supplier
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
-	 * @ordered
-	 */
-	
-	public SupplierManager supplierManager;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
 	 */
 	public Supplier(){
 		super();

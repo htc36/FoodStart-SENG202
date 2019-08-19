@@ -1,5 +1,4 @@
 package model;
-import java.util.List;
 import java.util.Set;
 
 
@@ -18,25 +17,7 @@ public class SupplierManager
 	 * @ordered
 	 */
 	
-	private List<Supplier> suppliers;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Set<Supplier> supplier;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Peristence database;
+	private Set<Supplier> suppliers;
 
 	/**
 	 * <!-- begin-user-doc -->

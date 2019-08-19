@@ -24,24 +24,6 @@ public class OrderManager
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
-	 * @ordered
-	 */
-	
-	public Set<Order> order;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Peristence database;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
 	 */
 	public OrderManager(){
 		super();
@@ -57,17 +39,6 @@ public class OrderManager
 	public List<Order> getOutstandingOrders() {
 		// TODO implement me
 		return null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void operation() {
-		// TODO implement me
 	}
 
 }

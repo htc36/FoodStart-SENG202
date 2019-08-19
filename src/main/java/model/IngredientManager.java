@@ -26,7 +26,7 @@ public class IngredientManager
 	 * @generated
 	 */
 	public IngredientManager(){
-		super();
+		
 	}
 
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Map;
-
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->
@@ -10,32 +8,6 @@ import java.util.Map;
 
 public class OnTheFlyRecipe extends Recipe
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private PermanentRecipe baseRecipe;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private Map<Ingredient, Integer> addedIngredients;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private Map<Ingredient, Float> removedIngredients;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -52,7 +24,7 @@ public class OnTheFlyRecipe extends Recipe
 	 * @generated
 	 */
 	public OnTheFlyRecipe(){
-		super();
+		
 	}
 
 }

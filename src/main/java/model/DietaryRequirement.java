@@ -7,5 +7,5 @@ package model;
  */
 public enum DietaryRequirement
 {
-	VEGAN, VEGETARIAN, GLUTEN_FREE, NUT_ALLERGY;
+	VEGAN, VEGETARIAN, GLUTEN_FREE, NUT_ALLERGY, LACTOSE_INTOLERENT;
 }

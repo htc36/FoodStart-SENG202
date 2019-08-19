@@ -8,7 +8,7 @@ import java.io.File;
  * @generated
  */
 
-public class Peristence
+public class Persistence
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -51,8 +51,8 @@ public class Peristence
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Peristence(){
-		super();
+	public Persistence(){
+		
 	}
 
 	/**

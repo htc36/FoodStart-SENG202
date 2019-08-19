@@ -27,15 +27,6 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private float basePrice;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
 	private String name;
 
 	/**
@@ -54,15 +45,6 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String displayName;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
 	private Set<Recipe> variants;
 
 	/**
@@ -71,7 +53,7 @@ public class MenuItem
 	 * @generated
 	 */
 	public MenuItem(){
-		super();
+		
 	}
 
 	/**

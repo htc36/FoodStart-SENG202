@@ -1,7 +1,6 @@
 package model;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -12,14 +11,6 @@ import java.util.Set;
 
 public abstract class Recipe
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private List<DietaryRequirement> safeFor;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -29,24 +20,6 @@ public abstract class Recipe
 	 */
 	
 	private float price;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String instructions;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String displayName;
 
 	/**
 	 * <!-- begin-user-doc -->
