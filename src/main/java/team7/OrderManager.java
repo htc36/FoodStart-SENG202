@@ -1,4 +1,5 @@
-package model;
+package team7;
+import java.util.List;
 import java.util.Set;
 
 
@@ -8,7 +9,7 @@ import java.util.Set;
  * @generated
  */
 
-public class Menu
+public class OrderManager
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -17,7 +18,16 @@ public class Menu
 	 * @ordered
 	 */
 	
-	private Set<MenuItem> menuItems;
+	private List<Order> allOrders;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public OrderManager(){
+		super();
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -26,15 +36,9 @@ public class Menu
 	 * @ordered
 	 */
 	
-	private String name;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public Menu(){
-		
+	public List<Order> getOutstandingOrders() {
+		// TODO implement me
+		return null;
 	}
 
 }

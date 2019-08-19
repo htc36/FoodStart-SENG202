@@ -1,4 +1,6 @@
-package model;
+package team7;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -7,16 +9,8 @@ package model;
  * @generated
  */
 
-public class PermanentRecipe extends Recipe
+public abstract class Recipe
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -25,7 +19,7 @@ public class PermanentRecipe extends Recipe
 	 * @ordered
 	 */
 	
-	private String instructions;
+	private float price;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -34,15 +28,27 @@ public class PermanentRecipe extends Recipe
 	 * @ordered
 	 */
 	
-	private String displayName;
+	private Map<Ingredient, Integer> ingredients;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public PermanentRecipe(){
+	public Recipe(){
 		super();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public boolean isSafeFor(DietaryRequirement requirement) {
+		// TODO implement me
+		return false;
 	}
 
 }

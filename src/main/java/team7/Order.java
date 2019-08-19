@@ -1,6 +1,7 @@
-package model;
+package team7;
+import java.util.Map;
+import java.util.Set;
 
-import java.io.File;
 
 /**
  * <!-- begin-user-doc -->
@@ -8,7 +9,7 @@ import java.io.File;
  * @generated
  */
 
-public class Persistence
+public class Order
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -17,7 +18,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public InventoryManager inventoryManager;
+	private String id;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -26,7 +27,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public OrderManager orderManager;
+	private Map<Recipe, Integer> items;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -35,7 +36,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public SupplierManager supplierManager;
+	private String customerName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -44,14 +45,23 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public Menu menu;
+	private long timePlaced;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private PaymentMethod paymentMethod;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Persistence(){
+	public Order() {
 		
 	}
 
@@ -62,9 +72,9 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public void importFile(File parameter, DataType parameter2) {
+	public float getTotalCost() {
 		// TODO implement me
-		return;
+		return 0.0f;
 	}
 
 	/**
@@ -74,7 +84,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public void exportFile(File parameter, DataType parameter2) {
+	public void addItem(Recipe parameter) {
 		// TODO implement me
 		return;
 	}

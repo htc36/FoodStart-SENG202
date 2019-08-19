@@ -1,4 +1,4 @@
-package model;
+package team7;
 import java.util.Set;
 
 
@@ -8,7 +8,7 @@ import java.util.Set;
  * @generated
  */
 
-public class SupplierManager
+public class Menu
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -17,16 +17,7 @@ public class SupplierManager
 	 * @ordered
 	 */
 	
-	private Set<Supplier> suppliers;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public SupplierManager(){
-		super();
-	}
+	private Set<MenuItem> menuItems;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -35,9 +26,15 @@ public class SupplierManager
 	 * @ordered
 	 */
 	
-	public void addSupplier(Supplier parameter) {
-		// TODO implement me
-		return;
+	private String name;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public Menu(){
+		
 	}
 
 }

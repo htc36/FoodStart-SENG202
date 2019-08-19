@@ -1,5 +1,5 @@
-package model;
-import java.util.HashSet;
+package team7;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -9,8 +9,9 @@ import java.util.Set;
  * @generated
  */
 
-public class MenuItem
+public class Ingredient
 {
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
@@ -18,7 +19,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String databaseId;
+	private Unit unit;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String description;
+	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -45,27 +46,34 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private Set<Recipe> variants;
+	private Map<DietaryRequirement, Boolean> safeFor;
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private int kitchenStock;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private int truckStock;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public MenuItem(){
+	public Ingredient(){
 		
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean isAvailable() {
-		// TODO implement me
-		return false;
 	}
 
 }
