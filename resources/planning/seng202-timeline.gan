@@ -73,6 +73,7 @@
                 <depend id="69" type="2" difference="0" hardness="Strong"/>
                 <depend id="83" type="2" difference="0" hardness="Strong"/>
                 <depend id="140" type="2" difference="0" hardness="Strong"/>
+                <depend id="173" type="2" difference="0" hardness="Strong"/>
             </task>
             <task id="83" name="Menu Item Editing" color="#8cb6ce" meeting="false" start="2019-09-04" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
             <task id="140" name="Multiple Menus" color="#8cb6ce" meeting="false" start="2019-09-04" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
@@ -93,6 +94,7 @@
             </task>
             <task id="123" name="Sale Log Editing" color="#8cb6ce" meeting="false" start="2019-09-11" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
             <task id="128" name="Supplier Data Addendum" color="#8cb6ce" meeting="false" start="2019-09-20" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="173" name="Create Order" color="#8cb6ce" meeting="false" start="2019-09-04" duration="10" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
         </task>
     </tasks>
     <resources/>
