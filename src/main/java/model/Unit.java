@@ -1,11 +1,11 @@
-package team7;
+package model;
 
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->
  * @generated
  */
-public enum PhoneType
+public enum Unit
 {
-	MOBILE, WORK, HOME;
+	MILLILITRES, GRAMS, UNITS;
 }

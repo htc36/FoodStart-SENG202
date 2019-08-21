@@ -1,4 +1,8 @@
-package team7;
+package model.stock;
+import model.DietaryRequirement;
+import model.Unit;
+
+import java.util.Map;
 
 
 /**
@@ -7,8 +11,27 @@ package team7;
  * @generated
  */
 
-public class Supplier
+public class Ingredient
 {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private Unit unit;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private String name;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
@@ -25,7 +48,8 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private String supplierName;
+	private Map<DietaryRequirement, Boolean> safeFor;
+
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -34,7 +58,7 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private String phoneNumber;
+	private int kitchenStock;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -43,42 +67,15 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private PhoneType phoneType;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String email;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String url;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String address;
+	private int truckStock;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Supplier(){
-		super();
+	public Ingredient(){
+		
 	}
 
 }

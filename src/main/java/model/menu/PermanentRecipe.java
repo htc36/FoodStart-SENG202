@@ -1,7 +1,7 @@
-package team7;
-import java.util.List;
-import java.util.Set;
+package model.menu;
 
+
+import model.Recipe;
 
 /**
  * <!-- begin-user-doc -->
@@ -9,7 +9,7 @@ import java.util.Set;
  * @generated
  */
 
-public class OrderManager
+public class PermanentRecipe extends Recipe
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -18,16 +18,7 @@ public class OrderManager
 	 * @ordered
 	 */
 	
-	private List<Order> allOrders;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public OrderManager(){
-		super();
-	}
+	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -36,9 +27,24 @@ public class OrderManager
 	 * @ordered
 	 */
 	
-	public List<Order> getOutstandingOrders() {
-		// TODO implement me
-		return null;
+	private String instructions;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private String displayName;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public PermanentRecipe(){
+		super();
 	}
 
 }

@@ -1,6 +1,7 @@
-package team7;
-import java.util.HashSet;
-import java.util.Set;
+package model;
+import model.stock.Ingredient;
+
+import java.util.Map;
 
 
 /**
@@ -9,16 +10,8 @@ import java.util.Set;
  * @generated
  */
 
-public class MenuItem
+public abstract class Recipe
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -27,7 +20,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String name;
+	private float price;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -36,24 +29,15 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String description;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private Set<Recipe> variants;
+	private Map<Ingredient, Integer> ingredients;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public MenuItem(){
-		
+	public Recipe(){
+		super();
 	}
 
 	/**
@@ -63,7 +47,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	public boolean isAvailable() {
+	public boolean isSafeFor(DietaryRequirement requirement) {
 		// TODO implement me
 		return false;
 	}

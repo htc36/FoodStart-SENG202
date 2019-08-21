@@ -1,4 +1,6 @@
-package team7;
+package model.menu;
+import java.util.Set;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -6,8 +8,16 @@ package team7;
  * @generated
  */
 
-public class OnTheFlyRecipe extends Recipe
+public class Menu
 {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private Set<MenuItem> menuItems;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -16,14 +26,14 @@ public class OnTheFlyRecipe extends Recipe
 	 * @ordered
 	 */
 	
-	private PermanentRecipe basedOn;
+	private String name;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public OnTheFlyRecipe(){
+	public Menu(){
 		
 	}
 

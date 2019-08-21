@@ -1,4 +1,6 @@
-package team7;
+package manager;
+import model.stock.Ingredient;
+
 import java.util.Set;
 
 
@@ -8,7 +10,7 @@ import java.util.Set;
  * @generated
  */
 
-public class Menu
+public class IngredientManager
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -17,23 +19,15 @@ public class Menu
 	 * @ordered
 	 */
 	
-	private Set<MenuItem> menuItems;
+	private Set<Ingredient> ingredients;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String name;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Menu(){
+	public IngredientManager(){
 		
 	}
 

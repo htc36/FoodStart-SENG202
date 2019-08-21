@@ -1,6 +1,7 @@
-package team7;
+package manager;
+import model.order.Order;
+
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -9,9 +10,8 @@ import java.util.Map;
  * @generated
  */
 
-public abstract class Recipe
+public class OrderManager
 {
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
@@ -19,23 +19,14 @@ public abstract class Recipe
 	 * @ordered
 	 */
 	
-	private float price;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private Map<Ingredient, Integer> ingredients;
+	private List<Order> allOrders;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Recipe(){
+	public OrderManager(){
 		super();
 	}
 
@@ -46,9 +37,9 @@ public abstract class Recipe
 	 * @ordered
 	 */
 	
-	public boolean isSafeFor(DietaryRequirement requirement) {
+	public List<Order> getOutstandingOrders() {
 		// TODO implement me
-		return false;
+		return null;
 	}
 
 }

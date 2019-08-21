@@ -1,4 +1,6 @@
-package team7;
+package manager;
+
+import model.stock.Ingredient;
 
 /**
  * <!-- begin-user-doc -->

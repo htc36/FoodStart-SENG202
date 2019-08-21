@@ -1,4 +1,4 @@
-package team7;
+package model;
 
 /**
  * <!-- begin-user-doc -->

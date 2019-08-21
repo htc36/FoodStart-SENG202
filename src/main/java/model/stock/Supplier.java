@@ -1,6 +1,7 @@
-package team7;
+package model.stock;
 
-import java.io.File;
+
+import model.PhoneType;
 
 /**
  * <!-- begin-user-doc -->
@@ -8,7 +9,7 @@ import java.io.File;
  * @generated
  */
 
-public class Persistence
+public class Supplier
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -17,7 +18,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public InventoryManager inventoryManager;
+	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -26,7 +27,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public OrderManager orderManager;
+	private String supplierName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -35,7 +36,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public SupplierManager supplierManager;
+	private String phoneNumber;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -44,16 +45,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public Menu menu;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public Persistence(){
-		
-	}
+	private PhoneType phoneType;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -62,10 +54,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public void importFile(File parameter, DataType parameter2) {
-		// TODO implement me
-		return;
-	}
+	private String email;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -74,9 +63,24 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public void exportFile(File parameter, DataType parameter2) {
-		// TODO implement me
-		return;
+	private String url;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private String address;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public Supplier(){
+		super();
 	}
 
 }

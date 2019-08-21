@@ -1,6 +1,8 @@
-package team7;
+package model.order;
+import model.PaymentMethod;
+import model.Recipe;
+
 import java.util.Map;
-import java.util.Set;
 
 
 /**

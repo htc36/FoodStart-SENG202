@@ -1,7 +1,11 @@
-package team7;
-import java.util.Map;
-import java.util.Set;
+package model;
 
+import manager.InventoryManager;
+import manager.OrderManager;
+import manager.SupplierManager;
+import model.menu.Menu;
+
+import java.io.File;
 
 /**
  * <!-- begin-user-doc -->
@@ -9,8 +13,16 @@ import java.util.Set;
  * @generated
  */
 
-public class Ingredient
+public class Persistence
 {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public InventoryManager inventoryManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -19,7 +31,7 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private Unit unit;
+	public OrderManager orderManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -28,7 +40,7 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private String name;
+	public SupplierManager supplierManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -37,43 +49,39 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private String databaseId;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private Map<DietaryRequirement, Boolean> safeFor;
-
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private int kitchenStock;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private int truckStock;
+	public Menu menu;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Ingredient(){
+	public Persistence(){
 		
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public void importFile(File parameter, DataType parameter2) {
+		// TODO implement me
+		return;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public void exportFile(File parameter, DataType parameter2) {
+		// TODO implement me
+		return;
 	}
 
 }
