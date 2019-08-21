@@ -1,6 +1,6 @@
 package model.order;
 import model.PaymentMethod;
-import model.Recipe;
+import model.menu.Recipe;
 
 import java.util.Map;
 

@@ -1,4 +1,5 @@
-package model;
+package model.menu;
+import model.DietaryRequirement;
 import model.stock.Ingredient;
 
 import java.util.Map;
