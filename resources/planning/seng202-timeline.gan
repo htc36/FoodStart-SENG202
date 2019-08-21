@@ -4,7 +4,7 @@
         <field id="tpd3" name="Name" width="261" order="0"/>
         <field id="tpd4" name="Begin date" width="83" order="1"/>
         <field id="tpd5" name="End date" width="83" order="2"/>
-        <option id="color.recent"><![CDATA[#ffff00 #ff33cc #00ffcc #66ff33]]></option>
+        <option id="color.recent"><![CDATA[#ff33cc #ffff00 #00ffcc #66ff33]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Name" width="210" order="0"/>
@@ -48,6 +48,9 @@
             <task id="163" name="ENCE Lab" color="#ff33cc" meeting="true" start="2019-08-21" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
             <task id="167" name="265 Handin" color="#ff33cc" meeting="true" start="2019-08-23" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
             <task id="166" name="264 Quiz" color="#ff33cc" meeting="true" start="2019-08-26" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
+            <task id="175" name="ENCE CA Quiz" color="#ff33cc" meeting="true" start="2019-08-26" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
+            <task id="178" name="ENCE Lab 6" color="#ff33cc" meeting="true" start="2019-08-28" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
+            <task id="181" name="ENCE Superquiz 2" color="#ff33cc" meeting="true" start="2019-08-29" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="171" name="High &amp; Medium Priorities implemented" color="#ffff00" meeting="true" start="2019-09-20" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
         <task id="59" name="Data" color="#00ffcc" meeting="false" start="2019-08-21" duration="25" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
