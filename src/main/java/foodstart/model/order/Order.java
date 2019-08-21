@@ -1,6 +1,6 @@
-package model.stock;
-import model.DietaryRequirement;
-import model.Unit;
+package foodstart.model.order;
+import model.PaymentMethod;
+import model.Recipe;
 
 import java.util.Map;
 
@@ -11,8 +11,16 @@ import java.util.Map;
  * @generated
  */
 
-public class Ingredient
+public class Order
 {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private String id;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -21,7 +29,7 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private Unit unit;
+	private Map<Recipe, Integer> items;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -30,7 +38,7 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private String name;
+	private String customerName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -39,7 +47,7 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private String databaseId;
+	private long timePlaced;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -48,34 +56,39 @@ public class Ingredient
 	 * @ordered
 	 */
 	
-	private Map<DietaryRequirement, Boolean> safeFor;
-
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private int kitchenStock;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private int truckStock;
+	private PaymentMethod paymentMethod;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Ingredient(){
+	public Order() {
 		
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public float getTotalCost() {
+		// TODO implement me
+		return 0.0f;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public void addItem(Recipe parameter) {
+		// TODO implement me
+		return;
 	}
 
 }

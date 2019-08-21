@@ -1,8 +1,7 @@
-package model;
-import model.stock.Ingredient;
+package foodstart.model.menu;
 
-import java.util.Map;
 
+import model.Recipe;
 
 /**
  * <!-- begin-user-doc -->
@@ -10,8 +9,16 @@ import java.util.Map;
  * @generated
  */
 
-public abstract class Recipe
+public class PermanentRecipe extends Recipe
 {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -20,7 +27,7 @@ public abstract class Recipe
 	 * @ordered
 	 */
 	
-	private float price;
+	private String instructions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -29,27 +36,15 @@ public abstract class Recipe
 	 * @ordered
 	 */
 	
-	private Map<Ingredient, Integer> ingredients;
+	private String displayName;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Recipe(){
+	public PermanentRecipe(){
 		super();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean isSafeFor(DietaryRequirement requirement) {
-		// TODO implement me
-		return false;
 	}
 
 }

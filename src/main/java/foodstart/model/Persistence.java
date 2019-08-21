@@ -1,8 +1,11 @@
-package model.menu;
-import model.Recipe;
+package foodstart.model;
 
-import java.util.Set;
+import manager.InventoryManager;
+import manager.OrderManager;
+import manager.SupplierManager;
+import model.menu.Menu;
 
+import java.io.File;
 
 /**
  * <!-- begin-user-doc -->
@@ -10,7 +13,7 @@ import java.util.Set;
  * @generated
  */
 
-public class MenuItem
+public class Persistence
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -19,7 +22,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String databaseId;
+	public InventoryManager inventoryManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -28,7 +31,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String name;
+	public OrderManager orderManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -37,7 +40,7 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private String description;
+	public SupplierManager supplierManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -46,14 +49,14 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	private Set<Recipe> variants;
+	public Menu menu;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public MenuItem(){
+	public Persistence(){
 		
 	}
 
@@ -64,9 +67,21 @@ public class MenuItem
 	 * @ordered
 	 */
 	
-	public boolean isAvailable() {
+	public void importFile(File parameter, DataType parameter2) {
 		// TODO implement me
-		return false;
+		return;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	public void exportFile(File parameter, DataType parameter2) {
+		// TODO implement me
+		return;
 	}
 
 }

@@ -1,7 +1,5 @@
-package manager;
-import model.order.Order;
-
-import java.util.List;
+package foodstart.model.menu;
+import java.util.Set;
 
 
 /**
@@ -10,7 +8,7 @@ import java.util.List;
  * @generated
  */
 
-public class OrderManager
+public class Menu
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -19,16 +17,7 @@ public class OrderManager
 	 * @ordered
 	 */
 	
-	private List<Order> allOrders;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public OrderManager(){
-		super();
-	}
+	private Set<MenuItem> menuItems;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -37,9 +26,15 @@ public class OrderManager
 	 * @ordered
 	 */
 	
-	public List<Order> getOutstandingOrders() {
-		// TODO implement me
-		return null;
+	private String name;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public Menu(){
+		
 	}
 
 }

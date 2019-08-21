@@ -1,4 +1,4 @@
-package model;
+package foodstart.model;
 
 /**
  * <!-- begin-user-doc -->

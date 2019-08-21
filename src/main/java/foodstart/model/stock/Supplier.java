@@ -1,9 +1,7 @@
-package model.order;
-import model.PaymentMethod;
-import model.Recipe;
+package foodstart.model.stock;
 
-import java.util.Map;
 
+import model.PhoneType;
 
 /**
  * <!-- begin-user-doc -->
@@ -11,7 +9,7 @@ import java.util.Map;
  * @generated
  */
 
-public class Order
+public class Supplier
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -20,7 +18,7 @@ public class Order
 	 * @ordered
 	 */
 	
-	private String id;
+	private String databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -29,7 +27,7 @@ public class Order
 	 * @ordered
 	 */
 	
-	private Map<Recipe, Integer> items;
+	private String supplierName;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -38,7 +36,7 @@ public class Order
 	 * @ordered
 	 */
 	
-	private String customerName;
+	private String phoneNumber;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -47,7 +45,7 @@ public class Order
 	 * @ordered
 	 */
 	
-	private long timePlaced;
+	private PhoneType phoneType;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -56,16 +54,7 @@ public class Order
 	 * @ordered
 	 */
 	
-	private PaymentMethod paymentMethod;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public Order() {
-		
-	}
+	private String email;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -74,10 +63,7 @@ public class Order
 	 * @ordered
 	 */
 	
-	public float getTotalCost() {
-		// TODO implement me
-		return 0.0f;
-	}
+	private String url;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -86,9 +72,15 @@ public class Order
 	 * @ordered
 	 */
 	
-	public void addItem(Recipe parameter) {
-		// TODO implement me
-		return;
+	private String address;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public Supplier(){
+		super();
 	}
 
 }

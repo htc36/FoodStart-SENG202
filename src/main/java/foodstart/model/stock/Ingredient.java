@@ -1,11 +1,9 @@
-package model;
+package foodstart.model.stock;
+import model.DietaryRequirement;
+import model.Unit;
 
-import manager.InventoryManager;
-import manager.OrderManager;
-import manager.SupplierManager;
-import model.menu.Menu;
+import java.util.Map;
 
-import java.io.File;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,16 +11,8 @@ import java.io.File;
  * @generated
  */
 
-public class Persistence
+public class Ingredient
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public InventoryManager inventoryManager;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -31,7 +21,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public OrderManager orderManager;
+	private Unit unit;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -40,7 +30,7 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public SupplierManager supplierManager;
+	private String name;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -49,39 +39,43 @@ public class Persistence
 	 * @ordered
 	 */
 	
-	public Menu menu;
+	private String databaseId;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private Map<DietaryRequirement, Boolean> safeFor;
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private int kitchenStock;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private int truckStock;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public Persistence(){
+	public Ingredient(){
 		
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void importFile(File parameter, DataType parameter2) {
-		// TODO implement me
-		return;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void exportFile(File parameter, DataType parameter2) {
-		// TODO implement me
-		return;
 	}
 
 }

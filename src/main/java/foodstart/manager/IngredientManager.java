@@ -1,6 +1,8 @@
-package model.menu;
+package foodstart.manager;
+import model.stock.Ingredient;
 
-import model.Recipe;
+import java.util.Set;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -8,9 +10,8 @@ import model.Recipe;
  * @generated
  */
 
-public class OnTheFlyRecipe extends Recipe
+public class IngredientManager
 {
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
@@ -18,14 +19,15 @@ public class OnTheFlyRecipe extends Recipe
 	 * @ordered
 	 */
 	
-	private PermanentRecipe basedOn;
+	private Set<Ingredient> ingredients;
+
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
 	 */
-	public OnTheFlyRecipe(){
+	public IngredientManager(){
 		
 	}
 

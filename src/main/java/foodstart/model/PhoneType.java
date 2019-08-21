@@ -1,11 +1,11 @@
-package model;
+package foodstart.model;
 
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->
  * @generated
  */
-public enum Unit
+public enum PhoneType
 {
-	MILLILITRES, GRAMS, UNITS;
+	MOBILE, WORK, HOME;
 }

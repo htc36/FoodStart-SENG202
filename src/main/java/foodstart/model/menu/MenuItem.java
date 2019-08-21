@@ -1,7 +1,8 @@
-package model.stock;
+package foodstart.model.menu;
+import model.Recipe;
 
+import java.util.Set;
 
-import model.PhoneType;
 
 /**
  * <!-- begin-user-doc -->
@@ -9,7 +10,7 @@ import model.PhoneType;
  * @generated
  */
 
-public class Supplier
+public class MenuItem
 {
 	/**
 	 * <!-- begin-user-doc -->
@@ -27,7 +28,7 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private String supplierName;
+	private String name;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -36,7 +37,7 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private String phoneNumber;
+	private String description;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -45,7 +46,16 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private PhoneType phoneType;
+	private Set<Recipe> variants;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public MenuItem(){
+		
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -54,33 +64,9 @@ public class Supplier
 	 * @ordered
 	 */
 	
-	private String email;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String url;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	private String address;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public Supplier(){
-		super();
+	public boolean isAvailable() {
+		// TODO implement me
+		return false;
 	}
 
 }
