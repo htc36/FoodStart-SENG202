@@ -1,6 +1,9 @@
-package foodstart.manager;
+package foodstart.model.menu;
+import java.util.Map;
 
+import foodstart.model.DietaryRequirement;
 import foodstart.model.stock.Ingredient;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -8,16 +11,34 @@ import foodstart.model.stock.Ingredient;
  * @generated
  */
 
-public class InventoryManager
+public abstract class Recipe
 {
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!--  end-user-doc  -->
 	 * @generated
+	 * @ordered
 	 */
-	public InventoryManager(){
-		
+	
+	private float price;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 * @ordered
+	 */
+	
+	private Map<Ingredient, Integer> ingredients;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!--  end-user-doc  -->
+	 * @generated
+	 */
+	public Recipe(){
+		super();
 	}
 
 	/**
@@ -27,33 +48,9 @@ public class InventoryManager
 	 * @ordered
 	 */
 	
-	public boolean isInTruckStock(Ingredient parameter) {
+	public boolean isSafeFor(DietaryRequirement requirement) {
 		// TODO implement me
 		return false;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void updateTruckStock(Ingredient parameter, int parameter2) {
-		// TODO implement me
-		return;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void updateKitchenStock(Ingredient parameter, int parameter2) {
-		// TODO implement me
-		return;
 	}
 
 }

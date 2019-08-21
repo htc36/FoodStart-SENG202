@@ -1,7 +1,7 @@
 package foodstart.manager;
-import model.order.Order;
-
 import java.util.List;
+
+import foodstart.model.order.Order;
 
 
 /**

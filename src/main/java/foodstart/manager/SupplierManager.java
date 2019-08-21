@@ -1,7 +1,7 @@
 package foodstart.manager;
-import model.stock.Supplier;
-
 import java.util.Set;
+
+import foodstart.model.stock.Supplier;
 
 
 /**

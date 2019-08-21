@@ -1,7 +1,5 @@
 package foodstart.model.menu;
 
-import model.Recipe;
-
 /**
  * <!-- begin-user-doc -->
  * <!--  end-user-doc  -->

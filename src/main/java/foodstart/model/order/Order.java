@@ -1,8 +1,8 @@
 package foodstart.model.order;
-import model.PaymentMethod;
-import model.Recipe;
-
 import java.util.Map;
+
+import foodstart.model.PaymentMethod;
+import foodstart.model.menu.Recipe;
 
 
 /**

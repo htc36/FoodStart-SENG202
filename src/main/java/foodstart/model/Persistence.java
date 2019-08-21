@@ -1,11 +1,11 @@
 package foodstart.model;
 
-import manager.InventoryManager;
-import manager.OrderManager;
-import manager.SupplierManager;
-import model.menu.Menu;
-
 import java.io.File;
+
+import foodstart.manager.InventoryManager;
+import foodstart.manager.OrderManager;
+import foodstart.manager.SupplierManager;
+import foodstart.model.menu.Menu;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,7 +1,7 @@
 package foodstart.model.stock;
 
 
-import model.PhoneType;
+import foodstart.model.PhoneType;
 
 /**
  * <!-- begin-user-doc -->

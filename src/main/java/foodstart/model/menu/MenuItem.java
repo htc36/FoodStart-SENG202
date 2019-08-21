@@ -1,6 +1,4 @@
 package foodstart.model.menu;
-import model.Recipe;
-
 import java.util.Set;
 
 

@@ -1,8 +1,8 @@
 package foodstart.model.stock;
-import model.DietaryRequirement;
-import model.Unit;
-
 import java.util.Map;
+
+import foodstart.model.DietaryRequirement;
+import foodstart.model.Unit;
 
 
 /**
