@@ -4,7 +4,7 @@
         <field id="tpd3" name="Name" width="261" order="0"/>
         <field id="tpd4" name="Begin date" width="83" order="1"/>
         <field id="tpd5" name="End date" width="83" order="2"/>
-        <option id="color.recent"><![CDATA[#ff33cc #ffff00 #00ffcc #66ff33]]></option>
+        <option id="color.recent"><![CDATA[#ff33cc #ff0000 #ffff00 #00ffcc #66ff33]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Name" width="210" order="0"/>
@@ -41,8 +41,8 @@
             </task>
             <task id="146" name="Second Deliverable" color="#66ff33" meeting="false" start="2019-08-14" duration="30" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="141" name="Important Dates" color="#ff33cc" meeting="false" start="2019-08-14" duration="19" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true">
-            <task id="151" name="Term Break" color="#ff33cc" meeting="false" start="2019-08-23" duration="12" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
+        <task id="141" name="Important Dates" color="#ff33cc" meeting="false" start="2019-08-14" duration="23" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true">
+            <task id="151" name="Term Break" color="#ff33cc" meeting="false" start="2019-08-23" duration="11" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
             <task id="160" name="ENCE Lab" color="#ff33cc" meeting="true" start="2019-08-14" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
             <task id="164" name="264 Assignment" color="#ff33cc" meeting="true" start="2019-08-19" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
             <task id="163" name="ENCE Lab" color="#ff33cc" meeting="true" start="2019-08-21" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
@@ -51,53 +51,54 @@
             <task id="175" name="ENCE CA Quiz" color="#ff33cc" meeting="true" start="2019-08-26" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
             <task id="178" name="ENCE Lab 6" color="#ff33cc" meeting="true" start="2019-08-28" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
             <task id="181" name="ENCE Superquiz 2" color="#ff33cc" meeting="true" start="2019-08-29" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
+            <task id="190" name="265 30min test" color="#ff33cc" meeting="true" start="2019-09-11" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
+            <task id="187" name="ENCE Lab Test" color="#ff33cc" meeting="true" start="2019-09-13" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
+            <task id="194" name="264 Lab Test" color="#ff33cc" meeting="true" start="2019-09-16" duration="0" complete="0" thirdDate="2019-08-13" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="171" name="High &amp; Medium Priorities implemented" color="#ffff00" meeting="true" start="2019-09-20" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
-        <task id="59" name="Data" color="#00ffcc" meeting="false" start="2019-08-21" duration="25" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
-            <task id="65" name="Data Classes" color="#00ffcc" meeting="false" start="2019-08-21" duration="5" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
+        <task id="171" name="High &amp; Medium Priorities implemented" color="#ffff00" meeting="true" start="2019-09-23" duration="0" complete="0" thirdDate="2019-08-12" thirdDate-constraint="0" expand="true"/>
+        <task id="59" name="Data" color="#00ffcc" meeting="false" start="2019-08-21" duration="9" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
+            <task id="65" name="Data Classes" color="#00ffcc" meeting="false" start="2019-08-21" duration="3" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
                 <depend id="43" type="2" difference="0" hardness="Strong"/>
+                <depend id="67" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="67" name="Data Importation" color="#00ffcc" meeting="false" start="2019-08-28" duration="4" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
+            <task id="67" name="Data Importation" color="#00ffcc" meeting="false" start="2019-08-26" duration="3" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
                 <depend id="55" type="2" difference="0" hardness="Strong"/>
                 <depend id="101" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="101" name="Data Exportation" color="#00ffcc" meeting="false" start="2019-09-03" duration="5" complete="0" thirdDate="2019-08-21" thirdDate-constraint="0" expand="true">
-                <depend id="133" type="2" difference="0" hardness="Strong"/>
-            </task>
-            <task id="133" name="Internal Database" color="#00ffcc" meeting="false" start="2019-09-10" duration="11" complete="0" thirdDate="2019-08-21" thirdDate-constraint="0" expand="true"/>
+            <task id="101" name="Data Exportation" color="#00ffcc" meeting="false" start="2019-08-29" duration="3" complete="0" thirdDate="2019-08-21" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="18" name="GUI Core &amp; Research" color="#8cb6ce" meeting="false" start="2019-08-14" duration="10" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
+        <task id="18" name="GUI Core &amp; Research" color="#8cb6ce" meeting="false" start="2019-08-14" duration="7" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
             <depend id="43" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="43" name="GUI" color="#8cb6ce" meeting="false" start="2019-08-28" duration="20" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
-            <task id="55" name="Import Menu" color="#8cb6ce" meeting="false" start="2019-09-03" duration="1" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="76" name="Menu Item Display" color="#8cb6ce" meeting="false" start="2019-08-28" duration="5" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
+        <task id="43" name="GUI" color="#8cb6ce" meeting="false" start="2019-08-26" duration="20" complete="0" thirdDate="2019-07-29" thirdDate-constraint="0" expand="true">
+            <task id="55" name="Import Menu" color="#8cb6ce" meeting="false" start="2019-08-29" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="76" name="Menu Item Display" color="#8cb6ce" meeting="false" start="2019-08-26" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
                 <depend id="50" type="2" difference="0" hardness="Strong"/>
                 <depend id="69" type="2" difference="0" hardness="Strong"/>
                 <depend id="83" type="2" difference="0" hardness="Strong"/>
                 <depend id="140" type="2" difference="0" hardness="Strong"/>
                 <depend id="173" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="83" name="Menu Item Editing" color="#8cb6ce" meeting="false" start="2019-09-04" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="140" name="Multiple Menus" color="#8cb6ce" meeting="false" start="2019-09-04" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="50" name="Recipe Display" color="#8cb6ce" meeting="false" start="2019-09-04" duration="5" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
+            <task id="83" name="Menu Item Editing" color="#8cb6ce" meeting="false" start="2019-08-29" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="140" name="Multiple Menus" color="#8cb6ce" meeting="false" start="2019-08-29" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="50" name="Recipe Display" color="#8cb6ce" meeting="false" start="2019-08-29" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
                 <depend id="69" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="69" name="Recipe Editing" color="#8cb6ce" meeting="false" start="2019-09-11" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="94" name="Stock and Ingredient Display" color="#8cb6ce" meeting="false" start="2019-08-28" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
+            <task id="173" name="Create Order" color="#8cb6ce" meeting="false" start="2019-08-29" duration="5" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="69" name="Recipe Editing" color="#8cb6ce" meeting="false" start="2019-09-03" duration="4" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="94" name="Stock and Ingredient Display" color="#8cb6ce" meeting="false" start="2019-08-26" duration="5" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
                 <depend id="95" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="95" name="Stock and Ingredient Editing" color="#8cb6ce" meeting="false" start="2019-09-06" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="107" name="Supplier Display" color="#8cb6ce" meeting="false" start="2019-08-28" duration="10" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
+            <task id="95" name="Stock and Ingredient Editing" color="#8cb6ce" meeting="false" start="2019-09-02" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="107" name="Supplier Display" color="#8cb6ce" meeting="false" start="2019-08-26" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
                 <depend id="114" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="114" name="Supplier Editing" color="#8cb6ce" meeting="false" start="2019-09-11" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="120" name="Sale Log Display" color="#8cb6ce" meeting="false" start="2019-08-28" duration="10" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
+            <task id="114" name="Supplier Editing" color="#8cb6ce" meeting="false" start="2019-08-29" duration="2" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="120" name="Sale Log Display" color="#8cb6ce" meeting="false" start="2019-09-09" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true">
                 <depend id="123" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="123" name="Sale Log Editing" color="#8cb6ce" meeting="false" start="2019-09-11" duration="7" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="128" name="Supplier Data Addendum" color="#8cb6ce" meeting="false" start="2019-09-20" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
-            <task id="173" name="Create Order" color="#8cb6ce" meeting="false" start="2019-09-04" duration="10" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="123" name="Sale Log Editing" color="#8cb6ce" meeting="false" start="2019-09-18" duration="3" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
+            <task id="128" name="Supplier Data Addendum" color="#8cb6ce" meeting="false" start="2019-09-09" duration="5" complete="0" thirdDate="2019-08-28" thirdDate-constraint="0" expand="true"/>
         </task>
     </tasks>
     <resources/>
