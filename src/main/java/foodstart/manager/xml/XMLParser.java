@@ -97,9 +97,12 @@ public class XMLParser extends Persistence {
 						NodeList dietaryNodes = ingredientElementNode.getChildNodes();
 						for (int k = 0; k < dietaryNodes.getLength(); k++) {
 							Node dietaryNode = dietaryNodes.item(k);
-							boolean value = Boolean.valueOf(dietaryNode.getNodeValue());
+							boolean value = Boolean.valueOf(dietaryNode.getTextContent());
 							String dietaryName = dietaryNode.getNodeName();
-							dietaryRequirements.put(DietaryRequirement.matchDietaryRequirement(dietaryName), value);
+							DietaryRequirement requirement = DietaryRequirement.matchDietaryRequirement(dietaryName);
+							if (requirement != null) {
+								dietaryRequirements.put(requirement, value);
+							}
 						}
 					}
 				}

@@ -26,7 +26,7 @@ public enum DietaryRequirement
 	 * Gets the name of the unit as it should appear in the database
 	 * @return Database name of the unit
 	 */
-	private String getDBName() {
+	public String getDBName() {
 		return this.dbName;
 	}
 	
