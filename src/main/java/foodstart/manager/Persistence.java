@@ -2,15 +2,15 @@ package foodstart.manager;
 
 import java.io.File;
 
+import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * 
+ * @author Alex Hobson
+ * @date 22/08/2019
  */
-
-public class Persistence
+public abstract class Persistence
 {
 
 	/**
@@ -20,22 +20,16 @@ public class Persistence
 	 * @param dataType The type of file to read
 	 * @throws ImportFailureException if the data is inconsistent
 	 */
-	public void importFile(File file, DataType dataType) {
-		// TODO implement me
-		return;
-	}
+	public abstract void importFile(File file, DataType dataType);
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * Exports all data stored in memory of a given DataType to
+	 * a specified file
+	 * @param file File to export to
+	 * @param dataType The data type to export
 	 */
 	
-	public void exportFile(File parameter, DataType parameter2) {
-		// TODO implement me
-		return;
-	}
+	public abstract void exportFile(File file, DataType dataType);
 
 }
 
