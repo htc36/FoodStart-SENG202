@@ -6,89 +6,76 @@ import foodstart.model.menu.Recipe;
 
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * The class that holds information about an order and its methods
  */
 
 public class Order
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The identifier code of the order
 	 */
 	
 	private String id;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The items that have been ordered and their quantities	
 	 */
 	
 	private Map<Recipe, Integer> items;
+	
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The name of the customer who made the order
 	 */
 	
 	private String customerName;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The time that the order was placed
 	 */
 	
 	private long timePlaced;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The payment method that the customer chose
 	 */
 	
 	private PaymentMethod paymentMethod;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * The order constructor
+	 * @param id The identifier code of the order
+	 * @param items The items that have been ordered and their quantities	
+	 * @param customerName The name of the customer who made the order
+	 * @param timePlaced The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
 	 */
-	public Order() {
-		
+	public Order(String id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+		this.id = id;
+		this.items = items;
+		this.customerName = customerName;
+		this.timePlaced = timePlaced;
+		this.paymentMethod = paymentMethod;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * Calculates the total cost of an order
+	 * @return totalCost The total cost of the order
 	 */
 	
 	public float getTotalCost() {
 		// TODO implement me
+		
+	
 		return 0.0f;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * Adds an item to the order
 	 */
 	
 	public void addItem(Recipe parameter) {
 		// TODO implement me
-		return;
 	}
 
 }
