@@ -4,72 +4,49 @@ package foodstart.model.stock;
 import foodstart.model.PhoneType;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * The class that stores relevant information and methods about a supplier
  */
 
 public class Supplier
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The identifier code of the supplier
 	 */
 	
 	private String databaseId;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The name of the supplier
 	 */
 	
 	private String supplierName;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The phone number of the supplier
 	 */
 	
 	private String phoneNumber;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The phone type of the supplier
 	 */
 	
 	private PhoneType phoneType;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The email address of the supplier
 	 */
 	
 	private String email;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The website url of the supplier
 	 */
 	
 	private String url;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The address of the supplier
 	 */
 	
 	private String address;
@@ -80,7 +57,6 @@ public class Supplier
 	 * @generated
 	 */
 	public Supplier(){
-		super();
 	}
 
 }
