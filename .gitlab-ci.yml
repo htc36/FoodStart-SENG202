@@ -9,4 +9,4 @@ generate_artifacts:
      - mvn -B clean site package
     artifacts:
         paths:
-         - target/s202*.jar
+         - target/foodstart*.jar
