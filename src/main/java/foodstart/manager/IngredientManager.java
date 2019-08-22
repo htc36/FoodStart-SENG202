@@ -31,5 +31,10 @@ public class IngredientManager
 		
 	}
 
+
+	public void addIngredient(Ingredient ingredient) {
+		ingredients.add(ingredient);
+	}
+
 }
 

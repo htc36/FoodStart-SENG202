@@ -1,5 +1,10 @@
 package foodstart.manager;
 
+/**
+ * Manager for all the managers
+ * @author Alex Hobson
+ * @date 22/08/2019
+ */
 public class Managers {
 
 	/**
@@ -21,6 +26,15 @@ public class Managers {
 	 * Functions relevant to the menus
 	 */
 	private static MenuManager menuManager = new MenuManager();
+	
+	/**
+	 * Functions relevant to ingredients
+	 */
+	private static IngredientManager ingredientManager = new IngredientManager();
+
+	public static IngredientManager getIngredientManager() {
+		return ingredientManager;
+	}
 
 	public static InventoryManager getInventoryManager() {
 		return inventoryManager;

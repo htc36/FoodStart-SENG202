@@ -28,7 +28,7 @@ public class Ingredient
 	 * The identifier code of the ingredient
 	 */
 	
-	private String databaseId;
+	private int databaseId;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -61,7 +61,7 @@ public class Ingredient
 	 * @param kitchenStock Amount of current stock in the kitchen
 	 * @param truckStock Amount of current stock in the truck
 	 */
-	public Ingredient(Unit unit, String name, String databaseId, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
+	public Ingredient(Unit unit, String name, int databaseId, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
 		this.unit = unit;
 		this.name = name;
 		this.databaseId = databaseId;
@@ -104,14 +104,14 @@ public class Ingredient
 	 * Gets the ingredient's identifier code
 	 * @return databaseId Identifier code of the ingredient 
 	 */
-	public String getDatabaseId() {
+	public int getDatabaseId() {
 		return databaseId;
 	}
 	
 	/**
 	 * Sets the ingredient's identifier code
 	 */
-	public void setDatabaseId(String databaseId) {
+	public void setDatabaseId(int databaseId) {
 		this.databaseId = databaseId;
 	}
 	
