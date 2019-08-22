@@ -6,9 +6,7 @@ import foodstart.model.Unit;
 
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * The class that stores relevant information and methods about an ingredient
  */
 
 public class Ingredient
