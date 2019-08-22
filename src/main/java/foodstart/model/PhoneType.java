@@ -7,5 +7,5 @@ package foodstart.model;
  */
 public enum PhoneType
 {
-	MOBILE, WORK, HOME;
+    MOBILE, WORK, HOME;
 }

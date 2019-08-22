@@ -1,44 +1,28 @@
 package foodstart.model.menu;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * A PermanentRecipe object represents a recipe 
  */
 
 public class PermanentRecipe extends Recipe
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+     * 
 	 */
-	
-	private String databaseId;
+	//private String databaseId;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The instructions for the recipe given as a single string.
 	 */
-	
 	private String instructions;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The name of the recipe as displayed in the GUI.
 	 */
-	
 	private String displayName;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * Creates a new PermanentRecipe object
 	 */
 	public PermanentRecipe(){
 		super();
