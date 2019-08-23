@@ -74,6 +74,7 @@ public class Ingredient
 	 * Gets the ingredient's unit of measurement
 	 * @return unit Unit of the ingredient 
 	 */
+	
 	public Unit getUnit() {
 		return unit;
 	}
@@ -81,6 +82,7 @@ public class Ingredient
 	/**
 	 * Sets the ingredient's unit of measurement
 	 */
+	
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
@@ -89,6 +91,7 @@ public class Ingredient
 	 * Gets the ingredient's name
 	 * @return name Name of the ingredient
 	 */
+	
 	public String getName() {
 		return name;
 	}
@@ -96,6 +99,7 @@ public class Ingredient
 	/**
 	 * Sets the ingredient's name
 	 */
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -104,6 +108,7 @@ public class Ingredient
 	 * Gets the ingredient's identifier code
 	 * @return databaseId Identifier code of the ingredient 
 	 */
+	
 	public int getDatabaseId() {
 		return databaseId;
 	}
@@ -111,6 +116,7 @@ public class Ingredient
 	/**
 	 * Sets the ingredient's identifier code
 	 */
+	
 	public void setDatabaseId(int databaseId) {
 		this.databaseId = databaseId;
 	}
@@ -119,6 +125,7 @@ public class Ingredient
 	 * Gets the whether the ingredient complies with the dietary requirements
 	 * @return safeFor ???
 	 */
+	
 	public Map<DietaryRequirement, Boolean> getSafeFor() {
 		return safeFor;
 	}
@@ -126,6 +133,7 @@ public class Ingredient
 	/**
 	 * Sets whether the ingredient complies with the dietary requirements
 	 */
+	
 	public void setSafeFor(Map<DietaryRequirement, Boolean> safeFor) {
 		this.safeFor = safeFor;
 	}
@@ -134,6 +142,7 @@ public class Ingredient
 	 * Gets the current stock available at the kitchen
 	 * @return kitchenStock current stock available at the kitchen
 	 */
+	
 	public int getKitchenStock() {
 		return kitchenStock;
 	}
@@ -141,6 +150,7 @@ public class Ingredient
 	/**
 	 * Sets the current stock available at the kitchen
 	 */
+	
 	public void setKitchenStock(int kitchenStock) {
 		this.kitchenStock = kitchenStock;
 	}
@@ -149,6 +159,7 @@ public class Ingredient
 	 * Gets the current stock available at the truck
 	 * @return truckStock current stock available at the truck
 	 */
+	
 	public int getTruckStock() {
 		return truckStock;
 	}
@@ -156,6 +167,7 @@ public class Ingredient
 	/**
 	 * Sets the current stock available at the truck
 	 */
+	
 	public void setTruckStock(int truckStock) {
 		this.truckStock = truckStock;
 	}

@@ -15,20 +15,21 @@ public abstract class Recipe
 {
 
 	/**
-         * The price of that the item costs
+     * The price of that the item costs
 	 */
 	
 	private float price;
 
 	/**
-         * A map of all ingrediants/amounts that are part of the recipe
+     * A map of all ingrediants/amounts that are part of the recipe
 	 */
 	
 	private Map<Ingredient, Integer> ingredients;
 
 	/**
-         * Constructor class for recipe
+     * Constructor class for recipe
 	 */
+	
 	public Recipe(float price, Map<Ingredient, Integer> ingredients) {
 		this.price = price;
 		this.ingredients = ingredients;
@@ -45,7 +46,6 @@ public abstract class Recipe
 		return false;
 	}
 
-
 	/**
 	 * Returns true if the menu item is available
 	 * Checks if all the menu items ingredients have a kitchen stock greater than 0
@@ -57,33 +57,33 @@ public abstract class Recipe
 
 	/**
 	 * Gets the price of the recipe
-         * @return price
+     * @return price
 	 */
 
 	public float getPrice() {
 		return price;
 	}
 
-        /**
+     /**
 	 * Sets the price of the recipe
-         */
+     */
 
 	public void setPrice(float price) {
 		this.price = price;
 	}
 
-        /**
-	 * Gets all ingrediants that are part of the recipe
-         * @return ingrediants
-         */
+     /**
+	 * Gets all ingredients that are part of the recipe
+     * @return ingredients
+     */
 
 	public Map<Ingredient, Integer> getIngredients() {
 		return ingredients;
 	}
 
-        /**
-	 * Sets all ingrediants that are part of the recipe
-         */
+     /**
+	 * Sets all ingredients that are part of the recipe
+     */
 
 	public void setIngredients(Map<Ingredient, Integer> ingredients) {
 		this.ingredients = ingredients;
