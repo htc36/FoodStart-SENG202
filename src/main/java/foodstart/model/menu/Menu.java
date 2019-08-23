@@ -11,31 +11,41 @@ import java.util.Set;
 public class Menu
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * A set to keep all the menu items in
 	 */
 	
 	private Set<MenuItem> menuItems;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The name of the menu
 	 */
 	
 	private String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * Constructor for menu class
 	 */
-	public Menu(){
-		
+	public Menu(Set<MenuItem> menuItems, String name) {
+		this.menuItems = menuItems;
+		this.name = name;
 	}
+	/**
+	 * Returns a set of all menu items
+         * @return menuItems
+	 */
+	public Set<MenuItem> getMenuItem() {
+		return menuItems;
+	}
+	/**
+	 * Returns name of menu
+         * @return name
+	 */
+
+	public String getName() {
+		return name;
+	}
+
+
 
 }
 

@@ -11,61 +11,42 @@ import java.util.Set;
 public class MenuItem
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The unique identifier for each menu item
 	 */
 	
 	private String databaseId;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The name of the menu item
 	 */
 	
 	private String name;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The description of the menu item
 	 */
 	
 	private String description;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * A set containing all the recipe variants of a menu item
 	 */
 	
 	private Set<Recipe> variants;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * Constructor for MenuItem class
 	 */
-	public MenuItem(){
-		
+
+	public MenuItem(String databaseId, String name, String description, Set<Recipe> variants) {
+		this.databaseId = databaseId;
+		this.name = name;
+		this.description = description;
+		this.variants = variants;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
+
 	
-	public boolean isAvailable() {
-		// TODO implement me
-		return false;
-	}
 
 }
 
