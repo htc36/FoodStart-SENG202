@@ -1,30 +1,28 @@
 package foodstart.model.menu;
 
-/**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
- */
+import foodstart.model.stock.Ingredient;
+import java.util.Map;
 
+/**
+ * Models an on the fly recipe, a recipe used to model a customised recipe
+ */
 public class OnTheFlyRecipe extends Recipe
 {
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The permanent recipe that the recipe is based on
 	 */
-	
 	private PermanentRecipe basedOn;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * Constructs an instance of an on the fly recipe
+	 * @param basis the recipe that the recipe is based on
+	 * @param ingredients the ingredients that the recipe contains
+	 * @param price the price of the recipe
 	 */
-	public OnTheFlyRecipe(){
-		
+	public OnTheFlyRecipe(PermanentRecipe basis, Map<Ingredient, Integer> ingredients, float price){
+		super(price, ingredients);
+		this.basedOn = basis;
 	}
 
 }

@@ -6,30 +6,26 @@ import foodstart.model.stock.Ingredient;
 
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * Models a recipe that makes up a menu item in the system
  */
-
 public abstract class Recipe
 {
 
 	/**
      * The price of that the item costs
 	 */
-	
 	private float price;
 
 	/**
-     * A map of all ingrediants/amounts that are part of the recipe
+     * A map of all ingredients/amounts that are part of the recipe
 	 */
-	
 	private Map<Ingredient, Integer> ingredients;
 
 	/**
-     * Constructor class for recipe
+	 * Constructs an instance of the recipe class
+	 * @param price the price of the recipe
+	 * @param ingredients a map of the ingredients that make up the recipe to the amount of that ingredient
 	 */
-	
 	public Recipe(float price, Map<Ingredient, Integer> ingredients) {
 		this.price = price;
 		this.ingredients = ingredients;
@@ -37,10 +33,9 @@ public abstract class Recipe
 
 	/**
 	 * Checks if all ingredients in recipe are safe for a specific dietary requirement which is given as a parameter
-	 * @param requirement
-	 * @return boolean 
+	 * @param requirement the dietary requirement to check
+	 * @return boolean true if the recipe is allowed for the requirement; false otherwise
 	 */
-	
 	public boolean isSafeFor(DietaryRequirement requirement) {
 		// TODO implement me
 		return false;
@@ -50,7 +45,6 @@ public abstract class Recipe
 	 * Returns true if the menu item is available
 	 * Checks if all the menu items ingredients have a kitchen stock greater than 0
 	 */
-	
 	public boolean isAvailable() {
 		return false;
 	}
@@ -59,7 +53,6 @@ public abstract class Recipe
 	 * Gets the price of the recipe
      * @return price
 	 */
-
 	public float getPrice() {
 		return price;
 	}
@@ -67,7 +60,6 @@ public abstract class Recipe
      /**
 	 * Sets the price of the recipe
      */
-
 	public void setPrice(float price) {
 		this.price = price;
 	}
@@ -76,7 +68,6 @@ public abstract class Recipe
 	 * Gets all ingredients that are part of the recipe
      * @return ingredients
      */
-
 	public Map<Ingredient, Integer> getIngredients() {
 		return ingredients;
 	}
@@ -84,9 +75,28 @@ public abstract class Recipe
      /**
 	 * Sets all ingredients that are part of the recipe
      */
-
 	public void setIngredients(Map<Ingredient, Integer> ingredients) {
 		this.ingredients = ingredients;
+	}
+
+	/**
+	 * Adds an ingredient to the map of ingredients in the recipe.
+	 * If the ingredient is already a part of the map, the previous entry is overwritten
+	 * @param ingredient the ingredient to add to the recipe
+	 * @param amount the amount of the ingredient to add
+	 * @return the previous amount of the ingredient, or null if the ingredient did not exist
+	 */
+	public Integer addIngredient(Ingredient ingredient, Integer amount) {
+		return this.ingredients.put(ingredient, amount);
+	}
+
+	/**
+	 * Removes an ingredient from the map of ingredients in the recipe
+	 * @param ingredient the ingredient to remove from the recipe
+	 * @return the amount of the ingredient, or null if the ingredient did not exist
+	 */
+	public Integer removeIngredient(Ingredient ingredient) {
+		return this.ingredients.remove(ingredient);
 	}
 
 }
