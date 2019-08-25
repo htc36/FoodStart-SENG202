@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE menu SYSTEM "../dtd/recipes.dtd">
+<!DOCTYPE recipes SYSTEM "../dtd/recipes.dtd">
 <recipes>
 	<recipe>
 		<recipe_id>0</recipe_id>
