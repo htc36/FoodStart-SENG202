@@ -25,5 +25,20 @@ public class OnTheFlyRecipe extends Recipe
 		this.basedOn = basis;
 	}
 
+    /**
+     * Returns the permanent recipe that this recipe is based on
+     * @return the permanent recipe that this recipe is based on
+     */
+    public PermanentRecipe getBasedOn() {
+        return basedOn;
+    }
+
+    /**
+     * Sets the permanent recipe that this recipe is based on
+     * @param basedOn the permanent recipe that this recipe is based on
+     */
+    public void setBasedOn(PermanentRecipe basedOn) {
+        this.basedOn = basedOn;
+    }
 }
 
