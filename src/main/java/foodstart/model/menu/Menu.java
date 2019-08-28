@@ -17,14 +17,50 @@ public class Menu
 	 * The name of the menu
 	 */
 	
-	private String name;
+	private int id;
+	
+	/**
+	 *  The title of the menu
+	 */
+	private String title;
+	
+	/**
+	 * The description of the menu
+	 */
+	private String description;
 
 	/**
 	 * Constructor for menu class
 	 */
-	public Menu(Set<MenuItem> menuItems, String name) {
+	public Menu(Set<MenuItem> menuItems, int id, String title, String description) {
 		this.menuItems = menuItems;
-		this.name = name;
+		this.id = id;
+		this.title = title;
+		this.description = description;
+	}
+
+	/**
+	 * Gets the id of the menu
+	 * @return menu id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * Gets the title of the menu
+	 * @return menu title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Gets the description of the menu
+	 * @return menu description
+	 */
+	public String getDescription() {
+		return description;
 	}
 
 	/**
@@ -34,13 +70,6 @@ public class Menu
 	public Set<MenuItem> getMenuItems() {
 		return menuItems;
 	}
-	/**
-	 * Returns name of menu
-	 * @return name
-	 */
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * Sets the menu items that make up the menu
@@ -48,14 +77,6 @@ public class Menu
 	 */
 	public void setMenuItems(Set<MenuItem> menuItems) {
 		this.menuItems = menuItems;
-	}
-
-	/**
-	 * Sets the name of the menu
-	 * @param name the name of the menu
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**
