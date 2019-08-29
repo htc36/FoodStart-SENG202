@@ -14,7 +14,7 @@ public class MenuItem
 	 * The unique identifier for each menu item
 	 */
 	
-	private String databaseId;
+	private int databaseId;
 
 	/**
 	 * The name of the menu item
@@ -38,7 +38,7 @@ public class MenuItem
 	 * Constructor for MenuItem class
 	 */
 
-	public MenuItem(String databaseId, String name, String description, Set<Recipe> variants) {
+	public MenuItem(int databaseId, String name, String description, Set<Recipe> variants) {
 		this.databaseId = databaseId;
 		this.name = name;
 		this.description = description;
@@ -50,7 +50,7 @@ public class MenuItem
 	 * @return databaseId
 	 */
 
-	public String getDatabaseId() {
+	public int getDatabaseId() {
 		return databaseId;
 	}
 	
@@ -58,7 +58,7 @@ public class MenuItem
 	 * Sets the data base ID
 	 */
 
-	public void setDatabaseId(String databaseId) {
+	public void setDatabaseId(int databaseId) {
 		this.databaseId = databaseId;
 	}
 	

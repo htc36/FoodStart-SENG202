@@ -44,9 +44,9 @@ public class XMLIngredientParser extends XMLParser {
 	}
 
 	/**
-	 * Parses one ingredient from the given ingredientNode
+	 * Parses one ingredient from the given element
 	 * 
-	 * @param ingredientNode XML Node to parse
+	 * @param element XML Element to parse
 	 */
 	private Ingredient parseOneIngredient(Element element) {
 		Unit unit = Unit.matchUnit(element.getAttribute("unit"));
