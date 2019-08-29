@@ -46,6 +46,7 @@ public abstract class Recipe
 	 * Checks if all the menu items ingredients have a kitchen stock greater than 0
 	 */
 	public boolean isAvailable() {
+		//TODO Implement this
 		return false;
 	}
 
