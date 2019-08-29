@@ -1,11 +1,9 @@
 package foodstart.model;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * The possible types of payment methods
  */
 public enum PaymentMethod
 {
-	CASH, EFTPOS;
+	CASH, EFTPOS
 }
