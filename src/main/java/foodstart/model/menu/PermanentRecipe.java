@@ -8,7 +8,10 @@ import foodstart.model.stock.Ingredient;
  */
 public class PermanentRecipe extends Recipe
 {
-	//private String databaseId;
+	/**
+	 * The ID that this recipe is given in data files
+	 */
+	private int databaseId;
 
 	/**
 	 * The instructions for the recipe given as a single string.
@@ -64,5 +67,14 @@ public class PermanentRecipe extends Recipe
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+
+	/**
+	 * Gets the ID that this recipe is given in data files
+	 * @return Unique ID of this recipe
+	 */
+	public int getDatabaseId() {
+		return databaseId;
+	}
+	
 }
 

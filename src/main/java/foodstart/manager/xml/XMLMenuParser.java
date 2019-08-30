@@ -9,9 +9,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import foodstart.manager.Managers;
+import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
+import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 
 /**
  * Parses menu XML files
@@ -59,6 +62,33 @@ public class XMLMenuParser extends XMLParser {
 	 * @param element XML Element to parse
 	 */
 	private MenuItem parseOneMenuItem(Element element) {
+		int itemId = Integer.parseInt(element.getElementsByTagName("item_id").item(0).getTextContent());
+		String name = element.getElementsByTagName("item_id").item(0).getTextContent();
+		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
 		
+		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
+		Set<Recipe> recipes = parseRecipeList(recipeIds);
+		
+		MenuItem menuItem = new MenuItem(itemId, name, description, recipes);
+		return menuItem;
+	}
+	
+	/**
+	 * Parses and validates the recipe list from the given NodeList
+	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
+	 * 
+	 * @return Set of recipes
+	 */
+	private Set<Recipe> parseRecipeList(NodeList recipeIds) {
+		Set<Recipe> recipeList = new HashSet<Recipe>();
+		for (int i = 0; i < recipeIds.getLength(); i++) {
+			Node node = recipeIds.item(i);
+			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {
+				int recipeId = Integer.parseInt(node.getTextContent());
+				PermanentRecipe recipe = Managers.getMenuManager().getRecipeById(recipeId);
+				recipeList.add(recipe);
+			}
+		}
+		return recipeList;
 	}
 }
