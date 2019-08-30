@@ -1,5 +1,6 @@
 package foodstart.model.menu;
 import java.util.Map;
+import java.util.Set;
 
 import foodstart.model.DietaryRequirement;
 import foodstart.model.stock.Ingredient;
@@ -32,13 +33,18 @@ public abstract class Recipe
 	}
 
 	/**
-	 * Checks if all ingredients in recipe are safe for a specific dietary requirement which is given as a parameter
+	 * Checks if all ingredients in recipe are safe for a specific dietary requirement
 	 * @param requirement the dietary requirement to check
 	 * @return boolean true if the recipe is allowed for the requirement; false otherwise
 	 */
 	public boolean isSafeFor(DietaryRequirement requirement) {
-		// TODO implement me
-		return false;
+		Set<Ingredient> ingredients = this.ingredients.keySet();
+		for (Ingredient ingredient : ingredients) {
+			if (!ingredient.isSafeFor(requirement)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -46,8 +52,13 @@ public abstract class Recipe
 	 * Checks if all the menu items ingredients have a kitchen stock greater than 0
 	 */
 	public boolean isAvailable() {
-		//TODO Implement this
-		return false;
+		Set<Ingredient> ingredients = this.ingredients.keySet();
+		for (Ingredient ingredient : ingredients) {
+			if (ingredient.getKitchenStock() <= 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
