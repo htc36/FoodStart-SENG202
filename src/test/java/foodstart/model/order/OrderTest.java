@@ -11,4 +11,11 @@ public class OrderTest {
 		assertTrue(true);
 	}
 
+	@Test
+	public void getTotalCost() {
+	}
+
+	@Test
+	public void addItem() {
+	}
 }
