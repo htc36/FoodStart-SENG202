@@ -47,7 +47,7 @@ public class XMLMenuParser extends XMLParser {
 				for (int j = 0; j < nodeList.getLength(); j++) {
 					Node menuItemNode = nodeList.item(j);
 					if (menuItemNode instanceof Element) {
-						menuItems.add(parseOneMenuItem((Element)menuItemNode));
+						menuItems.add(parseOneMenuItem((Element) menuItemNode));
 					}
 				}
 				Menu menu = new Menu(menuItems, menuId, title, description);
@@ -65,16 +65,17 @@ public class XMLMenuParser extends XMLParser {
 		int itemId = Integer.parseInt(element.getElementsByTagName("item_id").item(0).getTextContent());
 		String name = element.getElementsByTagName("item_id").item(0).getTextContent();
 		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
-		
+
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
 		Set<Recipe> recipes = parseRecipeList(recipeIds);
-		
+
 		MenuItem menuItem = new MenuItem(itemId, name, description, recipes);
 		return menuItem;
 	}
-	
+
 	/**
 	 * Parses and validates the recipe list from the given NodeList
+	 * 
 	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
 	 * 
 	 * @return Set of recipes
@@ -86,6 +87,9 @@ public class XMLMenuParser extends XMLParser {
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {
 				int recipeId = Integer.parseInt(node.getTextContent());
 				PermanentRecipe recipe = Managers.getMenuManager().getRecipeById(recipeId);
+				if (recipe == null) {
+					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
+				}
 				recipeList.add(recipe);
 			}
 		}
