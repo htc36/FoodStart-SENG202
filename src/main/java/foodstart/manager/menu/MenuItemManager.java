@@ -22,14 +22,6 @@ public class MenuItemManager {
 	}
 
 	/**
-	 * Adds a pre-constructed menu item to the set of all menu items
-	 * @param menuItem the menu item to add to the set of menu items
-	 */
-	public void addMenu(MenuItem menuItem) {
-		this.menuItems.put(menuItem.getId(), menuItem);
-	}
-
-	/**
 	 * Constructs and adds a menu item to the set of menu items
 	 * @param id the UID of the menu item
 	 * @param name the name of the menu item

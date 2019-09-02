@@ -29,14 +29,6 @@ public class RecipeManager {
 	}
 
 	/**
-	 * Adds a pre-constructed permanent recipe to the set of recipes
-	 * @param recipe the permanent recipe to add to the set
-	 */
-	public void addRecipe(PermanentRecipe recipe) {
-		this.recipes.put(recipe.getId(), recipe);
-	}
-
-	/**
 	 * Constructs and adds a permanent recipe to the set of recipes
 	 * @param id the UID of the recipe
 	 * @param name the display name of the recipe

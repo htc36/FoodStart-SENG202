@@ -25,14 +25,6 @@ public class SupplierManager
 	}
 
 	/**
-	 * Adds a pre-constructed supplier to the set of suppliers
-	 * @param supplier the supplier to add
-	 */
-	public void addSupplier(Supplier supplier) {
-		this.suppliers.put(supplier.getDatabaseId(), supplier);
-	}
-
-	/**
 	 * Constructs and adds a new supplier to the set of suppliers based
 	 * @param databaseId the UID of the supplier
 	 * @param supplierName name of the supplier
