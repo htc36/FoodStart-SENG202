@@ -1,18 +1,27 @@
 package foodstart.manager;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.PermanentRecipe;
 
 public class MenuManager {
-	
+
+	/**
+	 * The set of all menus modeled in the system
+	 */
 	private Set<Menu> menus;
-	
+
 	private Set<PermanentRecipe> recipes;
+
+	public MenuManager() {
+		this.menus = new HashSet<Menu>();
+		this.recipes = new HashSet<PermanentRecipe>();
+	}
 	
 	public void addMenu(Menu menu) {
-		menus.add(menu);
+		this.menus.add(menu);
 	}
 	
 	/**

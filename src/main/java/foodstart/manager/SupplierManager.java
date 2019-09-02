@@ -63,5 +63,19 @@ public class SupplierManager
 		return this.suppliers;
 	}
 
+	/**
+	 * Gets a supplier from the supplier set based on its id
+	 * @param id the id of the supplier to get
+	 * @return the supplier matching the given id, or null if it was not found
+	 */
+	public Supplier getSupplier(String id) {
+		for (Supplier supplier : this.suppliers) {
+			if (supplier.getDatabaseId().equals(id)) {
+				return supplier;
+			}
+		}
+		return null;
+	}
+
 }
 
