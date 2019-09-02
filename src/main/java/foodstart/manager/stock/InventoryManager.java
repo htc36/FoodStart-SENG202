@@ -1,4 +1,4 @@
-package foodstart.manager;
+package foodstart.manager.stock;
 
 import foodstart.model.stock.Ingredient;
 

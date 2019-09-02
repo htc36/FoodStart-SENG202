@@ -1,4 +1,4 @@
-package foodstart.manager;
+package foodstart.manager.order;
 import java.util.List;
 
 import foodstart.model.order.Order;

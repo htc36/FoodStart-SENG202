@@ -1,5 +1,11 @@
 package foodstart.manager;
 
+import foodstart.manager.menu.MenuManager;
+import foodstart.manager.order.OrderManager;
+import foodstart.manager.stock.IngredientManager;
+import foodstart.manager.stock.InventoryManager;
+import foodstart.manager.stock.SupplierManager;
+
 /**
  * Manager for all the managers
  * @author Alex Hobson
