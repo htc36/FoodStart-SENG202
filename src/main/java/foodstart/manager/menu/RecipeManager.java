@@ -58,7 +58,7 @@ public class RecipeManager {
 	 * @param id The unique recipe ID
 	 * @return The recipe that the UID refers to, or null
 	 */
-	public PermanentRecipe getRecipeById(int id) {
+	public PermanentRecipe getRecipe(int id) {
 		for (PermanentRecipe recipe : this.recipes) {
 			if (recipe.getDatabaseId().equals(id)) {
 				return recipe;

@@ -30,7 +30,11 @@ public class Menu
 	private String description;
 
 	/**
-	 * Constructor for menu class
+	 * Constructs an instance of a menu
+	 * @param menuItems the menu items that are in the menu
+	 * @param id the UID of the menu
+	 * @param title the name of the menu
+	 * @param description a description of the menu
 	 */
 	public Menu(Set<MenuItem> menuItems, int id, String title, String description) {
 		this.menuItems = menuItems;
