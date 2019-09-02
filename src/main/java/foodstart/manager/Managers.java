@@ -1,10 +1,12 @@
 package foodstart.manager;
 
 import foodstart.manager.menu.MenuManager;
+import foodstart.manager.menu.RecipeManager;
 import foodstart.manager.order.OrderManager;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.manager.stock.InventoryManager;
 import foodstart.manager.stock.SupplierManager;
+import foodstart.model.menu.Recipe;
 
 /**
  * Manager for all the managers
@@ -38,6 +40,8 @@ public class Managers {
 	 */
 	private static IngredientManager ingredientManager = new IngredientManager();
 
+	private static RecipeManager recipeManager = new RecipeManager();
+
 	public static IngredientManager getIngredientManager() {
 		return ingredientManager;
 	}
@@ -57,5 +61,7 @@ public class Managers {
 	public static MenuManager getMenuManager() {
 		return menuManager;
 	}
+
+	public static RecipeManager getRecipeManager() {return recipeManager;}
 
 }

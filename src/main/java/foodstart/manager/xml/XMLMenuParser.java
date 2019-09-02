@@ -50,8 +50,7 @@ public class XMLMenuParser extends XMLParser {
 						menuItems.add(parseOneMenuItem((Element) menuItemNode));
 					}
 				}
-				Menu menu = new Menu(menuItems, menuId, title, description);
-				Managers.getMenuManager().addMenu(menu);
+				Managers.getMenuManager().addMenu(menuItems, menuId, title, description);
 			}
 		}
 	}
@@ -86,7 +85,7 @@ public class XMLMenuParser extends XMLParser {
 			Node node = recipeIds.item(i);
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {
 				int recipeId = Integer.parseInt(node.getTextContent());
-				PermanentRecipe recipe = Managers.getMenuManager().getRecipeById(recipeId);
+				PermanentRecipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
 				if (recipe == null) {
 					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 				}
