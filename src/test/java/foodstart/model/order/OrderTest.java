@@ -64,6 +64,6 @@ public class OrderTest {
 		order.addItem(recipeAdded, amountAdded);
 
 		assertTrue(order.getTotalItemCount() == (prevTotalOrderItems + amountAdded));
-		assertTrue(order.getItems().containsKey("TestRecipeToAdd"));
+		assertTrue(order.getItems().containsKey(recipeAdded));
 	}
 }
