@@ -3,43 +3,39 @@ import java.util.Set;
 
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * Models a menu item in the system
  */
-
 public class MenuItem
 {
 	/**
 	 * The unique identifier for each menu item
 	 */
-	
-	private int databaseId;
+	private int id;
 
 	/**
 	 * The name of the menu item
 	 */
-	
 	private String name;
 
 	/**
 	 * The description of the menu item
 	 */
-	
 	private String description;
 
 	/**
 	 * A set containing all the recipe variants of a menu item
 	 */
-	
 	private Set<Recipe> variants;
 
 	/**
-	 * Constructor for MenuItem class
+	 * Constructs an instance of a menu item
+	 * @param databaseId the UID of the menu item
+	 * @param name the name of the menu item
+	 * @param description a description of the menu item
+	 * @param variants a set of all recipes that make up the menu item
 	 */
-
 	public MenuItem(int databaseId, String name, String description, Set<Recipe> variants) {
-		this.databaseId = databaseId;
+		this.id = databaseId;
 		this.name = name;
 		this.description = description;
 		this.variants = variants;
@@ -49,24 +45,21 @@ public class MenuItem
 	 * Gets the data base ID
 	 * @return databaseId
 	 */
-
-	public int getDatabaseId() {
-		return databaseId;
+	public int getId() {
+		return id;
 	}
 	
 	/**
 	 * Sets the data base ID
 	 */
-
-	public void setDatabaseId(int databaseId) {
-		this.databaseId = databaseId;
+	public void setDatabaseId(int id) {
+		this.id = id;
 	}
 	
 	/**
 	 * Gets the name of the menu item
 	 * @return name
 	 */
-	
 	public String getName() {
 		return name;
 	}
@@ -74,7 +67,6 @@ public class MenuItem
 	/**
 	 * Sets the name of the menu item
 	 */
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -83,7 +75,6 @@ public class MenuItem
 	 * Gets the description of the menu item
 	 * @return description
 	 */
-
 	public String getDescription() {
 		return description;
 	}
@@ -91,7 +82,6 @@ public class MenuItem
 	/**
 	 * Sets the description of the menu item
 	 */
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -100,7 +90,6 @@ public class MenuItem
 	 * Gets the different variants of the menu item
 	 * @return variants
 	 */
-
 	public Set<Recipe> getVariants() {
 		return variants;
 	}
@@ -108,7 +97,6 @@ public class MenuItem
 	/**
 	 * Sets the variants of the menu item
 	 */
-
 	public void setVariants(Set<Recipe> variants) {
 		this.variants = variants;
 	}
