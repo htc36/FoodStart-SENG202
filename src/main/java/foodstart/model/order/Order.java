@@ -171,5 +171,23 @@ public class Order
 		return this.items.remove(recipe);
 	}
 
+	/** Calculates the total number of items ordered
+	 * @return TotalOrderItems The total number of items ordered
+	 */
+	public Integer getTotalItemCount() {
+		int total = 0;
+		for (int i : this.items.values()) {
+			total += i;
+		}
+		return total;
+	}
+
+	/** Gets the recipe amount ordered
+	 * @return variantCount the amount of the ordered recipe
+	 */
+	public int getVariantCount(Recipe recipe) {
+		return this.items.get(recipe);
+	}
+
 }
 
