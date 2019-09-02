@@ -12,7 +12,7 @@ public class Supplier
 	/**
 	 * UID for supplier
 	 */
-	private String databaseId;
+	private int databaseId;
 
 	/**
 	 * Name of the supplier
@@ -54,7 +54,7 @@ public class Supplier
 	 * @param url supplier website URL
 	 * @param address supplier physical address
 	 */
-	public Supplier(String databaseId, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
+	public Supplier(int databaseId, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
 		this.databaseId = databaseId;
 		this.supplierName = supplierName;
 		this.phoneNumber = phoneNumber;
@@ -68,7 +68,7 @@ public class Supplier
 	 * Returns the supplier UID
 	 * @return the supplier UID
 	 */
-	public String getDatabaseId() {
+	public int getDatabaseId() {
 		return databaseId;
 	}
 
@@ -76,7 +76,7 @@ public class Supplier
 	 * Sets the supplier UID
 	 * @param databaseId the supplier UID
 	 */
-	public void setDatabaseId(String databaseId) {
+	public void setDatabaseId(int databaseId) {
 		this.databaseId = databaseId;
 	}
 

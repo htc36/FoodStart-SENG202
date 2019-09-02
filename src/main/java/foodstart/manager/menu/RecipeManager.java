@@ -1,42 +1,39 @@
 package foodstart.manager.menu;
 
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class RecipeManager {
 
 	/**
 	 * The set of all permanent recipes modeled
 	 */
-	private Set<PermanentRecipe> recipes;
+	private Map<Integer, PermanentRecipe> recipes;
 
 	/**
 	 * Constructs an instance of a recipe manager
 	 */
 	public RecipeManager() {
-		this.recipes = new HashSet<PermanentRecipe>();
+		this.recipes = new HashMap<Integer, PermanentRecipe>();
 	}
 
 	/**
 	 * Returns the set of all permanent recipes modeled
 	 * @return the set of all permanent recipes modeled
 	 */
-	public Set<PermanentRecipe> getRecipes() {
+	public Map<Integer, PermanentRecipe> getRecipes() {
 		return this.recipes;
 	}
 
 	/**
 	 * Adds a pre-constructed permanent recipe to the set of recipes
 	 * @param recipe the permanent recipe to add to the set
-	 * @return true if the recipe was added to the set; false otherwise
 	 */
-	public boolean addRecipe(PermanentRecipe recipe) {
-		return this.recipes.add(recipe);
+	public void addRecipe(PermanentRecipe recipe) {
+		this.recipes.put(recipe.getDatabaseId(), recipe);
 	}
 
 	/**
@@ -48,9 +45,9 @@ public class RecipeManager {
 	 * @param ingredients the ingredients that make up the recipe
 	 * @return true if the recipe was added to the set; false otherwise
 	 */
-	public boolean addRecipe(String id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients) {
+	public void addRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients) {
 		PermanentRecipe recipe = new PermanentRecipe(id, name, instructions, price, ingredients);
-		return this.recipes.add(recipe);
+		this.recipes.put(id, recipe);
 	}
 
 	/**
@@ -59,11 +56,6 @@ public class RecipeManager {
 	 * @return The recipe that the UID refers to, or null
 	 */
 	public PermanentRecipe getRecipe(int id) {
-		for (PermanentRecipe recipe : this.recipes) {
-			if (recipe.getDatabaseId().equals(id)) {
-				return recipe;
-			}
-		}
-		return null;
+		return this.recipes.get(id);
 	}
 }

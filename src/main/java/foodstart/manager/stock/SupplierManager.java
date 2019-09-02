@@ -1,9 +1,9 @@
 package foodstart.manager.stock;
-import java.util.HashSet;
-import java.util.Set;
-
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -15,13 +15,13 @@ public class SupplierManager
 	/**
 	 * The set of suppliers being modeled
 	 */
-	private Set<Supplier> suppliers;
+	private Map<Integer, Supplier> suppliers;
 
 	/**
 	 * Constructs an instance of a supplier manager
 	 */
 	public SupplierManager(){
-		this.suppliers = new HashSet<Supplier>();
+		this.suppliers = new HashMap<Integer, Supplier>();
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class SupplierManager
 	 * @param supplier the supplier to add
 	 */
 	public void addSupplier(Supplier supplier) {
-		this.suppliers.add(supplier);
+		this.suppliers.put(supplier.getDatabaseId(), supplier);
 	}
 
 	/**
@@ -42,9 +42,9 @@ public class SupplierManager
 	 * @param url supplier website URL
 	 * @param address supplier physical address
 	 */
-	public void addSupplier(String databaseId, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
+	public void addSupplier(int databaseId, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
 		Supplier supplier = new Supplier(databaseId, supplierName, phoneNumber, phoneType, email, url, address);
-		this.suppliers.add(supplier);
+		this.suppliers.put(databaseId, supplier);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class SupplierManager
 	 * Returns the set of suppliers
 	 * @return the set of suppliers
 	 */
-	public Set<Supplier> getSuppliers() {
+	public Map<Integer, Supplier> getSuppliers() {
 		return this.suppliers;
 	}
 
@@ -68,13 +68,8 @@ public class SupplierManager
 	 * @param id the id of the supplier to get
 	 * @return the supplier matching the given id, or null if it was not found
 	 */
-	public Supplier getSupplier(String id) {
-		for (Supplier supplier : this.suppliers) {
-			if (supplier.getDatabaseId().equals(id)) {
-				return supplier;
-			}
-		}
-		return null;
+	public Supplier getSupplier(int id) {
+		return this.suppliers.get(id);
 	}
 
 }
