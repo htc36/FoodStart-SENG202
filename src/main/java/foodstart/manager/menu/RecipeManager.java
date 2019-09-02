@@ -33,7 +33,7 @@ public class RecipeManager {
 	 * @param recipe the permanent recipe to add to the set
 	 */
 	public void addRecipe(PermanentRecipe recipe) {
-		this.recipes.put(recipe.getDatabaseId(), recipe);
+		this.recipes.put(recipe.getId(), recipe);
 	}
 
 	/**

@@ -11,7 +11,7 @@ public class PermanentRecipe extends Recipe
 	/**
 	 * The ID that this recipe is given in data files
 	 */
-	private int databaseId;
+	private int id;
 
 	/**
 	 * The instructions for the recipe given as a single string.
@@ -32,7 +32,7 @@ public class PermanentRecipe extends Recipe
 	 */
 	public PermanentRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients) {
 		super(price, ingredients);
-		this.databaseId = id;
+		this.id = id;
 		this.displayName = name;
 		this.instructions = instructions;
 	}
@@ -73,8 +73,8 @@ public class PermanentRecipe extends Recipe
 	 * Gets the ID that this recipe is given in data files
 	 * @return Unique ID of this recipe
 	 */
-	public int getDatabaseId() {
-		return databaseId;
+	public int getId() {
+		return id;
 	}
 	
 }

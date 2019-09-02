@@ -24,7 +24,7 @@ public class Ingredient
 	/**
 	 * The identifier code of the ingredient
 	 */
-	private int databaseId;
+	private int id;
 
 	/**
 	 * A map of dietary requirements to whether or not the ingredient is considered safe for that requirement
@@ -46,15 +46,15 @@ public class Ingredient
 	 * Constructs an instance of an ingredient
 	 * @param unit Unit of the ingredient
 	 * @param name Name of the ingredient
-	 * @param databaseId Identifier code of the ingredient
+	 * @param id Identifier code of the ingredient
 	 * @param safeFor map of dietary requirements to whether or not the ingredient is considered safe for that requirement
 	 * @param kitchenStock Amount of current stock in the kitchen
 	 * @param truckStock Amount of current stock in the truck
 	 */
-	public Ingredient(Unit unit, String name, int databaseId, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
+	public Ingredient(Unit unit, String name, int id, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
 		this.unit = unit;
 		this.name = name;
-		this.databaseId = databaseId;
+		this.id = id;
 		this.safeFor = safeFor;
 		this.kitchenStock = kitchenStock;
 		this.truckStock = truckStock;
@@ -94,15 +94,15 @@ public class Ingredient
 	 * Gets the ingredient's identifier code
 	 * @return databaseId Identifier code of the ingredient 
 	 */
-	public int getDatabaseId() {
-		return databaseId;
+	public int getId() {
+		return id;
 	}
 	
 	/**
 	 * Sets the ingredient's identifier code
 	 */
-	public void setDatabaseId(int databaseId) {
-		this.databaseId = databaseId;
+	public void setId(int databaseId) {
+		this.id = databaseId;
 	}
 	
 	/**

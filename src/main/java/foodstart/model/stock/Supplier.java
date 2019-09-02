@@ -12,7 +12,7 @@ public class Supplier
 	/**
 	 * UID for supplier
 	 */
-	private int databaseId;
+	private int id;
 
 	/**
 	 * Name of the supplier
@@ -46,7 +46,7 @@ public class Supplier
 
 	/**
 	 * Constructs an instance of a supplier
-	 * @param databaseId the UID of the supplier
+	 * @param id the UID of the supplier
 	 * @param supplierName name of the supplier
 	 * @param phoneNumber supplier contact phone number
 	 * @param phoneType supplier contact phone type
@@ -54,8 +54,8 @@ public class Supplier
 	 * @param url supplier website URL
 	 * @param address supplier physical address
 	 */
-	public Supplier(int databaseId, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
-		this.databaseId = databaseId;
+	public Supplier(int id, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
+		this.id = id;
 		this.supplierName = supplierName;
 		this.phoneNumber = phoneNumber;
 		this.phoneType = phoneType;
@@ -68,16 +68,16 @@ public class Supplier
 	 * Returns the supplier UID
 	 * @return the supplier UID
 	 */
-	public int getDatabaseId() {
-		return databaseId;
+	public int getId() {
+		return id;
 	}
 
 	/**
 	 * Sets the supplier UID
-	 * @param databaseId the supplier UID
+	 * @param id the supplier UID
 	 */
-	public void setDatabaseId(int databaseId) {
-		this.databaseId = databaseId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**

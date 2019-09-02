@@ -16,7 +16,7 @@ public class Order
 	 * The identifier code of the order
 	 */
 	
-	private String id;
+	private int id;
 
 	/**
 	 * The items that have been ordered and their quantities	
@@ -51,7 +51,7 @@ public class Order
 	 * @param timePlaced The time that the order was placed
 	 * @param paymentMethod The payment method that the customer chose
 	 */
-	public Order(String id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+	public Order(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
 		this.id = id;
 		this.items = items;
 		this.customerName = customerName;
@@ -63,7 +63,7 @@ public class Order
 	 * Returns the id of the order
 	 * @return the id of the order
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -71,7 +71,7 @@ public class Order
 	 * Sets the id of the order
 	 * @param id the id of the order
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
