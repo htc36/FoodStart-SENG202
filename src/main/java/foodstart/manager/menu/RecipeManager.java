@@ -3,8 +3,7 @@ package foodstart.manager.menu;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Acts as a controller, storing and managing the recipes in the model
@@ -12,7 +11,7 @@ import java.util.Map;
 public class RecipeManager {
 
 	/**
-	 * The set of all permanent recipes modeled
+	 * The map of all permanent recipes modeled
 	 */
 	private Map<Integer, PermanentRecipe> recipes;
 
@@ -24,15 +23,15 @@ public class RecipeManager {
 	}
 
 	/**
-	 * Returns the set of all permanent recipes modeled
-	 * @return the set of all permanent recipes modeled
+	 * Returns the map of all permanent recipes modeled
+	 * @return the map of all permanent recipes modeled
 	 */
 	public Map<Integer, PermanentRecipe> getRecipes() {
 		return this.recipes;
 	}
 
 	/**
-	 * Constructs and adds a permanent recipe to the set of recipes
+	 * Constructs and adds a permanent recipe to the map of recipes
 	 * @param id the UID of the recipe
 	 * @param name the display name of the recipe
 	 * @param instructions the instructions to make the recipe
@@ -52,5 +51,30 @@ public class RecipeManager {
 	 */
 	public PermanentRecipe getRecipe(int id) {
 		return this.recipes.get(id);
+	}
+
+	/**
+	 * Returns the set of recipes from the ids specified
+	 * @param ids the ids of the recipes to fetch
+	 * @return the set of recipes requested
+	 */
+	public Set<PermanentRecipe> getRecipes(Collection<Integer> ids) {
+		Set<PermanentRecipe> items = new HashSet<PermanentRecipe>();
+		for (int id : ids) {
+			PermanentRecipe item = this.recipes.get(id);
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	/**
+	 * Returns the set of all recipes stored in the map
+	 * @return the set of all recipes stored in the map
+	 */
+	public Set<PermanentRecipe> getRecipeSet() {
+		Set<PermanentRecipe> recipeSet = new HashSet<PermanentRecipe>(this.recipes.values());
+		return recipeSet;
 	}
 }

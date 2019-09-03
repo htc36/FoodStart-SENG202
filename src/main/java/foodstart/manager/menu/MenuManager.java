@@ -1,8 +1,6 @@
 package foodstart.manager.menu;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
@@ -13,7 +11,7 @@ import foodstart.model.menu.MenuItem;
 public class MenuManager {
 
 	/**
-	 * The set of all menus modeled in the system
+	 * The map of all menus modeled in the system
 	 */
 	private Map<Integer, Menu> menus;
 
@@ -37,7 +35,7 @@ public class MenuManager {
 	}
 
 	/**
-	 * Gets a menu from the set of menus by its UID
+	 * Gets a menu from the map of menus by its UID
 	 * @param id the UID of the menu
 	 * @return The menu that the UID refers to, or null
 	 */
@@ -46,10 +44,35 @@ public class MenuManager {
 	}
 
 	/**
-	 * Returns the set of all menus modeled
-	 * @return the set of all menus modeled
+	 * Returns the map of all menus modeled
+	 * @return the map of all menus modeled
 	 */
 	public Map<Integer, Menu> getMenus() {
 		return this.menus;
+	}
+
+	/**
+	 * Returns the set of menu from the ids specified
+	 * @param ids the ids of the menu to fetch
+	 * @return the set of menu requested
+	 */
+	public Set<Menu> getMenus(Collection<Integer> ids) {
+		Set<Menu> items = new HashSet<Menu>();
+		for (int id : ids) {
+			Menu item = this.menus.get(id);
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	/**
+	 * Returns the set of all menu stored in the map
+	 * @return the set of all menu stored in the map
+	 */
+	public Set<Menu> getMenuSet() {
+		Set<Menu> menuSet = new HashSet<Menu>(this.menus.values());
+		return menuSet;
 	}
 }

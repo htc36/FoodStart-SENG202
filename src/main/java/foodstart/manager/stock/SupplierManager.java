@@ -2,8 +2,7 @@ package foodstart.manager.stock;
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -12,7 +11,7 @@ import java.util.Map;
 public class SupplierManager
 {
 	/**
-	 * The set of suppliers being modeled
+	 * The map of suppliers being modeled
 	 */
 	private Map<Integer, Supplier> suppliers;
 
@@ -24,7 +23,7 @@ public class SupplierManager
 	}
 
 	/**
-	 * Constructs and adds a new supplier to the set of suppliers based
+	 * Constructs and adds a new supplier to the map of suppliers based
 	 * @param databaseId the UID of the supplier
 	 * @param supplierName name of the supplier
 	 * @param phoneNumber supplier contact phone number
@@ -39,7 +38,7 @@ public class SupplierManager
 	}
 
 	/**
-	 * Removes a supplier from the set of suppliers
+	 * Removes a supplier from the map of suppliers
 	 * @param supplier the supplier to remove
 	 */
 	public void removeSupplier(Supplier supplier) {
@@ -47,15 +46,15 @@ public class SupplierManager
 	}
 
 	/**
-	 * Returns the set of suppliers
-	 * @return the set of suppliers
+	 * Returns the map of suppliers
+	 * @return the map of suppliers
 	 */
 	public Map<Integer, Supplier> getSuppliers() {
 		return this.suppliers;
 	}
 
 	/**
-	 * Gets a supplier from the supplier set based on its id
+	 * Gets a supplier from the supplier map based on its id
 	 * @param id the id of the supplier to get
 	 * @return the supplier matching the given id, or null if it was not found
 	 */
@@ -63,5 +62,30 @@ public class SupplierManager
 		return this.suppliers.get(id);
 	}
 
+
+	/**
+	 * Returns the set of suppliers from the ids specified
+	 * @param ids the ids of the suppliers to fetch
+	 * @return the set of suppliers requested
+	 */
+	public Set<Supplier> getSuppliers(Collection<Integer> ids) {
+		Set<Supplier> items = new HashSet<Supplier>();
+		for (int id : ids) {
+			Supplier item = this.suppliers.get(id);
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	/**
+	 * Returns the set of all suppliers stored in the map
+	 * @return the set of all suppliers stored in the map
+	 */
+	public Set<Supplier> getSupplierSet() {
+		Set<Supplier> supplierSet = new HashSet<Supplier>(this.suppliers.values());
+		return supplierSet;
+	}
 }
 

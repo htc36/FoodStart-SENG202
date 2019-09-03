@@ -15,7 +15,7 @@ import java.util.Set;
 public class MenuItemManager {
 
 	/**
-	 * The set of all menu items modeled in the system
+	 * The map of all menu items modeled in the system
 	 */
 	private Map<Integer, MenuItem> menuItems;
 
@@ -27,7 +27,7 @@ public class MenuItemManager {
 	}
 
 	/**
-	 * Constructs and adds a menu item to the set of menu items
+	 * Constructs and adds a menu item to the map of menu items
 	 * @param id the UID of the menu item
 	 * @param name the name of the menu item
 	 * @param description a description of the menu item
@@ -39,7 +39,7 @@ public class MenuItemManager {
 	}
 
 	/**
-	 * Gets a menu item from the set of menu items by its UID
+	 * Gets a menu item from the map of menu items by its UID
 	 * @param id the UID of the menu item
 	 * @return The menu item that the UID refers to, or null
 	 */
@@ -48,13 +48,18 @@ public class MenuItemManager {
 	}
 
 	/**
-	 * Returns the set of all menu items modeled
-	 * @return the set of all menu items modeled
+	 * Returns the map of all menu items modeled
+	 * @return the map of all menu items modeled
 	 */
 	public Map<Integer, MenuItem> getMenuItems() {
 		return this.menuItems;
 	}
 
+	/**
+	 * Returns the set of menu items from the ids specified
+	 * @param ids the ids of the menu items to fetch
+	 * @return the set of menu items requested
+	 */
 	public Set<MenuItem> getMenuItems(Collection<Integer> ids) {
 		Set<MenuItem> items = new HashSet<MenuItem>();
 		for (int id : ids) {
@@ -64,5 +69,14 @@ public class MenuItemManager {
 			}
 		}
 		return items;
+	}
+
+	/**
+	 * Returns the set of all menu items stored in the map
+	 * @return the set of all menu items stored in the map
+	 */
+	public Set<MenuItem> getMenuItemSet() {
+		Set<MenuItem> menuItemsSet = new HashSet<MenuItem>(this.menuItems.values());
+		return menuItemsSet;
 	}
 }

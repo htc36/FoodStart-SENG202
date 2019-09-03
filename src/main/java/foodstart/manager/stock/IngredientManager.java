@@ -12,7 +12,7 @@ import foodstart.model.stock.Ingredient;
 public class IngredientManager
 {
 	/**
-	 * The set of all ingredients modeled
+	 * The map of all ingredients modeled
 	 */
 	private Map<Integer, Ingredient> ingredients;
 
@@ -25,7 +25,7 @@ public class IngredientManager
 	}
 
 	/**
-	 * Constructs and adds an ingredient to the set of ingredients
+	 * Constructs and adds an ingredient to the map of ingredients
 	 * @param unit Unit of the ingredient
 	 * @param name Name of the ingredient
 	 * @param id Identifier code of the ingredient
@@ -39,15 +39,15 @@ public class IngredientManager
 	}
 
 	/**
-	 * Returns the set of all menu items modeled
-	 * @return the set of all menu items modeled
+	 * Returns the map of all menu items modeled
+	 * @return the map of all menu items modeled
 	 */
 	public Map<Integer, Ingredient> getIngredients() {
 		return this.ingredients;
 	}
 
 	/**
-	 * Gets an ingredient from the set of ingredient by its UID
+	 * Gets an ingredient from the map of ingredient by its UID
 	 * @param id the UID of the ingredient
 	 * @return The ingredient that the UID refers to, or null
 	 */
@@ -95,5 +95,29 @@ public class IngredientManager
 		return ingredient.getKitchenStock() > 0;
 	}
 
+	/**
+	 * Returns the set of ingredients from the ids specified
+	 * @param ids the ids of the ingredients to fetch
+	 * @return the set of ingredients requested
+	 */
+	public Set<Ingredient> getIngredients(Collection<Integer> ids) {
+		Set<Ingredient> items = new HashSet<Ingredient>();
+		for (int id : ids) {
+			Ingredient item = this.ingredients.get(id);
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	/**
+	 * Returns the set of all ingredients stored in the map
+	 * @return the set of all ingredients stored in the map
+	 */
+	public Set<Ingredient> getIngredientSet() {
+		Set<Ingredient> ingredientSet = new HashSet<Ingredient>(this.ingredients.values());
+		return ingredientSet;
+	}
 }
 
