@@ -7,6 +7,8 @@ import foodstart.manager.order.OrderManager;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.manager.stock.SupplierManager;
 
+import foodstart.manager.xml.XMLPersistence;
+
 /**
  * Manager for all the managers
  * @author Alex Hobson
@@ -33,6 +35,11 @@ public class Managers {
 	 * Functions relevant to ingredients
 	 */
 	private static IngredientManager ingredientManager = new IngredientManager();
+
+	/**
+	 * Default persistence
+	 */
+	private static Persistence persistence = new XMLPersistence();
 
 	private static MenuItemManager menuItemManager = new MenuItemManager();
 
@@ -62,4 +69,7 @@ public class Managers {
 		return menuItemManager;
 	}
 
+	public static Persistence getDefaultPersistence() {
+		return persistence;
+	}
 }

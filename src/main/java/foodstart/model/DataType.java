@@ -7,5 +7,5 @@ package foodstart.model;
  */
 public enum DataType
 {
-	INVENTORY, RECIPE, MENU, SUPPLIER, INGREDIENT;
+	RECIPE, MENU, SUPPLIER, INGREDIENT, SALES_LOG;
 }

@@ -1,7 +1,9 @@
 package foodstart.manager.xml;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,5 +62,27 @@ public class XMLPersistence extends Persistence {
 	@Override
 	public void exportFile(File file, DataType dataType) {
 		// TODO
+	}
+	
+	/**
+	 * If the DTD files do not exist, this will copy them into the target directory 
+	 * @param directory Directory that the DTD files should be copied into
+	 */
+	public void copyDTDFilesIfNotExists(File directory) throws IOException {
+		for (DataType type : DataType.values()) {
+			File file = new File(directory.getAbsolutePath()+File.separator+type.name().toLowerCase()+".dtd");
+			if (!file.isFile()) {
+				InputStream dtdFile = getClass().getResourceAsStream("../../dtd/"+type.name().toLowerCase()+".dtd");
+				if (dtdFile != null) {
+					FileOutputStream output = new FileOutputStream(file);
+					byte[] fileContents = new byte[16384]; //dtd file shouldn't be bigger than 16kB
+					int length = dtdFile.read(fileContents);
+					dtdFile.close();
+					
+					output.write(fileContents, 0, length);
+					output.close();
+				}
+			}
+		}
 	}
 }
