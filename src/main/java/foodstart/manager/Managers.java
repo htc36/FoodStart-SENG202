@@ -1,5 +1,7 @@
 package foodstart.manager;
 
+import foodstart.manager.xml.XMLPersistence;
+
 /**
  * Manager for all the managers
  * @author Alex Hobson
@@ -31,6 +33,11 @@ public class Managers {
 	 * Functions relevant to ingredients
 	 */
 	private static IngredientManager ingredientManager = new IngredientManager();
+	
+	/**
+	 * Default persistence
+	 */
+	private static Persistence persistence = new XMLPersistence();
 
 	public static IngredientManager getIngredientManager() {
 		return ingredientManager;
@@ -52,4 +59,7 @@ public class Managers {
 		return menuManager;
 	}
 
+	public static Persistence getDefaultPersistence() {
+		return persistence;
+	}
 }
