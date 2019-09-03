@@ -90,7 +90,7 @@ public class IngredientManager
 	 * @param id the id of the ingredient to check
 	 * @return true if the truck stock is greater than 0; false otherwise
 	 */
-	public boolean isInkitchenStock(int id) {
+	public boolean isInKitchenStock(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
 		return ingredient.getKitchenStock() > 0;
 	}

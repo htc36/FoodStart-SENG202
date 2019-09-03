@@ -7,7 +7,7 @@ package foodstart.model;
  */
 public enum DietaryRequirement
 {
-	VEGAN("vegan"), VEGETARIAN("vegetarian"), GLUTEN_FREE("gluten_free"), NUT_ALLERGY("nut_free"), LACTOSE_INTOLERENT("dairy_free");
+	VEGAN("vegan"), VEGETARIAN("vegetarian"), GLUTEN_FREE("gluten_free"), NUT_ALLERGY("nut_free"), LACTOSE_INTOLERANT("dairy_free");
 	
 	/**
 	 * Locally stored dbName
