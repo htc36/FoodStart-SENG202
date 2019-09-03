@@ -6,6 +6,9 @@ import foodstart.model.stock.Ingredient;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Acts as a controller, storing and managing the recipes in the model
+ */
 public class RecipeManager {
 
 	/**

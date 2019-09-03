@@ -9,7 +9,6 @@ import java.util.Map;
 /**
  * Acts as a controller, storing and managing the suppliers in the model
  */
-
 public class SupplierManager
 {
 	/**

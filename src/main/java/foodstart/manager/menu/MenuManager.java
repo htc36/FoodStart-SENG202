@@ -7,6 +7,9 @@ import java.util.Set;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 
+/**
+ * Acts as a controller, storing and managing the menus in the model
+ */
 public class MenuManager {
 
 	/**

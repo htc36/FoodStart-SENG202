@@ -9,11 +9,8 @@ import foodstart.model.order.Order;
 
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * Acts as a controller, storing and managing the orders in the model
  */
-
 public class OrderManager
 {
 	/**

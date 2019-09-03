@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Acts as a controller, storing and managing the menu items in the model
+ */
 public class MenuItemManager {
 
 	/**
