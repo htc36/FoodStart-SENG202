@@ -26,8 +26,6 @@ public class OrderTest {
 
 	@Before
 	public void setUp() throws Exception {
-//		Set<Recipe> recipes = new HashSet<Recipe>();
-
 		//Ingredients for the test recipe
 		Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 		ingredient = new Ingredient(Unit.GRAMS, "TestIngredient",
@@ -65,5 +63,10 @@ public class OrderTest {
 
 		assertTrue(order.getTotalItemCount() == (prevTotalOrderItems + amountAdded));
 		assertTrue(order.getItems().containsKey(recipeAdded));
+	}
+
+	@Test
+	public void removeItem() {
+		assertTrue(true);
 	}
 }

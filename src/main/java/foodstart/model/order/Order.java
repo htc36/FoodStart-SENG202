@@ -8,6 +8,8 @@ import foodstart.model.menu.Recipe;
 
 /**
  * The class that holds information about an order and its methods
+ * @author Hamish O'Keefe, Frankie Oprenario
+ * @updated 3/9/19
  */
 
 public class Order
@@ -167,11 +169,43 @@ public class Order
 	 * @param recipe the recipe to remove
 	 * @return the amount of the recipe, or null if the recipe did not exist
 	 */
-	public Integer removeItem(Recipe recipe) {
-		return this.items.remove(recipe);
-	}
+	public Integer removeItem(Recipe recipe) { return this.items.remove(recipe); }
 
-	/** Calculates the total number of items ordered
+    /**
+     * Sets the amount for the recipe in the order
+     * @param recipe the recipe that requires for the amount to be altered
+     * @param amount the amount to be set
+     */
+    public void setAmount(Recipe recipe, int amount) { this.items.put(recipe, amount); }
+
+    /**
+     * MIGHT NOT NEED THIS BECAUSE OF THE addItem METHOD
+     * Increases the amount of the recipe in the order
+     * @param recipe the recipe that requires its amount to be increased
+     * @param amount the amount to add onto the current amount in the order
+     */
+    public void increaseAmount(Recipe recipe, int amount) {
+        if (this.items.containsKey(recipe)) {
+            setAmount(recipe, (this.items.get(recipe) + amount));
+        } // else, should throw an exception about the recipe not already existing in the order
+    }
+
+    /**
+     * Decreases the amount of the recipe in the order
+     * @param recipe the recipe that requires its amount to be decreased
+     * @param amount the amount to subtract from the current amount in the order
+     */
+    public void decreaseAmount(Recipe recipe, int amount) {
+        if (this.items.containsKey(recipe)) {
+            if ((this.items.get(recipe) - amount) > 0) {
+                setAmount(recipe, (this.items.get(recipe) - amount));
+            } else if ((this.items.get(recipe) - amount) == 0) {
+                removeItem(recipe);
+            } // else, should throw an exception exceeding the lowest bound (negatives)
+        } // else, should throw an exception about the recipe not already existing in the order
+    }
+
+    /** Calculates the total number of items ordered
 	 * @return TotalOrderItems The total number of items ordered
 	 */
 	public Integer getTotalItemCount() {
