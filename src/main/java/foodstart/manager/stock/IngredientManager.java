@@ -1,51 +1,98 @@
 package foodstart.manager.stock;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
+import foodstart.model.DietaryRequirement;
+import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
 
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * Acts as a controller, storing and managing the ingredients items in the model
  */
-
 public class IngredientManager
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * The set of all ingredients modeled
 	 */
-	
-	private Set<Ingredient> ingredients = new HashSet<Ingredient>();
+	private Map<Integer, Ingredient> ingredients;
 
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * Constructs an instance of an ingredient manager
 	 */
 	public IngredientManager(){
-		
+		this.ingredients = new HashMap<Integer, Ingredient>();
 	}
 
 	/**
-	 * Add an ingredient to the registry
-	 * @param ingredient The ingredient to add
+	 * Constructs and adds an ingredient to the set of ingredients
+	 * @param unit Unit of the ingredient
+	 * @param name Name of the ingredient
+	 * @param id Identifier code of the ingredient
+	 * @param safeFor map of dietary requirements to whether or not the ingredient is considered safe for that requirement
+	 * @param kitchenStock Amount of current stock in the kitchen
+	 * @param truckStock Amount of current stock in the truck
 	 */
-	public void addIngredient(Ingredient ingredient) {
-		ingredients.add(ingredient);
+	public void addIngredient(Unit unit, String name, int id, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
+		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
+		this.ingredients.put(id, ingredient);
 	}
 
 	/**
-	 * Gets all the ingredients in the registry
-	 * @return The set of ingredients in the registry
+	 * Returns the set of all menu items modeled
+	 * @return the set of all menu items modeled
 	 */
-	public Set<Ingredient> getIngredients() {
-		return ingredients;
+	public Map<Integer, Ingredient> getIngredients() {
+		return this.ingredients;
+	}
+
+	/**
+	 * Gets an ingredient from the set of ingredient by its UID
+	 * @param id the UID of the ingredient
+	 * @return The ingredient that the UID refers to, or null
+	 */
+	public Ingredient getIngredient(int id) {
+		return this.ingredients.get(id);
+	}
+
+	/**
+	 * Updates the truck stock for some ingredient
+	 * @param id the id of the ingredient to update
+	 * @param amount the amount to set the tuck stock to
+	 */
+	public void updateTruckStock(int id, int amount) {
+		Ingredient ingredient = this.ingredients.get(id);
+		ingredient.setTruckStock(amount);
+	}
+
+	/**
+	 * Updates the kitchen stock for some ingredient
+	 * @param id the id of the ingredient to update
+	 * @param amount the amount to set the kitchen stock to
+	 */
+	public void updateKitchenStock(int id, int amount) {
+		Ingredient ingredient = this.ingredients.get(id);
+		ingredient.setKitchenStock(amount);
+	}
+
+	/**
+	 * Checks if an ingredient is in stock in the truck
+	 * @param id the id of the ingredient to check
+	 * @return true if the truck stock is greater than 0; false otherwise
+	 */
+	public boolean isInTruckStock(int id) {
+		Ingredient ingredient = this.ingredients.get(id);
+		return ingredient.getTruckStock() > 0;
+	}
+
+	/**
+	 * Checks if an ingredient is in stock in the kitchen
+	 * @param id the id of the ingredient to check
+	 * @return true if the truck stock is greater than 0; false otherwise
+	 */
+	public boolean isInKitchenStock(int id) {
+		Ingredient ingredient = this.ingredients.get(id);
+		return ingredient.getKitchenStock() > 0;
 	}
 
 }

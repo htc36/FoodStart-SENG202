@@ -3,7 +3,9 @@ package foodstart.manager.menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.Recipe;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,7 +33,7 @@ public class MenuItemManager {
 	 * @param description a description of the menu item
 	 * @param variants a set of all recipes that make up the menu item
 	 */
-	public void addMenu(int id, String name, String description, Set<Recipe> variants) {
+	public void addMenuItem(int id, String name, String description, Set<Recipe> variants) {
 		MenuItem menuItem = new MenuItem(id, name, description, variants);
 		this.menuItems.put(id, menuItem);
 	}
@@ -41,7 +43,7 @@ public class MenuItemManager {
 	 * @param id the UID of the menu item
 	 * @return The menu item that the UID refers to, or null
 	 */
-	public MenuItem getMenu(int id) {
+	public MenuItem getMenuItem(int id) {
 		return this.menuItems.get(id);
 	}
 
@@ -49,7 +51,18 @@ public class MenuItemManager {
 	 * Returns the set of all menu items modeled
 	 * @return the set of all menu items modeled
 	 */
-	public Map<Integer, MenuItem> getMenus() {
+	public Map<Integer, MenuItem> getMenuItems() {
 		return this.menuItems;
+	}
+
+	public Set<MenuItem> getMenuItems(Collection<Integer> ids) {
+		Set<MenuItem> items = new HashSet<MenuItem>();
+		for (int id : ids) {
+			MenuItem item = this.menuItems.get(id);
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
 	}
 }

@@ -37,8 +37,7 @@ public class XMLIngredientParser extends XMLParser {
 			Node node = ingredientNodes.item(i);
 			if (node instanceof Element) {
 				Element element = (Element) node;
-				Ingredient ingredient = parseOneIngredient(element);
-				Managers.getIngredientManager().addIngredient(ingredient);
+				parseOneIngredient(element);
 			}
 		}
 	}
@@ -48,7 +47,7 @@ public class XMLIngredientParser extends XMLParser {
 	 * 
 	 * @param element XML Element to parse
 	 */
-	private Ingredient parseOneIngredient(Element element) {
+	private void parseOneIngredient(Element element) {
 		Unit unit = Unit.matchUnit(element.getAttribute("unit"));
 		int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
@@ -70,6 +69,6 @@ public class XMLIngredientParser extends XMLParser {
 			}
 		}
 
-		return new Ingredient(unit, name, id, dietaryRequirements, kitchenStock, truckStock);
+		Managers.getIngredientManager().addIngredient(unit, name, id, dietaryRequirements, kitchenStock, truckStock);
 	}
 }
