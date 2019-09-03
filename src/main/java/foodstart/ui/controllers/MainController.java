@@ -1,17 +1,17 @@
-package foodstart.ui;
+package foodstart.ui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 public class MainController {
 
 	@FXML
-	private Pane rootPane;
+	private BorderPane rootPane;
 	
 	public void showOrder() {
 		rootPane.getChildren().clear();
-		rootPane.getChildren().add(new Text("Hello"));
+		rootPane.setCenter(new Text("Hello"));
 	}
 	
 	public void showManageCurrentMenu() {
