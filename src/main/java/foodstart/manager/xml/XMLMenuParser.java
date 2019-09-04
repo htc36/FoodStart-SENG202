@@ -63,7 +63,7 @@ public class XMLMenuParser extends XMLParser {
 	 */
 	private int parseOneMenuItem(Element element) {
 		int itemId = Integer.parseInt(element.getElementsByTagName("item_id").item(0).getTextContent());
-		String name = element.getElementsByTagName("item_id").item(0).getTextContent();
+		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
 
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
