@@ -125,8 +125,8 @@ public class Main extends Application {
 	 */
 	private void loadEverything() throws Exception {
 		long startTime = System.currentTimeMillis();
-		loadFXMLFiles();
 		loadUserData();
+		loadFXMLFiles(); //this is done 2nd so initialize methods can access user data
 		prepareMainScreen();
 		long duration = System.currentTimeMillis() - startTime;
 		if (duration < 1000) {
