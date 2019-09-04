@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.PaymentMethod;
 import foodstart.model.Unit;
-import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
@@ -13,60 +12,133 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class OrderTest {
 
-	private Order order;
-	private Ingredient ingredient;
-	private Recipe recipe;
-	private Map<Ingredient, Integer> ingredients;
+	private Order testOrder;
+	private Ingredient testIngredient;
+	private Recipe testRecipe;
+	private Map<Ingredient, Integer> testIngredients;
+	private Map<Recipe, Integer> testItems;
 
 	@Before
 	public void setUp() throws Exception {
 		//Ingredients for the test recipe
 		Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
-		ingredient = new Ingredient(Unit.GRAMS, "TestIngredient",
+		testIngredient = new Ingredient(Unit.GRAMS, "TestIngredient",
 				0, safeFor, 5, 10);
 		Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-		ingredients.put(ingredient, 1);
+		ingredients.put(testIngredient, 1);
 
 		//The list of the items being ordered
-		recipe = new PermanentRecipe(1, "TestRecipeName", "Instructions", 5, ingredients);
-		Map<Recipe, Integer> items = new HashMap<Recipe, Integer>();
-		items.put(recipe, 1);
-
-		order = new Order(1, items, "TestCustomer", 0, PaymentMethod.CASH);
+		testRecipe = new PermanentRecipe(1, "TestRecipeName", "TestRecipeInstructions", 5, ingredients);
+		testItems = new HashMap<Recipe, Integer>();
+		testItems.put(testRecipe, 1);
+		testOrder = new Order(1, testItems, "TestCustomerName", 0, PaymentMethod.CASH);
 	}
 
 	@Test
-	public void test() {
-		assertTrue(true);
+	public void getId() {
+		assertNotNull(testOrder.getId());
+		assertEquals(testOrder.getId(), 1);
+	}
+
+	@Test
+	public void setId() {
+		testOrder.setId(3);
+		assertEquals(testOrder.getId(), 3);
+	}
+
+	@Test
+	public void getItems() {
+		assertEquals(testOrder.getItems(), testItems);
+	}
+
+	@Test
+	public void setItems() {
+		Map<Recipe, Integer> newItems = new HashMap<Recipe, Integer>();
+		newItems.put(testRecipe, 4);
+
+		Map<Recipe, Integer> previousItems = testOrder.getItems();
+		assertNotEquals(previousItems, newItems);
+		testOrder.setItems(newItems);
+		assertEquals(newItems, testOrder.getItems());
+	}
+
+	@Test
+	public void getCustomerName() {
+		assertEquals("TestCustomerName", testOrder.getCustomerName());
+	}
+
+	@Test
+	public void setCustomerName() {
+		String newCustomerName = "TestNewCustomerName";
+		String previousCustomerName = testOrder.getCustomerName();
+
+		assertNotEquals(newCustomerName, previousCustomerName);
+		testOrder.setCustomerName(newCustomerName);
+		assertEquals(newCustomerName, testOrder.getCustomerName());
+	}
+
+	@Test
+	public void getTimePlaced() {}
+
+	@Test
+	public void setTimePlaced() {}
+
+	@Test
+	public void getPaymentMethod() {
+		assertEquals(PaymentMethod.CASH, testOrder.getPaymentMethod());
+	}
+
+	@Test
+	public void setPaymentMethod() {
+		PaymentMethod newPaymentMethod = PaymentMethod.EFTPOS;
+		PaymentMethod previousPaymentMethod = testOrder.getPaymentMethod();
+
+		testOrder.setPaymentMethod(newPaymentMethod);
+		assertNotEquals(newPaymentMethod, previousPaymentMethod);
+		assertEquals(newPaymentMethod, testOrder.getPaymentMethod());
 	}
 
 	@Test
 	public void getTotalCost() {
-		assertTrue(order.getTotalCost() == recipe.getPrice());
+		assertTrue(testOrder.getTotalCost() == testRecipe.getPrice());
 //		assertEquals(order.getTotalCost(), recipe.getPrice());
 	}
 
 	@Test
 	public void addItem() {
-		int prevTotalOrderItems = order.getTotalItemCount();
+		int prevTotalOrderItems = testOrder.getTotalItemCount();
 		int amountAdded = 2;
-		assertFalse(order.getItems().containsKey("TestRecipeToAdd"));
+		assertFalse(testOrder.getItems().containsKey("TestRecipeToAdd"));
 
-		Recipe recipeAdded = new PermanentRecipe(1, "RecipeAddedName", "RecipeAddedInstructions", 8, ingredients);
-		order.addItem(recipeAdded, amountAdded);
+		Recipe newRecipe = new PermanentRecipe(1, "RecipeAddedName", "RecipeAddedInstructions", 8, testIngredients);
+		testOrder.addItem(newRecipe, amountAdded);
 
-		assertTrue(order.getTotalItemCount() == (prevTotalOrderItems + amountAdded));
-		assertTrue(order.getItems().containsKey(recipeAdded));
+		assertTrue(testOrder.getTotalItemCount() == (prevTotalOrderItems + amountAdded));
+		assertTrue(testOrder.getItems().containsKey(newRecipe));
 	}
 
 	@Test
 	public void removeItem() {
 		assertTrue(true);
 	}
+
+	@Test
+	public void setVariantAmount() {}
+
+	@Test
+	public void increaseVariantAmount() {}
+
+	@Test
+	public void decreaseVariantAmount() {}
+
+	@Test
+	public void getTotalItemCount() {}
+
+	@Test
+	public void getVariantCount() {}
+
 }
