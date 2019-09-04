@@ -176,7 +176,7 @@ public class Order
      * @param recipe the recipe that requires for the amount to be altered
      * @param amount the amount to be set
      */
-    public void setAmount(Recipe recipe, int amount) { this.items.put(recipe, amount); }
+    public void setVariantAmount(Recipe recipe, int amount) { this.items.put(recipe, amount); }
 
     /**
      * MIGHT NOT NEED THIS BECAUSE OF THE addItem METHOD
@@ -184,9 +184,9 @@ public class Order
      * @param recipe the recipe that requires its amount to be increased
      * @param amount the amount to add onto the current amount in the order
      */
-    public void increaseAmount(Recipe recipe, int amount) {
+    public void increaseVariantAmount(Recipe recipe, int amount) {
         if (this.items.containsKey(recipe)) {
-            setAmount(recipe, (this.items.get(recipe) + amount));
+            setVariantAmount(recipe, (this.items.get(recipe) + amount));
         } // else, should throw an exception about the recipe not already existing in the order
     }
 
@@ -195,13 +195,15 @@ public class Order
      * @param recipe the recipe that requires its amount to be decreased
      * @param amount the amount to subtract from the current amount in the order
      */
-    public void decreaseAmount(Recipe recipe, int amount) {
+    public void decreaseVariantAmount(Recipe recipe, int amount) {
         if (this.items.containsKey(recipe)) {
             if ((this.items.get(recipe) - amount) > 0) {
-                setAmount(recipe, (this.items.get(recipe) - amount));
+                setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
             } else if ((this.items.get(recipe) - amount) == 0) {
-                removeItem(recipe);
-            } // else, should throw an exception exceeding the lowest bound (negatives)
+                removeItem(recipe); // removes the item completely from the order
+            } else { // else, should throw an exception exceeding the lowest bound (negatives)
+				//throw new Exception
+            }
         } // else, should throw an exception about the recipe not already existing in the order
     }
 
