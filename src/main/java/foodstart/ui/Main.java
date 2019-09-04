@@ -126,7 +126,7 @@ public class Main extends Application {
 	private void loadEverything() throws Exception {
 		long startTime = System.currentTimeMillis();
 		loadFXMLFiles();
-		//TODO loadUserData();
+		loadUserData();
 		prepareMainScreen();
 		long duration = System.currentTimeMillis() - startTime;
 		if (duration < 1000) {
@@ -156,23 +156,32 @@ public class Main extends Application {
 		} catch (IOException e) {
 			throw new ImportFailureException("Could not copy DTD files into target directory");
 		}
-		for (File file : directory.listFiles()) {
-			switch (file.getName().toLowerCase()) {
-			case "ingredients.xml":
-				persistence.importFile(file, DataType.INGREDIENT);
-				break;
-			case "menu.xml":
-				persistence.importFile(file, DataType.MENU);
-				break;
-			case "recipes.xml":
-				persistence.importFile(file, DataType.RECIPE);
-				break;
-			case "sales.xml":
-				persistence.importFile(file, DataType.SALES_LOG);
-				break;
-			case "suppliers.xml":
-				persistence.importFile(file, DataType.SUPPLIER);
-				break;
+		File[] importOrder = new File[] {
+			new File(directory, "ingredients.xml"),
+			new File(directory, "recipes.xml"),
+			new File(directory, "menu.xml"),
+			new File(directory, "sales.xml"),
+			new File(directory, "suppliers.xml")
+		};
+		for (File file : importOrder) {
+			if (file.isFile()) {
+				switch (file.getName().toLowerCase()) {
+				case "ingredients.xml":
+					persistence.importFile(file, DataType.INGREDIENT);
+					break;
+				case "menu.xml":
+					persistence.importFile(file, DataType.MENU);
+					break;
+				case "recipes.xml":
+					persistence.importFile(file, DataType.RECIPE);
+					break;
+				case "sales.xml":
+					persistence.importFile(file, DataType.SALES_LOG);
+					break;
+				case "suppliers.xml":
+					persistence.importFile(file, DataType.SUPPLIER);
+					break;
+				}
 			}
 		}
 	}
