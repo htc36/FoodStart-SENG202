@@ -5,5 +5,10 @@ package foodstart.model;
  */
 public enum PhoneType
 {
-    MOBILE, WORK, HOME
+    MOBILE("Mobile"), WORK("Work"), HOME("Home");
+
+    private String name;
+    PhoneType(String name) {
+        this.name = name;
+    }
 }
