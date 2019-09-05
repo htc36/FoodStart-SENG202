@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
+import foodstart.model.menu.PermanentRecipe;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,7 +66,7 @@ public class CreateOrderController {
 		itemName.setTextAlignment(TextAlignment.CENTER);
 
 		String priceString = item.getVariants().size() > 0
-				? String.format("$%.02f", item.getVariants().get(0).getPrice())
+				? String.format("$%.02f", Managers.getMenuItemManager().getApproxPrice(item.getId()))
 				: "No Recipes";
 		Text itemPrice = new Text(priceString);
 
