@@ -1,4 +1,5 @@
 package foodstart.model.menu;
+import java.util.List;
 import java.util.Set;
 
 
@@ -25,7 +26,7 @@ public class MenuItem
 	/**
 	 * A set containing all the recipe variants of a menu item
 	 */
-	private Set<Recipe> variants;
+	private List<PermanentRecipe> variants;
 
 	/**
 	 * Constructs an instance of a menu item
@@ -34,7 +35,7 @@ public class MenuItem
 	 * @param description a description of the menu item
 	 * @param variants a set of all recipes that make up the menu item
 	 */
-	public MenuItem(int databaseId, String name, String description, Set<Recipe> variants) {
+	public MenuItem(int databaseId, String name, String description, List<PermanentRecipe> variants) {
 		this.id = databaseId;
 		this.name = name;
 		this.description = description;
@@ -90,14 +91,14 @@ public class MenuItem
 	 * Gets the different variants of the menu item
 	 * @return variants
 	 */
-	public Set<Recipe> getVariants() {
+	public List<PermanentRecipe> getVariants() {
 		return variants;
 	}
 	
 	/**
 	 * Sets the variants of the menu item
 	 */
-	public void setVariants(Set<Recipe> variants) {
+	public void setVariants(List<PermanentRecipe> variants) {
 		this.variants = variants;
 	}
 

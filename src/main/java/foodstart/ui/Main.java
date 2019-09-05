@@ -15,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -31,19 +30,10 @@ import javafx.util.Duration;
  */
 public class Main extends Application {
 
-	private static Stage primaryStage;
-	private static Stage splashStage;
+	private Stage primaryStage;
+	private Stage splashStage;
 
 	private Parent rootFXML;
-	private Parent createOrderFXML;
-	private Parent manageCurrentMenuFXML;
-	private Parent manageAllMenus;
-	private Parent manageMenuItems;
-	private Parent manageRecipes;
-	private Parent manageIngredients;
-	private Parent stockInventory;
-	private Parent stockSuppliers;
-	private Parent salesLog;
 
 	/**
 	 * Launches the JavaFX Application
@@ -63,7 +53,7 @@ public class Main extends Application {
 	 *            Main stage for the application
 	 */
 	public void start(Stage primaryStage) throws IOException {
-		Main.primaryStage = primaryStage;
+		this.primaryStage = primaryStage;
 
 		splashStage = new Stage();
 		VBox splashLayout = createSplash(splashStage);
@@ -134,11 +124,20 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+	 * Load all the FXML files and initialize them
+	 * @throws IOException If the FXML file could not be read
+	 */
 	private void loadFXMLFiles() throws IOException {
 		rootFXML = FXMLLoader.load(getClass().getResource("main.fxml"));
-		createOrderFXML = FXMLLoader.load(getClass().getResource("createorder.fxml"));
+		//Loaded by calling initialize on MainController
 	}
 	
+	/**
+	 * Loads all user data from the Constants.persistencePath path.
+	 * The order is important so things are not being loaded that depend
+	 * on IDs for things that haven't been loaded yet
+	 */
 	private void loadUserData() {
 		File directory = new File(Constants.persistencePath);
 		if (!directory.isDirectory()) {
@@ -186,6 +185,11 @@ public class Main extends Application {
 		}
 	}
 
+	/**
+	 * Prepare's the main screen so it can be displayed
+	 * (rootFXML should already have the create order controller in it
+	 * from initializing it in loadFXMLFiles)
+	 */
 	private void prepareMainScreen() {
 		primaryStage.setTitle("FoodStart");
 		Screen screen = Screen.getPrimary();
@@ -193,14 +197,6 @@ public class Main extends Application {
 				new Scene(rootFXML, screen.getVisualBounds().getWidth(), screen.getVisualBounds().getHeight()));
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 		primaryStage.setMaximized(true);
-		
-		BorderPane node = (BorderPane)rootFXML.getChildrenUnmodifiable().get(1);
-		node.getChildren().clear();
-		node.setCenter(createOrderFXML);
-	}
-
-	protected static Stage getPrimaryStage() {
-		return primaryStage;
 	}
 
 }

@@ -1,6 +1,8 @@
 package foodstart.manager.xml;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.w3c.dom.Document;
@@ -11,10 +13,8 @@ import org.w3c.dom.NodeList;
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
-import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
 
 /**
  * Parses menu XML files
@@ -67,7 +67,7 @@ public class XMLMenuParser extends XMLParser {
 		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
 
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
-		Set<Recipe> recipes = parseRecipeList(recipeIds);
+		List<PermanentRecipe> recipes = parseRecipeList(recipeIds);
 
 		Managers.getMenuItemManager().addMenuItem(itemId, name, description, recipes);
 		return itemId;
@@ -80,8 +80,8 @@ public class XMLMenuParser extends XMLParser {
 	 * 
 	 * @return Set of recipes
 	 */
-	private Set<Recipe> parseRecipeList(NodeList recipeIds) {
-		Set<Recipe> recipeList = new HashSet<Recipe>();
+	private List<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
+		List<PermanentRecipe> recipeList = new ArrayList<PermanentRecipe>();
 		for (int i = 0; i < recipeIds.getLength(); i++) {
 			Node node = recipeIds.item(i);
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {

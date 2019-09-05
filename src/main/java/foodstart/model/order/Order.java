@@ -1,8 +1,12 @@
 package foodstart.model.order;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Set;
 
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 
 
@@ -37,7 +41,7 @@ public class Order
 	 * The time that the order was placed
 	 */
 	
-	private long timePlaced;
+	private LocalDateTime timePlaced;
 
 	/**
 	 * The payment method that the customer chose
@@ -53,11 +57,28 @@ public class Order
 	 * @param timePlaced The time that the order was placed
 	 * @param paymentMethod The payment method that the customer chose
 	 */
-	public Order(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+	public Order(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
 		this.id = id;
 		this.items = items;
 		this.customerName = customerName;
 		this.timePlaced = timePlaced;
+		this.paymentMethod = paymentMethod;
+	}
+
+	/**
+	 * The order constructor
+	 * @param id The identifier code of the order
+	 * @param items The items that have been ordered and their quantities
+	 * @param customerName The name of the customer who made the order
+	 * @param timePlaced The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 */
+	public Order(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+		this.id = id;
+		this.items = items;
+		this.customerName = customerName;
+		//Ignores timezones by using UTC
+		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced, 0, ZoneOffset.UTC);
 		this.paymentMethod = paymentMethod;
 	}
 
@@ -113,7 +134,7 @@ public class Order
 	 * Returns the time at which the order was placed
 	 * @return the time at which the order was placed
 	 */
-	public long getTimePlaced() {
+	public LocalDateTime getTimePlaced() {
 		return timePlaced;
 	}
 
@@ -121,7 +142,7 @@ public class Order
 	 * Sets the time at which the order was placed
 	 * @param timePlaced the time at which the order was placed
 	 */
-	public void setTimePlaced(long timePlaced) {
+	public void setTimePlaced(LocalDateTime timePlaced) {
 		this.timePlaced = timePlaced;
 	}
 
@@ -224,6 +245,5 @@ public class Order
 	public int getVariantCount(Recipe recipe) {
 		return this.items.get(recipe);
 	}
-
 }
 

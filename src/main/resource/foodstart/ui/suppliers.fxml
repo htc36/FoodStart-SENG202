@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <AnchorPane>
+               <children>
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                    <items>
+                      <MenuItem fx:id="importButton" mnemonicParsing="false" text="Import" />
+                      <MenuItem fx:id="exportButton" mnemonicParsing="false" text="Export" />
+                        <MenuItem fx:id="addButton" mnemonicParsing="false" text="Add" />
+                        <MenuItem fx:id="removeButton" mnemonicParsing="false" text="Remove" />
+                        <MenuItem fx:id="editButton" mnemonicParsing="false" text="Edit" />
+                    </items>
+                  </MenuButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </bottom>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="supplierTable" prefHeight="676.0" prefWidth="1024.0">
+              <columns>
+                <TableColumn fx:id="codeColumn" prefWidth="102.0" text="Code" />
+                <TableColumn fx:id="supplierNameColumn" prefWidth="140.0" text="Supplier Name" />
+                  <TableColumn fx:id="addressColumn" prefWidth="194.0" text="Address" />
+                  <TableColumn fx:id="websiteColumn" minWidth="0.0" prefWidth="157.0" text="Website" />
+                  <TableColumn fx:id="emailColumn" prefWidth="184.0" text="Email" />
+                  <TableColumn fx:id="phoneColumn" prefWidth="135.0" text="Phone" />
+                  <TableColumn fx:id="phoneTypeColumn" prefWidth="108.0" text="Type" />
+              </columns>
+            </TableView>
+         </children></VBox>
+   </center>
+</BorderPane>
