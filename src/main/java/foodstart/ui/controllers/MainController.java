@@ -29,6 +29,9 @@ public class MainController {
 		try {
 			createOrderFXML = new FXMLLoader(getClass().getResource("../createorder.fxml"));
 			createOrderFXML.load();
+			
+			salesLog = new FXMLLoader(getClass().getResource("../sales.fxml"));
+			salesLog.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,9 +72,6 @@ public class MainController {
 	}
 	
 	public void showSales() throws IOException {
-		//TODO Fix null pointer issue
-		rootPane.getChildren().clear();
-		Parent salesScreen = FXMLLoader.load(getClass().getClassLoader().getResource("sales.fxml"));
-		rootPane.setCenter(salesScreen);
+		rootPane.setCenter(salesLog.getRoot());
 	}
 }
