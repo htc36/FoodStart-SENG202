@@ -14,12 +14,12 @@ public class MenuTest {
 	private Menu testMenu;
 	private Set<MenuItem> menuItems;
 	private MenuItem testitem;
-	private Set<Recipe> recipes;
+	private Set<PermanentRecipe> recipes;
 
     @Before
     public void setUp() throws Exception {
     	menuItems = new HashSet<MenuItem>();
-    	recipes = new HashSet<Recipe>();
+    	recipes = new HashSet<PermanentRecipe>();
         testitem = new MenuItem(0, "TestItem", "MenuItem test item", recipes);
     	testMenu = new Menu(menuItems, 0, "Summer Menu", "Base menu for the summer months");
     }
