@@ -1,5 +1,6 @@
 package foodstart.manager.stock;
 import java.util.*;
+import java.util.Map.Entry;
 
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
@@ -119,5 +120,17 @@ public class IngredientManager
 		Set<Ingredient> ingredientSet = new HashSet<Ingredient>(this.ingredients.values());
 		return ingredientSet;
 	}
+	
+	public String safeForString(int id) {
+		Ingredient ingredient = this.ingredients.get(id);
+		ArrayList<String> safeForList=new ArrayList<String>();
+		Map<DietaryRequirement, Boolean> safeDiets = ingredient.getSafeFor();
+		for (Map.Entry<DietaryRequirement, Boolean> entry : safeDiets.entrySet()) {
+			if (entry.getValue()) {
+				safeForList.add(entry.getKey().getDBName());
+			}
+		}
+		return String.join(", ", safeForList);
+		}
 }
 
