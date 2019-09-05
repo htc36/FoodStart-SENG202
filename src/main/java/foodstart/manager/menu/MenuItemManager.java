@@ -91,6 +91,6 @@ public class MenuItemManager {
 		for (PermanentRecipe recipe : item.getVariants()) {
 			sum += recipe.getPrice();
 		}
-		return sum;
+		return sum / item.getVariants().size();
 	}
 }
