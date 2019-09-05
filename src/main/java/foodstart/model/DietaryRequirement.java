@@ -15,7 +15,7 @@ public enum DietaryRequirement
 	private final String dbName;
 	
 	/**
-	 * Constructor for Unit
+	 * Constructor for Enum
 	 * @param dbName The name as it should appear in the database (eg XML)
 	 */
 	private DietaryRequirement(String dbName) {
