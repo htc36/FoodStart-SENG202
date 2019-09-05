@@ -1,8 +1,11 @@
 package foodstart.ui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class MainController {
 
@@ -42,7 +45,8 @@ public class MainController {
 		
 	}
 	
-	public void showSales() {
-		
+	public void showSales() throws IOException {
+		rootPane.getChildren().clear();
+		rootPane.setCenter(FXMLLoader.load(getClass().getResource("createorder.fxml")));
 	}
 }

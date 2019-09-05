@@ -45,6 +45,8 @@ public class SalesController {
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCustomerName()));
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", Float.toString(cell.getValue().getTotalCost()))));
 		itemsCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getItemsAsString()));
+		timeCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalTime().toString()));
+		dateCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalDate().toString()));
 
 	}
 
