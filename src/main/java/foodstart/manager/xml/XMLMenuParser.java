@@ -67,7 +67,7 @@ public class XMLMenuParser extends XMLParser {
 		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
 
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
-		Set<Recipe> recipes = parseRecipeList(recipeIds);
+		Set<PermanentRecipe> recipes = parseRecipeList(recipeIds);
 
 		Managers.getMenuItemManager().addMenuItem(itemId, name, description, recipes);
 		return itemId;
@@ -80,8 +80,8 @@ public class XMLMenuParser extends XMLParser {
 	 * 
 	 * @return Set of recipes
 	 */
-	private Set<Recipe> parseRecipeList(NodeList recipeIds) {
-		Set<Recipe> recipeList = new HashSet<Recipe>();
+	private Set<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
+		Set<PermanentRecipe> recipeList = new HashSet<PermanentRecipe>();
 		for (int i = 0; i < recipeIds.getLength(); i++) {
 			Node node = recipeIds.item(i);
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {
