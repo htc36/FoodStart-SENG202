@@ -1,5 +1,6 @@
 package foodstart.manager.order;
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 
@@ -76,6 +77,30 @@ public class OrderManager
 	public Set<Order> getOrderSet() {
 		Set<Order> orderSet = new HashSet<Order>(this.orders.values());
 		return orderSet;
+	}
+
+	/**
+	 * Returns the list of items and item quantities in an order of a given id as a string
+	 * @param id the id of the order
+	 * @return a string representation of the items in the order
+	 */
+	public String getItemsAsString(int id) {
+		Order order = this.orders.get(id);
+		if (order == null) {
+			return "";
+		}
+		String output = "";
+		Map<Recipe, Integer> items = order.getItems();
+		for (Recipe recipe : items.keySet()) {
+			if (recipe instanceof PermanentRecipe) {
+				//Permanent recipe
+				output.concat(String.format("%dx %s", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName()));
+			} else {
+				//OTF Recipe
+				output.concat(String.format("%dx %s (Modified)", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName()));
+			}
+		}
+		return output;
 	}
 }
 

@@ -4,13 +4,11 @@ import foodstart.manager.Managers;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.order.Order;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 import java.util.Set;
 
@@ -44,7 +42,9 @@ public class SalesController {
 		tranIDCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCustomerName()));
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", Float.toString(cell.getValue().getTotalCost()))));
-		itemsCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getItemsAsString()));
+		itemsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getItemsAsString(cell.getValue().getId())));
+		timeCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalTime().toString()));
+		dateCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalDate().toString()));
 
 	}
 

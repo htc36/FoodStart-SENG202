@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
+
 public class MainController {
 
 	@FXML
@@ -66,7 +68,10 @@ public class MainController {
 		
 	}
 	
-	public void showSales() {
-		
+	public void showSales() throws IOException {
+		//TODO Fix null pointer issue
+		rootPane.getChildren().clear();
+		Parent salesScreen = FXMLLoader.load(getClass().getClassLoader().getResource("sales.fxml"));
+		rootPane.setCenter(salesScreen);
 	}
 }
