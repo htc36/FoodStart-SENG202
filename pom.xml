@@ -11,7 +11,7 @@
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
   
-  <!--<packaging>jar</packaging>-->
+  <packaging>jar</packaging>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
