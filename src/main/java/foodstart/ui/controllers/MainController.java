@@ -32,6 +32,9 @@ public class MainController {
 			
 			salesLog = new FXMLLoader(getClass().getResource("../sales.fxml"));
 			salesLog.load();
+			
+			stockSuppliers = new FXMLLoader(getClass().getResource("../suppliers.fxml"));
+			stockSuppliers.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,7 +71,8 @@ public class MainController {
 	}
 	
 	public void showStockSuppliers() {
-		
+		rootPane.setCenter(stockSuppliers.getRoot());
+
 	}
 	
 	public void showSales() throws IOException {
