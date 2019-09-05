@@ -245,20 +245,5 @@ public class Order
 	public int getVariantCount(Recipe recipe) {
 		return this.items.get(recipe);
 	}
-
-	public String getItemsAsString() {
-		String output = "";
-		for (Recipe recipe : this.items.keySet()) {
-			if (recipe instanceof PermanentRecipe) {
-				//Permanent recipe
-				output.concat(String.format("%dx %s", this.items.get(recipe), ((PermanentRecipe) recipe).getDisplayName()));
-			} else {
-				//OTF Recipe
-				output.concat(String.format("%dx %s (Modified)", this.items.get(recipe), ((PermanentRecipe) recipe).getDisplayName()));
-			}
-		}
-		return output;
-	}
-
 }
 

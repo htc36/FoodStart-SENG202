@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
@@ -46,7 +47,9 @@ public class MainController {
 	}
 	
 	public void showSales() throws IOException {
+		//TODO Fix null pointer issue
 		rootPane.getChildren().clear();
-		rootPane.setCenter(FXMLLoader.load(getClass().getResource("createorder.fxml")));
+		Parent salesScreen = FXMLLoader.load(getClass().getClassLoader().getResource("sales.fxml"));
+		rootPane.setCenter(salesScreen);
 	}
 }
