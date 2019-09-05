@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InventoryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.InventoryController">
    <bottom>
       <GridPane>
          <columnConstraints>
@@ -35,13 +35,13 @@
       </GridPane>
    </bottom>
    <center>
-      <TableView fx:id="InventoryData" prefHeight="665.0" prefWidth="1042.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="inventoryView" prefHeight="665.0" prefWidth="1042.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="ID" prefWidth="279.0" text="ID" />
-          <TableColumn fx:id="Name" prefWidth="186.0" text="Name" />
-            <TableColumn fx:id="TruckStock" prefWidth="167.0" text="Truck Stock" />
-            <TableColumn fx:id="KitchenStock" minWidth="0.0" prefWidth="178.0" text="Kitchen Stock" />
-            <TableColumn fx:id="Dietary" prefWidth="213.0" text="Dietary" />
+          <TableColumn fx:id="id" prefWidth="279.0" text="ID" />
+          <TableColumn fx:id="name" prefWidth="186.0" text="Name" />
+            <TableColumn fx:id="truckStock" prefWidth="167.0" text="Truck Stock" />
+            <TableColumn fx:id="kitchenStock" minWidth="0.0" prefWidth="178.0" text="Kitchen Stock" />
+            <TableColumn fx:id="dietary" prefWidth="213.0" text="Dietary" />
         </columns>
       </TableView>
    </center>

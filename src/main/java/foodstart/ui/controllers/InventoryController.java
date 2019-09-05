@@ -47,7 +47,7 @@ public class InventoryController {
 		name.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
 		truckStock.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getTruckStock())));
 		kitchenStock.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getKitchenStock())));
-		name.setCellValueFactory(cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId())));
+		dietary.setCellValueFactory(cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId())));
 	}
 		
 }
