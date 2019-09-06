@@ -35,6 +35,7 @@ public class XMLPersistence extends Persistence {
 		parsers = new HashMap<DataType, XMLParser>();
 		parsers.put(DataType.INGREDIENT, new XMLIngredientParser());
 		parsers.put(DataType.MENU, new XMLMenuParser());
+		parsers.put(DataType.RECIPE, new XMLRecipeParser());
 	}
 	
 	/**
