@@ -39,7 +39,7 @@ public class XMLMenuParser extends XMLParser {
 		NodeList ingredientNodes = doc.getChildNodes();
 		for (int i = 0; i < ingredientNodes.getLength(); i++) {
 			Node node = ingredientNodes.item(i);
-			if (node instanceof Element) {
+			if (node instanceof Element && node.getNodeName().equalsIgnoreCase("menu")) {
 				Set<Integer> menuItems = new HashSet<Integer>();
 				Element element = (Element) node;
 				int menuId = Integer.parseInt(element.getElementsByTagName("menu_id").item(0).getTextContent());
@@ -48,7 +48,7 @@ public class XMLMenuParser extends XMLParser {
 				NodeList nodeList = element.getElementsByTagName("items").item(0).getChildNodes();
 				for (int j = 0; j < nodeList.getLength(); j++) {
 					Node menuItemNode = nodeList.item(j);
-					if (menuItemNode instanceof Element) {
+					if (menuItemNode instanceof Element && menuItemNode.getNodeName().equalsIgnoreCase("item")) {
 						menuItems.add(parseOneMenuItem((Element) menuItemNode));
 					}
 				}
