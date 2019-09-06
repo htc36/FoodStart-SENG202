@@ -65,23 +65,21 @@ public class XMLPersistence extends Persistence {
 	}
 	
 	/**
-	 * If the DTD files do not exist, this will copy them into the target directory 
+	 * This will copy DTD files into the target directory, overwriting files if necessary
 	 * @param directory Directory that the DTD files should be copied into
 	 */
-	public void copyDTDFilesIfNotExists(File directory) throws IOException {
+	public void copyDTDFiles(File directory) throws IOException {
 		for (DataType type : DataType.values()) {
 			File file = new File(directory.getAbsolutePath()+File.separator+type.name().toLowerCase()+".dtd");
-			if (!file.isFile()) {
-				InputStream dtdFile = getClass().getResourceAsStream("../../dtd/"+type.name().toLowerCase()+".dtd");
-				if (dtdFile != null) {
-					FileOutputStream output = new FileOutputStream(file);
-					byte[] fileContents = new byte[16384]; //dtd file shouldn't be bigger than 16kB
-					int length = dtdFile.read(fileContents);
-					dtdFile.close();
-					
-					output.write(fileContents, 0, length);
-					output.close();
-				}
+			InputStream dtdFile = getClass().getResourceAsStream("../../dtd/"+type.name().toLowerCase()+".dtd");
+			if (dtdFile != null) {
+				FileOutputStream output = new FileOutputStream(file);
+				byte[] fileContents = new byte[16384]; //dtd file shouldn't be bigger than 16kB
+				int length = dtdFile.read(fileContents);
+				dtdFile.close();
+				
+				output.write(fileContents, 0, length);
+				output.close();
 			}
 		}
 	}

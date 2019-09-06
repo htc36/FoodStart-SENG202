@@ -151,7 +151,7 @@ public class Main extends Application {
 		}
 		XMLPersistence persistence = (XMLPersistence) Managers.getDefaultPersistence();
 		try {
-			persistence.copyDTDFilesIfNotExists(directory);
+			persistence.copyDTDFiles(directory);
 		} catch (IOException e) {
 			throw new ImportFailureException("Could not copy DTD files into target directory");
 		}
