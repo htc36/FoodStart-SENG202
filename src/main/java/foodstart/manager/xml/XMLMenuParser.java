@@ -36,9 +36,9 @@ public class XMLMenuParser extends XMLParser {
 	 * @param doc The XML document to parse
 	 */
 	public void parse(Document doc) {
-		NodeList ingredientNodes = doc.getChildNodes();
-		for (int i = 0; i < ingredientNodes.getLength(); i++) {
-			Node node = ingredientNodes.item(i);
+		NodeList menuNodes = doc.getChildNodes();
+		for (int i = 0; i < menuNodes.getLength(); i++) {
+			Node node = menuNodes.item(i);
 			if (node instanceof Element && node.getNodeName().equalsIgnoreCase("menu")) {
 				Set<Integer> menuItems = new HashSet<Integer>();
 				Element element = (Element) node;
