@@ -3,7 +3,6 @@ package foodstart.manager.menu;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class MenuItemManager {
 	 * @param description a description of the menu item
 	 * @param variants a set of all recipes that make up the menu item
 	 */
-	public void addMenuItem(int id, String name, String description, List<PermanentRecipe> variants) {
+	public void addMenuItem(int id, String name, String description, Set<PermanentRecipe> variants) {
 		MenuItem menuItem = new MenuItem(id, name, description, variants);
 		this.menuItems.put(id, menuItem);
 	}
@@ -79,5 +78,19 @@ public class MenuItemManager {
 	public Set<MenuItem> getMenuItemSet() {
 		Set<MenuItem> menuItemsSet = new HashSet<MenuItem>(this.menuItems.values());
 		return menuItemsSet;
+	}
+
+	/**
+	 * Returns the approximate price for a menu item of a given id
+	 * @param id the id of the menu item
+	 * @return the mean price of the item
+	 */
+	public float getApproxPrice(int id) {
+		MenuItem item = this.menuItems.get(id);
+		float sum = 0;
+		for (PermanentRecipe recipe : item.getVariants()) {
+			sum += recipe.getPrice();
+		}
+		return sum / item.getVariants().size();
 	}
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.InventoryController">
+   <bottom>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <AnchorPane>
+               <children>
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Import" />
+                      <MenuItem mnemonicParsing="false" text="Export" />
+                        <MenuItem mnemonicParsing="false" text="Add" />
+                        <MenuItem mnemonicParsing="false" text="Remove" />
+                        <MenuItem mnemonicParsing="false" text="Edit" />
+                    </items>
+                  </MenuButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </bottom>
+   <center>
+      <TableView fx:id="inventoryView" prefHeight="665.0" prefWidth="1042.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="279.0" text="ID" />
+          <TableColumn fx:id="name" prefWidth="186.0" text="Name" />
+            <TableColumn fx:id="truckStock" prefWidth="167.0" text="Truck Stock" />
+            <TableColumn fx:id="kitchenStock" minWidth="0.0" prefWidth="178.0" text="Kitchen Stock" />
+            <TableColumn fx:id="dietary" prefWidth="213.0" text="Dietary" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

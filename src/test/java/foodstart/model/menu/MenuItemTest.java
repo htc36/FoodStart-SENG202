@@ -19,14 +19,14 @@ import static org.junit.Assert.*;
 public class MenuItemTest {
 
     private MenuItem testitem;
-    private Set<Recipe> recipes;
+    private Set<PermanentRecipe> recipes;
 
     @Before
     public void setUp() throws Exception {
        Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 //       Ingredient ingredient = new Ingredient(Unit.GRAMS, "TestIngredient",
 //                0, safeFor, 5, 10);
-        Set<Recipe> recipes = new HashSet<Recipe>();
+        Set<PermanentRecipe> recipes = new HashSet<PermanentRecipe>();
         testitem = new MenuItem(0, "TestItem", "MenuItem test item", recipes);
     }
 

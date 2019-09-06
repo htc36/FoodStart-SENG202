@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.SupplierController">
    <bottom>
       <GridPane>
          <columnConstraints>
@@ -22,11 +22,11 @@
                <children>
                   <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Import" />
-                      <MenuItem mnemonicParsing="false" text="Export" />
-                        <MenuItem mnemonicParsing="false" text="Add" />
-                        <MenuItem mnemonicParsing="false" text="Remove" />
-                        <MenuItem mnemonicParsing="false" text="Edit" />
+                      <MenuItem fx:id="importButton" mnemonicParsing="false" text="Import" />
+                      <MenuItem fx:id="exportButton" mnemonicParsing="false" text="Export" />
+                        <MenuItem fx:id="addButton" mnemonicParsing="false" text="Add" />
+                        <MenuItem fx:id="removeButton" mnemonicParsing="false" text="Remove" />
+                        <MenuItem fx:id="editButton" mnemonicParsing="false" text="Edit" />
                     </items>
                   </MenuButton>
                </children>

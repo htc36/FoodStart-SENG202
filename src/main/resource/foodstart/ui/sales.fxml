@@ -5,45 +5,49 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.SalesController">
-   <bottom>
-      <GridPane>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="2.5" prefWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.SalesController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="2.5" prefWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Import" />
-                      <MenuItem mnemonicParsing="false" text="Export" />
-                        <MenuItem mnemonicParsing="false" text="Remove" />
-                        <MenuItem mnemonicParsing="false" text="Edit" />
-                    </items>
-                  </MenuButton>
+                  <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Import" />
+                            <MenuItem mnemonicParsing="false" text="Export" />
+                              <MenuItem mnemonicParsing="false" text="Remove" />
+                              <MenuItem mnemonicParsing="false" text="Edit" />
+                          </items>
+                        </MenuButton>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-         </children>
-      </GridPane>
-   </bottom>
-   <center>
-      <TableView fx:id="salesTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="tranIDCol" prefWidth="174.0" text="Transaction ID" />
-          <TableColumn fx:id="nameCol" prefWidth="130.0" text="Name" />
-            <TableColumn fx:id="timeCol" prefWidth="109.0" text="Time" />
-            <TableColumn fx:id="dateCol" prefWidth="95.0" text="Date" />
-            <TableColumn fx:id="priceCol" prefWidth="123.0" text="Price" />
-            <TableColumn fx:id="itemsCol" prefWidth="392.0" text="Items" />
-        </columns>
-      </TableView>
-   </center>
-</BorderPane>
+            </GridPane>
+         </bottom>
+         <center>
+            <TableView fx:id="salesTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="tranIDCol" prefWidth="174.0" text="Transaction ID" />
+                <TableColumn fx:id="nameCol" prefWidth="130.0" text="Name" />
+                  <TableColumn fx:id="timeCol" prefWidth="109.0" text="Time" />
+                  <TableColumn fx:id="dateCol" prefWidth="95.0" text="Date" />
+                  <TableColumn fx:id="priceCol" prefWidth="123.0" text="Price" />
+                  <TableColumn fx:id="itemsCol" prefWidth="392.0" text="Items" />
+              </columns>
+            </TableView>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

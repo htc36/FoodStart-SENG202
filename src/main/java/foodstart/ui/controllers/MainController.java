@@ -32,6 +32,12 @@ public class MainController {
 			
 			salesLog = new FXMLLoader(getClass().getResource("../sales.fxml"));
 			salesLog.load();
+
+			stockSuppliers = new FXMLLoader(getClass().getResource("../suppliers.fxml"));
+			stockSuppliers.load();
+
+			stockInventory = new FXMLLoader(getClass().getResource("../inventory.fxml"));
+			stockInventory.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,11 +70,13 @@ public class MainController {
 	}
 	
 	public void showStockInventory() {
-		
+		rootPane.setCenter(stockInventory.getRoot());
 	}
+
 	
 	public void showStockSuppliers() {
-		
+		rootPane.setCenter(stockSuppliers.getRoot());
+
 	}
 	
 	public void showSales() throws IOException {
