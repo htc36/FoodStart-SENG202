@@ -22,10 +22,14 @@ import foodstart.model.menu.PermanentRecipe;
  */
 public class XMLMenuParser extends XMLParser {
 
+	/**
+	 * Constructor for menu parser
+	 */
 	public XMLMenuParser() {
 		super(DataType.MENU);
 	}
 
+	@Override
 	/**
 	 * Imports a menu file
 	 * 
