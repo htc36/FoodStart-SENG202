@@ -77,4 +77,16 @@ public class RecipeManager {
 		Set<PermanentRecipe> recipeSet = new HashSet<PermanentRecipe>(this.recipes.values());
 		return recipeSet;
 	}
+
+	public String getRecipesAsString(int id) {
+		PermanentRecipe recipe = this.recipes.get(id);
+		if (recipe == null) {
+			return "";
+		}
+		String out = "";
+		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
+			out.concat(String.format("%dx %s", ingredient.getName()));
+		}
+		return out;
+	}
 }
