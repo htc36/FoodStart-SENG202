@@ -11,7 +11,6 @@ import org.w3c.dom.NodeList;
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
-import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 
 /**
@@ -36,15 +35,17 @@ public class XMLRecipeParser extends XMLParser {
 	 * @param doc The XML document to parse
 	 */
 	public void parse(Document doc) {
-		NodeList ingredientNodes = doc.getChildNodes();
-		if (ingredientNodes.getLength() == 1 && ingredientNodes.item(0) instanceof Element) {
-			if (ingredientNodes.item(0).getNodeName().equalsIgnoreCase("recipes")) {
-				Element element = (Element) ingredientNodes.item(0);
-				NodeList nodes = element.getElementsByTagName("recipe");
-				for (int i = 0; i < nodes.getLength(); i++) {
-					Node recipeNode = nodes.item(i);
-					if (recipeNode instanceof Element) {
-						parseOneRecipe((Element) recipeNode);
+		NodeList recipeNodes = doc.getChildNodes();
+		for (int j = 0; j < recipeNodes.getLength(); j++) {
+			if (recipeNodes.item(j) instanceof Element && recipeNodes.item(j).getNodeName().equalsIgnoreCase("recipes")) {
+				if (recipeNodes.item(0).getNodeName().equalsIgnoreCase("recipes")) {
+					Element element = (Element) recipeNodes.item(j);
+					NodeList nodes = element.getElementsByTagName("recipe");
+					for (int i = 0; i < nodes.getLength(); i++) {
+						Node recipeNode = nodes.item(i);
+						if (recipeNode instanceof Element) {
+							parseOneRecipe((Element) recipeNode);
+						}
 					}
 				}
 			}
