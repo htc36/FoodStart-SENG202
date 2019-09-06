@@ -48,4 +48,20 @@ public class SalesController {
 
 	}
 
+	public void importSales() {
+
+	}
+
+	public void exportSales() {
+
+	}
+
+	public void removeSale() {
+
+	}
+
+	public void editSale() {
+
+	}
+
 }
