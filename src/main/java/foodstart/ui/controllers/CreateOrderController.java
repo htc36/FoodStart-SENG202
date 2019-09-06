@@ -7,6 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -29,11 +31,14 @@ public class CreateOrderController {
 	@FXML
 	private FlowPane flowPane;
 
+	private static Background boxBackground;
+
 	@FXML
 	/**
 	 * Called when the controller is initialized
 	 */
 	public void initialize() {
+		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 		populateMenu(flowPane);
 	}
 
@@ -54,7 +59,7 @@ public class CreateOrderController {
 		VBox box = new VBox();
 		box.setPrefSize(150, 150);
 		box.setPadding(new Insets(5));
-		box.setStyle("-fx-background-color: #FFFFFF;");
+		box.setBackground(boxBackground);
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
 		FlowPane.setMargin(box, new Insets(5));
@@ -71,7 +76,7 @@ public class CreateOrderController {
 
 		box.getChildren().add(itemName);
 		box.getChildren().add(itemPrice);
-		
+
 		return box;
 	}
 }
