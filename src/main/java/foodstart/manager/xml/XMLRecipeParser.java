@@ -9,8 +9,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import foodstart.manager.Managers;
+import foodstart.manager.exceptions.DuplicateDataException;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 
 /**
@@ -80,6 +82,11 @@ public class XMLRecipeParser extends XMLParser {
 			}
 		}
 		
+		for (PermanentRecipe recipe : Managers.getRecipeManager().getRecipes().values()) {
+			if (recipe.getDisplayName().equals(name)) {
+				throw new DuplicateDataException(DataType.RECIPE, name);
+			}
+		}
 		Managers.getRecipeManager().addRecipe(recipeId, name, method, price, ingredients);
 		return recipeId;
 	}
