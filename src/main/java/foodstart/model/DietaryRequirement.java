@@ -7,7 +7,9 @@ package foodstart.model;
  */
 public enum DietaryRequirement
 {
-	VEGAN("vegan"), VEGETARIAN("vegetarian"), GLUTEN_FREE("gluten_free"), NUT_ALLERGY("nut_free"), LACTOSE_INTOLERANT("dairy_free");
+	VEGAN("vegan", "Vegan"), VEGETARIAN("vegetarian", "Vegetarian"), 
+	GLUTEN_FREE("gluten_free", "Gluten Free"), NUT_ALLERGY("nut_free", "Nut Free"), 
+	LACTOSE_INTOLERANT("dairy_free", "Dairy Free");
 	
 	/**
 	 * Locally stored dbName
@@ -15,11 +17,17 @@ public enum DietaryRequirement
 	private final String dbName;
 	
 	/**
+	 * Human friendly name
+	 */
+	private final String name;
+	
+	/**
 	 * Constructor for Enum
 	 * @param dbName The name as it should appear in the database (eg XML)
 	 */
-	private DietaryRequirement(String dbName) {
+	private DietaryRequirement(String dbName, String name) {
 		this.dbName = dbName;
+		this.name = name;
 	}
 	
 	/**
@@ -28,6 +36,14 @@ public enum DietaryRequirement
 	 */
 	public String getDBName() {
 		return this.dbName;
+	}
+	
+	/**
+	 * Gets the name of the unit in a human friendly way
+	 * @return Human friendly name of the dietary requirement
+	 */
+	public String getHumanName() {
+		return this.name;
 	}
 	
 	/**

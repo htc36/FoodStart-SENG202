@@ -127,7 +127,7 @@ public class IngredientManager
 		Map<DietaryRequirement, Boolean> safeDiets = ingredient.getSafeFor();
 		for (Map.Entry<DietaryRequirement, Boolean> entry : safeDiets.entrySet()) {
 			if (entry.getValue()) {
-				safeForList.add(entry.getKey().getDBName());
+				safeForList.add(entry.getKey().getHumanName());
 			}
 		}
 		return String.join(", ", safeForList);
