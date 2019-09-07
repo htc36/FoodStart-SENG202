@@ -102,5 +102,19 @@ public class OrderManager
 		}
 		return output;
 	}
+
+	/**
+	 * Removes an order from the map of sales based on it's id
+	 * @param id the id of the sale to remove
+	 * @return true if the sale was removed, false otherwise
+	 */
+	public boolean removeOrder(int id) {
+		Order removed = this.orders.remove(id);
+		if (removed == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }
 
