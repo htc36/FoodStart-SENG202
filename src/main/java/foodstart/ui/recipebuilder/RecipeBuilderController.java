@@ -94,6 +94,7 @@ public class RecipeBuilderController {
 		masterQuantity.setValueFactory(new IntegerSpinnerValueFactory(1, 1000, 1));
 		masterQuantity.valueProperty().addListener((observable, oldValue, newValue) -> {
 			quantity = newValue;
+			updateTotalPrice();
 		});
 		quantity = 1;
 		
