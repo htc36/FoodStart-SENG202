@@ -92,6 +92,9 @@ public class RecipeBuilderController {
 		variantsDropdown.setValue(menuItem.getVariants().get(0).getDisplayName());
 		
 		masterQuantity.setValueFactory(new IntegerSpinnerValueFactory(1, 1000, 1));
+		masterQuantity.valueProperty().addListener((observable, oldValue, newValue) -> {
+			quantity = newValue;
+		});
 		quantity = 1;
 		
 		setVariant(menuItem.getVariants().get(0));
