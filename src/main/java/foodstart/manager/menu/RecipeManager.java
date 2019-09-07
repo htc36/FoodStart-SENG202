@@ -1,5 +1,8 @@
 package foodstart.manager.menu;
 
+import foodstart.manager.Managers;
+import foodstart.manager.exceptions.DuplicateDataException;
+import foodstart.model.DataType;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 
@@ -51,6 +54,20 @@ public class RecipeManager {
 	 */
 	public PermanentRecipe getRecipe(int id) {
 		return this.recipes.get(id);
+	}
+	
+	/**
+	 * Gets a recipe by its display name, or null if the recipe is not defined
+	 * @param displayName The unique display name of the recipe
+	 * @return The permanent recipe that the name refers to, or null
+	 */
+	public PermanentRecipe getRecipeByDisplayName(String displayName) {
+		for (PermanentRecipe recipe : getRecipes().values()) {
+			if (recipe.getDisplayName().equals(displayName)) {
+				return recipe;
+			}
+		}
+		return null;
 	}
 
 	/**

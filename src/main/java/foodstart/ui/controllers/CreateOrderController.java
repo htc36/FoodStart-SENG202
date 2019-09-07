@@ -3,6 +3,7 @@ package foodstart.ui.controllers;
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import foodstart.ui.recipebuilder.RecipeBuilder;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -63,6 +64,9 @@ public class CreateOrderController {
 		box.setBackground(boxBackground);
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
+		box.setOnMouseClicked((event) -> {
+			new RecipeBuilder(item, null); //TODO make a callback
+		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT)));
