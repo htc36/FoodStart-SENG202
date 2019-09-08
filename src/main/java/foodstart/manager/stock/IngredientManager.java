@@ -55,6 +55,20 @@ public class IngredientManager
 	public Ingredient getIngredient(int id) {
 		return this.ingredients.get(id);
 	}
+	
+	/**
+	 * Gets an ingredient from the map by its name
+	 * @param name The name of the ingredient
+	 * @return The ingredient that this name refers to, or null
+	 */
+	public Ingredient getIngredientByName(String name) {
+		for (Ingredient ingredient : this.ingredients.values()) {
+			if (ingredient.getName().equals(name)) {
+				return ingredient;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Updates the truck stock for some ingredient
