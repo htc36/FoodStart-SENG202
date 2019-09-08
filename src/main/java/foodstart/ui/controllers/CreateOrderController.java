@@ -135,6 +135,7 @@ public class CreateOrderController {
 			new RecipeBuilder(item, new RecipeBuilderRunnable() {
 				@Override
 				public boolean onRecipeComplete(Recipe recipe, int quantity) {
+					if (quantity == 0) return false;
 					if (orderBuilder.canAddItem(recipe, quantity)) {
 						orderBuilder.addItem(recipe, quantity);
 						updateOrderItems();
