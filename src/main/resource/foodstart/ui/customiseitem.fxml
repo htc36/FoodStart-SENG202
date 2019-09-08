@@ -45,9 +45,9 @@
       </ComboBox>
       <TableView fx:id="ingredientTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="500.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
         <columns>
-          <TableColumn minWidth="300.0" prefWidth="300.0" resizable="false" text="Ingredient" />
-          <TableColumn editable="false" minWidth="120.0" prefWidth="120.0" resizable="false" sortable="false" text="Quantity" />
-            <TableColumn minWidth="120.0" prefWidth="120.0" text="Actions" />
+          <TableColumn fx:id="tableIngredientColumn" minWidth="500.0" prefWidth="500.0" resizable="false" text="Ingredient" />
+          <TableColumn fx:id="tableQuantityColumn" editable="false" minWidth="120.0" prefWidth="120.0" resizable="false" sortable="false" text="Quantity" />
+            <TableColumn fx:id="tableActionsColumn" minWidth="120.0" prefWidth="120.0" text="Actions" />
         </columns>
          <GridPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -63,9 +63,10 @@
       </Text>
       <ButtonBar buttonMinWidth="150.0" prefHeight="40.0" prefWidth="600.0" GridPane.columnSpan="3" GridPane.rowIndex="4">
         <buttons>
-          <Button mnemonicParsing="false" text="Add Ingredient" />
-            <Button mnemonicParsing="false" text="Cancel" />
-            <Button fx:id="btnAddToOrder" mnemonicParsing="false" text="Add to Order" />
+            <ComboBox fx:id="allIngredientsDropdown" prefWidth="150.0" />
+          <Button mnemonicParsing="false" onAction="#onAddIngredient" text="Add Ingredient" />
+            <Button mnemonicParsing="false" onAction="#onCancelItem" text="Cancel" />
+            <Button fx:id="btnAddToOrder" mnemonicParsing="false" onAction="#onAddToOrder" text="Add to Order" />
         </buttons>
       </ButtonBar>
       <Text fx:id="totalPriceText" layoutX="50.0" layoutY="554.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL $##.##" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">

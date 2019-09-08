@@ -3,7 +3,9 @@ package foodstart.ui.controllers;
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 import foodstart.ui.recipebuilder.RecipeBuilder;
+import foodstart.ui.recipebuilder.RecipeBuilderRunnable;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,7 +67,13 @@ public class CreateOrderController {
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
 		box.setOnMouseClicked((event) -> {
-			new RecipeBuilder(item, null); //TODO make a callback
+			new RecipeBuilder(item, new RecipeBuilderRunnable() {
+				@Override
+				public boolean onRecipeComplete(Recipe recipe, int quantity) {
+					return true;
+					 //TODO make a callback to an OrderBuilder
+				}
+			});
 		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(

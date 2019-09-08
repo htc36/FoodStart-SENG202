@@ -11,10 +11,16 @@ import foodstart.model.menu.Recipe;
 public abstract class RecipeBuilderRunnable {
 
 	/**
-	 * Called when the recipe builder finishes (the user adds to order)
-	 * Recipe contains the per-item price
-	 * Recipe will be null and quantity 0 if the user cancels the action
-	 * @param recipe The recipe that was selected. Can be a OnTheFlyRecipe
+	 * Called when the recipe builder finishes (the user adds to order) Recipe
+	 * contains the per-item price Recipe will be null and quantity 0 if the user
+	 * cancels the action
+	 * 
+	 * @param recipe
+	 *            The recipe that was selected. Can be a OnTheFlyRecipe
+	 * @param quantity
+	 *            The quantity to add to the order
+	 * @return Boolean on whether the item was able to be added to the order (should
+	 *         the window be closed?)
 	 */
-	public abstract void onRecipeComplete(Recipe recipe, int quantity);
+	public abstract boolean onRecipeComplete(Recipe recipe, int quantity);
 }
