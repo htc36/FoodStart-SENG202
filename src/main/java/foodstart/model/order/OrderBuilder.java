@@ -151,7 +151,7 @@ public class OrderBuilder {
 		int required = 0;
 		for (Map.Entry<Recipe, Integer> item : currentOrder.entrySet()) {
 			if (item.getKey().getIngredients().containsKey(ingredient)) {
-				required += item.getKey().getIngredients().get(ingredient);
+				required += item.getKey().getIngredients().get(ingredient) * item.getValue();
 			}
 		}
 		return required;
