@@ -91,6 +91,8 @@ public class RecipeBuilder {
 	public RecipeBuilder(Recipe baseRecipe, int quantity, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
 		this.callback = callback;
 		this.orderBuilder = stockCheck;
+		
+		orderBuilder.setEditing(baseRecipe, true);
 
 		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../customiseitem.fxml"));
 		try {

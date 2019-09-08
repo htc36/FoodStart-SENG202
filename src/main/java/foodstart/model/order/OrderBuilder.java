@@ -1,8 +1,10 @@
 package foodstart.model.order;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.InsufficientStockException;
@@ -26,12 +28,18 @@ public class OrderBuilder {
 	final Map<Recipe, Integer> currentOrder;
 
 	/**
+	 * Any recipe that is being edited
+	 */
+	final Set<Recipe> editing;
+
+	/**
 	 * Constructor for the order builder
 	 */
 	public OrderBuilder() {
+		editing = new HashSet<Recipe>();
 		currentOrder = new LinkedHashMap<Recipe, Integer>();
-		//LinkedHashMap preserves insertion order so the items in the GUI are
-		//always in the same order
+		// LinkedHashMap preserves insertion order so the items in the GUI are
+		// always in the same order
 	}
 
 	/**
@@ -78,47 +86,57 @@ public class OrderBuilder {
 	 */
 	public void addItem(Recipe recipe, int quantity) {
 		if (!canAddItem(recipe, quantity)) {
-			String name = recipe instanceof PermanentRecipe ? ((PermanentRecipe) recipe).getDisplayName() : "Custom recipe";
-			throw new InsufficientStockException("Insufficient stock to add '"+name+"' to the order");
+			String name = recipe instanceof PermanentRecipe ? ((PermanentRecipe) recipe).getDisplayName()
+					: "Custom recipe";
+			throw new InsufficientStockException("Insufficient stock to add '" + name + "' to the order");
 		}
 		if (currentOrder.containsKey(recipe)) {
 			quantity += currentOrder.get(recipe);
 		}
 		currentOrder.put(recipe, quantity);
 	}
-	
+
 	/**
 	 * Remove all of a given recipe from the order
-	 * @param recipe Recipe to remove
+	 * 
+	 * @param recipe
+	 *            Recipe to remove
 	 */
 	public void removeItem(Recipe recipe) {
 		this.currentOrder.remove(recipe);
 	}
-	
+
 	/**
 	 * Build the order with the given customer name and payment method
-	 * @param customerName Customer's name
-	 * @param paymentMethod Payment method used
+	 * 
+	 * @param customerName
+	 *            Customer's name
+	 * @param paymentMethod
+	 *            Payment method used
 	 */
 	public void build(String customerName, PaymentMethod paymentMethod) {
 		int id = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
 		while (Managers.getOrderManager().getOrder(id) != null) {
-			id++; //make sure the order id is unique
+			id++; // make sure the order id is unique
 		}
-		Managers.getOrderManager().addOrder(id, this.currentOrder, customerName, System.currentTimeMillis(), paymentMethod);
+		Managers.getOrderManager().addOrder(id, this.currentOrder, customerName, System.currentTimeMillis(),
+				paymentMethod);
 	}
-	
+
 	/**
 	 * Gets all items in the current order
+	 * 
 	 * @return Map of recipes and their quantities of items in the current order
 	 */
 	public Map<Recipe, Integer> getCurrentOrder() {
 		return this.currentOrder;
 	}
-	
+
 	/**
 	 * Gets the quantity of an item in the order
-	 * @param recipe Recipe to get the quantity of
+	 * 
+	 * @param recipe
+	 *            Recipe to get the quantity of
 	 * @return Quantity of this item in the order
 	 */
 	public int getQuantity(Recipe recipe) {
@@ -150,10 +168,28 @@ public class OrderBuilder {
 	public int calculateRequiredStock(Ingredient ingredient) {
 		int required = 0;
 		for (Map.Entry<Recipe, Integer> item : currentOrder.entrySet()) {
+			if (editing.contains(item.getKey())) continue;
 			if (item.getKey().getIngredients().containsKey(ingredient)) {
 				required += item.getKey().getIngredients().get(ingredient) * item.getValue();
 			}
 		}
 		return required;
+	}
+
+	/**
+	 * Set a recipe to being edited or not. Editing recipes are excluded from stock
+	 * number calculations
+	 * 
+	 * @param baseRecipe
+	 *            Recipe to set status of
+	 * @param isEditing
+	 *            True if the recipe is being edited, false otherwise
+	 */
+	public void setEditing(Recipe baseRecipe, boolean isEditing) {
+		if (isEditing) {
+			editing.add(baseRecipe);
+		} else {
+			editing.remove(baseRecipe);
+		}
 	}
 }

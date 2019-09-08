@@ -236,10 +236,12 @@ public class CreateOrderController {
 				@Override
 				public boolean onRecipeComplete(Recipe recipe, int quantity) {
 					if (quantity == 0) {
+						orderBuilder.setEditing(recipe, false);
 						editSessions--;
 						return true;
 					} else {
 						if (orderBuilder.canAddItem(recipe, quantity)) {
+							orderBuilder.setEditing(recipe, false);
 							orderBuilder.removeItem(recipe);
 							orderBuilder.addItem(recipe, quantity);
 							updateOrderItems();
