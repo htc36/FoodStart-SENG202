@@ -189,4 +189,27 @@ public class CreateOrderController {
 		}
 		updateOrderItems();
 	}
+	
+	/**
+	 * JavaFX calls this when the place order button is clicked
+	 */
+	public void onPlaceOrder() {
+		String customerName = orderCustomerName.getText();
+		if (customerName.length() == 0) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Missing customer name");
+			alert.setHeaderText("Cannot place the order as the customer's name is missing");
+			alert.setContentText("Insert the customer's name and try again");
+			alert.show();
+			return;
+		}
+		PaymentMethod paymentMethod = PaymentMethod.matchNiceName(orderPaymentMethod.getValue());
+		orderBuilder.build(customerName, paymentMethod);
+		
+		//Reset the order panel on the side
+		orderCustomerName.setText("");
+		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
+		orderBuilder = new OrderBuilder();
+		updateOrderItems();
+	}
 }
