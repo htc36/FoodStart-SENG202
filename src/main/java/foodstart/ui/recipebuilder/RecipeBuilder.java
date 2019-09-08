@@ -51,12 +51,13 @@ public class RecipeBuilder {
 		
 		this.controller = ((RecipeBuilderController)loader.getController());
 		this.controller.setRecipeBuilder(this);
-		this.controller.populateFields(baseItem);
 		
 		Scene scene = new Scene(loader.getRoot());
 		Stage stage = new Stage();
 		stage.setTitle("Customise Item");
 		stage.setScene(scene);
 		stage.show();
+		
+		this.controller.populateFields(baseItem);
 	}
 }
