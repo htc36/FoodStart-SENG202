@@ -1,16 +1,28 @@
 package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
+import foodstart.model.PaymentMethod;
 import foodstart.model.menu.MenuItem;
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
+import foodstart.model.order.OrderBuilder;
 import foodstart.ui.recipebuilder.RecipeBuilder;
 import foodstart.ui.recipebuilder.RecipeBuilderRunnable;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -35,7 +47,36 @@ public class CreateOrderController {
 	@FXML
 	private FlowPane flowPane;
 
-	private static Background boxBackground;
+	@FXML
+	private TableView<Recipe> orderTable;
+
+	@FXML
+	private TableColumn<Recipe, Integer> columnQty;
+
+	@FXML
+	private TableColumn<Recipe, String> columnItem;
+
+	@FXML
+	private TableColumn<Recipe, String> columnPrice;
+
+	@FXML
+	private TextField orderCustomerName;
+
+	@FXML
+	private ComboBox<String> orderPaymentMethod;
+	
+	@FXML
+	private Text orderPrice;
+
+	/**
+	 * Box background for menu items in the grid
+	 */
+	private Background boxBackground;
+
+	/**
+	 * There should only be 1 order in progress at a time
+	 */
+	private OrderBuilder orderBuilder;
 
 	@FXML
 	/**
@@ -44,6 +85,24 @@ public class CreateOrderController {
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 		populateMenu(flowPane);
+		orderBuilder = new OrderBuilder();
+
+		columnQty.setCellValueFactory(
+				cell -> new SimpleIntegerProperty(orderBuilder.getQuantity(cell.getValue())).asObject());
+		columnItem.setCellValueFactory(cell -> new SimpleStringProperty(
+				cell.getValue() instanceof PermanentRecipe ? ((PermanentRecipe) cell.getValue()).getDisplayName()
+						: ("(Custom) " + ((OnTheFlyRecipe) cell.getValue()).getBasedOn().getDisplayName())));
+		columnPrice.setCellValueFactory(cell -> new SimpleStringProperty(
+				String.format("%.02f", cell.getValue().getPrice() * orderBuilder.getQuantity(cell.getValue()))));
+
+		
+		orderPaymentMethod.getItems().clear();
+		for (
+
+		PaymentMethod method : PaymentMethod.values()) {
+			orderPaymentMethod.getItems().add(method.getNiceName());
+		}
+		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
 	}
 
 	/**
@@ -52,14 +111,21 @@ public class CreateOrderController {
 	 * @param flowPane
 	 *            The flowpane to populate
 	 */
-	public static void populateMenu(FlowPane flowPane) {
+	public void populateMenu(FlowPane flowPane) {
 		flowPane.getChildren().clear();
 		for (MenuItem item : Managers.getMenuItemManager().getMenuItemSet()) {
 			flowPane.getChildren().add(createMenuItemBox(item));
 		}
 	}
 
-	private static Node createMenuItemBox(MenuItem item) {
+	/**
+	 * Create a VBox that represents a menuitem to be added to the list
+	 * 
+	 * @param item
+	 *            Menu item to represent
+	 * @return Node representing the menuitem
+	 */
+	private Node createMenuItemBox(MenuItem item) {
 		VBox box = new VBox();
 		box.setPrefSize(150, 150);
 		box.setPadding(new Insets(5));
@@ -70,8 +136,18 @@ public class CreateOrderController {
 			new RecipeBuilder(item, new RecipeBuilderRunnable() {
 				@Override
 				public boolean onRecipeComplete(Recipe recipe, int quantity) {
-					return true;
-					 //TODO make a callback to an OrderBuilder
+					if (orderBuilder.canAddItem(recipe, quantity)) {
+						orderBuilder.addItem(recipe, quantity);
+						updateOrderItems();
+						return true;
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Insufficient Stock");
+						alert.setHeaderText("Cannot add this item to the order as there is insufficient stock");
+						alert.setContentText("Modify the order and try again");
+						alert.show();
+						return false;
+					}
 				}
 			});
 		});
@@ -91,5 +167,19 @@ public class CreateOrderController {
 		box.getChildren().add(itemPrice);
 
 		return box;
+	}
+
+	public void updateOrderItems() {
+		orderTable.getItems().clear(); // otherwise quantities don't get updated
+		orderTable.setItems(FXCollections.observableArrayList(orderBuilder.getCurrentOrder().keySet()));
+		float total = orderBuilder.getCurrentTotalPrice();
+		orderPrice.setText(String.format("Total $%.02f", total));
+	}
+	
+	public void onRemoveFromOrder() {
+		for (Recipe recipe : orderTable.getSelectionModel().getSelectedItems()) {
+			orderBuilder.removeItem(recipe);
+		}
+		updateOrderItems();
 	}
 }
