@@ -94,10 +94,10 @@ public class OrderManager
 		for (Recipe recipe : items.keySet()) {
 			if (recipe instanceof PermanentRecipe) {
 				//Permanent recipe
-				output.concat(String.format("%dx %s", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName()));
+				output += String.format("%dx %s", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
 			} else {
 				//OTF Recipe
-				output.concat(String.format("%dx %s (Modified)", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName()));
+				output += String.format("%dx %s (Modified)", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
 			}
 		}
 		return output;

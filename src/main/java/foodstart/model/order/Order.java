@@ -78,7 +78,7 @@ public class Order
 		this.items = items;
 		this.customerName = customerName;
 		//Ignores timezones by using UTC
-		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced, 0, ZoneOffset.UTC);
+		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced/1000, 0, ZoneOffset.UTC);
 		this.paymentMethod = paymentMethod;
 	}
 

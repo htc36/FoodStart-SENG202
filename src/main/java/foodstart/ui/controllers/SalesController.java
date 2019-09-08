@@ -44,7 +44,7 @@ public class SalesController {
 		salesTableView.setItems(observableOrders);
 		tranIDCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCustomerName()));
-		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", Float.toString(cell.getValue().getTotalCost()))));
+		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.02f", cell.getValue().getTotalCost())));
 		itemsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getItemsAsString(cell.getValue().getId())));
 		timeCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalTime().toString()));
 		dateCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalDate().toString()));
