@@ -1,10 +1,15 @@
 package foodstart.manager.order;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
-
-import java.util.*;
 
 
 /**
@@ -97,7 +102,7 @@ public class OrderManager
 				output += String.format("%dx %s", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
 			} else {
 				//OTF Recipe
-				output += String.format("%dx %s (Modified)", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
+				output += String.format("%dx %s (Modified)", items.get(recipe), ((OnTheFlyRecipe) recipe).getBasedOn().getDisplayName());
 			}
 		}
 		return output;
