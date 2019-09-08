@@ -77,6 +77,11 @@ public class CreateOrderController {
 	 * There should only be 1 order in progress at a time
 	 */
 	private OrderBuilder orderBuilder;
+	
+	/**
+	 * The number of items being edited at a given point in time
+	 */
+	private int editSessions;
 
 	@FXML
 	/**
@@ -194,6 +199,14 @@ public class CreateOrderController {
 	 * JavaFX calls this when the place order button is clicked
 	 */
 	public void onPlaceOrder() {
+		if (editSessions > 0) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Item is being edited");
+			alert.setHeaderText("Cannot place the order as one or more of the items is being edited");
+			alert.setContentText("Finish editing the item(s) and try again");
+			alert.show();
+			return;
+		}
 		String customerName = orderCustomerName.getText();
 		if (customerName.length() == 0) {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -211,5 +224,38 @@ public class CreateOrderController {
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
 		orderBuilder = new OrderBuilder();
 		updateOrderItems();
+	}
+	
+	/**
+	 * JavaFX calls this when the Modify button is clicked
+	 */
+	public void onModifyItem() {
+		for (Recipe recipe : orderTable.getSelectionModel().getSelectedItems()) {
+			editSessions++;
+			new RecipeBuilder(recipe, orderBuilder.getQuantity(recipe), new RecipeBuilderRunnable() {
+				@Override
+				public boolean onRecipeComplete(Recipe recipe, int quantity) {
+					if (quantity == 0) {
+						editSessions--;
+						return true;
+					} else {
+						if (orderBuilder.canAddItem(recipe, quantity)) {
+							orderBuilder.removeItem(recipe);
+							orderBuilder.addItem(recipe, quantity);
+							updateOrderItems();
+							editSessions--;
+							return true;
+						} else {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Insufficient Stock");
+							alert.setHeaderText("Cannot modify this item as there is insufficient stock");
+							alert.setContentText("Modify the order and try again");
+							alert.show();
+							return false;
+						}
+					}
+				}
+			}, orderBuilder);
+		}
 	}
 }

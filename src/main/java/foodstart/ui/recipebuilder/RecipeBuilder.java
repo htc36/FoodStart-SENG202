@@ -24,11 +24,6 @@ import javafx.stage.Stage;
 public class RecipeBuilder {
 
 	/**
-	 * The menu item that this recipe builder is based on
-	 */
-	private final MenuItem baseItem;
-
-	/**
 	 * The callback that should be called on completion
 	 */
 	private final RecipeBuilderRunnable callback;
@@ -58,7 +53,6 @@ public class RecipeBuilder {
 	 *            What should be called when the user is finished
 	 */
 	public RecipeBuilder(MenuItem baseItem, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
-		this.baseItem = baseItem;
 		this.callback = callback;
 		this.orderBuilder = stockCheck;
 
@@ -83,6 +77,42 @@ public class RecipeBuilder {
 		});
 
 		this.controller.populateFields(baseItem);
+	}
+	
+	/**
+	 * Constructor for RecipeBuilder. Calling the constructor will cause the window
+	 * to be opened to customise the already existing recipe
+	 * 
+	 * @param baseRecipe
+	 *            Recipe to be edited
+	 * @param callback
+	 *            What should be called when the user is finished
+	 */
+	public RecipeBuilder(Recipe baseRecipe, int quantity, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
+		this.callback = callback;
+		this.orderBuilder = stockCheck;
+
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../customiseitem.fxml"));
+		try {
+			loader.load();
+		} catch (IOException e) {
+			FXExceptionDisplay.showException(e, false);
+		}
+
+		this.controller = ((RecipeBuilderController) loader.getController());
+		this.controller.setRecipeBuilder(this);
+
+		Scene scene = new Scene(loader.getRoot());
+		stage = new Stage();
+		stage.setTitle("Customise Item");
+		stage.setScene(scene);
+		stage.show();
+
+		stage.setOnCloseRequest((event) -> {
+			cancel();
+		});
+
+		this.controller.populateFields(baseRecipe, quantity);
 	}
 
 	/**

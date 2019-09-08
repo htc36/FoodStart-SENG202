@@ -5,7 +5,9 @@ import java.util.Map;
 
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -153,6 +155,22 @@ public class RecipeBuilderController {
 			allIngredientsDropdown.getItems().add(ingredient.getName());
 		}
 		allIngredientsDropdown.setValue(defaultDropdown);
+		
+		pricePerUnit.textProperty().addListener((observable, oldValue, newValue) -> {
+			isEdited = true;
+			try {
+				float newPrice = Float.valueOf(newValue);
+				if (newPrice >= 0) {
+					price = Math.round(newPrice * 100F) / 100F; // make the price max 2dp
+					setFinishableStatus(1, true);
+					updateTotalPrice();
+				} else {
+					setFinishableStatus(1, false);
+				}
+			} catch (NumberFormatException e) {
+				setFinishableStatus(1, false);
+			}
+		});
 	}
 
 	/**
@@ -183,30 +201,36 @@ public class RecipeBuilderController {
 		quantity = 1;
 
 		setVariant(menuItem.getVariants().get(0));
+	}
+	
+	/**
+	 * Populate the GUI with the given recipe
+	 * 
+	 * @param recipe
+	 *            The recipe to populate it with
+	 */
+	public void populateFields(Recipe recipe, int quantity) {
+		itemNameText.setText("Editing recipe");
+		itemDescriptionText.setText("");
 
-		pricePerUnit.textProperty().addListener((observable, oldValue, newValue) -> {
-			isEdited = true;
-			try {
-				float newPrice = Float.valueOf(newValue);
-				if (newPrice >= 0) {
-					price = Math.round(newPrice * 100F) / 100F; // make the price max 2dp
-					setFinishableStatus(1, true);
-					updateTotalPrice();
-				} else {
-					setFinishableStatus(1, false);
-				}
-			} catch (NumberFormatException e) {
-				setFinishableStatus(1, false);
-			}
-		});
+		variantsDropdown.setDisable(true);
+
+		masterQuantity.getValueFactory().setValue(quantity);
+		this.quantity = quantity;
+
+		setVariant(recipe);
 	}
 
 	/**
 	 * Update the UI to show a new variant of this menuitem
 	 * @param recipe The recipe to update everything to
 	 */
-	private void setVariant(PermanentRecipe recipe) {
-		this.variant = recipe;
+	private void setVariant(Recipe recipe) {
+		if (recipe instanceof PermanentRecipe) {
+			this.variant = (PermanentRecipe) recipe;
+		} else {
+			this.variant = ((OnTheFlyRecipe) recipe).getBasedOn();
+		}
 		isEdited = false;
 		price = recipe.getPrice();
 		pricePerUnit.setText(String.format("%.02f", recipe.getPrice()));

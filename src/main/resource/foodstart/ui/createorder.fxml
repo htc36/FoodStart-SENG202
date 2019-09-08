@@ -56,7 +56,7 @@
                      </GridPane.margin>
                   </Text>
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRemoveFromOrder" text="Remove" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="150.0" mnemonicParsing="false" text="Modify" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="150.0" mnemonicParsing="false" onAction="#onModifyItem" text="Modify" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPlaceOrder" text="Place Order" GridPane.columnSpan="2" GridPane.rowIndex="5" />
                   <TableView fx:id="orderTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                     <columns>
