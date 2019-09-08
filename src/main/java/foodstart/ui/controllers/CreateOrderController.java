@@ -149,7 +149,7 @@ public class CreateOrderController {
 						return false;
 					}
 				}
-			});
+			}, orderBuilder);
 		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(

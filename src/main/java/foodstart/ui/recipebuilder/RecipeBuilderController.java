@@ -226,7 +226,7 @@ public class RecipeBuilderController {
 			int quantity = ingredientMap.get(ingredient);
 			if (!spinnerMap.containsKey(ingredient)) {
 				Spinner<Integer> spinner = new Spinner<Integer>();
-				int stock = ingredient.getTruckStock(); //TODO Account for the rest of the order
+				int stock = builder.getStockFactoringCurrentOrder(ingredient);
 				if (stock == 0) {
 					spinner.setDisable(true);
 					spinner.setValueFactory(new IntegerSpinnerValueFactory(0, 0, 0));
