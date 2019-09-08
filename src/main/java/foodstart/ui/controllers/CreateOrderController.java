@@ -64,7 +64,7 @@ public class CreateOrderController {
 
 	@FXML
 	private ComboBox<String> orderPaymentMethod;
-	
+
 	@FXML
 	private Text orderPrice;
 
@@ -95,7 +95,6 @@ public class CreateOrderController {
 		columnPrice.setCellValueFactory(cell -> new SimpleStringProperty(
 				String.format("%.02f", cell.getValue().getPrice() * orderBuilder.getQuantity(cell.getValue()))));
 
-		
 		orderPaymentMethod.getItems().clear();
 		for (
 
@@ -169,13 +168,20 @@ public class CreateOrderController {
 		return box;
 	}
 
+	/**
+	 * Updates the display whenever the items in the order change
+	 */
 	public void updateOrderItems() {
 		orderTable.getItems().clear(); // otherwise quantities don't get updated
 		orderTable.setItems(FXCollections.observableArrayList(orderBuilder.getCurrentOrder().keySet()));
 		float total = orderBuilder.getCurrentTotalPrice();
 		orderPrice.setText(String.format("Total $%.02f", total));
 	}
-	
+
+	/**
+	 * JavaFX calls this when the remove button is clicked to remove an item from
+	 * the order
+	 */
 	public void onRemoveFromOrder() {
 		for (Recipe recipe : orderTable.getSelectionModel().getSelectedItems()) {
 			orderBuilder.removeItem(recipe);
