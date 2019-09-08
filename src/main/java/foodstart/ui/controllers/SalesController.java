@@ -37,7 +37,7 @@ public class SalesController {
 		populateTable();
 	}
 
-	private void populateTable() {
+	public void populateTable() {
 		OrderManager manager = Managers.getOrderManager();
 		Set<Order> orders = manager.getOrderSet();
 		ObservableList<Order> observableOrders = FXCollections.observableArrayList(orders);

@@ -80,6 +80,7 @@ public class MainController {
 	}
 	
 	public void showSales() throws IOException {
+		((SalesController)salesLog.getController()).populateTable();
 		rootPane.setCenter(salesLog.getRoot());
 	}
 }
