@@ -7,11 +7,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,8 +38,16 @@ public class SalesController {
 	@FXML
 	private TableColumn<Order, String> dateCol;
 
+	private Parent orderEditorFXML;
+	private Stage popupStage;
+
 	@FXML
 	public void initialize() {
+		try {
+			orderEditorFXML = FXMLLoader.load(getClass().getResource("../editOrder.fxml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		populateTable();
 	}
 
@@ -76,7 +90,9 @@ public class SalesController {
 	}
 
 	public void editSale() {
-
+		Screen screen = Screen.getPrimary();
+		popupStage = new Stage();
+		popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
+		popupStage.showAndWait();
 	}
-
 }
