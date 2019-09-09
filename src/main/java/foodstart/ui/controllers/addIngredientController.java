@@ -42,7 +42,7 @@ public class addIngredientController {
 	    UnitComboBox.getItems().addAll("ml", "g", "count");
 	}
 	
-	//used to check if kitchen stock and truck stock feilds are ints
+	//used to check if kitchen stock and truck stock fields are ints
 	private boolean isInt(TextField input) {
 		try {
 			int value = Integer.parseInt(input.getText());
@@ -62,8 +62,9 @@ public class addIngredientController {
 //          safeFor.put(new DietaryRequirement("NUT_FREE", "nut_free"), nutFree.isSelected());
 //          safeFor.put(new DietaryRequirement("DAIRY_FREE", "dairy_free"), dairyFree.isSelected());
 			IngredientManager manager = Managers.getIngredientManager();
-			Unit unit = new Unit(unitString);
-			manager.addIngredient(unit, nameInput.getText(), idInput.getText(), safeFor, kitchenStockInput.getText(), truckStockInput.getText());
+			Unit unit = Unit.matchUnit(unitString);
+			manager.addIngredient(unit, nameInput.getText(), Integer.parseInt(idInput.getText()), safeFor,
+					Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
 		}
 
 
