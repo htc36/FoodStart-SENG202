@@ -54,6 +54,11 @@
       <artifactId>mockito-core</artifactId>
       <version>2.25.1</version>
     </dependency>
+    <dependency>
+      <groupId>no.tornado</groupId>
+      <artifactId>tornadofx-controls</artifactId>
+      <version>1.0.4</version>
+    </dependency>
     <!-- needed?<dependency>
       <groupId>org.jacoco</groupId>
       <artifactId>jacoco-maven-plugin</artifactId>

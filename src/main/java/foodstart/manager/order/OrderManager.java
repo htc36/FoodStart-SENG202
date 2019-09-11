@@ -1,4 +1,5 @@
 package foodstart.manager.order;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,6 +56,19 @@ public class OrderManager
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
+		this.orders.put(id, order);
+	}
+
+	/**
+	 * Constructs and adds an order to the map of all orders
+	 * @param id The identifier code of the order
+	 * @param items The items that have been ordered and their quantities
+	 * @param customerName The name of the customer who made the order
+	 * @param timePlaced The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 */
+	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
 		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
 		this.orders.put(id, order);
 	}
@@ -119,6 +133,42 @@ public class OrderManager
 			return false;
 		} else {
 			return true;
+		}
+	}
+
+	/**
+	 * Mutates an order, changing the ordered items
+	 * @param id The identifier code of the order
+	 * @param items The items that have been ordered and their quantities
+	 * @return true if the order could be found and changed; false otherwise
+	 */
+	public boolean mutateOrderItems(int id, Map<Recipe, Integer> items) {
+		Order order = this.getOrder(id);
+		if (order != null) {
+			order.setItems(items);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Mutates an order, changing it's data
+	 * @param id The identifier code of the order
+	 * @param customerName The name of the customer who made the order
+	 * @param timePlaced The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 * @return true if the order could be found and changed; false otherwise
+	 */
+	public boolean mutateOrder(int id, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
+		Order order = this.getOrder(id);
+		if (order != null) {
+			order.setCustomerName(customerName);
+			order.setTimePlaced(timePlaced);
+			order.setPaymentMethod(paymentMethod);
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

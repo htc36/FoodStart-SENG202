@@ -40,11 +40,13 @@ public class SalesController {
 
 	private Parent orderEditorFXML;
 	private Stage popupStage;
+	private FXMLLoader editorLoader;
 
 	@FXML
 	public void initialize() {
 		try {
-			orderEditorFXML = FXMLLoader.load(getClass().getResource("../editOrder.fxml"));
+			editorLoader = new FXMLLoader(getClass().getResource("../editOrder.fxml"));
+			orderEditorFXML = editorLoader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -90,9 +92,19 @@ public class SalesController {
 	}
 
 	public void editSale() {
-		Screen screen = Screen.getPrimary();
-		popupStage = new Stage();
-		popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
-		popupStage.showAndWait();
+		//TODO: Fix issue with crash when trying to access editor a second time
+		Order order = salesTableView.getSelectionModel().getSelectedItem();
+		if (order == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not edit order as none was selected", ButtonType.OK);
+			alert.setHeaderText("No order selected");
+			alert.showAndWait();
+		} else {
+			Screen screen = Screen.getPrimary();
+			popupStage = new Stage();
+			popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
+			((OrderEditorController)editorLoader.getController()).setOrder(order);
+			popupStage.showAndWait();
+			popupStage.setScene(null);
+		}
 	}
 }
