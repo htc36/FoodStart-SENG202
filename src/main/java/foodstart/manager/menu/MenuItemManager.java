@@ -11,24 +11,24 @@ import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 
 /**
- * Acts as a controller, storing and managing the menu items in the model
+ * Acts as a controller, storing and managing the menu items in the model.
  */
 public class MenuItemManager {
 
 	/**
-	 * The map of all menu items modeled in the system
+	 * The map of all menu items modeled in the system.
 	 */
 	private Map<Integer, MenuItem> menuItems;
 
 	/**
-	 * Constructs an instance of a menu item manager
+	 * Constructs an instance of a menu item manager.
 	 */
 	public MenuItemManager() {
 		this.menuItems = new HashMap<Integer, MenuItem>();
 	}
 
 	/**
-	 * Constructs and adds a menu item to the map of menu items
+	 * Constructs and adds a menu item to the map of menu items.
 	 * @param id the UID of the menu item
 	 * @param name the name of the menu item
 	 * @param description a description of the menu item
@@ -49,7 +49,7 @@ public class MenuItemManager {
 	}
 
 	/**
-	 * Returns the map of all menu items modeled
+	 * Returns the map of all menu items modeled.
 	 * @return the map of all menu items modeled
 	 */
 	public Map<Integer, MenuItem> getMenuItems() {
@@ -57,9 +57,9 @@ public class MenuItemManager {
 	}
 
 	/**
-	 * Returns the set of menu items from the ids specified
-	 * @param ids the ids of the menu items to fetch
-	 * @return the set of menu items requested
+	 * Returns the set of menu items from the IDs specified.
+	 * @param the IDs of the menu items to fetch.
+	 * @return the set of menu items requested.
 	 */
 	public Set<MenuItem> getMenuItems(Collection<Integer> ids) {
 		Set<MenuItem> items = new HashSet<MenuItem>();
