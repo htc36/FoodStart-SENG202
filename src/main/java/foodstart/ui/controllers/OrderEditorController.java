@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
 
@@ -62,7 +63,6 @@ public class OrderEditorController {
 		LocalDateTime timePlaced = dateTimePicker.getDateTimeValue();
 
 		manager.mutateOrder(id, name, timePlaced, order.getPaymentMethod());
-		System.out.println(timePlaced);
 		closeSelf();
 	}
 
