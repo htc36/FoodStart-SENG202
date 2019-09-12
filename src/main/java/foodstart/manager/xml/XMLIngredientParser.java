@@ -1,24 +1,21 @@
 package foodstart.manager.xml;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import foodstart.manager.Managers;
+import foodstart.model.DataType;
+import foodstart.model.DietaryRequirement;
+import foodstart.model.Unit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import foodstart.manager.Managers;
-import foodstart.model.DataType;
-import foodstart.model.DietaryRequirement;
-import foodstart.model.Unit;
-import foodstart.model.stock.Ingredient;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses ingredient XML files
- * 
- * @author Alex Hobson
- * @date 28/08/2019
+ *
+ * @author Alex Hobson on 28/08/2019
  */
 public class XMLIngredientParser extends XMLParser {
 
@@ -28,7 +25,7 @@ public class XMLIngredientParser extends XMLParser {
 
 	/**
 	 * Imports an ingredient file
-	 * 
+	 *
 	 * @param doc The XML document to parse
 	 */
 	public void parse(Document doc) {
@@ -44,7 +41,7 @@ public class XMLIngredientParser extends XMLParser {
 
 	/**
 	 * Parses one ingredient from the given element
-	 * 
+	 *
 	 * @param element XML Element to parse
 	 */
 	private void parseOneIngredient(Element element) {

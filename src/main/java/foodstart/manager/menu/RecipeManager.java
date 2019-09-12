@@ -1,8 +1,5 @@
 package foodstart.manager.menu;
 
-import foodstart.manager.Managers;
-import foodstart.manager.exceptions.DuplicateDataException;
-import foodstart.model.DataType;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 
@@ -27,6 +24,7 @@ public class RecipeManager {
 
 	/**
 	 * Returns the map of all permanent recipes modeled
+	 *
 	 * @return the map of all permanent recipes modeled
 	 */
 	public Map<Integer, PermanentRecipe> getRecipes() {
@@ -35,12 +33,12 @@ public class RecipeManager {
 
 	/**
 	 * Constructs and adds a permanent recipe to the map of recipes
-	 * @param id the UID of the recipe
-	 * @param name the display name of the recipe
+	 *
+	 * @param id           the UID of the recipe
+	 * @param name         the display name of the recipe
 	 * @param instructions the instructions to make the recipe
-	 * @param price the price of the recipe
-	 * @param ingredients the ingredients that make up the recipe
-	 * @return true if the recipe was added to the set; false otherwise
+	 * @param price        the price of the recipe
+	 * @param ingredients  the ingredients that make up the recipe
 	 */
 	public void addRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients) {
 		PermanentRecipe recipe = new PermanentRecipe(id, name, instructions, price, ingredients);
@@ -49,17 +47,19 @@ public class RecipeManager {
 
 	/**
 	 * Gets a recipe by its id, or null if the recipe is not defined
+	 *
 	 * @param id The unique recipe ID
 	 * @return The recipe that the UID refers to, or null
 	 */
 	public PermanentRecipe getRecipe(int id) {
 		return this.recipes.get(id);
 	}
-	
+
 	/**
 	 * Gets a recipe by its display name, or null if the recipe is not defined
+	 *
 	 * @param displayName The unique display name of the recipe
-	 * @return The permanent recipe that the name refers to, or null
+	 * @return recipe The permanent recipe that the name refers to, or null
 	 */
 	public PermanentRecipe getRecipeByDisplayName(String displayName) {
 		for (PermanentRecipe recipe : getRecipes().values()) {
@@ -72,8 +72,9 @@ public class RecipeManager {
 
 	/**
 	 * Returns the set of recipes from the ids specified
+	 *
 	 * @param ids the ids of the recipes to fetch
-	 * @return the set of recipes requested
+	 * @return items The set of recipes requested
 	 */
 	public Set<PermanentRecipe> getRecipes(Collection<Integer> ids) {
 		Set<PermanentRecipe> items = new HashSet<PermanentRecipe>();
@@ -88,21 +89,27 @@ public class RecipeManager {
 
 	/**
 	 * Returns the set of all recipes stored in the map
-	 * @return the set of all recipes stored in the map
+	 *
+	 * @return recipeSet The set of all recipes stored in the map
 	 */
 	public Set<PermanentRecipe> getRecipeSet() {
-		Set<PermanentRecipe> recipeSet = new HashSet<PermanentRecipe>(this.recipes.values());
-		return recipeSet;
+		return new HashSet<PermanentRecipe>(this.recipes.values());
 	}
 
-	public String getRecipesAsString(int id) {
+	/**
+	 * Returns the ingredients and their truck stock quantity as a string
+	 *
+	 * @param id The id of the recipe
+	 * @return out The ingredients and their truck stock quantity as a string
+	 */
+	public String getIngredientsAsString(int id) {
 		PermanentRecipe recipe = this.recipes.get(id);
 		if (recipe == null) {
 			return "";
 		}
 		String out = "";
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
-			out.concat(String.format("%dx %s", ingredient.getName()));
+			out = out.concat(String.format("%dx %s ", ingredient.getTruckStock(), ingredient.getName()));
 		}
 		return out;
 	}

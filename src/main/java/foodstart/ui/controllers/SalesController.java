@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -41,6 +42,7 @@ public class SalesController {
 	private Parent orderEditorFXML;
 	private Stage popupStage;
 	private FXMLLoader editorLoader;
+	private ObservableList<Order> observableOrders;
 
 	@FXML
 	public void initialize() {
@@ -50,13 +52,17 @@ public class SalesController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Screen screen = Screen.getPrimary();
+		popupStage = new Stage();
+		popupStage.initModality(Modality.WINDOW_MODAL);
+		popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
 		populateTable();
 	}
 
 	public void populateTable() {
 		OrderManager manager = Managers.getOrderManager();
 		Set<Order> orders = manager.getOrderSet();
-		ObservableList<Order> observableOrders = FXCollections.observableArrayList(orders);
+		observableOrders = FXCollections.observableArrayList(orders);
 		salesTableView.setItems(observableOrders);
 		tranIDCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCustomerName()));
@@ -64,7 +70,6 @@ public class SalesController {
 		itemsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getItemsAsString(cell.getValue().getId())));
 		timeCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalTime().toString()));
 		dateCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalDate().toString()));
-
 	}
 
 	public void importSales() {
@@ -76,7 +81,6 @@ public class SalesController {
 	}
 
 	public void removeSale() {
-		//TODO Double check this after the xml parser for orders has been implemented
 		Order order = salesTableView.getSelectionModel().getSelectedItem();
 		if (order == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove order as none was selected", ButtonType.OK);
@@ -89,22 +93,26 @@ public class SalesController {
 				Managers.getOrderManager().removeOrder(order.getId());
 			}
 		}
+		populateTable();
 	}
 
 	public void editSale() {
-		//TODO: Fix issue with crash when trying to access editor a second time
 		Order order = salesTableView.getSelectionModel().getSelectedItem();
 		if (order == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not edit order as none was selected", ButtonType.OK);
 			alert.setHeaderText("No order selected");
 			alert.showAndWait();
 		} else {
-			Screen screen = Screen.getPrimary();
-			popupStage = new Stage();
-			popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
-			((OrderEditorController)editorLoader.getController()).setOrder(order);
+			if (popupStage.getOwner() == null) {
+				popupStage.initOwner(this.salesTableView.getScene().getWindow());
+			}
+			((OrderEditorController) editorLoader.getController()).setOrder(order);
 			popupStage.showAndWait();
-			popupStage.setScene(null);
+			refreshTable();
 		}
+	}
+
+	private void refreshTable() {
+		this.observableOrders.setAll(Managers.getOrderManager().getOrderSet());
 	}
 }

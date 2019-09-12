@@ -7,8 +7,7 @@ import foodstart.model.PhoneType;
  * Stores relevant information and methods about a supplier
  */
 
-public class Supplier
-{
+public class Supplier {
 	/**
 	 * UID for supplier
 	 */
@@ -46,13 +45,14 @@ public class Supplier
 
 	/**
 	 * Constructs an instance of a supplier
-	 * @param id the UID of the supplier
+	 *
+	 * @param id           the UID of the supplier
 	 * @param supplierName name of the supplier
-	 * @param phoneNumber supplier contact phone number
-	 * @param phoneType supplier contact phone type
-	 * @param email supplier email address
-	 * @param url supplier website URL
-	 * @param address supplier physical address
+	 * @param phoneNumber  supplier contact phone number
+	 * @param phoneType    supplier contact phone type
+	 * @param email        supplier email address
+	 * @param url          supplier website URL
+	 * @param address      supplier physical address
 	 */
 	public Supplier(int id, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
 		this.id = id;
@@ -66,6 +66,7 @@ public class Supplier
 
 	/**
 	 * Returns the supplier UID
+	 *
 	 * @return the supplier UID
 	 */
 	public int getId() {
@@ -74,6 +75,7 @@ public class Supplier
 
 	/**
 	 * Sets the supplier UID
+	 *
 	 * @param id the supplier UID
 	 */
 	public void setId(int id) {
@@ -82,6 +84,7 @@ public class Supplier
 
 	/**
 	 * Returns the name of the supplier
+	 *
 	 * @return the name of the supplier
 	 */
 	public String getSupplierName() {
@@ -90,6 +93,7 @@ public class Supplier
 
 	/**
 	 * Sets the name of the supplier
+	 *
 	 * @param supplierName the name of the supplier
 	 */
 	public void setSupplierName(String supplierName) {
@@ -98,6 +102,7 @@ public class Supplier
 
 	/**
 	 * Returns the supplier contact phone number
+	 *
 	 * @return the supplier contact phone number
 	 */
 	public String getPhoneNumber() {
@@ -106,6 +111,7 @@ public class Supplier
 
 	/**
 	 * Sets the supplier contact phone number
+	 *
 	 * @param phoneNumber the supplier contact phone number
 	 */
 	public void setPhoneNumber(String phoneNumber) {
@@ -114,6 +120,7 @@ public class Supplier
 
 	/**
 	 * Returns the supplier contact phone type
+	 *
 	 * @return the supplier contact phone type
 	 */
 	public PhoneType getPhoneType() {
@@ -122,6 +129,7 @@ public class Supplier
 
 	/**
 	 * Set the supplier contact phone type
+	 *
 	 * @param phoneType the supplier contact phone type
 	 */
 	public void setPhoneType(PhoneType phoneType) {
@@ -130,6 +138,7 @@ public class Supplier
 
 	/**
 	 * Returns the supplier contact email address
+	 *
 	 * @return the supplier contact email address
 	 */
 	public String getEmail() {
@@ -138,6 +147,7 @@ public class Supplier
 
 	/**
 	 * Sets the supplier contact email address
+	 *
 	 * @param email the supplier contact email address
 	 */
 	public void setEmail(String email) {
@@ -146,6 +156,7 @@ public class Supplier
 
 	/**
 	 * Returns the supplier website URL
+	 *
 	 * @return the supplier website URL
 	 */
 	public String getUrl() {
@@ -154,6 +165,7 @@ public class Supplier
 
 	/**
 	 * Sets the supplier website URL
+	 *
 	 * @param url the supplier website URL
 	 */
 	public void setUrl(String url) {
@@ -162,6 +174,7 @@ public class Supplier
 
 	/**
 	 * Returns the physical address of the supplier
+	 *
 	 * @return the physical address of the supplier
 	 */
 	public String getAddress() {
@@ -170,6 +183,7 @@ public class Supplier
 
 	/**
 	 * Sets the physical address of the supplier
+	 *
 	 * @param address the physical address of the supplier
 	 */
 	public void setAddress(String address) {

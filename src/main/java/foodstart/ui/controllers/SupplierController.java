@@ -1,7 +1,5 @@
 package foodstart.ui.controllers;
 
-import java.util.Set;
-
 import foodstart.manager.Managers;
 import foodstart.manager.stock.SupplierManager;
 import foodstart.model.stock.Supplier;
@@ -11,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.util.Set;
 
 public class SupplierController {
 
@@ -30,16 +30,16 @@ public class SupplierController {
 	private TableColumn<Supplier, String> phoneColumn;
 	@FXML
 	private TableColumn<Supplier, String> phoneTypeColumn;
-	
-	@FXML
+
 	/**
 	 * Called when the controller is initialized
 	 */
+	@FXML
 	public void initialize() {
 		populateSuppliers();
 	}
 
-	
+
 	/**
 	 * Populate the supplierTable with all suppliers and their details
 	 */
@@ -48,7 +48,7 @@ public class SupplierController {
 		Set<Supplier> suppliers = supplierManager.getSupplierSet();
 		ObservableList<Supplier> observableSuppliers = FXCollections.observableArrayList(suppliers);
 		supplierTable.setItems(observableSuppliers);
-		
+
 		codeColumn.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
 		supplierNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSupplierName()));
 		addressColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress()));
@@ -56,9 +56,8 @@ public class SupplierController {
 		emailColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEmail()));
 		phoneColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneNumber()));
 		phoneTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneType().name()));
-		
 
-	
+
 	}
 }
 	

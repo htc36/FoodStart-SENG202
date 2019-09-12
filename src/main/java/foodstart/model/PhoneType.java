@@ -3,17 +3,18 @@ package foodstart.model;
 /**
  * The possible types of phone numbers
  */
-public enum PhoneType
-{
-    MOBILE("Mobile"), WORK("Work"), HOME("Home");
+public enum PhoneType {
+	MOBILE("Mobile"), WORK("Work"), HOME("Home");
 
-    private String name;
-    PhoneType(String name) {
-        this.name = name;
-    }
-    
+	private String name;
+
+	PhoneType(String name) {
+		this.name = name;
+	}
+
 	/**
 	 * Matches a given string to a phone type
+	 *
 	 * @param string The string to match
 	 * @return The type it matched to, or null if it didn't match
 	 */

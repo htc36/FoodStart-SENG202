@@ -1,11 +1,5 @@
 package foodstart.model.order;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.InsufficientStockException;
 import foodstart.model.PaymentMethod;
@@ -13,12 +7,13 @@ import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 
+import java.util.*;
+
 /**
  * Class that builds up an order and calculates whether a given item can be
  * added to the order with the current amount of stock in the truck
- * 
- * @author Alex Hobson
- * @date 08/09/2019
+ *
+ * @author Alex Hobson on 08/09/2019
  */
 public class OrderBuilder {
 
@@ -44,7 +39,7 @@ public class OrderBuilder {
 
 	/**
 	 * Gets the current total price of the order
-	 * 
+	 *
 	 * @return The current total price of the order (2dp)
 	 */
 	public float getCurrentTotalPrice() {
@@ -57,13 +52,11 @@ public class OrderBuilder {
 
 	/**
 	 * Calculates whether the proposed item can be added to the order
-	 * 
-	 * @param recipe
-	 *            Recipe to see if it can be added
-	 * @param quantity
-	 *            How much of this recipe to try and add
+	 *
+	 * @param recipe   Recipe to see if it can be added
+	 * @param quantity How much of this recipe to try and add
 	 * @return True if the item can be added to the order with the current stock,
-	 *         false otherwise
+	 * false otherwise
 	 */
 	public boolean canAddItem(Recipe recipe, int quantity) {
 		for (Map.Entry<Ingredient, Integer> recipeItem : recipe.getIngredients().entrySet()) {
@@ -78,11 +71,10 @@ public class OrderBuilder {
 
 	/**
 	 * Adds the item to the order
-	 * 
-	 * @param recipe
-	 * @param quantity
-	 * @throws InsufficientStockException
-	 *             when there isn't enough truck stock to add this to the order
+	 *
+	 * @param recipe the recipe to add
+	 * @param quantity the number of the recipe to add
+	 * @throws InsufficientStockException when there isn't enough truck stock to add this to the order
 	 */
 	public void addItem(Recipe recipe, int quantity) {
 		if (!canAddItem(recipe, quantity)) {
@@ -98,9 +90,8 @@ public class OrderBuilder {
 
 	/**
 	 * Remove all of a given recipe from the order
-	 * 
-	 * @param recipe
-	 *            Recipe to remove
+	 *
+	 * @param recipe Recipe to remove
 	 */
 	public void removeItem(Recipe recipe) {
 		this.currentOrder.remove(recipe);
@@ -108,11 +99,9 @@ public class OrderBuilder {
 
 	/**
 	 * Build the order with the given customer name and payment method
-	 * 
-	 * @param customerName
-	 *            Customer's name
-	 * @param paymentMethod
-	 *            Payment method used
+	 *
+	 * @param customerName  Customer's name
+	 * @param paymentMethod Payment method used
 	 */
 	public void build(String customerName, PaymentMethod paymentMethod) {
 		int id = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
@@ -126,7 +115,7 @@ public class OrderBuilder {
 
 	/**
 	 * Gets all items in the current order
-	 * 
+	 *
 	 * @return Map of recipes and their quantities of items in the current order
 	 */
 	public Map<Recipe, Integer> getCurrentOrder() {
@@ -135,15 +124,14 @@ public class OrderBuilder {
 
 	/**
 	 * Gets the quantity of an item in the order
-	 * 
-	 * @param recipe
-	 *            Recipe to get the quantity of
+	 *
+	 * @param recipe Recipe to get the quantity of
 	 * @return Quantity of this item in the order
 	 */
 	public int getQuantity(Recipe recipe) {
 		return this.currentOrder.get(recipe);
 	}
-	
+
 	/**
 	 * Removed all the items that the order takes from the truck's inventory
 	 */
@@ -155,7 +143,7 @@ public class OrderBuilder {
 
 	/**
 	 * Calculates the amount of stock needed to create the current order
-	 * 
+	 *
 	 * @return Map of ingredients to the amount it needs
 	 */
 	private Map<Ingredient, Integer> calculateRequiredStock() {
@@ -172,7 +160,7 @@ public class OrderBuilder {
 	/**
 	 * Calculates the amount of stock needed of a particular ingredient to create
 	 * the current order
-	 * 
+	 *
 	 * @return Integer of how much is needed
 	 */
 	public int calculateRequiredStock(Ingredient ingredient) {
@@ -189,11 +177,9 @@ public class OrderBuilder {
 	/**
 	 * Set a recipe to being edited or not. Editing recipes are excluded from stock
 	 * number calculations
-	 * 
-	 * @param baseRecipe
-	 *            Recipe to set status of
-	 * @param isEditing
-	 *            True if the recipe is being edited, false otherwise
+	 *
+	 * @param baseRecipe Recipe to set status of
+	 * @param isEditing  True if the recipe is being edited, false otherwise
 	 */
 	public void setEditing(Recipe baseRecipe, boolean isEditing) {
 		if (isEditing) {

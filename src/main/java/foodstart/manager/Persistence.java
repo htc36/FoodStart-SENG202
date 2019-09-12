@@ -1,22 +1,20 @@
 package foodstart.manager;
 
-import java.io.File;
-
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 
+import java.io.File;
+
 /**
- * 
- * @author Alex Hobson
- * @date 22/08/2019
+ * @author Alex Hobson on 22/08/2019
  */
-public abstract class Persistence
-{
+public abstract class Persistence {
 
 	/**
 	 * Reads and imports a specified file assuming it contains
 	 * data of the specified DataType
-	 * @param file File to read
+	 *
+	 * @param file     File to read
 	 * @param dataType The type of file to read
 	 * @throws ImportFailureException if the data is inconsistent
 	 */
@@ -25,10 +23,11 @@ public abstract class Persistence
 	/**
 	 * Exports all data stored in memory of a given DataType to
 	 * a specified file
-	 * @param file File to export to
+	 *
+	 * @param file     File to export to
 	 * @param dataType The data type to export
 	 */
-	
+
 	public abstract void exportFile(File file, DataType dataType);
 
 }

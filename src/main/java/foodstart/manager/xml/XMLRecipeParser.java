@@ -1,25 +1,23 @@
 package foodstart.manager.xml;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.DuplicateDataException;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses recipe XML files
- * 
- * @author Alex Hobson
- * @date 06/09/2019
+ *
+ * @author Alex Hobson on 06/09/2019
  */
 public class XMLRecipeParser extends XMLParser {
 
@@ -30,12 +28,12 @@ public class XMLRecipeParser extends XMLParser {
 		super(DataType.RECIPE);
 	}
 
-	@Override
 	/**
 	 * Imports a recipe file
-	 * 
+	 *
 	 * @param doc The XML document to parse
 	 */
+	@Override
 	public void parse(Document doc) {
 		NodeList recipeNodes = doc.getChildNodes();
 		for (int j = 0; j < recipeNodes.getLength(); j++) {
@@ -53,9 +51,10 @@ public class XMLRecipeParser extends XMLParser {
 			}
 		}
 	}
-	
+
 	/**
 	 * Parses a single recipe from the given element
+	 *
 	 * @param element The XML element to parse
 	 * @return Recipe that was parsed (also added to the registry)
 	 */
@@ -65,9 +64,9 @@ public class XMLRecipeParser extends XMLParser {
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String method = element.getElementsByTagName("method").item(0).getTextContent();
 		float price = Float.parseFloat(element.getElementsByTagName("price").item(0).getTextContent());
-		NodeList ingredientsNodes = ((Element)element.getElementsByTagName("ingredients").item(0)).getElementsByTagName("ingredient");
+		NodeList ingredientsNodes = ((Element) element.getElementsByTagName("ingredients").item(0)).getElementsByTagName("ingredient");
 		Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-		
+
 		for (int i = 0; i < ingredientsNodes.getLength(); i++) {
 			Node ingredientNode = ingredientsNodes.item(i);
 			if (ingredientNode instanceof Element) {
@@ -81,7 +80,7 @@ public class XMLRecipeParser extends XMLParser {
 				ingredients.put(ingredient, quantity);
 			}
 		}
-		
+
 		for (PermanentRecipe recipe : Managers.getRecipeManager().getRecipes().values()) {
 			if (recipe.getDisplayName().equals(name)) {
 				throw new DuplicateDataException(DataType.RECIPE, name);
