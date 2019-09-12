@@ -121,6 +121,7 @@ public class OrderBuilder {
 		}
 		Managers.getOrderManager().addOrder(id, this.currentOrder, customerName, System.currentTimeMillis(),
 				paymentMethod);
+		deductStock();
 	}
 
 	/**
@@ -141,6 +142,15 @@ public class OrderBuilder {
 	 */
 	public int getQuantity(Recipe recipe) {
 		return this.currentOrder.get(recipe);
+	}
+	
+	/**
+	 * Removed all the items that the order takes from the truck's inventory
+	 */
+	private void deductStock() {
+		for (Map.Entry<Ingredient, Integer> ingredient : calculateRequiredStock().entrySet()) {
+			ingredient.getKey().setTruckStock(ingredient.getKey().getTruckStock() - ingredient.getValue());
+		}
 	}
 
 	/**
