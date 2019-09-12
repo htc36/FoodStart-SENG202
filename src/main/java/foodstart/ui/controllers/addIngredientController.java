@@ -32,7 +32,7 @@ public class addIngredientController {
 	@FXML
 	private CheckBox dairyFree;
 	@FXML
-	private ComboBox UnitComboBox;
+	private ComboBox<String> UnitComboBox;
 	
 
 	@FXML
@@ -51,31 +51,22 @@ public class addIngredientController {
 			return false;
 		}
 	}
-	private void submit() {
+
+	public void submit() {
 		String unitString = (String) UnitComboBox.getValue();
+		/*
 		if (isInt(truckStockInput) && isInt(kitchenStockInput) && ! isInt(nameInput) && unitString != "") {
-			HashMap<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>(); 
+		 */
+		HashMap<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>(); 
 //			having trouble making enum this is throwing errors
-//          safeFor.put(new DietaryRequirement("VEGAN", "vegan"), vegan.isSelected());
-//          safeFor.put(new DietaryRequirement("VEGETARIAN", "vegetarian"), vegetarian.isSelected());
-//          safeFor.put(new DietaryRequirement("GLUTEN_FREE", "gluten_free"), glutenFree.isSelected());
-//          safeFor.put(new DietaryRequirement("NUT_FREE", "nut_free"), nutFree.isSelected());
-//          safeFor.put(new DietaryRequirement("DAIRY_FREE", "dairy_free"), dairyFree.isSelected());
-			IngredientManager manager = Managers.getIngredientManager();
-			Unit unit = Unit.matchUnit(unitString);
-			manager.addIngredient(unit, nameInput.getText(), Integer.parseInt(idInput.getText()), safeFor,
-					Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
+         safeFor.put(DietaryRequirement.VEGAN, vegan.isSelected());
+         safeFor.put(DietaryRequirement.VEGETARIAN, vegetarian.isSelected());
+         safeFor.put(DietaryRequirement.GLUTEN_FREE, glutenFree.isSelected());
+         safeFor.put(DietaryRequirement.NUT_ALLERGY, nutFree.isSelected());
+         safeFor.put(DietaryRequirement.LACTOSE_INTOLERANT, dairyFree.isSelected());
+		 IngredientManager manager = Managers.getIngredientManager();
+		 Unit unit = Unit.matchUnit(unitString);
+		 manager.addIngredient(unit, nameInput.getText(), Integer.parseInt(idInput.getText()), safeFor,
+				Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
 		}
-
-
-
-
-
-
-		
-	}
-
-	
-	
-
 }
