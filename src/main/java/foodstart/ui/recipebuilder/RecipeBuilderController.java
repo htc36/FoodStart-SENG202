@@ -250,6 +250,7 @@ public class RecipeBuilderController {
 			int quantity = ingredientMap.get(ingredient);
 			if (!spinnerMap.containsKey(ingredient)) {
 				Spinner<Integer> spinner = new Spinner<Integer>();
+				spinner.setEditable(true);
 				int stock = builder.getStockFactoringCurrentOrder(ingredient);
 				if (stock == 0) {
 					spinner.setDisable(true);
