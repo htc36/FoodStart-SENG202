@@ -4,22 +4,15 @@ import foodstart.manager.Managers;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.PaymentMethod;
 import foodstart.model.order.Order;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.regex.Pattern;
 
 public class OrderEditorController {
 	@FXML

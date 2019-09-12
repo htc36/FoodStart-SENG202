@@ -1,8 +1,5 @@
 package foodstart.ui.recipebuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.OnTheFlyRecipe;
@@ -13,24 +10,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for RecipeBuilder
- * 
- * @author Alex Hobson
- * @date 07/09/2019
+ *
+ * @author Alex Hobson on 07/09/2019
  */
 public class RecipeBuilderController {
 
@@ -66,7 +57,7 @@ public class RecipeBuilderController {
 
 	@FXML
 	private TableColumn<Ingredient, Integer> tableActionColumn;
-	
+
 	@FXML
 	private ComboBox<String> allIngredientsDropdown;
 
@@ -97,39 +88,39 @@ public class RecipeBuilderController {
 	 * number
 	 */
 	private byte canProceed = 0;
-	
+
 	/**
 	 * The variant currently being edited
 	 */
 	private PermanentRecipe variant;
-	
+
 	/**
 	 * Map of ingredients to their spinners
 	 */
 	private Map<Ingredient, Spinner<Integer>> spinnerMap;
-	
+
 	/**
 	 * Map of all ingredients in the current recipe, to their quantity
 	 */
 	private Map<Ingredient, Integer> ingredientMap;
 
-	@FXML
 	/**
 	 * Called when FXML file is loaded, sets up a bunch of things
 	 */
+	@FXML
 	public void initialize() {
 		spinnerMap = new HashMap<Ingredient, Spinner<Integer>>();
 		ingredientMap = new HashMap<Ingredient, Integer>();
-		
+
 		masterQuantity.setValueFactory(new IntegerSpinnerValueFactory(1, 1000, 1));
 		masterQuantity.valueProperty().addListener((observable, oldValue, newValue) -> {
 			quantity = newValue;
 			updateTotalPrice();
 		});
-		
+
 		tableIngredientColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName() + " ("
 				+ Managers.getIngredientManager().safeForString(cell.getValue().getId()) + ")"));
-		
+
 		tableQuantityColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
 
 		tableQuantityColumn.setCellFactory(param -> new TableCell<Ingredient, Integer>() {
@@ -148,18 +139,18 @@ public class RecipeBuilderController {
 				}
 			}
 		});
-		
+
 		String defaultDropdown = "Select an ingredient";
 		allIngredientsDropdown.getItems().add(defaultDropdown);
 		for (Ingredient ingredient : Managers.getIngredientManager().getIngredientSet()) {
 			allIngredientsDropdown.getItems().add(ingredient.getName());
 		}
 		allIngredientsDropdown.setValue(defaultDropdown);
-		
+
 		pricePerUnit.textProperty().addListener((observable, oldValue, newValue) -> {
 			isEdited = true;
 			try {
-				float newPrice = Float.valueOf(newValue);
+				float newPrice = Float.parseFloat(newValue);
 				if (newPrice >= 0) {
 					price = Math.round(newPrice * 100F) / 100F; // make the price max 2dp
 					setFinishableStatus(1, true);
@@ -175,9 +166,8 @@ public class RecipeBuilderController {
 
 	/**
 	 * Sets the instance of the owning recipe builder
-	 * 
-	 * @param builder
-	 *            The builder that created this controller
+	 *
+	 * @param builder The builder that created this controller
 	 */
 	public void setRecipeBuilder(RecipeBuilder builder) {
 		this.builder = builder;
@@ -185,9 +175,8 @@ public class RecipeBuilderController {
 
 	/**
 	 * Populate the GUI with the given menuitem
-	 * 
-	 * @param menuItem
-	 *            The menu item to populate the GUI with
+	 *
+	 * @param menuItem The menu item to populate the GUI with
 	 */
 	public void populateFields(MenuItem menuItem) {
 		itemNameText.setText(menuItem.getName());
@@ -202,12 +191,11 @@ public class RecipeBuilderController {
 
 		setVariant(menuItem.getVariants().get(0));
 	}
-	
+
 	/**
 	 * Populate the GUI with the given recipe
-	 * 
-	 * @param recipe
-	 *            The recipe to populate it with
+	 *
+	 * @param recipe The recipe to populate it with
 	 */
 	public void populateFields(Recipe recipe, int quantity) {
 		itemNameText.setText("Editing recipe");
@@ -223,6 +211,7 @@ public class RecipeBuilderController {
 
 	/**
 	 * Update the UI to show a new variant of this menuitem
+	 *
 	 * @param recipe The recipe to update everything to
 	 */
 	private void setVariant(Recipe recipe) {
@@ -241,7 +230,7 @@ public class RecipeBuilderController {
 
 		updateTotalPrice();
 	}
-	
+
 	/**
 	 * Refreshes the table with all the ingredients and their quantities
 	 */
@@ -257,11 +246,11 @@ public class RecipeBuilderController {
 				} else {
 					if (quantity > stock) {
 						spinner.setValueFactory(new IntegerSpinnerValueFactory(1, stock, stock));
-						
+
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setTitle("Insufficient Stock");
-						alert.setHeaderText("There is not enough '"+ingredient.getName()+"' to make this item");
-						alert.setContentText("The quantity was automatically set to "+stock+" which is the amount of "
+						alert.setHeaderText("There is not enough '" + ingredient.getName() + "' to make this item");
+						alert.setContentText("The quantity was automatically set to " + stock + " which is the amount of "
 								+ "this item in the truck");
 						alert.show();
 					} else {
@@ -290,11 +279,9 @@ public class RecipeBuilderController {
 	/**
 	 * Sets the 'bit'th bit of canProceed to state. True means this bit will be set
 	 * to 0 and the item is valid
-	 * 
-	 * @param bit
-	 *            Bit to set
-	 * @param state
-	 *            Value to give this bit
+	 *
+	 * @param bit   Bit to set
+	 * @param state Value to give this bit
 	 */
 	private void setFinishableStatus(int bit, boolean state) {
 		if (!state) {
@@ -314,7 +301,7 @@ public class RecipeBuilderController {
 		PermanentRecipe recipe = Managers.getRecipeManager().getRecipeByDisplayName(value);
 		setVariant(recipe);
 	}
-	
+
 	/**
 	 * Called by JavaFX when user clicks Add Ingredient
 	 */
@@ -325,7 +312,7 @@ public class RecipeBuilderController {
 			if (ingredientMap.containsKey(ingredient)) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Ingredient already in order");
-				alert.setHeaderText("The ingredient '"+ingredient.getName()+"' is already in the order");
+				alert.setHeaderText("The ingredient '" + ingredient.getName() + "' is already in the order");
 				alert.setContentText("The operation was cancelled, nothing was added to the order");
 				alert.show();
 			} else {
@@ -335,14 +322,14 @@ public class RecipeBuilderController {
 			}
 		}
 	}
-	
+
 	/**
 	 * Called by JavaFX when user clicks cancel to stop customising this item
 	 */
 	public void onCancelItem() {
 		this.builder.cancel();
 	}
-	
+
 	/**
 	 * Called by JavaFX when user clicks Add To Order
 	 */

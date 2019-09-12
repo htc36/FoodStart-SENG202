@@ -106,7 +106,7 @@ public class SalesController {
 			if (popupStage.getOwner() == null) {
 				popupStage.initOwner(this.salesTableView.getScene().getWindow());
 			}
-			((OrderEditorController)editorLoader.getController()).setOrder(order);
+			((OrderEditorController) editorLoader.getController()).setOrder(order);
 			popupStage.showAndWait();
 			refreshTable();
 		}

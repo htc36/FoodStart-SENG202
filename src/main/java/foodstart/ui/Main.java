@@ -1,8 +1,5 @@
 package foodstart.ui;
 
-import java.io.File;
-import java.io.IOException;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.xml.XMLPersistence;
@@ -22,11 +19,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Main/Bootstrap class that launches the application
- * 
- * @author Alex Hobson
- * @date 02/09/2019
+ *
+ * @author Alex Hobson on 02/09/2019
  */
 public class Main extends Application {
 
@@ -37,22 +36,21 @@ public class Main extends Application {
 
 	/**
 	 * Launches the JavaFX Application
-	 * 
-	 * @param args
-	 *            List of commandline args
+	 *
+	 * @param args List of commandline args
 	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
-	@Override
 	/**
 	 * Start the JavaFX application
-	 * 
+	 *
 	 * @param primaryStage
 	 *            Main stage for the application
 	 */
-	public void start(Stage primaryStage) throws IOException {
+	@Override
+	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 
 		splashStage = new Stage();
@@ -70,7 +68,7 @@ public class Main extends Application {
 		fadeIn.setOnFinished((e) -> {
 			try {
 				loadEverything();
-				
+
 				fadeOut.play();
 				primaryStage.show();
 			} catch (Exception ex) {
@@ -83,14 +81,14 @@ public class Main extends Application {
 		fadeOut.setOnFinished((e) -> {
 			splashStage.hide();
 		});
-		
+
 		fadeIn.play();
 		splashStage.show();
 	}
 
 	/**
 	 * Create the splash screen for the application and display it on the given stage
-	 * 
+	 *
 	 * @param stage Stage to display the splash screen on
 	 */
 	private VBox createSplash(Stage stage) {
@@ -103,7 +101,7 @@ public class Main extends Application {
 		splashLayout.getChildren().add(splashImage);
 		Scene splashScene = new Scene(splashLayout, 700, 450);
 		splashScene.setFill(Color.TRANSPARENT);
-		
+
 		stage.setScene(splashScene);
 		return splashLayout;
 	}
@@ -111,7 +109,8 @@ public class Main extends Application {
 	/**
 	 * Blocks until everything required to start the application is loaded
 	 * (at least 1 second)
-	 * @throws Exception 
+	 *
+	 * @throws Exception
 	 */
 	private void loadEverything() throws Exception {
 		long startTime = System.currentTimeMillis();
@@ -126,13 +125,14 @@ public class Main extends Application {
 
 	/**
 	 * Load all the FXML files and initialize them
+	 *
 	 * @throws IOException If the FXML file could not be read
 	 */
 	private void loadFXMLFiles() throws IOException {
 		rootFXML = FXMLLoader.load(getClass().getResource("main.fxml"));
 		//Loaded by calling initialize on MainController
 	}
-	
+
 	/**
 	 * Loads all user data from the Constants.persistencePath path.
 	 * The order is important so things are not being loaded that depend
@@ -142,10 +142,10 @@ public class Main extends Application {
 		File directory = new File(Constants.persistencePath);
 		if (!directory.isDirectory()) {
 			if (directory.exists()) {
-				throw new ImportFailureException("File "+directory.getAbsolutePath()+" is not a directory");
+				throw new ImportFailureException("File " + directory.getAbsolutePath() + " is not a directory");
 			} else {
 				if (!directory.mkdir()) {
-					throw new ImportFailureException("Permissions error creating directory "+directory.getAbsolutePath());
+					throw new ImportFailureException("Permissions error creating directory " + directory.getAbsolutePath());
 				}
 			}
 		}
@@ -155,31 +155,31 @@ public class Main extends Application {
 		} catch (IOException e) {
 			throw new ImportFailureException("Could not copy DTD files into target directory");
 		}
-		File[] importOrder = new File[] {
-			new File(directory, "ingredients.xml"),
-			new File(directory, "recipes.xml"),
-			new File(directory, "menu.xml"),
-			new File(directory, "sales.xml"),
-			new File(directory, "suppliers.xml")
+		File[] importOrder = new File[]{
+				new File(directory, "ingredients.xml"),
+				new File(directory, "recipes.xml"),
+				new File(directory, "menu.xml"),
+				new File(directory, "sales.xml"),
+				new File(directory, "suppliers.xml")
 		};
 		for (File file : importOrder) {
 			if (file.isFile()) {
 				switch (file.getName().toLowerCase()) {
-				case "ingredients.xml":
-					persistence.importFile(file, DataType.INGREDIENT);
-					break;
-				case "menu.xml":
-					persistence.importFile(file, DataType.MENU);
-					break;
-				case "recipes.xml":
-					persistence.importFile(file, DataType.RECIPE);
-					break;
-				case "sales.xml":
-					persistence.importFile(file, DataType.SALES_LOG);
-					break;
-				case "suppliers.xml":
-					persistence.importFile(file, DataType.SUPPLIER);
-					break;
+					case "ingredients.xml":
+						persistence.importFile(file, DataType.INGREDIENT);
+						break;
+					case "menu.xml":
+						persistence.importFile(file, DataType.MENU);
+						break;
+					case "recipes.xml":
+						persistence.importFile(file, DataType.RECIPE);
+						break;
+					case "sales.xml":
+						persistence.importFile(file, DataType.SALES_LOG);
+						break;
+					case "suppliers.xml":
+						persistence.importFile(file, DataType.SUPPLIER);
+						break;
 				}
 			}
 		}

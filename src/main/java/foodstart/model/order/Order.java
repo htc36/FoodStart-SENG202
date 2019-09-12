@@ -1,52 +1,50 @@
 package foodstart.model.order;
-import java.time.Instant;
+
+import foodstart.model.PaymentMethod;
+import foodstart.model.menu.Recipe;
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Set;
 
-import foodstart.model.PaymentMethod;
-import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
-
 
 /**
  * The class that holds information about an order and its methods
- * @author Hamish O'Keefe, Frankie Oprenario
- * @updated 3/9/19
+ *
+ * @author Frankie Oprenario
  */
 
-public class Order
-{
+public class Order {
 	/**
 	 * The identifier code of the order
 	 */
-	
+
 	private int id;
 
 	/**
-	 * The items that have been ordered and their quantities	
+	 * The items that have been ordered and their quantities
 	 */
-	
+
 	private Map<Recipe, Integer> items;
-	
+
 
 	/**
 	 * The name of the customer who made the order
 	 */
-	
+
 	private String customerName;
 
 	/**
 	 * The time that the order was placed
 	 */
-	
+
 	private LocalDateTime timePlaced;
 
 	/**
 	 * The payment method that the customer chose
 	 */
-	
+
 	private PaymentMethod paymentMethod;
 
 	/**
@@ -56,10 +54,11 @@ public class Order
 
 	/**
 	 * The order constructor
-	 * @param id The identifier code of the order
-	 * @param items The items that have been ordered and their quantities	
-	 * @param customerName The name of the customer who made the order
-	 * @param timePlaced The time that the order was placed
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public Order(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
@@ -73,10 +72,11 @@ public class Order
 
 	/**
 	 * The order constructor
-	 * @param id The identifier code of the order
-	 * @param items The items that have been ordered and their quantities
-	 * @param customerName The name of the customer who made the order
-	 * @param timePlaced The time that the order was placed
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public Order(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
@@ -84,13 +84,14 @@ public class Order
 		this.items = items;
 		this.customerName = customerName;
 		//Ignores timezones by using UTC
-		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced/1000, 0, ZoneOffset.UTC);
+		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced / 1000, 0, ZoneOffset.UTC);
 		this.paymentMethod = paymentMethod;
 		calculateCost();
 	}
 
 	/**
 	 * Returns the id of the order
+	 *
 	 * @return the id of the order
 	 */
 	public int getId() {
@@ -99,6 +100,7 @@ public class Order
 
 	/**
 	 * Sets the id of the order
+	 *
 	 * @param id the id of the order
 	 */
 	public void setId(int id) {
@@ -107,6 +109,7 @@ public class Order
 
 	/**
 	 * Returns the map of recipes in the order to the amount of the recipe
+	 *
 	 * @return the map of recipes in the order to the amount of the recipe
 	 */
 	public Map<Recipe, Integer> getItems() {
@@ -115,6 +118,7 @@ public class Order
 
 	/**
 	 * Sets the map of recipes in the order to the amount of the recipe
+	 *
 	 * @param items the map of recipes in the order to the amount of the recipe
 	 */
 	public void setItems(Map<Recipe, Integer> items) {
@@ -123,6 +127,7 @@ public class Order
 
 	/**
 	 * Returns the name of the customer
+	 *
 	 * @return the name of the customer
 	 */
 	public String getCustomerName() {
@@ -131,6 +136,7 @@ public class Order
 
 	/**
 	 * Sets the name of the customer
+	 *
 	 * @param customerName the name of the customer
 	 */
 	public void setCustomerName(String customerName) {
@@ -139,6 +145,7 @@ public class Order
 
 	/**
 	 * Returns the time at which the order was placed
+	 *
 	 * @return the time at which the order was placed
 	 */
 	public LocalDateTime getTimePlaced() {
@@ -147,6 +154,7 @@ public class Order
 
 	/**
 	 * Sets the time at which the order was placed
+	 *
 	 * @param timePlaced the time at which the order was placed
 	 */
 	public void setTimePlaced(LocalDateTime timePlaced) {
@@ -155,6 +163,7 @@ public class Order
 
 	/**
 	 * Returns the payment method for the order
+	 *
 	 * @return the payment method for the order
 	 */
 	public PaymentMethod getPaymentMethod() {
@@ -163,6 +172,7 @@ public class Order
 
 	/**
 	 * Sets the payment method for the order
+	 *
 	 * @param paymentMethod the payment method for the order
 	 */
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
@@ -171,6 +181,7 @@ public class Order
 
 	/**
 	 * Returns the total cost of an order
+	 *
 	 * @return The total cost of the order
 	 */
 	public float getTotalCost() {
@@ -179,6 +190,7 @@ public class Order
 
 	/**
 	 * Adds a recipe to the order. Overrides old value if the recipe already exists
+	 *
 	 * @param recipe the recipe to add
 	 * @param amount the amount of the recipe to add
 	 * @return the previous amount of the recipe, or null if the recipe did not exist
@@ -189,48 +201,58 @@ public class Order
 
 	/**
 	 * Removes a recipe from the order
+	 *
 	 * @param recipe the recipe to remove
 	 * @return the amount of the recipe, or null if the recipe did not exist
 	 */
-	public Integer removeItem(Recipe recipe) { return this.items.remove(recipe); }
+	public Integer removeItem(Recipe recipe) {
+		return this.items.remove(recipe);
+	}
 
-    /**
-     * Sets the amount for the recipe in the order
-     * @param recipe the recipe that requires for the amount to be altered
-     * @param amount the amount to be set
-     */
-    public void setVariantAmount(Recipe recipe, int amount) { this.items.put(recipe, amount); }
+	/**
+	 * Sets the amount for the recipe in the order
+	 *
+	 * @param recipe the recipe that requires for the amount to be altered
+	 * @param amount the amount to be set
+	 */
+	public void setVariantAmount(Recipe recipe, int amount) {
+		this.items.put(recipe, amount);
+	}
 
-    /**
-     * MIGHT NOT NEED THIS BECAUSE OF THE addItem METHOD
-     * Increases the amount of the recipe in the order
-     * @param recipe the recipe that requires its amount to be increased
-     * @param amount the amount to add onto the current amount in the order
-     */
-    public void increaseVariantAmount(Recipe recipe, int amount) {
-        if (this.items.containsKey(recipe)) {
-            setVariantAmount(recipe, (this.items.get(recipe) + amount));
-        } // else, should throw an exception about the recipe not already existing in the order
-    }
+	/**
+	 * MIGHT NOT NEED THIS BECAUSE OF THE addItem METHOD
+	 * Increases the amount of the recipe in the order
+	 *
+	 * @param recipe the recipe that requires its amount to be increased
+	 * @param amount the amount to add onto the current amount in the order
+	 */
+	public void increaseVariantAmount(Recipe recipe, int amount) {
+		if (this.items.containsKey(recipe)) {
+			setVariantAmount(recipe, (this.items.get(recipe) + amount));
+		} // else, should throw an exception about the recipe not already existing in the order
+	}
 
-    /**
-     * Decreases the amount of the recipe in the order
-     * @param recipe the recipe that requires its amount to be decreased
-     * @param amount the amount to subtract from the current amount in the order
-     */
-    public void decreaseVariantAmount(Recipe recipe, int amount) {
-        if (this.items.containsKey(recipe)) {
-            if ((this.items.get(recipe) - amount) > 0) {
-                setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
-            } else if ((this.items.get(recipe) - amount) == 0) {
-                removeItem(recipe); // removes the item completely from the order
-            } else { // else, should throw an exception exceeding the lowest bound (negatives)
+	/**
+	 * Decreases the amount of the recipe in the order
+	 *
+	 * @param recipe the recipe that requires its amount to be decreased
+	 * @param amount the amount to subtract from the current amount in the order
+	 */
+	public void decreaseVariantAmount(Recipe recipe, int amount) {
+		if (this.items.containsKey(recipe)) {
+			if ((this.items.get(recipe) - amount) > 0) {
+				setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
+			} else if ((this.items.get(recipe) - amount) == 0) {
+				removeItem(recipe); // removes the item completely from the order
+			} else { // else, should throw an exception exceeding the lowest bound (negatives)
 				//throw new Exception
-            }
-        } // else, should throw an exception about the recipe not already existing in the order
-    }
+			}
+		} // else, should throw an exception about the recipe not already existing in the order
+	}
 
-    /** Calculates the total number of items ordered
+	/**
+	 * Calculates the total number of items ordered
+	 *
 	 * @return TotalOrderItems The total number of items ordered
 	 */
 	public Integer getTotalItemCount() {
@@ -241,7 +263,9 @@ public class Order
 		return total;
 	}
 
-	/** Gets the recipe amount ordered
+	/**
+	 * Gets the recipe amount ordered
+	 *
 	 * @return variantCount the amount of the ordered recipe
 	 */
 	public int getVariantCount(Recipe recipe) {
@@ -262,6 +286,7 @@ public class Order
 
 	/**
 	 * Sets the total price of the order, used if the cost of recipes changes
+	 *
 	 * @param price the total price of the order
 	 */
 	public void setPrice(float price) {

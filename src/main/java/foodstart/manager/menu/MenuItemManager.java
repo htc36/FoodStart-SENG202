@@ -1,14 +1,9 @@
 package foodstart.manager.menu;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+
+import java.util.*;
 
 /**
  * Acts as a controller, storing and managing the menu items in the model.
@@ -29,10 +24,11 @@ public class MenuItemManager {
 
 	/**
 	 * Constructs and adds a menu item to the map of menu items.
-	 * @param id the UID of the menu item
-	 * @param name the name of the menu item
+	 *
+	 * @param id          the UID of the menu item
+	 * @param name        the name of the menu item
 	 * @param description a description of the menu item
-	 * @param variants a set of all recipes that make up the menu item
+	 * @param variants    a set of all recipes that make up the menu item
 	 */
 	public void addMenuItem(int id, String name, String description, List<PermanentRecipe> variants) {
 		MenuItem menuItem = new MenuItem(id, name, description, variants);
@@ -41,6 +37,7 @@ public class MenuItemManager {
 
 	/**
 	 * Gets a menu item from the map of menu items by its UID
+	 *
 	 * @param id the UID of the menu item
 	 * @return The menu item that the UID refers to, or null
 	 */
@@ -50,6 +47,7 @@ public class MenuItemManager {
 
 	/**
 	 * Returns the map of all menu items modeled.
+	 *
 	 * @return the map of all menu items modeled
 	 */
 	public Map<Integer, MenuItem> getMenuItems() {
@@ -58,7 +56,8 @@ public class MenuItemManager {
 
 	/**
 	 * Returns the set of menu items from the IDs specified.
-	 * @param the IDs of the menu items to fetch.
+	 *
+	 * @param ids the IDs of the menu items to fetch.
 	 * @return the set of menu items requested.
 	 */
 	public Set<MenuItem> getMenuItems(Collection<Integer> ids) {
@@ -74,15 +73,16 @@ public class MenuItemManager {
 
 	/**
 	 * Returns the set of all menu items stored in the map
+	 *
 	 * @return the set of all menu items stored in the map
 	 */
 	public Set<MenuItem> getMenuItemSet() {
-		Set<MenuItem> menuItemsSet = new HashSet<MenuItem>(this.menuItems.values());
-		return menuItemsSet;
+		return new HashSet<MenuItem>(this.menuItems.values());
 	}
 
 	/**
 	 * Returns the approximate price for a menu item of a given id
+	 *
 	 * @param id the id of the menu item
 	 * @return the mean price of the item
 	 */

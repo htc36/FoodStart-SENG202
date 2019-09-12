@@ -6,13 +6,12 @@ import foodstart.manager.menu.RecipeManager;
 import foodstart.manager.order.OrderManager;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.manager.stock.SupplierManager;
-
 import foodstart.manager.xml.XMLPersistence;
 
 /**
  * Manager for all the managers
- * @author Alex Hobson
- * @date 22/08/2019
+ *
+ * @author Alex Hobson on 22/08/2019
  */
 public class Managers {
 
@@ -30,7 +29,7 @@ public class Managers {
 	 * Functions relevant to the menus
 	 */
 	private static MenuManager menuManager = new MenuManager();
-	
+
 	/**
 	 * Functions relevant to ingredients
 	 */

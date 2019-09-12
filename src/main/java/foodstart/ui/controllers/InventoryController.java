@@ -1,55 +1,42 @@
 package foodstart.ui.controllers;
 
+import foodstart.manager.Managers;
+import foodstart.manager.stock.IngredientManager;
+import foodstart.model.stock.Ingredient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
-import foodstart.manager.Managers;
-import foodstart.manager.stock.IngredientManager;
-import foodstart.model.stock.Ingredient;
-
 public class InventoryController {
+	private Stage stage;
 	@FXML
 	private TableView<Ingredient> inventoryView;
-
 	@FXML
 	private TableColumn<Ingredient, String> id;
-
 	@FXML
 	private TableColumn<Ingredient, String> name;
-	
 	@FXML
 	private TableColumn<Ingredient, String> truckStock;
-
 	@FXML
 	private TableColumn<Ingredient, String> kitchenStock;
-
 	@FXML
 	private TableColumn<Ingredient, String> dietary;
-	
 	private FXMLLoader loader;
-	Stage stage;
 
 	@FXML
 	public void initialize() {
 		populateTable();
 	}
-	
+
 	private void populateTable() {
 		IngredientManager ingredientManager = Managers.getIngredientManager();
 		Set<Ingredient> ingredientSet = ingredientManager.getIngredientSet();
@@ -61,6 +48,7 @@ public class InventoryController {
 		kitchenStock.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getKitchenStock())));
 		dietary.setCellValueFactory(cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId())));
 	}
+
 	public void addIngredient() {
 		loader = new FXMLLoader(getClass().getResource("../addIngredientPopUp.fxml"));
 		try {
@@ -75,8 +63,8 @@ public class InventoryController {
 		stage.setScene(scene);
 		stage.show();
 
-		
+
 	}
-		
+
 
 }

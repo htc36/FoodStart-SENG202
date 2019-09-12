@@ -1,10 +1,4 @@
 package foodstart.manager.order;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import foodstart.model.PaymentMethod;
 import foodstart.model.menu.OnTheFlyRecipe;
@@ -12,12 +6,14 @@ import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 
+import java.time.LocalDateTime;
+import java.util.*;
+
 
 /**
  * Acts as a controller, storing and managing the orders in the model
  */
-public class OrderManager
-{
+public class OrderManager {
 	/**
 	 * The map of all orders
 	 */
@@ -26,12 +22,13 @@ public class OrderManager
 	/**
 	 * Constructs a new instance of an order manager
 	 */
-	public OrderManager(){
+	public OrderManager() {
 		this.orders = new HashMap<Integer, Order>();
 	}
 
 	/**
 	 * Returns the map of all orders
+	 *
 	 * @return the map of all orders
 	 */
 	public Map<Integer, Order> getOrders() {
@@ -40,6 +37,7 @@ public class OrderManager
 
 	/**
 	 * Gets an order from the map of orders by its UID
+	 *
 	 * @param id the UID of the order to get
 	 * @return The order that the UID refers to, or null
 	 */
@@ -49,10 +47,11 @@ public class OrderManager
 
 	/**
 	 * Constructs and adds an order to the map of all orders
-	 * @param id The identifier code of the order
-	 * @param items The items that have been ordered and their quantities
-	 * @param customerName The name of the customer who made the order
-	 * @param timePlaced The time that the order was placed
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
@@ -62,10 +61,11 @@ public class OrderManager
 
 	/**
 	 * Constructs and adds an order to the map of all orders
-	 * @param id The identifier code of the order
-	 * @param items The items that have been ordered and their quantities
-	 * @param customerName The name of the customer who made the order
-	 * @param timePlaced The time that the order was placed
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
@@ -75,6 +75,7 @@ public class OrderManager
 
 	/**
 	 * Returns the set of orders from the ids specified
+	 *
 	 * @param ids the ids of the orders to fetch
 	 * @return the set of orders requested
 	 */
@@ -91,15 +92,16 @@ public class OrderManager
 
 	/**
 	 * Returns the set of all orders stored in the map
+	 *
 	 * @return the set of all orders stored in the map
 	 */
 	public Set<Order> getOrderSet() {
-		Set<Order> orderSet = new HashSet<Order>(this.orders.values());
-		return orderSet;
+		return new HashSet<Order>(this.orders.values());
 	}
 
 	/**
 	 * Returns the list of items and item quantities in an order of a given id as a string
+	 *
 	 * @param id the id of the order
 	 * @return a string representation of the items in the order
 	 */
@@ -124,21 +126,19 @@ public class OrderManager
 
 	/**
 	 * Removes an order from the map of sales based on it's id
+	 *
 	 * @param id the id of the sale to remove
 	 * @return true if the sale was removed, false otherwise
 	 */
 	public boolean removeOrder(int id) {
 		Order removed = this.orders.remove(id);
-		if (removed == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return removed != null;
 	}
 
 	/**
 	 * Mutates an order, changing the ordered items
-	 * @param id The identifier code of the order
+	 *
+	 * @param id    The identifier code of the order
 	 * @param items The items that have been ordered and their quantities
 	 * @return true if the order could be found and changed; false otherwise
 	 */
@@ -154,10 +154,11 @@ public class OrderManager
 
 	/**
 	 * Mutates an order, changing it's data
-	 * @param id The identifier code of the order
-	 * @param customerName The name of the customer who made the order
-	 * @param timePlaced The time that the order was placed
-	 * @param price The total price of the order
+	 *
+	 * @param id            The identifier code of the order
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
+	 * @param price         The total price of the order
 	 * @param paymentMethod The payment method that the customer chose
 	 * @return true if the order could be found and changed; false otherwise
 	 */

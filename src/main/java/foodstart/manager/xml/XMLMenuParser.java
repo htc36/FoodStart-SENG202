@@ -1,26 +1,24 @@
 package foodstart.manager.xml;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Parses menu XML files
- * 
- * @author Alex Hobson
- * @date 28/08/2019
+ *
+ * @author Alex Hobson on 28/08/2019
  */
 public class XMLMenuParser extends XMLParser {
 
@@ -31,12 +29,12 @@ public class XMLMenuParser extends XMLParser {
 		super(DataType.MENU);
 	}
 
-	@Override
 	/**
 	 * Imports a menu file
-	 * 
+	 *
 	 * @param doc The XML document to parse
 	 */
+	@Override
 	public void parse(Document doc) {
 		NodeList menuNodes = doc.getChildNodes();
 		for (int i = 0; i < menuNodes.getLength(); i++) {
@@ -62,7 +60,7 @@ public class XMLMenuParser extends XMLParser {
 
 	/**
 	 * Parses one menu item from the given element
-	 * 
+	 *
 	 * @param element XML Element to parse
 	 */
 	private int parseOneMenuItem(Element element) {
@@ -79,10 +77,9 @@ public class XMLMenuParser extends XMLParser {
 
 	/**
 	 * Parses and validates the recipe list from the given NodeList
-	 * 
-	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
-	 * 
+	 *
 	 * @return Set of recipes
+	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
 	 */
 	private List<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
 		List<PermanentRecipe> recipeList = new ArrayList<PermanentRecipe>();

@@ -1,17 +1,16 @@
 package foodstart.manager.stock;
-import java.util.*;
-import java.util.Map.Entry;
 
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
 
+import java.util.*;
+
 
 /**
  * Acts as a controller, storing and managing the ingredients items in the model
  */
-public class IngredientManager
-{
+public class IngredientManager {
 	/**
 	 * The map of all ingredients modeled
 	 */
@@ -21,18 +20,19 @@ public class IngredientManager
 	/**
 	 * Constructs an instance of an ingredient manager
 	 */
-	public IngredientManager(){
+	public IngredientManager() {
 		this.ingredients = new HashMap<Integer, Ingredient>();
 	}
 
 	/**
 	 * Constructs and adds an ingredient to the map of ingredients
-	 * @param unit Unit of the ingredient
-	 * @param name Name of the ingredient
-	 * @param id Identifier code of the ingredient
-	 * @param safeFor map of dietary requirements to whether or not the ingredient is considered safe for that requirement
+	 *
+	 * @param unit         Unit of the ingredient
+	 * @param name         Name of the ingredient
+	 * @param id           Identifier code of the ingredient
+	 * @param safeFor      map of dietary requirements to whether or not the ingredient is considered safe for that requirement
 	 * @param kitchenStock Amount of current stock in the kitchen
-	 * @param truckStock Amount of current stock in the truck
+	 * @param truckStock   Amount of current stock in the truck
 	 */
 	public void addIngredient(Unit unit, String name, int id, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
 		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
@@ -41,6 +41,7 @@ public class IngredientManager
 
 	/**
 	 * Returns the map of all menu items modeled
+	 *
 	 * @return the map of all menu items modeled
 	 */
 	public Map<Integer, Ingredient> getIngredients() {
@@ -49,15 +50,17 @@ public class IngredientManager
 
 	/**
 	 * Gets an ingredient from the map of ingredient by its UID
+	 *
 	 * @param id the UID of the ingredient
 	 * @return The ingredient that the UID refers to, or null
 	 */
 	public Ingredient getIngredient(int id) {
 		return this.ingredients.get(id);
 	}
-	
+
 	/**
 	 * Gets an ingredient from the map by its name
+	 *
 	 * @param name The name of the ingredient
 	 * @return The ingredient that this name refers to, or null
 	 */
@@ -72,7 +75,8 @@ public class IngredientManager
 
 	/**
 	 * Updates the truck stock for some ingredient
-	 * @param id the id of the ingredient to update
+	 *
+	 * @param id     the id of the ingredient to update
 	 * @param amount the amount to set the tuck stock to
 	 */
 	public void updateTruckStock(int id, int amount) {
@@ -82,7 +86,8 @@ public class IngredientManager
 
 	/**
 	 * Updates the kitchen stock for some ingredient
-	 * @param id the id of the ingredient to update
+	 *
+	 * @param id     the id of the ingredient to update
 	 * @param amount the amount to set the kitchen stock to
 	 */
 	public void updateKitchenStock(int id, int amount) {
@@ -92,6 +97,7 @@ public class IngredientManager
 
 	/**
 	 * Checks if an ingredient is in stock in the truck
+	 *
 	 * @param id the id of the ingredient to check
 	 * @return true if the truck stock is greater than 0; false otherwise
 	 */
@@ -102,6 +108,7 @@ public class IngredientManager
 
 	/**
 	 * Checks if an ingredient is in stock in the kitchen
+	 *
 	 * @param id the id of the ingredient to check
 	 * @return true if the truck stock is greater than 0; false otherwise
 	 */
@@ -112,6 +119,7 @@ public class IngredientManager
 
 	/**
 	 * Returns the set of ingredients from the ids specified
+	 *
 	 * @param ids the ids of the ingredients to fetch
 	 * @return the set of ingredients requested
 	 */
@@ -128,16 +136,16 @@ public class IngredientManager
 
 	/**
 	 * Returns the set of all ingredients stored in the map
+	 *
 	 * @return the set of all ingredients stored in the map
 	 */
 	public Set<Ingredient> getIngredientSet() {
-		Set<Ingredient> ingredientSet = new HashSet<Ingredient>(this.ingredients.values());
-		return ingredientSet;
+		return new HashSet<Ingredient>(this.ingredients.values());
 	}
-	
+
 	public String safeForString(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
-		ArrayList<String> safeForList=new ArrayList<String>();
+		ArrayList<String> safeForList = new ArrayList<String>();
 		Map<DietaryRequirement, Boolean> safeDiets = ingredient.getSafeFor();
 		for (Map.Entry<DietaryRequirement, Boolean> entry : safeDiets.entrySet()) {
 			if (entry.getValue()) {
@@ -145,6 +153,6 @@ public class IngredientManager
 			}
 		}
 		return String.join(", ", safeForList);
-		}
+	}
 }
 

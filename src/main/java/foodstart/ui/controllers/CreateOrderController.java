@@ -17,30 +17,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 /**
  * Controller for Create Order panel
- * 
- * @author Alex Hobson
- * @date 04/09/2019
+ *
+ * @author Alex Hobson on 04/09/2019
  */
 public class CreateOrderController {
 
@@ -77,16 +64,16 @@ public class CreateOrderController {
 	 * There should only be 1 order in progress at a time
 	 */
 	private OrderBuilder orderBuilder;
-	
+
 	/**
 	 * The number of items being edited at a given point in time
 	 */
 	private int editSessions;
 
-	@FXML
 	/**
 	 * Called when the controller is initialized
 	 */
+	@FXML
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 		populateMenu(flowPane);
@@ -103,7 +90,7 @@ public class CreateOrderController {
 		orderPaymentMethod.getItems().clear();
 		for (
 
-		PaymentMethod method : PaymentMethod.values()) {
+				PaymentMethod method : PaymentMethod.values()) {
 			orderPaymentMethod.getItems().add(method.getNiceName());
 		}
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
@@ -111,9 +98,8 @@ public class CreateOrderController {
 
 	/**
 	 * Populate the FlowPane with all menu items
-	 * 
-	 * @param flowPane
-	 *            The flowpane to populate
+	 *
+	 * @param flowPane The flowpane to populate
 	 */
 	public void populateMenu(FlowPane flowPane) {
 		flowPane.getChildren().clear();
@@ -124,9 +110,8 @@ public class CreateOrderController {
 
 	/**
 	 * Create a VBox that represents a menuitem to be added to the list
-	 * 
-	 * @param item
-	 *            Menu item to represent
+	 *
+	 * @param item Menu item to represent
 	 * @return Node representing the menuitem
 	 */
 	private Node createMenuItemBox(MenuItem item) {
@@ -194,7 +179,7 @@ public class CreateOrderController {
 		}
 		updateOrderItems();
 	}
-	
+
 	/**
 	 * JavaFX calls this when the place order button is clicked
 	 */
@@ -218,14 +203,14 @@ public class CreateOrderController {
 		}
 		PaymentMethod paymentMethod = PaymentMethod.matchNiceName(orderPaymentMethod.getValue());
 		orderBuilder.build(customerName, paymentMethod);
-		
+
 		//Reset the order panel on the side
 		orderCustomerName.setText("");
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
 		orderBuilder = new OrderBuilder();
 		updateOrderItems();
 	}
-	
+
 	/**
 	 * JavaFX calls this when the Modify button is clicked
 	 */
