@@ -19,6 +19,7 @@ import tornadofx.control.DateTimePicker;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 public class OrderEditorController {
 	@FXML
@@ -58,19 +59,17 @@ public class OrderEditorController {
 	}
 
 	public void editItems() {
-
+		//TODO: Add editor for recipe items
 	}
 
 	public void confirmEdit() {
-		//TODO: Add payment method editor and price to orders
 		OrderManager manager = Managers.getOrderManager();
-
 		int id = order.getId();
 		String name = this.nameField.getText();
 		float price = Float.parseFloat(this.priceField.getText());
 		LocalDateTime timePlaced = dateTimePicker.getDateTimeValue();
-
-		manager.mutateOrder(id, name, timePlaced, order.getPaymentMethod());
+		PaymentMethod paymentMethod = this.paymentMethodCB.getValue();
+		manager.mutateOrder(id, name, timePlaced, price, paymentMethod);
 		closeSelf();
 	}
 

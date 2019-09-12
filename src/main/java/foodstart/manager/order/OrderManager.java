@@ -157,15 +157,17 @@ public class OrderManager
 	 * @param id The identifier code of the order
 	 * @param customerName The name of the customer who made the order
 	 * @param timePlaced The time that the order was placed
+	 * @param price The total price of the order
 	 * @param paymentMethod The payment method that the customer chose
 	 * @return true if the order could be found and changed; false otherwise
 	 */
-	public boolean mutateOrder(int id, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
+	public boolean mutateOrder(int id, String customerName, LocalDateTime timePlaced, float price, PaymentMethod paymentMethod) {
 		Order order = this.getOrder(id);
 		if (order != null) {
 			order.setCustomerName(customerName);
 			order.setTimePlaced(timePlaced);
 			order.setPaymentMethod(paymentMethod);
+			order.setPrice(price);
 			return true;
 		} else {
 			return false;

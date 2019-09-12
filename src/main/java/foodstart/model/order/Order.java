@@ -50,6 +50,11 @@ public class Order
 	private PaymentMethod paymentMethod;
 
 	/**
+	 * The total price of the order
+	 */
+	private float price;
+
+	/**
 	 * The order constructor
 	 * @param id The identifier code of the order
 	 * @param items The items that have been ordered and their quantities	
@@ -63,6 +68,7 @@ public class Order
 		this.customerName = customerName;
 		this.timePlaced = timePlaced;
 		this.paymentMethod = paymentMethod;
+		calculateCost();
 	}
 
 	/**
@@ -80,6 +86,7 @@ public class Order
 		//Ignores timezones by using UTC
 		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced/1000, 0, ZoneOffset.UTC);
 		this.paymentMethod = paymentMethod;
+		calculateCost();
 	}
 
 	/**
@@ -163,16 +170,11 @@ public class Order
 	}
 
 	/**
-	 * Calculates the total cost of an order
-	 * @return totalCost The total cost of the order
+	 * Returns the total cost of an order
+	 * @return The total cost of the order
 	 */
 	public float getTotalCost() {
-		Set<Recipe> recipes = this.items.keySet();
-		float total = 0;
-		for (Recipe recipe : recipes) {
-			total += recipe.getPrice();
-		}
-		return total;
+		return this.price;
 	}
 
 	/**
@@ -244,6 +246,26 @@ public class Order
 	 */
 	public int getVariantCount(Recipe recipe) {
 		return this.items.get(recipe);
+	}
+
+	/**
+	 * Calculates the total price of the order based on the current price of the recipes included
+	 */
+	private void calculateCost() {
+		Set<Recipe> recipes = this.items.keySet();
+		float total = 0;
+		for (Recipe recipe : recipes) {
+			total += recipe.getPrice();
+		}
+		this.price = total;
+	}
+
+	/**
+	 * Sets the total price of the order, used if the cost of recipes changes
+	 * @param price the total price of the order
+	 */
+	public void setPrice(float price) {
+		this.price = price;
 	}
 }
 

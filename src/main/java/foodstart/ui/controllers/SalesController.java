@@ -81,7 +81,6 @@ public class SalesController {
 	}
 
 	public void removeSale() {
-		//TODO Double check this after the xml parser for orders has been implemented
 		Order order = salesTableView.getSelectionModel().getSelectedItem();
 		if (order == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove order as none was selected", ButtonType.OK);
@@ -109,6 +108,7 @@ public class SalesController {
 			}
 			((OrderEditorController)editorLoader.getController()).setOrder(order);
 			popupStage.showAndWait();
+			refreshTable();
 		}
 	}
 
