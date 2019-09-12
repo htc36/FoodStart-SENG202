@@ -38,6 +38,9 @@ public class MainController {
 
 			stockInventory = new FXMLLoader(getClass().getResource("../inventory.fxml"));
 			stockInventory.load();
+
+			manageRecipes = new FXMLLoader(getClass().getResource("../recipes.fxml"));
+			manageRecipes.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +65,8 @@ public class MainController {
 	}
 	
 	public void showManageRecipes() {
-		
+		((recipesController)manageRecipes.getController()).populateTable();
+		rootPane.setCenter(manageRecipes.getRoot());
 	}
 	
 	public void showManageIngredients() {
