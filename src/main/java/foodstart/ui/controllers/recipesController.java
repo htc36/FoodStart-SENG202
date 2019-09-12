@@ -24,24 +24,21 @@ public class recipesController {
 	private TableColumn<PermanentRecipe, String> priceCol;
 	@FXML
 	private TableColumn<PermanentRecipe, String> ingredientsCol;
-	@FXML
-	private TableColumn<PermanentRecipe, String> instructionsCol;
 
 	@FXML
 	public void initialize() {
 		populateTable();
 	}
 
-	private void populateTable() {
+	public void populateTable() {
 		RecipeManager manager = Managers.getRecipeManager();
-		Set<PermanentRecipe> recipes = manager.getRecipeSet();
-		ObservableList<PermanentRecipe> observableRecipes = FXCollections.observableArrayList(recipes);
+		Set<PermanentRecipe> recipesSet = manager.getRecipeSet();
+		ObservableList<PermanentRecipe> observableRecipes = FXCollections.observableArrayList(recipesSet);
 		recipesTableView.setItems(observableRecipes);
 		recIDCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
-		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", Float.toString(cell.getValue().getPrice()))));
-		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getRecipesAsString(cell.getValue().getId())));
-		instructionsCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getInstructions()));
+		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
+		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
 
 	}
 
