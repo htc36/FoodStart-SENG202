@@ -47,7 +47,7 @@ public class SalesController {
 	@FXML
 	public void initialize() {
 		try {
-			editorLoader = new FXMLLoader(getClass().getResource("../editOrder.fxml"));
+			editorLoader = new FXMLLoader(getClass().getResource("editOrder.fxml"));
 			orderEditorFXML = editorLoader.load();
 		} catch (IOException e) {
 			e.printStackTrace();

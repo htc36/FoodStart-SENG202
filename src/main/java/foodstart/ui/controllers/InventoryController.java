@@ -50,7 +50,7 @@ public class InventoryController {
 	}
 
 	public void addIngredient() {
-		loader = new FXMLLoader(getClass().getResource("../addIngredientPopUp.fxml"));
+		loader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {

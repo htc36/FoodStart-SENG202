@@ -129,7 +129,9 @@ public class Main extends Application {
 	 * @throws IOException If the FXML file could not be read
 	 */
 	private void loadFXMLFiles() throws IOException {
-		rootFXML = FXMLLoader.load(getClass().getResource("main.fxml"));
+		//rootFXML = FXMLLoader.load(getClass().getResource("main.fxml"));
+		FXMLLoader rootFXMLLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+		rootFXML = rootFXMLLoader.load();
 		//Loaded by calling initialize on MainController
 	}
 
