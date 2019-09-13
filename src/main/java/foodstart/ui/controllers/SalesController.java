@@ -38,6 +38,8 @@ public class SalesController {
 	private TableColumn<Order, String> timeCol;
 	@FXML
 	private TableColumn<Order, String> dateCol;
+	@FXML
+	private TableColumn<Order, String> paymentMethodCol;
 
 	private Parent orderEditorFXML;
 	private Stage popupStage;
@@ -70,6 +72,7 @@ public class SalesController {
 		itemsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getItemsAsString(cell.getValue().getId())));
 		timeCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalTime().toString()));
 		dateCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTimePlaced().toLocalDate().toString()));
+		paymentMethodCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPaymentMethod().getNiceName()));
 	}
 
 	public void importSales() {
