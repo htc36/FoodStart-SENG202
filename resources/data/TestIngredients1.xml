@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ingredients SYSTEM "../dtd/ingredient.dtd">
+<ingredients>
+	<ingredient unit="g">
+		<id>0</id>
+		<name>Edam Cheese</name>
+		<truck_stock>1000</truck_stock>
+		<kitchen_stock>2000</kitchen_stock>
+		<dietary>
+			<vegan>true</vegan>
+			<vegetarian>true</vegetarian>
+			<nut_free>true</nut_free>
+			<gluten_free>true</gluten_free>
+			<dairy_free>true</dairy_free>
+		</dietary>
+	</ingredient>
+</ingredients>
