@@ -4,6 +4,7 @@ import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.xml.XMLPersistence;
 import foodstart.model.Constants;
+import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -14,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,6 +23,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Main/Bootstrap class that launches the application
@@ -199,6 +202,18 @@ public class Main extends Application {
 				new Scene(rootFXML, screen.getVisualBounds().getWidth(), screen.getVisualBounds().getHeight()));
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 		primaryStage.setMaximized(true);
+	}
+
+	/**
+	 * Returns an array of all possible file filters for a file chooser
+	 * @return the array of all possible file filters for a file chooser
+	 */
+	public static FileChooser.ExtensionFilter[] generateFilters() {
+		ArrayList<FileChooser.ExtensionFilter> filters = new ArrayList<FileChooser.ExtensionFilter>();
+		for (DataFileType type : DataFileType.values()) {
+			filters.add(new FileChooser.ExtensionFilter(type.getDescription(), type.getExtensions()));
+		}
+		return filters.toArray(new FileChooser.ExtensionFilter[0]);
 	}
 
 }
