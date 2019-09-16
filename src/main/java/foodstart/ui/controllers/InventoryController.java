@@ -32,21 +32,37 @@ public class InventoryController {
 	private TableColumn<Ingredient, String> dietary;
 	private FXMLLoader loader;
 
+	/**
+	 * Observable list of ingredients
+	 */
+	private ObservableList<Ingredient> observableList;
+
 	@FXML
 	public void initialize() {
 		populateTable();
 	}
 
-	private void populateTable() {
+	public void populateTable() {
 		IngredientManager ingredientManager = Managers.getIngredientManager();
 		Set<Ingredient> ingredientSet = ingredientManager.getIngredientSet();
-		ObservableList<Ingredient> ingredientObserver = FXCollections.observableArrayList(ingredientSet);
-		inventoryView.setItems(ingredientObserver);
+		observableList = FXCollections.observableArrayList(ingredientSet);
+		inventoryView.setItems(observableList);
 		id.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
 		name.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
-		truckStock.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getTruckStock())));
-		kitchenStock.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getKitchenStock())));
-		dietary.setCellValueFactory(cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId())));
+		truckStock.setCellValueFactory(
+				cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getTruckStock())));
+		kitchenStock.setCellValueFactory(
+				cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getKitchenStock())));
+		dietary.setCellValueFactory(
+				cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId())));
+	}
+
+	/**
+	 * Refreshes the table of displayed ingredients, updating its quantities among
+	 * other things
+	 */
+	public void refreshTable() {
+		this.observableList.setAll(Managers.getIngredientManager().getIngredientSet());
 	}
 
 	public void addIngredient() {
@@ -63,8 +79,6 @@ public class InventoryController {
 		stage.setScene(scene);
 		stage.show();
 
-
 	}
-
 
 }

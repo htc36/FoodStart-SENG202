@@ -71,6 +71,7 @@ public class MainController {
 	}
 
 	public void showStockInventory() {
+		((InventoryController)stockInventory.getController()).refreshTable();
 		rootPane.setCenter(stockInventory.getRoot());
 	}
 
