@@ -48,7 +48,8 @@ public class XMLSupplierParser extends XMLParser {
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String address = element.getElementsByTagName("address").item(0).getTextContent();
 		String phone = element.getElementsByTagName("phone").item(0).getTextContent();
-		PhoneType phoneType = PhoneType.matchType(element.getAttribute("type"));
+		Element phoneTypeElement = (Element) element.getElementsByTagName("phone").item(0);
+		PhoneType phoneType = PhoneType.matchType(phoneTypeElement.getAttribute("type"));
 		String email = element.getElementsByTagName("email").item(0).getTextContent();
 		String url = element.getElementsByTagName("url").item(0).getTextContent();
 		Managers.getSupplierManager().addSupplier(sid, name, phone, phoneType, email, url, address);
