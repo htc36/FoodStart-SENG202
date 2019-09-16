@@ -76,6 +76,7 @@ public class MainController {
 
 
 	public void showStockSuppliers() {
+		((SupplierController) stockSuppliers.getController()).populateTable();
 		rootPane.setCenter(stockSuppliers.getRoot());
 
 	}

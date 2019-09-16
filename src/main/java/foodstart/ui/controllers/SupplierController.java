@@ -36,14 +36,14 @@ public class SupplierController {
 	 */
 	@FXML
 	public void initialize() {
-		populateSuppliers();
+		populateTable();
 	}
 
 
 	/**
 	 * Populate the supplierTable with all suppliers and their details
 	 */
-	private void populateSuppliers() {
+	public void populateTable() {
 		SupplierManager supplierManager = Managers.getSupplierManager();
 		Set<Supplier> suppliers = supplierManager.getSupplierSet();
 		ObservableList<Supplier> observableSuppliers = FXCollections.observableArrayList(suppliers);
@@ -55,9 +55,7 @@ public class SupplierController {
 		websiteColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getUrl()));
 		emailColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEmail()));
 		phoneColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneNumber()));
-		phoneTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneType().name()));
-
-
+		//phoneTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneType().name()));
 	}
 }
 	
