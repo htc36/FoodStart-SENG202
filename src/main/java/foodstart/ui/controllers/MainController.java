@@ -24,19 +24,19 @@ public class MainController {
 	@FXML
 	public void initialize() {
 		try {
-			createOrderFXML = new FXMLLoader(getClass().getResource("../createorder.fxml"));
+			createOrderFXML = new FXMLLoader(getClass().getResource("createOrder.fxml"));
 			createOrderFXML.load();
 
-			salesLog = new FXMLLoader(getClass().getResource("../sales.fxml"));
+			salesLog = new FXMLLoader(getClass().getResource("sales.fxml"));
 			salesLog.load();
 
-			stockSuppliers = new FXMLLoader(getClass().getResource("../suppliers.fxml"));
+			stockSuppliers = new FXMLLoader(getClass().getResource("suppliers.fxml"));
 			stockSuppliers.load();
 
-			stockInventory = new FXMLLoader(getClass().getResource("../inventory.fxml"));
+			stockInventory = new FXMLLoader(getClass().getResource("inventory.fxml"));
 			stockInventory.load();
 
-			manageRecipes = new FXMLLoader(getClass().getResource("../recipes.fxml"));
+			manageRecipes = new FXMLLoader(getClass().getResource("recipes.fxml"));
 			manageRecipes.load();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -76,6 +76,7 @@ public class MainController {
 
 
 	public void showStockSuppliers() {
+		((SupplierController) stockSuppliers.getController()).populateTable();
 		rootPane.setCenter(stockSuppliers.getRoot());
 
 	}

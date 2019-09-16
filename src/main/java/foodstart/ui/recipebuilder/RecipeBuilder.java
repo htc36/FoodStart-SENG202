@@ -53,7 +53,7 @@ public class RecipeBuilder {
 		this.callback = callback;
 		this.orderBuilder = stockCheck;
 
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../customiseitem.fxml"));
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("customiseItem.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {

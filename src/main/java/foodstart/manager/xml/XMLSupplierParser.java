@@ -8,12 +8,23 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Parses supplier XML files
+ */
 public class XMLSupplierParser extends XMLParser {
 
+	/**
+	 * The constructor class for the supplier parser
+	 */
 	public XMLSupplierParser() {
 		super(DataType.SUPPLIER);
 	}
 
+	/**
+	 * Imports a supplier file
+	 *
+	 * @param doc The XML document to parse
+	 */
 	public void parse(Document doc) {
 
 		NodeList supplierNodes = doc.getDocumentElement().getChildNodes();
@@ -28,6 +39,10 @@ public class XMLSupplierParser extends XMLParser {
 		}
 	}
 
+	/**
+	 * Parse a single supplier element
+	 * @param element The supplier XML element to parse
+	 */
 	private void parseOneSupplier(Element element) {
 		int sid = Integer.parseInt(element.getElementsByTagName("sid").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
