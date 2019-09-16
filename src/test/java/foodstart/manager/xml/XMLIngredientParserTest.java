@@ -1,12 +1,17 @@
 package foodstart.manager.xml;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
@@ -104,4 +109,39 @@ public class XMLIngredientParserTest {
 
 	}
 
+	@Test
+	public void testImportInvalidIDs() {
+		boolean threwException = false;
+		try {
+			persistence.importFile(new File("resources/data/TestBadIngredients1.xml"), DataType.INGREDIENT);
+		} catch (ImportFailureException e) {
+			threwException = true;
+		}
+		assertTrue("Throw exception when importing ID -1", threwException);
+		assertTrue("Should not have ID -1 in memory", Managers.getIngredientManager().getIngredient(-1) == null);
+	}
+
+	@Test
+	public void testImportInvalidTruckStock() {
+		boolean threwException = false;
+		try {
+			persistence.importFile(new File("resources/data/TestBadIngredients2.xml"), DataType.INGREDIENT);
+		} catch (ImportFailureException e) {
+			threwException = true;
+		}
+		assertTrue("Throw exception when importing truck stock -1000", threwException);
+		assertTrue("Should not have ID 1000 in memory", Managers.getIngredientManager().getIngredient(1000) == null);
+	}
+	
+	@Test
+	public void testImportInvalidKitchenStock() {
+		boolean threwException = false;
+		try {
+			persistence.importFile(new File("resources/data/TestBadIngredients3.xml"), DataType.INGREDIENT);
+		} catch (ImportFailureException e) {
+			threwException = true;
+		}
+		assertTrue("Throw exception when importing kitchen stock -1", threwException);
+		assertTrue("Should not have ID 1001 in memory", Managers.getIngredientManager().getIngredient(1001) == null);
+	}
 }
