@@ -96,7 +96,15 @@ public class SalesController {
 	}
 
 	public void exportSales() {
-
+		Stage stage = (Stage) this.salesTableView.getScene().getWindow();
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save Sales Log File");
+		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
+		File selectedFile = fileChooser.showSaveDialog(stage);
+		if (selectedFile != null) {
+			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
+			persist.exportFile(selectedFile, DataType.SALES_LOG);
+		}
 	}
 
 	public void removeSale() {
