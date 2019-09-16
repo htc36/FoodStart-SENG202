@@ -38,6 +38,10 @@ public class MainController {
 
 			manageRecipes = new FXMLLoader(getClass().getResource("recipes.fxml"));
 			manageRecipes.load();
+
+			manageAllMenus = new FXMLLoader(getClass().getResource("allMenus.fxml"));
+			manageAllMenus.load();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,7 +58,8 @@ public class MainController {
 	}
 
 	public void showManageAllMenus() {
-
+		((AllMenusController) manageAllMenus.getController()).initialize();
+		rootPane.setCenter(manageAllMenus.getRoot());
 	}
 
 	public void showManageMenuItems() {
