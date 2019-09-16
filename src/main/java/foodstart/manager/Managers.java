@@ -7,6 +7,7 @@ import foodstart.manager.order.OrderManager;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.manager.stock.SupplierManager;
 import foodstart.manager.xml.XMLPersistence;
+import foodstart.model.DataFileType;
 
 /**
  * Manager for all the managers
@@ -38,7 +39,7 @@ public class Managers {
 	/**
 	 * Default persistence
 	 */
-	private static Persistence persistence = new XMLPersistence();
+	private static Persistence xmlPersistence = new XMLPersistence();
 
 	private static MenuItemManager menuItemManager = new MenuItemManager();
 
@@ -69,6 +70,15 @@ public class Managers {
 	}
 
 	public static Persistence getDefaultPersistence() {
-		return persistence;
+		return xmlPersistence;
+	}
+
+	public static Persistence getPersistence(DataFileType fileType) {
+		switch(fileType) {
+			case XML:
+				return xmlPersistence;
+			default:
+				return getDefaultPersistence();
+		}
 	}
 }
