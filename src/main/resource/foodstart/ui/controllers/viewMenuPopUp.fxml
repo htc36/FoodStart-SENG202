@@ -42,7 +42,7 @@
       </TableView>
       <ButtonBar buttonMinWidth="150.0" prefHeight="40.0" prefWidth="600.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#onCancelItem" text="Cancel" />
+            <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel" />
             <Button fx:id="btnSetCurrentMenu" mnemonicParsing="false" text="Set as Current Menu" />
         </buttons>
       </ButtonBar>

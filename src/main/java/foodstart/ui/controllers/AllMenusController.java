@@ -7,17 +7,21 @@ import foodstart.model.menu.Recipe;
 import foodstart.ui.recipebuilder.RecipeBuilder;
 import foodstart.ui.recipebuilder.RecipeBuilderRunnable;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class AllMenusController {
@@ -27,7 +31,11 @@ public class AllMenusController {
 	@FXML
 	private MenuButton menuButton;
 
-	/**
+    private FXMLLoader loader;
+    private Stage stage;
+
+
+    /**
 	 * Box background for menu items in the grid
 	 */
 	private Background boxBackground;
@@ -54,7 +62,7 @@ public class AllMenusController {
 	/**
 	 * Create a VBox that represents a menu to be added to the list
 	 *
-	 * @param menue Menu item to represent
+	 * @param menu Menu item to represent
 	 * @return Node representing the menuitem
 	 */
 	private Node createMenuBox(Menu menu) {
@@ -64,9 +72,22 @@ public class AllMenusController {
 		box.setBackground(boxBackground);
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
-		/* TO DO MAKE IT DISPLAY MENU ITEMS BUT just to view
+
+
+
 		box.setOnMouseClicked((event) -> {
-		});*/
+            loader = new FXMLLoader(getClass().getResource("viewMenuPopUp.fxml"));
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Scene scene = new Scene(loader.getRoot());
+            stage = new Stage();
+            stage.setTitle("View Menu");
+            stage.setScene(scene);
+            stage.show();
+		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT)));
