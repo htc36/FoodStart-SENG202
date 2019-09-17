@@ -1,16 +1,17 @@
 package foodstart.manager.xml;
 
-import foodstart.model.DataType;
 import foodstart.manager.Managers;
+import foodstart.manager.exceptions.IDLeadsNowhereException;
+import foodstart.model.DataType;
+import foodstart.model.PaymentMethod;
+import foodstart.model.menu.Recipe;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.time.Month;
-import java.time.Year;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class XMLSalesLogParser extends XMLParser {
@@ -23,6 +24,7 @@ public class XMLSalesLogParser extends XMLParser {
 
     @Override
     public void parse(Document doc) {
+        //TODO: Finish implementing parser
         NodeList salesNodes = doc.getChildNodes();
         for (int j = 0; j < salesNodes.getLength(); j++) {
             if (salesNodes.item(j) instanceof Element && salesNodes.item(j).getNodeName().equalsIgnoreCase("sales")) {
@@ -40,40 +42,38 @@ public class XMLSalesLogParser extends XMLParser {
         }
     }
 
+    private Map<Recipe, Integer> getSaleItems(Element element) {
+    	//TODO: Add parsing for OTF recipes
+	    Map<Recipe, Integer> recipes = new HashMap<Recipe, Integer>();
+	    NodeList recipeNodes = element.getElementsByTagName("recipes").item(0).getChildNodes();
+	    for (int i = 0; i < recipeNodes.getLength(); i++) {
+		    Node node = recipeNodes.item(i);
+		    if (node.getNodeName().equalsIgnoreCase("recipe")) {
+		    	Element recipeEl = (Element) node;
+			    int recipeId = Integer.parseInt(recipeEl.getElementsByTagName("recipe_id").item(0).getTextContent());
+			    int quantity = Integer.parseInt(recipeEl.getElementsByTagName("quantity").item(0).getTextContent());
+			    Recipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
+			    if (recipe == null) {
+				    throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
+			    }
+			    recipes.put(recipe, quantity);
+		    }
+	    }
+	    return recipes;
+    }
     /**
      * Parses one sale from the given element
      *
      * @param element XML Element to parse
      */
     private void parseOneSale(Element element) {
-        Set<Integer> ingredientIds = new HashSet<Integer>();
-        int id = Integer.parseInt(element.getElementsByTagName("sale_id").item(0).getTextContent());
+        int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
         String name = element.getElementsByTagName("name").item(0).getTextContent();
-        long date =  Long.parseLong(element.getElementsByTagName("date").item(0).getTextContent());
+        long date = Long.parseLong(element.getElementsByTagName("date").item(0).getTextContent());
         float cost = Float.parseFloat(element.getElementsByTagName("cost").item(0).getTextContent());
+	    PaymentMethod payment = PaymentMethod.matchNiceName(element.getElementsByTagName("payment").item(0).getTextContent());
+	    Map<Recipe, Integer> recipes = getSaleItems(element);
+		Managers.getOrderManager().addOrder(id, recipes, name, date, payment, cost);
 
-        NodeList recipesNodes = ((Element) element.getElementsByTagName("recipes").item(0)).getElementsByTagName("recipe");
-        for (int i = 0; i < recipesNodes.getLength(); i++) {
-            Node recipeNode = recipesNodes.item(i);
-            if (recipeNode instanceof Element) {
-                parseOneRecipe((Element) recipeNode);
-            }
-        }
     }
-
-    private void parseOneRecipe(Element element) {
-        int recipeId = Integer.parseInt(element.getElementsByTagName("recipe_id").item(0).getTextContent());
-        NodeList ingredientsNodes = element.getElementsByTagName("ingredients");
-
-//        for (int j = 0; j < ingredientsNodes.getLength(); j++) {
-//            Node ingredientNode = ingredientsNodes.item(j);
-//            if (ingredientNode instanceof Element) {
-//                int ingredientId = Integer.parseInt(element.getElementsByTagName("ingredient_id").item(0).getTextContent());
-//                System.out.println(ingredientId);
-//            }
-//        }
-//
-//        float price = Float.parseFloat(element.getElementsByTagName("price").item(0).getTextContent());
-    }
-
 }

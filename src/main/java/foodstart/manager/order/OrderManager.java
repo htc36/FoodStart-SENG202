@@ -74,6 +74,21 @@ public class OrderManager {
 	}
 
 	/**
+	 * Constructs and adds an order to the map of all orders
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 * @param cost          The total cost of the order
+	 */
+	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod, float cost) {
+		Order order = new Order(id, items, customerName, timePlaced, paymentMethod, cost);
+		this.orders.put(id, order);
+	}
+
+	/**
 	 * Returns the set of orders from the ids specified
 	 *
 	 * @param ids the ids of the orders to fetch

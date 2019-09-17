@@ -6,9 +6,10 @@
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT date (#PCDATA)>
 <!ELEMENT cost (#PCDATA)>
+<!ELEMENT payment (#PCDATA)>
 <!ELEMENT recipes (recipe+)>
-<!ELEMENT price (#PCDATA)>
-<!ELEMENT recipe (recipe_id, ingredients?, price)>
+<!ELEMENT recipe (recipe_id, ingredients?, quantity)>
 <!ELEMENT recipe_id (#PCDATA)>
 <!ELEMENT ingredients (ingredient_id+)>
 <!ELEMENT ingredient_id (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>

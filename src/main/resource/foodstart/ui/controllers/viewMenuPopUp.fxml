@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.viewMenuController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="350.0" />
+      <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="120.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+  </rowConstraints>
+   <children>
+      <Text fx:id="menuNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="MENU_NAME">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <TableView fx:id="menuTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="500.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+        <columns>
+          <TableColumn fx:id="tableIDColumn" minWidth="75.20001220703125" prefWidth="75.20001220703125" resizable="false" text="ID" />
+          <TableColumn fx:id="tableNameColumn" editable="false" minWidth="120.0" prefWidth="158.39998626708984" resizable="false" sortable="false" text="Name" />
+            <TableColumn fx:id="tableDescriptionColumn" minWidth="120.0" prefWidth="269.6000671386719" text="Description" />
+            <TableColumn fx:id="tableVariantsColumn" prefWidth="317.5999755859375" text="Variants" />
+        </columns>
+         <GridPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </GridPane.margin>
+      </TableView>
+      <ButtonBar buttonMinWidth="150.0" prefHeight="40.0" prefWidth="600.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
+        <buttons>
+            <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="btnSetCurrentMenu" mnemonicParsing="false" text="Set as Current Menu" />
+        </buttons>
+      </ButtonBar>
+      <Text fx:id="menuDescriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="MENU-DESCRIPTION" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Text>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</GridPane>
