@@ -21,7 +21,9 @@ public class XMLSalesLogParser extends XMLParser {
 
     @Override
     public void parse(Document doc) {
-        NodeList salesNodes = doc.getDocumentElement().getChildNodes();
+        System.out.println(doc);
+        NodeList salesNodes = doc.getChildNodes();
+
         for (int j = 0; j < salesNodes.getLength(); j++) {
             if (salesNodes.item(j) instanceof Element && salesNodes.item(j).getNodeName().equalsIgnoreCase("sales")) {
                 if (salesNodes.item(0).getNodeName().equalsIgnoreCase("sales")) {
@@ -30,7 +32,8 @@ public class XMLSalesLogParser extends XMLParser {
                     for (int i = 0; i < nodes.getLength(); i++) {
                         Node saleNode = nodes.item(i);
                         if (saleNode instanceof Element) {
-                            parseOneSale((Element) saleNode);
+//                            parseOneSale((Element) saleNode);
+                            System.out.println("123");
                         }
                     }
                 }
@@ -43,15 +46,11 @@ public class XMLSalesLogParser extends XMLParser {
      *
      * @param element XML Element to parse
      */
-    private void parseOneSale(Element element) {
-        int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
-        String name = element.getElementsByTagName("name").item(0).getTextContent();
-        //Year year =  Year.parse(element.getElementsByTagName("year").item(0).getTextContent());
-        //String month = element.getElementsByTagName("month").item(0).getTextContent();
-        //String day = element.getElementsByTagName("day").item(0).getTextContent();
-        float cost = Float.parseFloat(element.getElementsByTagName("cost").item(0).getTextContent());
-
-
-
-    }
+//    private void parseOneSale(Element element) {
+//        int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
+//        String name = element.getElementsByTagName("name").item(0).getTextContent();
+//        System.out.println("ytfluihrfytius");
+//        long date =  Long.parseLong(element.getElementsByTagName("year").item(0).getTextContent());
+//        float cost = Float.parseFloat(element.getElementsByTagName("cost").item(0).getTextContent());
+//    }
 }

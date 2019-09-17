@@ -164,7 +164,7 @@ public class Main extends Application {
 				new File(directory, "ingredients.xml"),
 				new File(directory, "recipes.xml"),
 				new File(directory, "menu.xml"),
-				new File(directory, "sales.xml"),
+				new File(directory, "sales_log.xml"),
 				new File(directory, "suppliers.xml")
 		};
 		for (File file : importOrder) {
@@ -179,7 +179,7 @@ public class Main extends Application {
 					case "recipes.xml":
 						persistence.importFile(file, DataType.RECIPE);
 						break;
-					case "sales.xml":
+					case "sales_log.xml":
 						persistence.importFile(file, DataType.SALES_LOG);
 						break;
 					case "suppliers.xml":
