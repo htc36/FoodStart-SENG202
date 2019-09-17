@@ -1,5 +1,6 @@
 package foodstart.ui.controllers;
 
+import foodstart.model.menu.Menu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -36,10 +37,30 @@ public class ViewMenuController {
     @FXML
     private Button btnCancel;
 
+    Stage stage;
+
+    /**
+     * Called when a menu box is clicked to be viewed
+     */
     @FXML
     public void initialize() {
-        //TO-DO
     }
+
+    public void setStage(Stage popupStage) {
+        stage = popupStage;
+    }
+
+    public void setMenuInfo(Menu menu) {
+        menuNameText.setText(menu.getTitle());
+        menuDescriptionText.setText(menu.getDescription());
+    }
+
+    public void onCancel() {
+        stage.close();
+    }
+
+
+
 
 
 }

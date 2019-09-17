@@ -75,10 +75,14 @@ public class AllMenusController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+            ((ViewMenuController) loader.getController()).setMenuInfo(menu);
+
 			Scene scene = new Scene(loader.getRoot());
 
 			popupStage = new Stage();
 			popupStage.initModality(Modality.WINDOW_MODAL);
+
+            ((ViewMenuController) loader.getController()).setStage(popupStage);
 
 
 			if (popupStage.getOwner() == null) {
