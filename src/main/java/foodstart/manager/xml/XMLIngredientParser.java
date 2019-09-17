@@ -3,16 +3,20 @@ package foodstart.manager.xml;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
+import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DataType;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
+import foodstart.model.stock.Ingredient;
 
 /**
  * Parses ingredient XML files
@@ -28,8 +32,10 @@ public class XMLIngredientParser extends XMLParser {
 	/**
 	 * Imports an ingredient file
 	 *
-	 * @param doc The XML document to parse
+	 * @param doc
+	 *            The XML document to parse
 	 */
+	@Override
 	public void parse(Document doc) {
 		NodeList ingredientNodes = doc.getDocumentElement().getChildNodes();
 		for (int i = 0; i < ingredientNodes.getLength(); i++) {
@@ -42,25 +48,98 @@ public class XMLIngredientParser extends XMLParser {
 	}
 
 	/**
+	 * Exports an ingredient file
+	 * 
+	 * @param doc
+	 *            The XML document to write everything to
+	 */
+	@Override
+	public void export(Document doc) {
+		exportWithManager(doc, Managers.getIngredientManager());
+	}
+
+	/**
+	 * Export an ingredient file by writing it to the document. By specifying the
+	 * ingredient manager this makes it easier to test
+	 * 
+	 * @param doc
+	 *            Document to export to
+	 * @param manager
+	 *            The ingredient manager to export ingredients from
+	 */
+	public void exportWithManager(Document doc, IngredientManager manager) {
+		DOMImplementation domImpl = doc.getImplementation();
+	    DocumentType doctype = domImpl.createDocumentType("ingredients", "SYSTEM", "ingredient.dtd");
+	    doc.appendChild(doctype);
+		
+		Element root = doc.createElement("ingredients");
+		for (Ingredient ingredient : manager.getIngredientSet()) {
+			Element ingredientElement = exportIngredient(doc, ingredient);
+			root.appendChild(ingredientElement);
+		}
+		doc.appendChild(root);
+	}
+	
+	/**
+	 * Export an individual ingredient
+	 * @param doc Document to create tags from
+	 * @param ingredient Ingredient to export
+	 * @return Element referring to the ingredient
+	 */
+	private Element exportIngredient(Document doc, Ingredient ingredient) {
+		Element ingredientElement = doc.createElement("ingredient");
+		
+		ingredientElement.setAttribute("unit", ingredient.getUnit().getDBName());
+		
+		Element ingredientId = doc.createElement("id");
+		ingredientId.appendChild(doc.createTextNode(String.valueOf(ingredient.getId())));
+		ingredientElement.appendChild(ingredientId);
+		
+		Element ingredientName = doc.createElement("name");
+		ingredientName.appendChild(doc.createTextNode(ingredient.getName()));
+		ingredientElement.appendChild(ingredientName);
+		
+		Element ingredientTruckStock = doc.createElement("truck_stock");
+		ingredientTruckStock.appendChild(doc.createTextNode(String.valueOf(ingredient.getTruckStock())));
+		ingredientElement.appendChild(ingredientTruckStock);
+		
+		Element ingredientKitchenStock = doc.createElement("kitchen_stock");
+		ingredientKitchenStock.appendChild(doc.createTextNode(String.valueOf(ingredient.getKitchenStock())));
+		ingredientElement.appendChild(ingredientKitchenStock);
+		
+		Element ingredientDietaryRequirements = doc.createElement("dietary");
+		for (DietaryRequirement requirement : DietaryRequirement.values()) {
+			boolean safe = ingredient.isSafeFor(requirement);
+			Element isSafeForElement = doc.createElement(requirement.getDBName());
+			isSafeForElement.appendChild(doc.createTextNode(String.valueOf(safe)));
+			ingredientDietaryRequirements.appendChild(isSafeForElement);
+		}
+		ingredientElement.appendChild(ingredientDietaryRequirements);
+		
+		return ingredientElement;
+	}
+
+	/**
 	 * Parses one ingredient from the given element
 	 *
-	 * @param element XML Element to parse
+	 * @param element
+	 *            XML Element to parse
 	 */
 	private void parseOneIngredient(Element element) {
 		Unit unit = Unit.matchUnit(element.getAttribute("unit"));
-		//unit cannot be null because DTD would validate this
+		// unit cannot be null because DTD would validate this
 		int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
 		if (id < 0) {
-			throw new ImportFailureException("Item ID '"+id+"' is negative");
+			throw new ImportFailureException("Item ID '" + id + "' is negative");
 		}
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		if (name.length() == 0) {
-			throw new ImportFailureException("Name of item ID '"+id+"' is blank");
+			throw new ImportFailureException("Name of item ID '" + id + "' is blank");
 		}
 		int truckStock = Integer.parseInt(element.getElementsByTagName("truck_stock").item(0).getTextContent());
 		int kitchenStock = Integer.parseInt(element.getElementsByTagName("kitchen_stock").item(0).getTextContent());
 		if (truckStock < 0 || kitchenStock < 0) {
-			throw new ImportFailureException("Stock of item ID '"+id+"' goes into the negatives");
+			throw new ImportFailureException("Stock of item ID '" + id + "' goes into the negatives");
 		}
 		Map<DietaryRequirement, Boolean> dietaryRequirements = new HashMap<DietaryRequirement, Boolean>();
 		for (DietaryRequirement requirement : DietaryRequirement.values()) {

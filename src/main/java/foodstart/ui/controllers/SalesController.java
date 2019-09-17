@@ -1,11 +1,18 @@
 package foodstart.ui.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.Set;
+
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import foodstart.model.order.Order;
+import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -22,12 +29,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Set;
 
 public class SalesController {
 
@@ -103,7 +104,11 @@ public class SalesController {
 		File selectedFile = fileChooser.showSaveDialog(stage);
 		if (selectedFile != null) {
 			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
-			persist.exportFile(selectedFile, DataType.SALES_LOG);
+			try {
+				persist.exportFile(selectedFile, DataType.SALES_LOG);
+			} catch (ExportFailureException e) {
+				FXExceptionDisplay.showException(e, false);
+			}
 		}
 	}
 

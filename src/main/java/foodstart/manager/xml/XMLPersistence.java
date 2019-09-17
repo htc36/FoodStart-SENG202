@@ -1,20 +1,30 @@
 package foodstart.manager.xml;
 
-import foodstart.manager.Persistence;
-import foodstart.manager.exceptions.ImportFailureException;
-import foodstart.model.DataType;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.ExportFailureException;
+import foodstart.manager.exceptions.ImportFailureException;
+import foodstart.model.DataType;
 
 /**
  * Parses an XML file with a given DataType
@@ -26,7 +36,17 @@ public class XMLPersistence extends Persistence {
 	/**
 	 * Map of datatypes to XML parsers
 	 */
-	Map<DataType, XMLParser> parsers;
+	private Map<DataType, XMLParser> parsers;
+
+	/**
+	 * Document builder
+	 */
+	private DocumentBuilder dBuilder;
+
+	/**
+	 * Transformer (for exporting)
+	 */
+	private Transformer transformer;
 
 	public XMLPersistence() {
 		parsers = new HashMap<DataType, XMLParser>();
@@ -34,6 +54,21 @@ public class XMLPersistence extends Persistence {
 		parsers.put(DataType.MENU, new XMLMenuParser());
 		parsers.put(DataType.RECIPE, new XMLRecipeParser());
 		parsers.put(DataType.SUPPLIER, new XMLSupplierParser());
+
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		try {
+			transformer = transformerFactory.newTransformer();
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -42,31 +77,50 @@ public class XMLPersistence extends Persistence {
 	@Override
 	public void importFile(File file, DataType dataType) {
 
-		Document doc;
-		try {
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			doc = dBuilder.parse(file);
-		} catch (ParserConfigurationException e) {
-			throw new ImportFailureException("Parser had a configuration exception: " + e.getMessage());
-		} catch (SAXException e) {
-			throw new ImportFailureException("Parser threw a SAX Exception: " + e.getMessage());
-		} catch (IOException e) {
-			throw new ImportFailureException("Parser threw an IO Exception: " + e.getMessage());
+		if (dBuilder == null) {
+			throw new ImportFailureException("DocumentBuilder class not initialized");
 		}
 
-		parsers.get(dataType).parse(doc);
+		try {
+			Document doc = dBuilder.parse(file);
+			parsers.get(dataType).parse(doc);
+		} catch (IOException e) {
+			throw new ImportFailureException("Parser threw an IO Exception: " + e.getMessage());
+		} catch (SAXException e) {
+			throw new ImportFailureException("Parser threw a SAX Exception: " + e.getMessage());
+		}
 	}
 
 	@Override
 	public void exportFile(File file, DataType dataType) {
-		// TODO
+		if (dBuilder == null) {
+			throw new ImportFailureException("DocumentBuilder class not initialized");
+		} else if (transformer == null) {
+			throw new ImportFailureException("Transformer class not initialized");
+		}
+		
+		Document doc = dBuilder.newDocument();
+		parsers.get(dataType).export(doc);
+
+		DOMSource source = new DOMSource(doc);
+
+		try {
+			FileWriter writer = new FileWriter(file);
+			StreamResult result = new StreamResult(writer);
+			transformer.transform(source, result);
+		} catch (IOException e) {
+			throw new ExportFailureException("Exporter threw an IO Exception: " + e.getMessage());
+		} catch (TransformerException e) {
+			throw new ExportFailureException("Exporter threw a TransformerException: " + e.getMessage());
+		}
 	}
 
 	/**
-	 * This will copy DTD files into the target directory, overwriting files if necessary
+	 * This will copy DTD files into the target directory, overwriting files if
+	 * necessary
 	 *
-	 * @param directory Directory that the DTD files should be copied into
+	 * @param directory
+	 *            Directory that the DTD files should be copied into
 	 */
 	public void copyDTDFiles(File directory) throws IOException {
 		for (DataType type : DataType.values()) {
@@ -74,7 +128,7 @@ public class XMLPersistence extends Persistence {
 			InputStream dtdFile = getClass().getResourceAsStream("../../dtd/" + type.name().toLowerCase() + ".dtd");
 			if (dtdFile != null) {
 				FileOutputStream output = new FileOutputStream(file);
-				byte[] fileContents = new byte[16384]; //dtd file shouldn't be bigger than 16kB
+				byte[] fileContents = new byte[16384]; // dtd file shouldn't be bigger than 16kB
 				int length = dtdFile.read(fileContents);
 				dtdFile.close();
 
