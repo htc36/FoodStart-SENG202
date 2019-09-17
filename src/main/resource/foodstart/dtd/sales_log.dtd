@@ -1,17 +1,14 @@
 <!-- DTD for representing sales log -->
 <!-- FOREIGN KEYS: recipe_id, ingredient_id-->
-<!ELEMENT sales ((sale*))>
+<!ELEMENT sales (sale*)>
 <!ELEMENT sale (id, name, date, cost, recipes)>
 <!ELEMENT id (#PCDATA)>
 <!ELEMENT name (#PCDATA)>
-<!ELEMENT date (year, month, day)>
-<!ELEMENT year (#PCDATA)>
-<!ELEMENT month (#PCDATA)>
-<!ELEMENT day (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
 <!ELEMENT cost (#PCDATA)>
 <!ELEMENT recipes (recipe+)>
-<!ELEMENT price (#PCDATA)>
-<!ELEMENT recipe (recipe_id, ingredients?, price)>
+<!ELEMENT recipe (recipe_id, ingredients?, quantity)>
 <!ELEMENT recipe_id (#PCDATA)>
 <!ELEMENT ingredients (ingredient_id+)>
 <!ELEMENT ingredient_id (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
