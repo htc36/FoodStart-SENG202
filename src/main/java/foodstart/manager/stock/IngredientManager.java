@@ -155,7 +155,7 @@ public class IngredientManager {
 		return String.join(", ", safeForList);
 	}
 	public int generateNewID() {
-		return Collections.max(ingredients.keySet()) + 1;
+		return ingredients.keySet().size() == 0 ? 0 : Collections.max(ingredients.keySet()) + 1;
 	}
 }
 
