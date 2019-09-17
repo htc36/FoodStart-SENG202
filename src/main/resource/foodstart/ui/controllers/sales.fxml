@@ -49,7 +49,7 @@
                   <TableColumn fx:id="timeCol" prefWidth="112.0" text="Time" />
                   <TableColumn fx:id="dateCol" prefWidth="92.0" text="Date" />
                   <TableColumn fx:id="priceCol" prefWidth="200.0" text="Price" />
-                  <TableColumn fx:id="paymentMethodCol" prefWidth="75.0" text="Payment Mehtod" />
+                  <TableColumn fx:id="paymentMethodCol" prefWidth="75.0" text="Payment Method" />
                   <TableColumn fx:id="itemsCol" minWidth="100.0" prefWidth="392.0" text="Items" />
               </columns>
                <columnResizePolicy>
