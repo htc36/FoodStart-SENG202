@@ -78,7 +78,9 @@ public class InventoryController {
 		stage.setTitle("Add Item");
 		stage.setScene(scene);
 		stage.show();
-
+	}
+	public void closeAddIngredient() {
+		stage.close();
 	}
 
 }

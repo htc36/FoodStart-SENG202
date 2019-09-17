@@ -7,6 +7,7 @@ import foodstart.model.Unit;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.util.HashMap;
@@ -32,14 +33,29 @@ public class addIngredientController {
 	@FXML
 	private CheckBox dairyFree;
 	@FXML
-	private ComboBox<String> UnitComboBox;
+	private ComboBox<String> unitComboBox;
+	@FXML
+	private Label nameError;
+
+	@FXML 
+	private Label kitchenStockError;
+	@FXML 
+	private Label truckStockError;
+	@FXML 
+	private Label unitBoxError;
+	@FXML
+	private Label idDisplay;
+
+	private int id;
 
 
 	@FXML
 	public void initialize() {
-		UnitComboBox.getItems().removeAll(UnitComboBox.getItems());
+		id = Managers.getIngredientManager().generateNewID();
+		idDisplay.setText(Integer.toString(id));
+		unitComboBox.getItems().removeAll(unitComboBox.getItems());
 		//will need to change this to use the enum rather than hardcode
-		UnitComboBox.getItems().addAll("ml", "g", "count");
+		unitComboBox.getItems().addAll("ml", "g", "count");
 	}
 
 	//used to check if kitchen stock and truck stock fields are ints
@@ -51,14 +67,55 @@ public class addIngredientController {
 			return false;
 		}
 	}
+	private boolean textFieldValidate(TextField field, Label label) {
+		String message = null;
+		boolean isValid = true;
+		if (field.getText() == null || field.getText().isEmpty()) {
+			isValid = false;
+			message = "Input can not be empty";
+		}
+		else if (isInt(field)) {
+			isValid = false;
+			message = "Input must be a word";
+		}
+		label.setText(message);
+		return isValid;
+		}
+	private boolean integerFieldValidate(TextField field, Label label) {
+		String message = null;
+		boolean isValid = true;
+		if (field.getText() == null || field.getText().isEmpty()){
+			isValid = false;
+			message = "Input can not be empty";
+		}
+		else if (!isInt(field)) {
+			isValid = false;
+			message = "Input must be an integer";
+		}
+		label.setText(message);
+		return isValid;
+	}
+	private boolean comboBoxValidate(ComboBox<String> field, Label label) {
+		boolean isValid = true;
+		String message = null;
+		if (field.getValue() == null) {
+			isValid = false;
+			message = "Combobox must have selection";
+		}
+		label.setText(message);
+		return isValid;
+	}
 
 	public void submit() {
-		String unitString = UnitComboBox.getValue();
+		boolean isNameValid = textFieldValidate(nameInput, nameError);
+		boolean isKitchenStockValid = integerFieldValidate(kitchenStockInput, kitchenStockError);
+		boolean isTruckStockValid = integerFieldValidate(truckStockInput, truckStockError);
+		boolean isUnitComboBoxValid = comboBoxValidate(unitComboBox, unitBoxError);
+		String unitString = unitComboBox.getValue();
 		/*
 		if (isInt(truckStockInput) && isInt(kitchenStockInput) && ! isInt(nameInput) && unitString != "") {
 		 */
 		HashMap<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
-//			having trouble making enum this is throwing errors
 		safeFor.put(DietaryRequirement.VEGAN, vegan.isSelected());
 		safeFor.put(DietaryRequirement.VEGETARIAN, vegetarian.isSelected());
 		safeFor.put(DietaryRequirement.GLUTEN_FREE, glutenFree.isSelected());
@@ -66,7 +123,11 @@ public class addIngredientController {
 		safeFor.put(DietaryRequirement.LACTOSE_INTOLERANT, dairyFree.isSelected());
 		IngredientManager manager = Managers.getIngredientManager();
 		Unit unit = Unit.matchUnit(unitString);
-		manager.addIngredient(unit, nameInput.getText(), Integer.parseInt(idInput.getText()), safeFor,
-				Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
+		if (isNameValid && isKitchenStockValid && isTruckStockValid && isUnitComboBoxValid) {
+			manager.addIngredient(unit, nameInput.getText(), id, safeFor,
+					Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
+			//InventoryController.closeAddIngredient();
+		}
+		
 	}
 }
