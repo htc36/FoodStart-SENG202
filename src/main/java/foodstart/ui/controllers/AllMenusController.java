@@ -2,10 +2,6 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.model.menu.Menu;
-import foodstart.model.menu.MenuItem;
-import foodstart.model.menu.Recipe;
-import foodstart.ui.recipebuilder.RecipeBuilder;
-import foodstart.ui.recipebuilder.RecipeBuilderRunnable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -13,26 +9,24 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Set;
 
 public class AllMenusController {
 	@FXML
 	private FlowPane flowPane;
 
-	@FXML
-	private MenuButton menuButton;
 
     private FXMLLoader loader;
-    private Stage stage;
+    private Stage popupStage;
+    private Scene scene;
 
 
     /**
@@ -44,6 +38,7 @@ public class AllMenusController {
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 		populateAllMenus(flowPane);
+
 
 	}
 
@@ -72,21 +67,26 @@ public class AllMenusController {
 		box.setBackground(boxBackground);
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
-
-
-
+		
 		box.setOnMouseClicked((event) -> {
-            loader = new FXMLLoader(getClass().getResource("viewMenuPopUp.fxml"));
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Scene scene = new Scene(loader.getRoot());
-            stage = new Stage();
-            stage.setTitle("View Menu");
-            stage.setScene(scene);
-            stage.show();
+			loader = new FXMLLoader(getClass().getResource("viewMenuPopUp.fxml"));
+			try {
+				loader.load();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Scene scene = new Scene(loader.getRoot());
+
+			popupStage = new Stage();
+			popupStage.initModality(Modality.WINDOW_MODAL);
+
+
+			if (popupStage.getOwner() == null) {
+				popupStage.initOwner(this.flowPane.getScene().getWindow());
+			}
+			popupStage.setTitle("View Menu");
+			popupStage.setScene(scene);
+			popupStage.showAndWait();
 		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
