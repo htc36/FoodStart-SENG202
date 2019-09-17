@@ -31,5 +31,13 @@ public abstract class XMLParser {
 	 * @param doc Document to parse
 	 */
 	public abstract void parse(Document doc);
+	
+	/**
+	 * Export a given XML document
+	 * @param doc Document to populate with data
+	 */
+	public void export(Document doc) {
+		//TODO make this abstract
+	}
 
 }

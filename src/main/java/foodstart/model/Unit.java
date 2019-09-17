@@ -42,7 +42,7 @@ public enum Unit {
 	 *
 	 * @return Database name of the unit
 	 */
-	private String getDBName() {
+	public String getDBName() {
 		return this.dbName;
 	}
 }
