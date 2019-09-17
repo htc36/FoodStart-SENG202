@@ -14,6 +14,7 @@ import foodstart.model.DataType;
 import foodstart.model.order.Order;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
+import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class SalesController {
+public class SalesController implements Refreshable {
 
 	@FXML
 	private TableView<Order> salesTableView;
@@ -144,7 +145,8 @@ public class SalesController {
 		}
 	}
 
-	private void refreshTable() {
+	@Override
+	public void refreshTable() {
 		this.observableOrders.setAll(Managers.getOrderManager().getOrderSet());
 	}
 }

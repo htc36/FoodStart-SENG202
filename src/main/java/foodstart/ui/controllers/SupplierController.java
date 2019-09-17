@@ -1,8 +1,8 @@
 package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
-import foodstart.manager.stock.SupplierManager;
 import foodstart.model.stock.Supplier;
+import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,9 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.util.Set;
-
-public class SupplierController {
+public class SupplierController implements Refreshable {
 
 	@FXML
 	private TableView<Supplier> supplierTable;
@@ -30,6 +28,11 @@ public class SupplierController {
 	private TableColumn<Supplier, String> phoneColumn;
 	@FXML
 	private TableColumn<Supplier, String> phoneTypeColumn;
+	
+	/**
+	 * List of suppliers currently shown on the table
+	 */
+	private ObservableList<Supplier> observableSuppliers;
 
 	/**
 	 * Called when the controller is initialized
@@ -44,9 +47,8 @@ public class SupplierController {
 	 * Populate the supplierTable with all suppliers and their details
 	 */
 	public void populateTable() {
-		SupplierManager supplierManager = Managers.getSupplierManager();
-		Set<Supplier> suppliers = supplierManager.getSupplierSet();
-		ObservableList<Supplier> observableSuppliers = FXCollections.observableArrayList(suppliers);
+		observableSuppliers = FXCollections.observableArrayList(Managers.getSupplierManager().getSupplierSet());
+		refreshTable();
 		supplierTable.setItems(observableSuppliers);
 
 		codeColumn.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
@@ -56,6 +58,12 @@ public class SupplierController {
 		emailColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEmail()));
 		phoneColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneNumber()));
 		phoneTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneType().name()));
+	}
+
+
+	@Override
+	public void refreshTable() {
+		observableSuppliers.setAll(Managers.getSupplierManager().getSupplierSet());
 	}
 }
 	

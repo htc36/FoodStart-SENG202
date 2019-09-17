@@ -1,8 +1,12 @@
 package foodstart.ui.controllers;
 
+import java.io.IOException;
+import java.util.Set;
+
 import foodstart.manager.Managers;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.model.stock.Ingredient;
+import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,10 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Set;
-
-public class InventoryController {
+public class InventoryController implements Refreshable {
 	private Stage stage;
 	@FXML
 	private TableView<Ingredient> inventoryView;
@@ -61,6 +62,7 @@ public class InventoryController {
 	 * Refreshes the table of displayed ingredients, updating its quantities among
 	 * other things
 	 */
+	@Override
 	public void refreshTable() {
 		this.observableList.setAll(Managers.getIngredientManager().getIngredientSet());
 	}

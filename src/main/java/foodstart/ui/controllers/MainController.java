@@ -1,10 +1,11 @@
 package foodstart.ui.controllers;
 
+import java.io.IOException;
+
+import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-
-import java.io.IOException;
 
 public class MainController {
 
@@ -52,8 +53,7 @@ public class MainController {
 	}
 
 	public void showOrder() {
-		((CreateOrderController) createOrderFXML.getController()).initialize();
-		rootPane.setCenter(createOrderFXML.getRoot());
+		changeView(createOrderFXML);
 	}
 
 	public void showManageCurrentMenu() {
@@ -70,8 +70,7 @@ public class MainController {
 	}
 
 	public void showManageRecipes() {
-		((recipesController) manageRecipes.getController()).populateTable();
-		rootPane.setCenter(manageRecipes.getRoot());
+		changeView(manageRecipes);
 	}
 
 	public void showManageIngredients() {
@@ -79,19 +78,26 @@ public class MainController {
 	}
 
 	public void showStockInventory() {
-		((InventoryController)stockInventory.getController()).refreshTable();
-		rootPane.setCenter(stockInventory.getRoot());
+		changeView(stockInventory);
 	}
 
 
 	public void showStockSuppliers() {
-		((SupplierController) stockSuppliers.getController()).populateTable();
-		rootPane.setCenter(stockSuppliers.getRoot());
-
+		changeView(stockSuppliers);
 	}
 
 	public void showSales() {
-		((SalesController) salesLog.getController()).populateTable();
-		rootPane.setCenter(salesLog.getRoot());
+		changeView(salesLog);
+	}
+	
+	/**
+	 * Change the currently shown view to the one specified
+	 * @param loader FXML view to set as the current view
+	 */
+	private void changeView(FXMLLoader loader) {
+		if (loader.getController() instanceof Refreshable) {
+			((Refreshable)loader.getController()).refreshTable();
+		}
+		rootPane.setCenter(loader.getRoot());
 	}
 }
