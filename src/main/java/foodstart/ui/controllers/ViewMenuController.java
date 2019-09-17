@@ -1,14 +1,29 @@
 package foodstart.ui.controllers;
 
+import foodstart.manager.Managers;
+import foodstart.manager.menu.MenuManager;
 import foodstart.model.menu.Menu;
+import foodstart.model.menu.MenuItem;
+import foodstart.model.menu.PermanentRecipe;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.List;
+import java.util.Set;
+
 public class ViewMenuController {
+
+
+    @FXML
+    private TableView<MenuItem> menuTable;
 
     @FXML
     private Text menuNameText;
@@ -17,19 +32,16 @@ public class ViewMenuController {
     private Text menuDescriptionText;
 
     @FXML
-    private TableView menuTable;
+    private TableColumn<MenuItem, String> tableIDColumn;
 
     @FXML
-    private TableColumn tableIDColumn;
+    private TableColumn<MenuItem, String> tableNameColumn;
 
     @FXML
-    private TableColumn tableNameColumn;
+    private TableColumn<MenuItem, String> tableDescriptionColumn;
 
     @FXML
-    private TableColumn tableDescriptionColumn;
-
-    @FXML
-    private TableColumn tableVariantsColumn;
+    private TableColumn<MenuItem, String> tableVariantsColumn;
 
     @FXML
     private Button btnSetCurrentMenu;
@@ -46,13 +58,50 @@ public class ViewMenuController {
     public void initialize() {
     }
 
+    /**
+     * Called when a popup stage is made.
+     * Gives the controller class the popup stage
+     */
     public void setStage(Stage popupStage) {
         stage = popupStage;
     }
 
+    /**
+     * Called to set up the view menu popup with the correct menu information
+     */
     public void setMenuInfo(Menu menu) {
         menuNameText.setText(menu.getTitle());
         menuDescriptionText.setText(menu.getDescription());
+        populateTable(menu);
+    }
+
+    /**
+     * Called to populate the table view with the menu information
+     */
+    private void populateTable(Menu menu) {
+        Set<MenuItem> menuItems = menu.getMenuItems();
+        tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        tableVariantsColumn.setCellValueFactory(cell -> {
+            String variantsAsString = "";
+            List<PermanentRecipe> variantsList = cell.getValue().getVariants();
+            for (PermanentRecipe variant : variantsList) {
+                variantsAsString.concat(" " + variant.getDisplayName());
+            }
+            return new SimpleStringProperty(variantsAsString);
+        });
+        menuTable.setItems(FXCollections.observableArrayList(menuItems));
+
+
+
+        /*
+        ObservableList<MenuItem> observableMenuItems = FXCollections.observableArrayList(menuItems);
+        menuTable.setItems(observableMenuItems);
+
+        tableIDColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
+        */
+
     }
 
     public void onCancel() {
