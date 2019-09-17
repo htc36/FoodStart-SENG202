@@ -28,7 +28,7 @@ public enum PaymentMethod {
 	 */
 	public static PaymentMethod matchNiceName(String niceName) {
 		for (PaymentMethod method : values()) {
-			if (method.niceName.equals(niceName)) {
+			if (method.niceName.equalsIgnoreCase(niceName)) {
 				return method;
 			}
 		}

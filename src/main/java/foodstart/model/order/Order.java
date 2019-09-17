@@ -90,6 +90,26 @@ public class Order {
 	}
 
 	/**
+	 * The order constructor
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 * @param cost          The total cost of the order
+	 */
+	public Order(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod, float cost) {
+		this.id = id;
+		this.items = items;
+		this.customerName = customerName;
+		//Ignores timezones by using UTC
+		this.timePlaced = LocalDateTime.ofEpochSecond(timePlaced / 1000, 0, ZoneOffset.UTC);
+		this.paymentMethod = paymentMethod;
+		this.price = cost;
+	}
+
+	/**
 	 * Returns the id of the order
 	 *
 	 * @return the id of the order
