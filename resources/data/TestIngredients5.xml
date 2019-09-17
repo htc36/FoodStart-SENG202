@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ingredients SYSTEM "../dtd/ingredient.dtd">
+<ingredients>
+	<ingredient unit="g">
+		<id>8</id>
+		<name>TestItem8</name>
+		<truck_stock>1</truck_stock>
+		<kitchen_stock>1</kitchen_stock>
+		<dietary>
+			<vegan>true</vegan>
+			<vegetarian>true</vegetarian>
+			<nut_free>true</nut_free>
+			<gluten_free>true</gluten_free>
+			<dairy_free>true</dairy_free>
+		</dietary>
+	</ingredient>
+	<ingredient unit="g">
+		<id>9</id>
+		<name>TestItem9</name>
+		<truck_stock>1</truck_stock>
+		<kitchen_stock>1</kitchen_stock>
+		<dietary>
+			<vegan>false</vegan>
+			<vegetarian>false</vegetarian>
+			<nut_free>false</nut_free>
+			<gluten_free>false</gluten_free>
+			<dairy_free>false</dairy_free>
+		</dietary>
+	</ingredient>
+	<ingredient unit="g">
+		<id>10</id>
+		<name>TestItem10</name>
+		<truck_stock>1</truck_stock>
+		<kitchen_stock>1</kitchen_stock>
+		<dietary>
+			
+		</dietary>
+	</ingredient>
+	<ingredient unit="g">
+		<id>11</id>
+		<name>TestItem11</name>
+		<truck_stock>1</truck_stock>
+		<kitchen_stock>1</kitchen_stock>
+		<dietary>
+			<vegan>false</vegan>
+			<vegetarian>true</vegetarian>
+			<gluten_free>false</gluten_free>
+			<dairy_free>true</dairy_free>
+		</dietary>
+	</ingredient>
+</ingredients>
