@@ -59,7 +59,6 @@ public class XMLRecipeParser extends XMLParser {
 	 * @return Recipe that was parsed (also added to the registry)
 	 */
 	private int parseOneRecipe(Element element) {
-		//	public PermanentRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients) {
 		int recipeId = Integer.parseInt(element.getElementsByTagName("recipe_id").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String method = element.getElementsByTagName("method").item(0).getTextContent();

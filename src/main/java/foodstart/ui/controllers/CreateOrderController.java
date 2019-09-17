@@ -192,6 +192,14 @@ public class CreateOrderController {
 			alert.show();
 			return;
 		}
+		if (orderBuilder.getCurrentOrder().size() == 0) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Cannot place order with 0 items");
+			alert.setHeaderText("Cannot place the order as it has no items");
+			alert.setContentText("Add an item and try again");
+			alert.show();
+			return;
+		}
 		String customerName = orderCustomerName.getText();
 		if (customerName.length() == 0) {
 			Alert alert = new Alert(AlertType.INFORMATION);

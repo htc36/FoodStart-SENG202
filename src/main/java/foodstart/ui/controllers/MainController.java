@@ -58,7 +58,7 @@ public class MainController {
 	}
 
 	public void showManageAllMenus() {
-		((AllMenusController) manageAllMenus.getController()).initialize();
+		//((AllMenusController) manageAllMenus.getController()).populateAllMenus();
 		rootPane.setCenter(manageAllMenus.getRoot());
 	}
 

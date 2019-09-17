@@ -1,16 +1,18 @@
 package foodstart.manager.xml;
 
-import foodstart.manager.Managers;
-import foodstart.model.DataType;
-import foodstart.model.DietaryRequirement;
-import foodstart.model.Unit;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.HashMap;
-import java.util.Map;
+import foodstart.manager.Managers;
+import foodstart.manager.exceptions.ImportFailureException;
+import foodstart.model.DataType;
+import foodstart.model.DietaryRequirement;
+import foodstart.model.Unit;
 
 /**
  * Parses ingredient XML files
@@ -46,10 +48,20 @@ public class XMLIngredientParser extends XMLParser {
 	 */
 	private void parseOneIngredient(Element element) {
 		Unit unit = Unit.matchUnit(element.getAttribute("unit"));
+		//unit cannot be null because DTD would validate this
 		int id = Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent());
+		if (id < 0) {
+			throw new ImportFailureException("Item ID '"+id+"' is negative");
+		}
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
+		if (name.length() == 0) {
+			throw new ImportFailureException("Name of item ID '"+id+"' is blank");
+		}
 		int truckStock = Integer.parseInt(element.getElementsByTagName("truck_stock").item(0).getTextContent());
 		int kitchenStock = Integer.parseInt(element.getElementsByTagName("kitchen_stock").item(0).getTextContent());
+		if (truckStock < 0 || kitchenStock < 0) {
+			throw new ImportFailureException("Stock of item ID '"+id+"' goes into the negatives");
+		}
 		Map<DietaryRequirement, Boolean> dietaryRequirements = new HashMap<DietaryRequirement, Boolean>();
 		for (DietaryRequirement requirement : DietaryRequirement.values()) {
 			dietaryRequirements.put(requirement, false);

@@ -34,6 +34,7 @@ public class XMLPersistence extends Persistence {
 		parsers.put(DataType.MENU, new XMLMenuParser());
 		parsers.put(DataType.RECIPE, new XMLRecipeParser());
 		parsers.put(DataType.SUPPLIER, new XMLSupplierParser());
+		parsers.put(DataType.SALES_LOG, new XMLSalesLogParser());
 	}
 
 	/**

@@ -36,24 +36,32 @@ public class XMLMenuParser extends XMLParser {
 	 */
 	@Override
 	public void parse(Document doc) {
-		NodeList menuNodes = doc.getChildNodes();
-		for (int i = 0; i < menuNodes.getLength(); i++) {
-			Node node = menuNodes.item(i);
-			if (node instanceof Element && node.getNodeName().equalsIgnoreCase("menu")) {
-				Set<Integer> menuItems = new HashSet<Integer>();
-				Element element = (Element) node;
-				int menuId = Integer.parseInt(element.getElementsByTagName("menu_id").item(0).getTextContent());
-				String title = element.getElementsByTagName("title").item(0).getTextContent();
-				String description = element.getElementsByTagName("description").item(0).getTextContent();
-				NodeList nodeList = element.getElementsByTagName("items").item(0).getChildNodes();
-				for (int j = 0; j < nodeList.getLength(); j++) {
-					Node menuItemNode = nodeList.item(j);
-					if (menuItemNode instanceof Element && menuItemNode.getNodeName().equalsIgnoreCase("item")) {
-						menuItems.add(parseOneMenuItem((Element) menuItemNode));
+		NodeList menusNodes = doc.getChildNodes();
+		for (int i = 0; i < menusNodes.getLength(); i++) {
+			if (menusNodes.item(i) instanceof Element && menusNodes.item(i).getNodeName().equalsIgnoreCase("menus")) {
+				Element element = (Element) menusNodes.item(i);
+				NodeList nodes = element.getElementsByTagName("menu");
+
+				for (int j = 0; j < nodes.getLength(); j++) {
+
+					Node node = nodes.item(j);
+					if (node instanceof Element && node.getNodeName().equalsIgnoreCase("menu")) {
+						Set<Integer> menuItems = new HashSet<Integer>();
+						Element menuElement = (Element) node;
+						int menuId = Integer.parseInt(menuElement.getElementsByTagName("menu_id").item(0).getTextContent());
+						String title = menuElement.getElementsByTagName("title").item(0).getTextContent();
+						String description = menuElement.getElementsByTagName("description").item(0).getTextContent();
+						NodeList nodeList = menuElement.getElementsByTagName("items").item(0).getChildNodes();
+						for (int k = 0; k < nodeList.getLength(); k++) {
+							Node menuItemNode = nodeList.item(k);
+							if (menuItemNode instanceof Element && menuItemNode.getNodeName().equalsIgnoreCase("item")) {
+								menuItems.add(parseOneMenuItem((Element) menuItemNode));
+							}
+						}
+						Set<MenuItem> items = Managers.getMenuItemManager().getMenuItems(menuItems);
+						Managers.getMenuManager().addMenu(items, menuId, title, description);
 					}
 				}
-				Set<MenuItem> items = Managers.getMenuItemManager().getMenuItems(menuItems);
-				Managers.getMenuManager().addMenu(items, menuId, title, description);
 			}
 		}
 	}
