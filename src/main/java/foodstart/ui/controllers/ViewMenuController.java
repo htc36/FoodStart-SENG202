@@ -78,19 +78,17 @@ public class ViewMenuController {
     /**
      * Called to populate the table view with the menu information
      */
+    private int test = 0;
     private void populateTable(Menu menu) {
         Set<MenuItem> menuItems = menu.getMenuItems();
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         tableVariantsColumn.setCellValueFactory(cell -> {
-            String variantsAsString = "";
-            List<PermanentRecipe> variantsList = cell.getValue().getVariants();
-            for (PermanentRecipe variant : variantsList) {
-                variantsAsString.concat(" " + variant.getDisplayName());
-            }
-            return new SimpleStringProperty(variantsAsString);
+            String output = cell.getValue().getVariantsAsString();
+            return new SimpleStringProperty(output);
         });
+
         menuTable.setItems(FXCollections.observableArrayList(menuItems));
 
 

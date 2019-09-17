@@ -99,12 +99,26 @@ public class MenuItem {
 		return variants;
 	}
 
+    /**
+     * Gets the different variants of the menu item as a string
+     *
+     * @return output A string of the variants
+     */
+    public String getVariantsAsString() {
+        String output = "";
+        for (PermanentRecipe recipe : variants) {
+                output += String.format("%s ", recipe.getDisplayName());
+        }
+        return output;
+    }
+
 	/**
 	 * Sets the variants of the menu item
 	 */
 	public void setVariants(List<PermanentRecipe> variants) {
 		this.variants = variants;
 	}
+
 
 
 }
