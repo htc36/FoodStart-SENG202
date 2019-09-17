@@ -25,9 +25,7 @@ public class XMLSalesLogParser extends XMLParser {
         NodeList salesNodes = doc.getChildNodes();
         System.out.println(salesNodes);
         for (int j = 0; j < salesNodes.getLength(); j++) {
-            System.out.println(salesNodes.item(j).getNodeName());
             if (salesNodes.item(j) instanceof Element && salesNodes.item(j).getNodeName().equalsIgnoreCase("sales")) {
-                System.out.println("In");
                 if (salesNodes.item(0).getNodeName().equalsIgnoreCase("sales")) {
                     Element element = (Element) salesNodes.item(j);
                     NodeList nodes = element.getElementsByTagName("sale");

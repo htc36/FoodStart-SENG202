@@ -9,6 +9,7 @@ import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -84,9 +85,11 @@ public class OrderTest {
 	@Test
 	public void getTimePlaced() {}
 
+	@Ignore
 	@Test
 	public void setTimePlaced() {}
 
+	@Ignore
 	@Test
 	public void getPaymentMethod() {
 		assertEquals(PaymentMethod.CASH, testOrder.getPaymentMethod());
