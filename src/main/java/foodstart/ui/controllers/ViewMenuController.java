@@ -7,7 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class viewMenuController {
+public class ViewMenuController {
 
     @FXML
     private Text menuNameText;
