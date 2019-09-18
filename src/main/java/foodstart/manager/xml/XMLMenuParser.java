@@ -1,19 +1,25 @@
 package foodstart.manager.xml;
 
-import foodstart.manager.Managers;
-import foodstart.manager.exceptions.IDLeadsNowhereException;
-import foodstart.model.DataType;
-import foodstart.model.menu.MenuItem;
-import foodstart.model.menu.PermanentRecipe;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import foodstart.manager.Managers;
+import foodstart.manager.exceptions.IDLeadsNowhereException;
+import foodstart.manager.menu.MenuManager;
+import foodstart.model.DataType;
+import foodstart.model.menu.Menu;
+import foodstart.model.menu.MenuItem;
+import foodstart.model.menu.PermanentRecipe;
 
 /**
  * Parses menu XML files
@@ -41,7 +47,7 @@ public class XMLMenuParser extends XMLParser {
 			if (menusNodes.item(i) instanceof Element && menusNodes.item(i).getNodeName().equalsIgnoreCase("menus")) {
 				Element element = (Element) menusNodes.item(i);
 				NodeList nodes = element.getElementsByTagName("menu");
-
+				
 				for (int j = 0; j < nodes.getLength(); j++) {
 
 					Node node = nodes.item(j);
@@ -103,5 +109,91 @@ public class XMLMenuParser extends XMLParser {
 			}
 		}
 		return recipeList;
+	}
+	
+	/**
+	 * Exports a menu file
+	 * 
+	 * @param doc
+	 *            The XML document to write everything to
+	 */
+	@Override
+	public void export(Document doc, Transformer transformer) {
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "menu.dtd");
+		exportWithManager(doc, Managers.getMenuManager());
+	}
+
+	/**
+	 * Export a menu file by writing it to the document. By specifying the
+	 * menu manager this makes it easier to test
+	 * 
+	 * @param doc
+	 *            Document to export to
+	 * @param menuItemManager
+	 *            The ingredient manager to export ingredients from
+	 */
+	public void exportWithManager(Document doc, MenuManager manager) {
+		Element menuRoot = doc.createElement("menus");
+		for (Menu menu : manager.getMenuSet()) {
+			Element root = doc.createElement("menu");
+			
+			Element menuId = doc.createElement("menu_id");
+			menuId.appendChild(doc.createTextNode(String.valueOf(menu.getId())));
+			root.appendChild(menuId);
+			
+			Element menuName = doc.createElement("title");
+			menuName.appendChild(doc.createTextNode(menu.getTitle()));
+			root.appendChild(menuName);
+			
+			Element menuDesc = doc.createElement("description");
+			menuDesc.appendChild(doc.createTextNode(menu.getDescription()));
+			root.appendChild(menuDesc);
+			
+			Element items = doc.createElement("items");
+			
+			for (MenuItem item : menu.getMenuItems()) {
+				Element menuItemElement = exportMenuItem(doc, item);
+				items.appendChild(menuItemElement);
+			}
+			
+			root.appendChild(items);
+			menuRoot.appendChild(root);
+		}
+		doc.appendChild(menuRoot);
+	}
+
+	/**
+	 * Turn an individual menu item into an element with respect to the
+	 * specified document instance
+	 * @param doc Document to create elements with
+	 * @param item Menu item to export
+	 * @return The XML element to export with
+	 */
+	private Element exportMenuItem(Document doc, MenuItem item) {
+		Element itemElement = doc.createElement("item");
+		
+		Element itemId = doc.createElement("item_id");
+		itemId.appendChild(doc.createTextNode(String.valueOf(item.getId())));
+		itemElement.appendChild(itemId);
+		
+		Element itemName = doc.createElement("name");
+		itemName.appendChild(doc.createTextNode(item.getName()));
+		itemElement.appendChild(itemName);
+		
+		Element itemDesc = doc.createElement("item_description");
+		itemDesc.appendChild(doc.createTextNode(item.getDescription()));
+		itemElement.appendChild(itemDesc);
+		
+		Element itemRecipes = doc.createElement("recipes");
+		
+		for (PermanentRecipe recipe : item.getVariants()) {
+			Element recipeId = doc.createElement("recipe_id");
+			recipeId.appendChild(doc.createTextNode(String.valueOf(recipe.getId())));
+			itemRecipes.appendChild(recipeId);
+		}
+		
+		itemElement.appendChild(itemRecipes);
+		
+		return itemElement;
 	}
 }
