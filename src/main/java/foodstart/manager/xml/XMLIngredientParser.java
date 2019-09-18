@@ -70,10 +70,6 @@ public class XMLIngredientParser extends XMLParser {
 	 *            The ingredient manager to export ingredients from
 	 */
 	public void exportWithManager(Document doc, IngredientManager manager) {
-		/*DOMImplementation domImpl = doc.getImplementation();
-	    DocumentType doctype = domImpl.createDocumentType("ingredients", "SYSTEM", "ingredient.dtd");
-	    doc.appendChild(doctype);*/
-		
 		Element root = doc.createElement("ingredients");
 		for (Ingredient ingredient : manager.getIngredientSet()) {
 			Element ingredientElement = exportIngredient(doc, ingredient);
