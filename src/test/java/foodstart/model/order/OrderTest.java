@@ -9,6 +9,7 @@ import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -23,17 +24,20 @@ public class OrderTest {
 	private Map<Ingredient, Integer> testIngredients;
 	private Map<Recipe, Integer> testItems;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public void setUpBeforeClass() throws Exception {
 		//Ingredients for the test recipe
 		Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 		testIngredient = new Ingredient(Unit.GRAMS, "TestIngredient",
 				0, safeFor, 5, 10);
-		Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-		ingredients.put(testIngredient, 1);
+		Map<Ingredient, Integer> testIngredients = new HashMap<Ingredient, Integer>();
+		testIngredients.put(testIngredient, 1);
+	}
 
+	@Before
+	public void setUp() {
 		//The list of the items being ordered
-		testRecipe = new PermanentRecipe(1, "TestRecipeName", "TestRecipeInstructions", 5, ingredients);
+		testRecipe = new PermanentRecipe(1, "TestRecipeName", "TestRecipeInstructions", 5, testIngredients);
 		testItems = new HashMap<Recipe, Integer>();
 		testItems.put(testRecipe, 1);
 		testOrder = new Order(1, testItems, "TestCustomerName", 0, PaymentMethod.CASH);
