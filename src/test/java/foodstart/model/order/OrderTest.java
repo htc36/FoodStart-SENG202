@@ -24,13 +24,13 @@ public class OrderTest {
 	private Map<Ingredient, Integer> testIngredients;
 	private Map<Recipe, Integer> testItems;
 
-	@BeforeClass
+	@Before
 	public void setUp() throws Exception {
 		//Ingredients for the test recipe
 		Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 		testIngredient = new Ingredient(Unit.GRAMS, "TestIngredient",
 				0, safeFor, 5, 10);
-		Map<Ingredient, Integer> testIngredients = new HashMap<Ingredient, Integer>();
+		testIngredients = new HashMap<Ingredient, Integer>();
 		testIngredients.put(testIngredient, 1);
 
 		//The list of the items being ordered
