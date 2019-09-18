@@ -1,6 +1,9 @@
 package foodstart.manager.xml;
 
 import foodstart.model.DataType;
+
+import javax.xml.transform.Transformer;
+
 import org.w3c.dom.Document;
 
 /**
@@ -35,8 +38,9 @@ public abstract class XMLParser {
 	/**
 	 * Export a given XML document
 	 * @param doc Document to populate with data
+	 * @param transformer 
 	 */
-	public void export(Document doc) {
+	public void export(Document doc, Transformer transformer) {
 		//TODO make this abstract
 	}
 

@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -57,6 +58,7 @@ public class XMLPersistence extends Persistence {
 		parsers.put(DataType.SALES_LOG, new XMLSalesLogParser());
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setValidating(true);
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
@@ -66,6 +68,9 @@ public class XMLPersistence extends Persistence {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		try {
 			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		} catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -100,7 +105,7 @@ public class XMLPersistence extends Persistence {
 		}
 		
 		Document doc = dBuilder.newDocument();
-		parsers.get(dataType).export(doc);
+		parsers.get(dataType).export(doc, transformer);
 
 		DOMSource source = new DOMSource(doc);
 

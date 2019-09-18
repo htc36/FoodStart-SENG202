@@ -3,9 +3,10 @@ package foodstart.manager.xml;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.w3c.dom.DOMImplementation;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+
 import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -54,7 +55,8 @@ public class XMLIngredientParser extends XMLParser {
 	 *            The XML document to write everything to
 	 */
 	@Override
-	public void export(Document doc) {
+	public void export(Document doc, Transformer transformer) {
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "ingredient.dtd");
 		exportWithManager(doc, Managers.getIngredientManager());
 	}
 
@@ -68,9 +70,9 @@ public class XMLIngredientParser extends XMLParser {
 	 *            The ingredient manager to export ingredients from
 	 */
 	public void exportWithManager(Document doc, IngredientManager manager) {
-		DOMImplementation domImpl = doc.getImplementation();
+		/*DOMImplementation domImpl = doc.getImplementation();
 	    DocumentType doctype = domImpl.createDocumentType("ingredients", "SYSTEM", "ingredient.dtd");
-	    doc.appendChild(doctype);
+	    doc.appendChild(doctype);*/
 		
 		Element root = doc.createElement("ingredients");
 		for (Ingredient ingredient : manager.getIngredientSet()) {
