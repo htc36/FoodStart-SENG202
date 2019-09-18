@@ -25,23 +25,22 @@ public class OrderTest {
 	private Map<Recipe, Integer> testItems;
 
 	@BeforeClass
-	public void setUpBeforeClass() throws Exception {
+	public void setUp() throws Exception {
 		//Ingredients for the test recipe
 		Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 		testIngredient = new Ingredient(Unit.GRAMS, "TestIngredient",
 				0, safeFor, 5, 10);
 		Map<Ingredient, Integer> testIngredients = new HashMap<Ingredient, Integer>();
 		testIngredients.put(testIngredient, 1);
-	}
 
-	@Before
-	public void setUp() {
 		//The list of the items being ordered
 		testRecipe = new PermanentRecipe(1, "TestRecipeName", "TestRecipeInstructions", 5, testIngredients);
 		testItems = new HashMap<Recipe, Integer>();
 		testItems.put(testRecipe, 1);
 		testOrder = new Order(1, testItems, "TestCustomerName", 0, PaymentMethod.CASH);
 	}
+
+
 
 	@Test
 	public void getId() {
