@@ -101,6 +101,8 @@ public class XMLSupplierParser extends XMLParser {
 			Element url = doc.createElement("url");
 			url.appendChild(doc.createTextNode(String.valueOf(supplier.getUrl())));
 			root.appendChild(url);
+			supplierRoot.appendChild(root);
+
 		}
 		doc.appendChild(supplierRoot);
 	}
