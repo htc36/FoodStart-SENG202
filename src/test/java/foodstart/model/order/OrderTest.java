@@ -40,8 +40,6 @@ public class OrderTest {
 		testOrder = new Order(1, testItems, "TestCustomerName", 0, PaymentMethod.CASH);
 	}
 
-
-
 	@Test
 	public void getId() {
 		assertNotNull(testOrder.getId());
@@ -129,14 +127,24 @@ public class OrderTest {
 
 	@Test
 	public void removeItem() {
-		assertTrue(true);
+		assertEquals(1, testOrder.getItems().size());
+		assertTrue(testOrder.getItems().containsKey(testRecipe));
+		testOrder.removeItem(testRecipe);
+		assertEquals(0, testOrder.getItems().size());
+		assertFalse(testOrder.getItems().containsKey(testRecipe));
+
+		/*Needs to test for when the recipe does not exist but is being removed from the list - edge case*/
 	}
 
 	@Test
 	public void setVariantAmount() {}
 
 	@Test
-	public void increaseVariantAmount() {}
+	public void increaseVariantAmount() {
+		assertTrue(testOrder.getItems().containsKey(testRecipe));
+		assertTrue(1 == Integer.valueOf(testOrder.getItems().get(testRecipe)));
+		
+	}
 
 	@Test
 	public void decreaseVariantAmount() {}
