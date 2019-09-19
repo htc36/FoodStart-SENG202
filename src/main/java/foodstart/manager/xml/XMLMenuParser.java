@@ -129,7 +129,7 @@ public class XMLMenuParser extends XMLParser {
 	 * 
 	 * @param doc
 	 *            Document to export to
-	 * @param menuItemManager
+	 * @param manager
 	 *            The ingredient manager to export ingredients from
 	 */
 	public void exportWithManager(Document doc, MenuManager manager) {
