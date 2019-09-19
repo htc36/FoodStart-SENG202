@@ -2,14 +2,19 @@ package foodstart.manager.xml;
 
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
+import foodstart.manager.order.OrderManager;
 import foodstart.model.DataType;
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
+import foodstart.model.order.Order;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +79,89 @@ public class XMLSalesLogParser extends XMLParser {
 	    PaymentMethod payment = PaymentMethod.matchNiceName(element.getElementsByTagName("payment").item(0).getTextContent());
 	    Map<Recipe, Integer> recipes = getSaleItems(element);
 		Managers.getOrderManager().addOrder(id, recipes, name, date, payment, cost);
-
     }
+
+    /**
+     * Exports a sales log file
+     *
+     * @param doc
+     *             The XML document to write everything to
+     */
+    @Override
+    public void export(Document doc, Transformer transformer) {
+        transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "sales_log.dtd");
+        exportWithManager(doc, Managers.getOrderManager());
+    }
+
+    /**
+     * Export a sales log file by writing it to the document. By specifying the
+     * order manager this makes it easier to test
+     *
+     * @param doc
+     *            Document to export to
+     * @param manager
+     *            The order manager to export sales from
+     */
+    public void exportWithManager(Document doc, OrderManager manager) {
+        Element saleRoot = doc.createElement("sales");
+        for (Order sale : manager.getOrderSet()) {
+            Element root = doc.createElement("sale");
+
+            Element saleId = doc.createElement("sale_id");
+            saleId.appendChild(doc.createTextNode(String.valueOf(sale.getId())));
+            root.appendChild(saleId);
+
+            Element saleName = doc.createElement("name");
+            saleName.appendChild(doc.createTextNode(sale.getCustomerName()));
+            root.appendChild(saleName);
+
+            Element saleDate = doc.createElement("date");
+            saleDate.appendChild(doc.createTextNode(String.valueOf(sale.getTimePlaced())));
+            root.appendChild(saleDate);
+
+            Element saleCost = doc.createElement("cost");
+            saleCost.appendChild(doc.createTextNode(String.valueOf(sale.getTotalCost())));
+            root.appendChild(saleCost);
+
+            Element salePayment = doc.createElement("payment");
+            salePayment.appendChild(doc.createTextNode(sale.getPaymentMethod().getNiceName()));
+            root.appendChild(salePayment);
+
+            Element saleRecipes = doc.createElement("recipes");
+
+            for (Recipe recipe : sale.getItems().keySet()) {
+                int quantity = sale.getItems().get(recipe);
+                Element recipeElement = exportPermanentRecipe(doc,(PermanentRecipe) recipe, quantity);
+                saleRecipes.appendChild(recipeElement);
+            }
+
+            root.appendChild(saleRecipes);
+            saleRoot.appendChild(root);
+        }
+        doc.appendChild(saleRoot);
+    }
+
+    /**
+     * Turn an individual recipe into an element with respect to the
+     * specified document instance
+     * @param doc Document to create elements with
+     * @param recipe Recipe to export
+     * @return The XML element to export with
+     */
+
+    private Element exportPermanentRecipe(Document doc, PermanentRecipe recipe, int quantity) {
+        Element recipeElement = doc.createElement("recipe");
+
+        Element recipeId = doc.createElement("recipe_id");
+        recipeId.appendChild(doc.createTextNode(String.valueOf(recipe.getId())));
+        recipeElement.appendChild(recipeId);
+
+        Element recipeQuantity = doc.createElement("quantity");
+        recipeQuantity.appendChild(doc.createTextNode(String.valueOf(quantity)));
+        recipeElement.appendChild(recipeQuantity);
+
+        return recipeElement;
+    }
+
+
 }
