@@ -93,7 +93,7 @@ public class XMLPersistence extends Persistence {
 		} catch (IOException e) {
 			throw new ImportFailureException("Parser threw an IO Exception: " + e.getMessage());
 		} catch (SAXException e) {
-			//throw new ImportFailureException("Parser threw a SAX Exception: " + e.getMessage());
+			throw new ImportFailureException("Parser threw a SAX Exception: " + e.getMessage());
 		}
 	}
 
