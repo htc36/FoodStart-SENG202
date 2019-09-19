@@ -125,10 +125,20 @@ public class MenuItemManagerTest {
 		assertEquals(2, testManager.getMenuItemSet().size());
 	}
 
-	@Ignore
 	@Test
-	public void testGetApproxPrice() {
-		fail("Not yet implemented");
+	public void testGetApproxPriceSingleItem() {
+		assertEquals(5, testManager.getApproxPrice(0), 2e-1);
+	}
+
+	@Test
+	public void testGetApproxPriceMultipleItems() {
+		List<PermanentRecipe> recipes = new ArrayList<PermanentRecipe>();
+		recipes.add(new PermanentRecipe(0, "recipe0", "blank", 1, null));
+		recipes.add(new PermanentRecipe(1, "recipe1", "blank", (float) 2.5, null));
+		recipes.add(new PermanentRecipe(2, "recipe2", "blank", 3, null));
+		recipes.add(new PermanentRecipe(3, "recipe3", "blank", (float) 4.34, null));
+		testManager.addMenuItem(1, "TestItem", "blank", recipes);
+		assertEquals(2.66, testManager.getApproxPrice(1), 2e-1);
 	}
 
 }
