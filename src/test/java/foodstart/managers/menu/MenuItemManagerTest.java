@@ -1,76 +1,134 @@
 package foodstart.managers.menu;
 
 import foodstart.manager.menu.MenuItemManager;
+import foodstart.model.Unit;
+import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import org.junit.*;
 
-import java.util.HashMap;
+import java.util.*;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class MenuItemManagerTest {
-    //UNFINISHED
-    private MenuItemManager testManager;
-    private static PermanentRecipe recipe1, recipe, recipeSilly, recipeEmpty, recipeNull;
 
-    @BeforeClass
-    public static void setUpBeforeClass() {
-        HashMap<Ingredient, Integer> dummyVariations = new HashMap<Ingredient, Integer>();
-        recipe1 = new PermanentRecipe(1, "test1", "do some stuff", (float) 10.5, dummyVariations);
-        recipe1 = new PermanentRecipe(2, "test2", "do some more stuff", (float) 0.65, dummyVariations);
-        recipeEmpty = new PermanentRecipe(0, "", "", (float) 0.0, dummyVariations);
-        String silly1 = "s,djhfsudzkyjsghadgilhser,kj,asmzdhgk,reoirsjzlg";
-        String silly2 = ",mrak,gmfejramdy,thjgfhaersljd.ktlifksehzrdfkid,gjyfqgh";
-        recipeSilly = new PermanentRecipe(589453432, silly1, silly2,
-                (float) 46846849852416.5524736, dummyVariations);
-        }
+	private MenuItemManager testManager;
+	private PermanentRecipe recipe1, recipeEmpty;
+	private List<PermanentRecipe> recipeList;
 
-    @Ignore
-    @Before
-    public void setUp() throws Exception {
-        testManager = new MenuItemManager();
-    }
+	@Before
+	public void setUp() throws Exception {
+		testManager = new MenuItemManager();
+		HashMap<Ingredient, Integer> ingredients1 = new HashMap<Ingredient, Integer>();
+		HashMap<Ingredient, Integer> ingredients2 = new HashMap<Ingredient, Integer>();
+		Ingredient ingredient1 = new Ingredient(Unit.UNITS, "ingredient1", 0, null, 10, 20);
+		ingredients1.put(ingredient1, 20);
+		recipe1 = new PermanentRecipe(1, "recipe1", "Create recipe one", 5, ingredients1);
+		recipeEmpty = new PermanentRecipe(0, "", "", (float) 0.0, null);
+		recipeList = new ArrayList<PermanentRecipe>();
+		recipeList.add(recipe1);
+		testManager.addMenuItem(0, "test menu item", "a menu item test", recipeList);
+	}
 
-    @Ignore
-    @After
-    public void tearDown() throws Exception {
-    }
+	@After
+	public void tearDown() throws Exception {
+	}
 
-    @Ignore
-    @Test
-    public void testAddMenuItem() {
-        fail("Not yet implemented");
-    }
+	@Test
+	public void testAddMenuItem() {
+		assertFalse(testManager.getMenuItems().isEmpty());
+		testManager.addMenuItem(1, "test menu item", "a menu item test", recipeList);
+		assertEquals(2, testManager.getMenuItems().size());
+		testManager.addMenuItem(1, "Overriding item", "Overrides another item", null);
+		assertEquals(2, testManager.getMenuItems().size());
+	}
 
-    @Ignore
-    @Test
-    public void testGetMenuItem() {
-        fail("Not yet implemented");
-    }
+	@Test
+	public void testGetMenuItemValidId() {
+		MenuItem item = testManager.getMenuItem(0);
+		assertNotNull(item);
+		assertEquals(0, item.getId());
+	}
 
-    @Ignore
-    @Test
-    public void testGetMenuItems() {
-        fail("Not yet implemented");
-    }
+	@Test
+	public void testGetMenuItemMultipleItems() {
+		testManager.addMenuItem(1, "fetchedItem", "a menu item test", recipeList);
+		testManager.addMenuItem(3, "test menu item", "a menu item test", recipeList);
+		MenuItem item2 = testManager.getMenuItem(1);
+		assertEquals("fetchedItem", item2.getName());
+	}
 
-    @Ignore
-    @Test
-    public void testGetMenuItemsCollectionOfInteger() {
-        fail("Not yet implemented");
-    }
+	@Test
+	public void testGetMenuItemInvalidId() {
+		assertNull(testManager.getMenuItem(10));
+	}
 
-    @Test
-    @Ignore
-    public void testGetMenuItemSet() {
-        fail("Not yet implemented");
-    }
+	@Test
+	public void testGetMenuItemsSingleId() {
+		Collection<Integer> ids = new ArrayList<Integer>();
+		ids.add(0);
+		Set<MenuItem> items = testManager.getMenuItems(ids);
+		assertEquals(1, items.size());
+	}
 
-    @Ignore
-    @Test
-    public void testGetApproxPrice() {
-        fail("Not yet implemented");
-    }
+	@Test
+	public void testGetMenuItemsMultipleIds() {
+		testManager.addMenuItem(5, "TestItem5", "A test item", null);
+		testManager.addMenuItem(4, "TestItem4", "A test item", null);
+		testManager.addMenuItem(3, "TestItem3", "A test item", null);
+		Collection<Integer> ids = new ArrayList<Integer>();
+		ids.add(0);
+		ids.add(3);
+		Set<MenuItem> items = testManager.getMenuItems(ids);
+		assertEquals(2, items.size());
+	}
+
+	@Test
+	public void testGetMenuItemsInvalidId() {
+		testManager.addMenuItem(5, "TestItem5", "A test item", null);
+		testManager.addMenuItem(4, "TestItem4", "A test item", null);
+		testManager.addMenuItem(3, "TestItem3", "A test item", null);
+		Collection<Integer> ids = new ArrayList<Integer>();
+		ids.add(0);
+		ids.add(10);
+		Set<MenuItem> items = testManager.getMenuItems(ids);
+		assertEquals(1, items.size());
+	}
+
+	@Test
+	public void testGetMenuItemsNoIds() {
+		testManager.addMenuItem(5, "TestItem5", "A test item", null);
+		testManager.addMenuItem(4, "TestItem4", "A test item", null);
+		testManager.addMenuItem(3, "TestItem3", "A test item", null);
+		Collection<Integer> ids = new ArrayList<Integer>();
+		Set<MenuItem> items = testManager.getMenuItems(ids);
+		assertEquals(0, items.size());
+	}
+
+	@Test
+	public void testGetMenuItemSet() {
+		assertEquals(1, testManager.getMenuItemSet().size());
+		testManager.addMenuItem(1, "AnotherTestItem", "Another Testing Item", null);
+		testManager.addMenuItem(3, "AnotherTestItem", "Another Testing Item", null);
+		assertEquals(3, testManager.getMenuItemSet().size());
+	}
+
+	@Test
+	public void testGetMenuItemSetAbuse() {
+		Map<Integer, MenuItem> items = testManager.getMenuItems();
+		MenuItem item = new MenuItem(1, "AbusiveMenuItem", "This should never occur in the system", null);
+		items.put(1, item);
+		items.put(2, item);
+		assertEquals(3, items.size());
+		assertEquals(2, testManager.getMenuItemSet().size());
+	}
+
+	@Ignore
+	@Test
+	public void testGetApproxPrice() {
+		fail("Not yet implemented");
+	}
 
 }
