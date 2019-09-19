@@ -1,9 +1,16 @@
 package foodstart.ui.controllers;
+import java.io.File;
 import java.util.Optional;
 
 
 import foodstart.manager.Managers;
+import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.ExportFailureException;
+import foodstart.model.DataFileType;
+import foodstart.model.DataType;
 import foodstart.model.stock.Supplier;
+import foodstart.ui.FXExceptionDisplay;
+import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -14,6 +21,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class SupplierController implements Refreshable {
 
@@ -90,7 +99,19 @@ public class SupplierController implements Refreshable {
 	}
 	
 	public void onExport() {
-		
+		Stage stage = (Stage) this.supplierTable.getScene().getWindow();
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save Suppliers Log File");
+		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
+		File selectedFile = fileChooser.showSaveDialog(stage);
+		if (selectedFile != null) {
+			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
+			try {
+				persist.exportFile(selectedFile, DataType.SUPPLIER);
+			} catch (ExportFailureException e) {
+				FXExceptionDisplay.showException(e, false);
+			}
+		}
 	}
 	
 	public void onAdd() {
