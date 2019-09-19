@@ -62,6 +62,11 @@ public class XMLSupplierParser extends XMLParser {
 	}
 	
 	
+	/**
+	 * Exports a supplier file
+	 * 
+	 * @param doc The XML document to write the data to
+	 */
 	@Override
 	public void export(Document doc, Transformer transformer) {
 		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "suppliers.dtd");

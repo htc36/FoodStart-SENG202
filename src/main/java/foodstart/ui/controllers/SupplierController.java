@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -28,6 +29,17 @@ public class SupplierController implements Refreshable {
 	private TableColumn<Supplier, String> phoneColumn;
 	@FXML
 	private TableColumn<Supplier, String> phoneTypeColumn;
+	@FXML
+	private MenuItem importButton;
+	@FXML
+	private MenuItem exportButton;
+	@FXML
+	private MenuItem addButton;
+	@FXML
+	private MenuItem removeButton;
+	@FXML
+	private MenuItem editButton;
+	
 	
 	/**
 	 * List of suppliers currently shown on the table
@@ -61,10 +73,34 @@ public class SupplierController implements Refreshable {
 	}
 
 
+	/**
+	 * Updates the supplierTable to show the current data
+	 */
 	@Override
 	public void refreshTable() {
 		observableSuppliers.setAll(Managers.getSupplierManager().getSupplierSet());
 	}
+	
+	public void onImport() {
+		
+	}
+	
+	public void onExport() {
+		
+	}
+	
+	public void onAdd() {
+		
+	}
+	
+	public void onRemove() {
+		
+	}
+	
+	public void onEdit() {
+		
+	}
+	
 }
 	
 
