@@ -36,10 +36,8 @@ public class OnTheFlyRecipeTest {
 
         testPermanentIngredients = new HashMap<Ingredient, Integer>();
         testPermanentIngredients.put(testIngredient1, 1);
-        testPermanentIngredients.put(testIngredient3, 3);
 
         testAddOnIngredients = new HashMap<Ingredient, Integer>();
-        testAddOnIngredients.put(testIngredient1, 1);
         testAddOnIngredients.put(testIngredient2, 2);
 
         testPermanentRecipeBasis = new PermanentRecipe(1, "PermanentRecipeName", "PermanentRecipeInstructions", 5, testPermanentIngredients);
@@ -83,13 +81,25 @@ public class OnTheFlyRecipeTest {
     @Test
     public void addIngredient() {
         //Add an ingredient that doesn't exist on the current ingredients list of the item
+        assertFalse(testOnTheFlyRecipe.getIngredients().containsKey(testIngredient3));
+        testOnTheFlyRecipe.addIngredient(testIngredient3, 1);
+        assertTrue(testOnTheFlyRecipe.getIngredients().containsKey(testIngredient3));
+        assertTrue(testOnTheFlyRecipe.getIngredients().get(testIngredient3) == 1);
+
         //Add an ingredient that already exists on the current ingredients list of the item
+        testOnTheFlyRecipe.addIngredient(testIngredient3, 2);
+        assertTrue(testOnTheFlyRecipe.getIngredients().get(testIngredient3) == 2);
     }
 
     @Test
-    public void removeIngredient() {
+    public void removeIngredient() { //throw exception that ingredient does not exist
         //Remove an ingredient that has exists on the current ingredients list of the item
+        assertTrue(testOnTheFlyRecipe.getIngredients().containsKey(testIngredient2));
+        testOnTheFlyRecipe.removeIngredient(testIngredient2);
+        assertFalse(testOnTheFlyRecipe.getIngredients().containsKey(testIngredient2));
+
         //Remove an ingredient that doesn't exists on the current ingredients list of the item
+        assertNull(testOnTheFlyRecipe.removeIngredient(testIngredient2));
     }
 
     @Test
