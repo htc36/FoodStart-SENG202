@@ -5,6 +5,7 @@ import java.util.Set;
 
 import foodstart.manager.Managers;
 import foodstart.manager.stock.IngredientManager;
+import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,8 +14,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class InventoryController implements Refreshable {
@@ -31,7 +35,10 @@ public class InventoryController implements Refreshable {
 	private TableColumn<Ingredient, String> kitchenStock;
 	@FXML
 	private TableColumn<Ingredient, String> dietary;
-	private FXMLLoader loader;
+	private FXMLLoader addLoader;
+	private FXMLLoader editLoader;
+	private Stage editPopup;
+	private Stage addPopup;
 
 	/**
 	 * Observable list of ingredients
@@ -40,6 +47,26 @@ public class InventoryController implements Refreshable {
 
 	@FXML
 	public void initialize() {
+		editLoader = new FXMLLoader(getClass().getResource("editIngredient.fxml"));
+		addLoader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
+
+		try {
+			editLoader.load();
+			addLoader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		editPopup = new Stage();
+		editPopup.initModality(Modality.WINDOW_MODAL);
+		Scene editScene = new Scene(editLoader.getRoot());
+		editPopup.setTitle("Add Item");
+		editPopup.setScene(editScene);
+		addPopup = new Stage();
+		addPopup.initModality(Modality.WINDOW_MODAL);
+		Scene addScene = new Scene(addLoader.getRoot());
+		addPopup.setTitle("Add Item");
+		addPopup.setScene(addScene);
 		populateTable();
 	}
 
@@ -68,19 +95,28 @@ public class InventoryController implements Refreshable {
 	}
 
 	public void addIngredient() {
-		loader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
-		try {
-			loader.load();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (addPopup.getOwner() == null) {
+			addPopup.initOwner(this.inventoryView.getScene().getWindow());
 		}
-		Scene scene = new Scene(loader.getRoot());
-		stage = new Stage();
-		stage.setTitle("Add Item");
-		stage.setScene(scene);
-		stage.show();
+		addPopup.showAndWait();
 	}
+
+	public void editIngredient() {
+		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
+		if (ingredient == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not edit ingredient as nothing is selected", ButtonType.OK);
+			alert.setHeaderText("No order selected");
+			alert.showAndWait();
+		} else {
+			if (editPopup.getOwner() == null) {
+				editPopup.initOwner(this.inventoryView.getScene().getWindow());
+			}
+			((EditIngredientController) editLoader.getController()).setIngredient(ingredient);
+			editPopup.showAndWait();
+			refreshTable();
+		}
+	}
+
 	public void closeAddIngredient() {
 		stage.close();
 	}

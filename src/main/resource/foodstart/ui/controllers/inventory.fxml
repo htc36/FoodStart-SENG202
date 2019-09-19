@@ -37,7 +37,7 @@
                             <MenuItem mnemonicParsing="false" text="Export" />
                               <MenuItem mnemonicParsing="false" onAction="#addIngredient" text="Add" />
                               <MenuItem mnemonicParsing="false" text="Remove" />
-                              <MenuItem mnemonicParsing="false" text="Edit" />
+                              <MenuItem mnemonicParsing="false" onAction="#editIngredient" text="Edit" />
                           </items>
                         </MenuButton>
                      </children>
