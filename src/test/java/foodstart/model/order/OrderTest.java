@@ -143,7 +143,7 @@ public class OrderTest {
 	public void increaseVariantAmount() {
 		assertTrue(testOrder.getItems().containsKey(testRecipe));
 		assertTrue(1 == Integer.valueOf(testOrder.getItems().get(testRecipe)));
-		
+
 	}
 
 	@Test
