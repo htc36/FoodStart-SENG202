@@ -3,7 +3,11 @@ package foodstart.ui.controllers;
 import foodstart.manager.Managers;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DietaryRequirement;
+import foodstart.model.PaymentMethod;
 import foodstart.model.Unit;
+import foodstart.model.order.Order;
+import foodstart.model.stock.Ingredient;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -13,7 +17,7 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-public class addIngredientController {
+public class EditIngredientController {
 
 	@FXML
 	private TextField idInput;
@@ -34,7 +38,7 @@ public class addIngredientController {
 	@FXML
 	private CheckBox dairyFree;
 	@FXML
-	private ComboBox<String> unitComboBox;
+	private ComboBox<Unit> unitComboBox;
 	@FXML
 	private Label nameError;
 
@@ -48,15 +52,17 @@ public class addIngredientController {
 	private Label idDisplay;
 
 	private int id;
+	private Ingredient ingredient;
 
 
 	@FXML
 	public void initialize() {
+		this.unitComboBox.setItems(FXCollections.observableArrayList(Unit.values()));
 		id = Managers.getIngredientManager().generateNewID();
 		idDisplay.setText(Integer.toString(id));
-		unitComboBox.getItems().removeAll(unitComboBox.getItems());
+		//unitComboBox.getItems().removeAll(unitComboBox.getItems());
 		//will need to change this to use the enum rather than hardcode
-		unitComboBox.getItems().addAll("ml", "g", "count");
+		//unitComboBox.getItems().addAll("ml", "g", "count");
 	}
 
 	//used to check if kitchen stock and truck stock fields are ints
@@ -106,13 +112,28 @@ public class addIngredientController {
 		label.setText(message);
 		return isValid;
 	}
+	public void setIngredient(Ingredient ingredient) {
+		this.ingredient = ingredient;
+		if (ingredient != null) {
+			this.nameInput.setText(ingredient.getName());
+			this.truckStockInput.setText(Integer.toString(ingredient.getTruckStock()));
+			this.kitchenStockInput.setText(Integer.toString(ingredient.getKitchenStock()));
+			this.unitComboBox.getSelectionModel().select(ingredient.getUnit());
+			this.vegan.setSelected(ingredient.isSafeFor(DietaryRequirement.VEGAN));
+			this.vegetarian.setSelected(ingredient.isSafeFor(DietaryRequirement.VEGETARIAN));
+			this.glutenFree.setSelected(ingredient.isSafeFor(DietaryRequirement.GLUTEN_FREE));
+			this.nutFree.setSelected(ingredient.isSafeFor(DietaryRequirement.NUT_ALLERGY));
+			this.dairyFree.setSelected(ingredient.isSafeFor(DietaryRequirement.LACTOSE_INTOLERANT));
+		}
+	}
 
 	public void submit() {
 		boolean isNameValid = textFieldValidate(nameInput, nameError);
 		boolean isKitchenStockValid = integerFieldValidate(kitchenStockInput, kitchenStockError);
 		boolean isTruckStockValid = integerFieldValidate(truckStockInput, truckStockError);
-		boolean isUnitComboBoxValid = comboBoxValidate(unitComboBox, unitBoxError);
-		String unitString = unitComboBox.getValue();
+		//boolean isUnitComboBoxValid = comboBoxValidate(unitComboBox, unitBoxError);
+		boolean isUnitComboBoxValid = true;
+		String unitString = unitComboBox.getValue().getDBName();
 		/*
 		if (isInt(truckStockInput) && isInt(kitchenStockInput) && ! isInt(nameInput) && unitString != "") {
 		 */

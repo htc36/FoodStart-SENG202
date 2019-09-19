@@ -1,8 +1,14 @@
 package foodstart.manager.xml;
 
 import foodstart.manager.Managers;
+import foodstart.manager.stock.SupplierManager;
 import foodstart.model.DataType;
 import foodstart.model.PhoneType;
+import foodstart.model.stock.Supplier;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -54,5 +60,50 @@ public class XMLSupplierParser extends XMLParser {
 		String url = element.getElementsByTagName("url").item(0).getTextContent();
 		Managers.getSupplierManager().addSupplier(sid, name, phone, phoneType, email, url, address);
 	}
+	
+	
+	/**
+	 * Exports a supplier file
+	 * 
+	 * @param doc The XML document to write the data to
+	 */
+	@Override
+	public void export(Document doc, Transformer transformer) {
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "suppliers.dtd");
+		exportWithManager(doc, Managers.getSupplierManager());
+	}
+	
+	public void exportWithManager(Document doc, SupplierManager manager) {
+		Element supplierRoot = doc.createElement("suppliers");
+		for (Supplier supplier : manager.getSupplierSet()) {
+			Element root = doc.createElement("supplier");
+			
+			Element sid = doc.createElement("sid");
+			sid.appendChild(doc.createTextNode(String.valueOf(supplier.getId())));
+			root.appendChild(sid);
+			
+			Element name = doc.createElement("name");
+			name.appendChild(doc.createTextNode(String.valueOf(supplier.getSupplierName())));
+			root.appendChild(name);
+			
+			Element address = doc.createElement("address");
+			address.appendChild(doc.createTextNode(String.valueOf(supplier.getAddress())));
+			root.appendChild(address);
+			
+			Element phone = doc.createElement("phone");
+			phone.setAttribute("type", String.valueOf(supplier.getPhoneType()));
+			root.appendChild(doc.createTextNode(String.valueOf(supplier.getPhoneNumber())));
+			
+			Element email = doc.createElement("email");
+			email.appendChild(doc.createTextNode(String.valueOf(supplier.getEmail())));
+			root.appendChild(email);
+			
+			Element url = doc.createElement("url");
+			url.appendChild(doc.createTextNode(String.valueOf(supplier.getUrl())));
+			root.appendChild(url);
+		}
+		doc.appendChild(supplierRoot);
+	}
+	
 
 }
