@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE menus SYSTEM "../dtd/menu.dtd">
+<menus>
+	<menu>
+		<menu_id>0</menu_id>
+		<title>Test title</title>
+		<description>Test description</description>
+		<items>
+			<item>
+				<item_id>0</item_id>
+				<name>Boring Burger</name>
+				<item_description>Test burger</item_description>
+				<recipes>
+					<recipe_id>1000</recipe_id>
+					<recipe_id>1001</recipe_id>
+				</recipes>
+			</item>
+		</items>
+	</menu>
+</menus>
