@@ -144,4 +144,16 @@ public class XMLIngredientParserTest {
 		assertTrue("Throw exception when importing kitchen stock -1", threwException);
 		assertTrue("Should not have ID 1001 in memory", Managers.getIngredientManager().getIngredient(1001) == null);
 	}
+	
+	@Test
+	public void testImportEmptyName() {
+		boolean threwException = false;
+		try {
+			persistence.importFile(new File("resources/data/TestBadIngredients4.xml"), DataType.INGREDIENT);
+		} catch (ImportFailureException e) {
+			threwException = true;
+		}
+		assertTrue("Throw exception when importing ingredient with no name", threwException);
+		assertTrue("Should not have ID 1002 in memory", Managers.getIngredientManager().getIngredient(1002) == null);
+	}
 }
