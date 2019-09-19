@@ -2,9 +2,12 @@ package foodstart.ui.controllers;
 
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class EditSupplierController {
     @FXML
@@ -23,6 +26,9 @@ public class EditSupplierController {
     private TextField phoneTextField;
 
     @FXML
+    private Text codeText;
+
+    @FXML
     private ComboBox<PhoneType> phoneTypeComboBox;
 
     /**
@@ -30,7 +36,7 @@ public class EditSupplierController {
      */
     @FXML
     public void initialize() {
-        //TODO: Display the popup with the correct info of selected supplier
+        this.phoneTypeComboBox.setItems(FXCollections.observableArrayList(PhoneType.values()));
     }
 
     /**
@@ -38,12 +44,18 @@ public class EditSupplierController {
      * @param supplier
      */
     public void setSupplier(Supplier supplier) {
-        //TODO: Set the supplier info
-
+        codeText.setText(Integer.toString(supplier.getId()));
+        nameTextField.setText(supplier.getSupplierName());
+        addressTextField.setText(supplier.getAddress());
+        websiteTextField.setText(supplier.getUrl());
+        emailTextField.setText(supplier.getEmail());
+        phoneTextField.setText(supplier.getPhoneNumber());
+        phoneTypeComboBox.getSelectionModel().select(supplier.getPhoneType());
     }
 
     public void onCancel() {
-        //TODO: Close this popup
+        Stage stage = (Stage) this.nameTextField.getScene().getWindow();
+        stage.close();
 
     }
 

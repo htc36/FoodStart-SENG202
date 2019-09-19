@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
@@ -20,31 +21,37 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="40.799981689453126" minHeight="22.39998779296875" prefHeight="39.200006103515626" />
-    <RowConstraints maxHeight="59.60001220703125" minHeight="10.0" prefHeight="42.799993896484374" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="59.60001220703125" minHeight="10.0" prefHeight="27.199981689453125" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="92.80001831054688" minHeight="10.0" prefHeight="59.99999389648438" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="82.19998779296876" minHeight="10.0" prefHeight="54.80000000000001" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="68.00000610351563" minHeight="10.0" prefHeight="59.9999969482422" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="58.80002441406248" minHeight="10.0" prefHeight="53.600003051757824" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="57.59995117187498" minHeight="10.0" prefHeight="57.59995117187498" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier Name" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Website" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-      <TextField fx:id="nameTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-      <TextField fx:id="addressTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-      <TextField fx:id="websiteTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-      <TextField fx:id="emailTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-      <TextField fx:id="phoneTextField" prefHeight="26.0" prefWidth="338.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancel" text="Cancel" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-      <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirm" text="Confirm" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-      <ComboBox fx:id="phoneTypeComboBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier Name" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Website" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+      <TextField fx:id="nameTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+      <TextField fx:id="addressTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+      <TextField fx:id="websiteTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+      <TextField fx:id="emailTextField" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+      <TextField fx:id="phoneTextField" prefHeight="26.0" prefWidth="338.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancel" text="Cancel" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+      <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirm" text="Confirm" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+      <ComboBox fx:id="phoneTypeComboBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Supplier" textAlignment="CENTER" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Code" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+      <Text fx:id="codeText" strokeType="OUTSIDE" strokeWidth="0.0" text="CODE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
    </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
 </GridPane>
