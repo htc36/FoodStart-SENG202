@@ -5,6 +5,7 @@ import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.DataType;
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import org.w3c.dom.Document;
@@ -92,6 +93,15 @@ public class XMLSalesLogParser extends XMLParser {
         exportWithManager(doc, Managers.getOrderManager());
     }
 
+    /**
+     * Export a sales log file by writing it to the document. By specifying the
+     * order manager this makes it easier to test
+     *
+     * @param doc
+     *            Document to export to
+     * @param manager
+     *            The order manager to export sales from
+     */
     public void exportWithManager(Document doc, OrderManager manager) {
         Element saleRoot = doc.createElement("sales");
         for (Order sale : manager.getOrderSet()) {
@@ -119,11 +129,16 @@ public class XMLSalesLogParser extends XMLParser {
 
             Element saleRecipes = doc.createElement("recipes");
 
-//            for (Recipe recipe : sale.getItems()) {
-//
-//            }
+            for (Recipe recipe : sale.getItems().keySet()) {
+                int quantity = sale.getItems().get(recipe);
+                Element recipeElement = exportPermanentRecipe(doc,(PermanentRecipe) recipe, quantity);
+                saleRecipes.appendChild(recipeElement);
+            }
 
+            root.appendChild(saleRecipes);
+            saleRoot.appendChild(root);
         }
+        doc.appendChild(saleRoot);
     }
 
     /**
@@ -134,11 +149,19 @@ public class XMLSalesLogParser extends XMLParser {
      * @return The XML element to export with
      */
 
-    private Element exportRecipe(Document doc, Recipe recipe) {
+    private Element exportPermanentRecipe(Document doc, PermanentRecipe recipe, int quantity) {
         Element recipeElement = doc.createElement("recipe");
+
+        Element recipeId = doc.createElement("recipe_id");
+        recipeId.appendChild(doc.createTextNode(String.valueOf(recipe.getId())));
+        recipeElement.appendChild(recipeId);
+
+        Element recipeQuantity = doc.createElement("quantity");
+        recipeQuantity.appendChild(doc.createTextNode(String.valueOf(quantity)));
+        recipeElement.appendChild(recipeQuantity);
 
         return recipeElement;
     }
 
 
-    }
+}
