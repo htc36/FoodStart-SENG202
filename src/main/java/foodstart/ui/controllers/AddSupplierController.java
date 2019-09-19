@@ -3,7 +3,6 @@ package foodstart.ui.controllers;
 import foodstart.manager.Managers;
 import foodstart.manager.stock.SupplierManager;
 import foodstart.model.PhoneType;
-import foodstart.model.stock.Supplier;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -11,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class EditSupplierController {
+public class AddSupplierController {
     @FXML
     private TextField nameTextField;
 
@@ -33,26 +32,26 @@ public class EditSupplierController {
     @FXML
     private ComboBox<PhoneType> phoneTypeComboBox;
 
+
+    private int code;
+
     /**
      * Called when the controller is initialized
      */
     @FXML
     public void initialize() {
+        setNewCode();
         this.phoneTypeComboBox.setItems(FXCollections.observableArrayList(PhoneType.values()));
+        phoneTypeComboBox.getSelectionModel().select(PhoneType.WORK); // default phone type
     }
 
+
     /**
-     * Called to set the supplier so the correct information can be displayed
-     * @param supplier
+     * Called when a new code must be generated and set in the code text box
      */
-    public void setSupplier(Supplier supplier) {
-        codeText.setText(Integer.toString(supplier.getId()));
-        nameTextField.setText(supplier.getSupplierName());
-        addressTextField.setText(supplier.getAddress());
-        websiteTextField.setText(supplier.getUrl());
-        emailTextField.setText(supplier.getEmail());
-        phoneTextField.setText(supplier.getPhoneNumber());
-        phoneTypeComboBox.getSelectionModel().select(supplier.getPhoneType());
+    public void setNewCode() {
+        code = Managers.getSupplierManager().generateNewCode();
+        codeText.setText(Integer.toString(code));
     }
 
     /**
@@ -65,17 +64,28 @@ public class EditSupplierController {
     }
 
     /**
-     * Called when the confirm button is clicked
-     * Replaces the existing supplier with a new supplier with the retrieved information
+     * Called when the submit button is pressed
      */
-    public void onConfirm() {
-        //TODO: Validations of the text fields
+    public void onSubmit() {
         SupplierManager supplierManager = Managers.getSupplierManager();
         int code = Integer.parseInt(codeText.getText());
         supplierManager.removeSupplier(code);
         supplierManager.addSupplier(code, nameTextField.getText(), phoneTextField.getText(), phoneTypeComboBox.getValue(),
                 emailTextField.getText(), websiteTextField.getText(), addressTextField.getText());
         this.onCancel();
+        clearFields();
+    }
+
+    /**
+     * Called when the text fields are to be cleared
+     */
+    private void clearFields() {
+        nameTextField.clear();
+        addressTextField.clear();
+        websiteTextField.clear();
+        emailTextField.clear();
+        phoneTextField.clear();
+        phoneTypeComboBox.getSelectionModel().select(PhoneType.WORK);
     }
 
 

@@ -92,5 +92,14 @@ public class SupplierManager {
 	public Set<Supplier> getSupplierSet() {
 		return new HashSet<Supplier>(this.suppliers.values());
 	}
+
+	/**
+	 * Generates a new code for a new supplier
+	 * @return the new supplier code
+	 */
+	public int generateNewCode() {
+		return suppliers.keySet().size() == 0 ? 0 : Collections.max(suppliers.keySet()) + 1;
+	}
+
 }
 
