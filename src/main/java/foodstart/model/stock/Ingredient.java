@@ -3,6 +3,7 @@ package foodstart.model.stock;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -43,7 +44,7 @@ public class Ingredient {
 	private int truckStock;
 
 	/**
-	 * Constructs an instance of an ingredient
+	 * Constructs an Ingredient object, taking all the fields of the class as parameters. 
 	 *
 	 * @param unit         Unit of the ingredient
 	 * @param name         Name of the ingredient
@@ -60,7 +61,7 @@ public class Ingredient {
 		this.kitchenStock = kitchenStock;
 		this.truckStock = truckStock;
 	}
-
+	
 	/**
 	 * Gets the ingredient's unit of measurement
 	 *
@@ -156,10 +157,44 @@ public class Ingredient {
 	public void setTruckStock(int truckStock) {
 		this.truckStock = truckStock;
 	}
+	
+	
+	/**
+	 * Returns a deep copy of this Ingredient object.
+	 * @return a new Ingredient object 
+	 */
+	@Override
+	public Ingredient clone() {
+	    Map<DietaryRequirement, Boolean> mapCopy = new HashMap<DietaryRequirement, Boolean>(safeFor);
+	    Ingredient copy = new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
+	    return copy;
+	}
+	
+
+	/**
+	 * Returns whether the target object's fields are equal to this one's.
+	 * @param target - the Ingredient object being compared with.
+	 * @return True if all fields between the objects are equal; false otherwise.
+	 */
+	@Override
+	public boolean equals(Object target) {
+	    boolean result = true;
+	    if (target.getClass() != Ingredient.class) {
+	        result = false;
+	    } else {
+    	    if (this.unit != ((Ingredient) target).getUnit()) result = false;
+    	    else if (!this.name.equals(((Ingredient) target).getName())) result = false;
+    	    else if (this.id != ((Ingredient) target).getId()) result = false;
+    	    else if (this.kitchenStock != ((Ingredient) target).getKitchenStock()) result = false;
+    	    else if (this.truckStock != ((Ingredient) target).getTruckStock()) result = false;
+    	    else if (!this.safeFor.equals(((Ingredient) target).getSafeFor())) result = false;
+	    }
+	    return result;
+	    
+	}
 
 	/**
 	 * Checks if the ingredient is safe for some dietary requirement
-	 *
 	 * @param requirement the dietary requirement to check
 	 * @return true of the ingredient is considered safe for the dietary requirement; false otherwise
 	 */
