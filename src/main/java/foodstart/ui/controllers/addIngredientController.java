@@ -9,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 
@@ -126,8 +127,13 @@ public class addIngredientController {
 		if (isNameValid && isKitchenStockValid && isTruckStockValid && isUnitComboBoxValid) {
 			manager.addIngredient(unit, nameInput.getText(), id, safeFor,
 					Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
-			//InventoryController.closeAddIngredient();
+			this.closeSelf();
 		}
 		
+	}
+
+	private void closeSelf() {
+		Stage stage = (Stage) this.nameInput.getScene().getWindow();
+		stage.close();
 	}
 }
