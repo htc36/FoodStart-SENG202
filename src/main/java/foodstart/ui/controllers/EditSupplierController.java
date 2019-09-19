@@ -1,5 +1,7 @@
 package foodstart.ui.controllers;
 
+import foodstart.manager.Managers;
+import foodstart.manager.stock.SupplierManager;
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
 import javafx.collections.FXCollections;
@@ -60,7 +62,14 @@ public class EditSupplierController {
     }
 
     public void onConfirm() {
-        //TODO: Get the changes from the textfields and modify selected supplier
+        //TODO: Validations of the text fields
+        SupplierManager supplierManager = Managers.getSupplierManager();
+        int code = Integer.parseInt(codeText.getText());
+        supplierManager.removeSupplier(code);
+        supplierManager.addSupplier(code, nameTextField.getText(), phoneTextField.getText(), phoneTypeComboBox.getValue(),
+                emailTextField.getText(), websiteTextField.getText(), addressTextField.getText());
+        this.onCancel();
     }
+
 
 }
