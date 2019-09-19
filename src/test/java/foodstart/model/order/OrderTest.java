@@ -94,7 +94,9 @@ public class OrderTest {
 	@Test
 	public void getPaymentMethod() {
 		assertEquals(PaymentMethod.CASH, testOrder.getPaymentMethod());
-	}
+		testOrder.setPaymentMethod(PaymentMethod.EFTPOS);
+        assertEquals(PaymentMethod.EFTPOS, testOrder.getPaymentMethod());
+    }
 
 	@Test
 	public void setPaymentMethod() {
@@ -109,7 +111,6 @@ public class OrderTest {
 	@Test
 	public void getTotalCost() {
 		assertTrue(testOrder.getTotalCost() == testRecipe.getPrice());
-//		assertEquals(order.getTotalCost(), recipe.getPrice());
 	}
 
 	@Test
@@ -142,15 +143,25 @@ public class OrderTest {
 	@Test
 	public void increaseVariantAmount() {
 		assertTrue(testOrder.getItems().containsKey(testRecipe));
-		assertTrue(1 == Integer.valueOf(testOrder.getItems().get(testRecipe)));
-
-	}
-
-	@Test
-	public void decreaseVariantAmount() {}
+		assertTrue(1 == testOrder.getItems().get(testRecipe));
+        testOrder.increaseVariantAmount(testRecipe, 2);
+        assertTrue(3 == testOrder.getItems().get(testRecipe));
+    }
 
 	@Test
-	public void getTotalItemCount() {}
+	public void decreaseVariantAmount() {
+        assertTrue(testOrder.getItems().containsKey(testRecipe));
+        assertTrue(1 == testOrder.getItems().get(testRecipe));
+        testOrder.decreaseVariantAmount(testRecipe, 1);
+        assertNull(testOrder.getItems().get(testRecipe));
+    }
+
+	@Test
+	public void getTotalItemCount() {
+        assertEquals((Integer) 1, testOrder.getTotalItemCount());
+	    testOrder.increaseVariantAmount(testRecipe, 3);
+//        assertEquals((Integer) 3, testOrder.getTotalItemCount());
+    }
 
 	@Test
 	public void getVariantCount() {}
