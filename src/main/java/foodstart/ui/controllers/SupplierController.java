@@ -1,5 +1,6 @@
 package foodstart.ui.controllers;
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -16,12 +17,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class SupplierController implements Refreshable {
@@ -52,7 +56,9 @@ public class SupplierController implements Refreshable {
 	private MenuItem removeButton;
 	@FXML
 	private MenuItem editButton;
-	
+
+	private FXMLLoader editLoader;
+	private Stage editPopup;
 	
 	/**
 	 * List of suppliers currently shown on the table
@@ -64,6 +70,21 @@ public class SupplierController implements Refreshable {
 	 */
 	@FXML
 	public void initialize() {
+		editLoader = new FXMLLoader(getClass().getResource("editSupplier.fxml"));
+
+		try {
+			editLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		editPopup = new Stage();
+		editPopup.initModality(Modality.WINDOW_MODAL);
+		editPopup.setTitle("Edit Supplier");
+		Scene editScene = new Scene(editLoader.getRoot());
+		editPopup.setScene(editScene);
+
+		//TODO: Add popup
+
 		populateTable();
 	}
 
@@ -87,17 +108,23 @@ public class SupplierController implements Refreshable {
 
 
 	/**
-	 * Updates the supplierTable to show the current data
+	 * Updates the supplierTable to show the current supplier data
 	 */
 	@Override
 	public void refreshTable() {
 		observableSuppliers.setAll(Managers.getSupplierManager().getSupplierSet());
 	}
-	
+
+	/**
+	 * Called when the import button in the menu list is clicked
+	 */
 	public void onImport() {
 		
 	}
-	
+
+	/**
+	 * Called when the export button in the menu list is clicked
+	 */
 	public void onExport() {
 		Stage stage = (Stage) this.supplierTable.getScene().getWindow();
 		FileChooser fileChooser = new FileChooser();
@@ -113,11 +140,17 @@ public class SupplierController implements Refreshable {
 			}
 		}
 	}
-	
+
+	/**
+	 * Called when the add button in the menu list is clicked
+	 */
 	public void onAdd() {
 		
 	}
-	
+
+	/**
+	 * Called when the remove button in the menu list is clicked
+	 */
 	public void onRemove() {
 		Supplier supplier = supplierTable.getSelectionModel().getSelectedItem();
 		if (supplier == null) {
@@ -133,8 +166,26 @@ public class SupplierController implements Refreshable {
 		}
 		populateTable();
 	}
-	
+
+	/**
+	 * Called when the edit button in the menu list is clicked
+	 */
 	public void onEdit() {
+		Supplier supplier = supplierTable.getSelectionModel().getSelectedItem();
+		if (supplier == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not edit supplier as nothing is selected", ButtonType.OK);
+			alert.setHeaderText("No supplier selected");
+			alert.showAndWait();
+		} else {
+			if (editPopup.getOwner() == null) {
+				editPopup.initOwner(this.supplierTable.getScene().getWindow());
+			}
+
+			((EditSupplierController) editLoader.getController()).setSupplier(supplier);
+			editPopup.showAndWait();
+			refreshTable();
+
+		}
 		
 	}
 	
