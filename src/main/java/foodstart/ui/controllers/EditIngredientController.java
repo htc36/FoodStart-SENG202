@@ -58,8 +58,6 @@ public class EditIngredientController {
 	@FXML
 	public void initialize() {
 		this.unitComboBox.setItems(FXCollections.observableArrayList(Unit.values()));
-		id = Managers.getIngredientManager().generateNewID();
-		idDisplay.setText(Integer.toString(id));
 		//unitComboBox.getItems().removeAll(unitComboBox.getItems());
 		//will need to change this to use the enum rather than hardcode
 		//unitComboBox.getItems().addAll("ml", "g", "count");
@@ -115,6 +113,8 @@ public class EditIngredientController {
 	public void setIngredient(Ingredient ingredient) {
 		this.ingredient = ingredient;
 		if (ingredient != null) {
+			this.id = ingredient.getId();
+			idDisplay.setText(Integer.toString(id));
 			this.nameInput.setText(ingredient.getName());
 			this.truckStockInput.setText(Integer.toString(ingredient.getTruckStock()));
 			this.kitchenStockInput.setText(Integer.toString(ingredient.getKitchenStock()));
@@ -146,7 +146,7 @@ public class EditIngredientController {
 		IngredientManager manager = Managers.getIngredientManager();
 		Unit unit = Unit.matchUnit(unitString);
 		if (isNameValid && isKitchenStockValid && isTruckStockValid && isUnitComboBoxValid) {
-			manager.addIngredient(unit, nameInput.getText(), id, safeFor,
+			manager.mutateIngredient(unit, nameInput.getText(), id, safeFor,
 					Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
 			this.closeSelf();
 		}

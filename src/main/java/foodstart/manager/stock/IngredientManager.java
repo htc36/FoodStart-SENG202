@@ -157,5 +157,26 @@ public class IngredientManager {
 	public int generateNewID() {
 		return ingredients.keySet().size() == 0 ? 0 : Collections.max(ingredients.keySet()) + 1;
 	}
+
+	/**
+	 * Mutates an ingredient of the given id to have the given parameters
+	 *
+	 * @param unit         Unit of the ingredient
+	 * @param name         Name of the ingredient
+	 * @param id           Identifier code of the ingredient
+	 * @param safeFor      map of dietary requirements to whether or not the ingredient is considered safe for that requirement
+	 * @param kitchenStock Amount of current stock in the kitchen
+	 * @param truckStock   Amount of current stock in the truck
+	 */
+	public void mutateIngredient(Unit unit, String name, int id, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
+		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient != null) {
+			ingredient.setName(name);
+			ingredient.setUnit(unit);
+			ingredient.setSafeFor(safeFor);
+			ingredient.setKitchenStock(kitchenStock);
+			ingredient.setTruckStock(truckStock);
+		}
+	}
 }
 
