@@ -25,25 +25,19 @@ import foodstart.model.stock.Ingredient;
 public class MenuItemManagerTest {
 
     private MenuItemManager testManager;
-    private PermanentRecipe recipe1, recipeEmpty;
+    private PermanentRecipe recipe1;
     private List<PermanentRecipe> recipeList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         testManager = new MenuItemManager();
         HashMap<Ingredient, Integer> ingredients1 = new HashMap<Ingredient, Integer>();
-        HashMap<Ingredient, Integer> ingredients2 = new HashMap<Ingredient, Integer>();
         Ingredient ingredient1 = new Ingredient(Unit.UNITS, "ingredient1", 0, null, 10, 20);
         ingredients1.put(ingredient1, 20);
         recipe1 = new PermanentRecipe(1, "recipe1", "Create recipe one", 5, ingredients1);
-        recipeEmpty = new PermanentRecipe(0, "", "", (float) 0.0, null);
         recipeList = new ArrayList<PermanentRecipe>();
         recipeList.add(recipe1);
         testManager.addMenuItem(0, "test menu item", "a menu item test", recipeList);
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
