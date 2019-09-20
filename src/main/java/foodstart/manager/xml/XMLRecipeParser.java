@@ -3,21 +3,29 @@ package foodstart.manager.xml;
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.DuplicateDataException;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
+import foodstart.manager.menu.RecipeManager;
+import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DataType;
+import foodstart.model.DietaryRequirement;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
 
 /**
  * Parses recipe XML files
  *
  * @author Alex Hobson on 06/09/2019
+ * @author Alan Wang
  */
 public class XMLRecipeParser extends XMLParser {
 
@@ -69,9 +77,9 @@ public class XMLRecipeParser extends XMLParser {
 		for (int i = 0; i < ingredientsNodes.getLength(); i++) {
 			Node ingredientNode = ingredientsNodes.item(i);
 			if (ingredientNode instanceof Element) {
-				Element ingredientElement = (Element) ingredientNode;
-				int ingredientId = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
-				int quantity = Integer.parseInt(ingredientElement.getElementsByTagName("quantity").item(0).getTextContent());
+				Element recipeElement = (Element) ingredientNode;
+				int ingredientId = Integer.parseInt(recipeElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
+				int quantity = Integer.parseInt(recipeElement.getElementsByTagName("quantity").item(0).getTextContent());
 				Ingredient ingredient = Managers.getIngredientManager().getIngredient(ingredientId);
 				if (ingredient == null) {
 					throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
@@ -88,5 +96,79 @@ public class XMLRecipeParser extends XMLParser {
 		Managers.getRecipeManager().addRecipe(recipeId, name, method, price, ingredients);
 		return recipeId;
 	}
+	
+	/**
+     * Exports an ingredient file
+     * 
+     * @param doc The XML document to write everything to
+     */
+    @Override
+    public void export(Document doc, Transformer transformer) {
+        transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "recipe.dtd");
+        exportWithManager(doc, Managers.getRecipeManager());
+    }
 
+    /**
+     * Export a recipe file by writing it to the document. By specifying the
+     * ingredient manager this makes it easier to test
+     * 
+     * @param doc Document to export to
+     * @param manager The ingredient manager to export ingredients from
+     */
+    public void exportWithManager(Document doc, RecipeManager manager) {
+        Element root = doc.createElement("recipes");
+        Map<Integer, PermanentRecipe> recipeMap = manager.getRecipes();
+        for (Integer id : recipeMap.keySet()) {
+            PermanentRecipe recipe = recipeMap.get(id);
+            Element recipeElement = createRecipeElement(doc, recipe);
+            root.appendChild(recipeElement);
+        }
+        doc.appendChild(root);
+    }
+    
+    /**
+     * Converts a Recipe object into a subtree of Element objects for exporting to an XML file.
+     * @param doc The target Document object to create tags from
+     * @param recipe The recipe to be exported
+     * @return The Element object at the root of the subtree 
+     */
+    private Element createRecipeElement(Document doc, PermanentRecipe recipe) {
+        Element recipeElement = doc.createElement("recipe");
+        
+        Element recipeId = doc.createElement("recipe_id");
+        recipeId.appendChild(doc.createTextNode(Integer.toString(recipe.getId())));
+        recipeElement.appendChild(recipeId);       
+        
+        Element recipeName = doc.createElement("name");
+        recipeName.appendChild(doc.createTextNode(recipe.getDisplayName()));
+        recipeElement.appendChild(recipeName);
+        
+        Element recipeIngredients = doc.createElement("ingredients");
+        Map<Ingredient, Integer> ingredientMap = recipe.getIngredients();
+        for (Ingredient ing : ingredientMap.keySet()) {
+            Element ingredient = doc.createElement("ingredient");
+            
+            Element ingredient_id = doc.createElement("ingredient_id");
+            Text idString = doc.createTextNode(Integer.toString(ing.getId()));
+            ingredient_id.appendChild(idString);
+            Element quantity = doc.createElement("quantity");
+            Text qtyString = doc.createTextNode(Integer.toString(ingredientMap.get(ing)));
+            quantity.appendChild(qtyString);
+            ingredient.appendChild(ingredient_id);
+            ingredient.appendChild(quantity);
+            
+            recipeIngredients.appendChild(ingredient);                    
+        }
+        recipeElement.appendChild(recipeIngredients);
+        
+        Element recipeMethod = doc.createElement("method");
+        recipeMethod.appendChild(doc.createTextNode(recipe.getInstructions()));
+        recipeElement.appendChild(recipeMethod);
+        
+        Element recipePrice = doc.createElement("price");
+        recipePrice.appendChild(doc.createTextNode(String.valueOf(recipe.getPrice())));
+        recipeElement.appendChild(recipePrice);
+        
+        return recipeElement;
+    }
 }
