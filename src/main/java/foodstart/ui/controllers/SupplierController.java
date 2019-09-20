@@ -73,10 +73,10 @@ public class SupplierController implements Refreshable {
 	@FXML
 	public void initialize() {
 		editLoader = new FXMLLoader(getClass().getResource("editSupplier.fxml"));
-		//addLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));
+		addLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));
 		try {
 			editLoader.load();
-			//addLoader.load();
+			addLoader.load();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -87,13 +87,13 @@ public class SupplierController implements Refreshable {
 		Scene editScene = new Scene(editLoader.getRoot());
 		editPopup.setScene(editScene);
 
-		/*
+
 		addPopup = new Stage();
 		addPopup.initModality(Modality.WINDOW_MODAL);
 		addPopup.setTitle("Add New Supplier");
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setScene(addScene);
-		*/
+
 
 		populateTable();
 	}
@@ -156,14 +156,14 @@ public class SupplierController implements Refreshable {
 	 */
 
 	public void onAdd() {
-		/*
+
 		if (addPopup.getOwner() == null) {
 			addPopup.initOwner(this.supplierTable.getScene().getWindow());
 		}
 		((AddSupplierController) addLoader.getController()).setNewCode();
 		addPopup.showAndWait();
 		refreshTable();
-		*/
+
 	}
 
 
