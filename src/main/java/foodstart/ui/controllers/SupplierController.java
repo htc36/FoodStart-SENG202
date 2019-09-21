@@ -46,16 +46,6 @@ public class SupplierController implements Refreshable {
 	private TableColumn<Supplier, String> phoneColumn;
 	@FXML
 	private TableColumn<Supplier, String> phoneTypeColumn;
-	@FXML
-	private MenuItem importButton;
-	@FXML
-	private MenuItem exportButton;
-	@FXML
-	private MenuItem addButton;
-	@FXML
-	private MenuItem removeButton;
-	@FXML
-	private MenuItem editButton;
 
 	private FXMLLoader editLoader;
 	private Stage editPopup;
@@ -129,7 +119,16 @@ public class SupplierController implements Refreshable {
 	 * Called when the import button in the menu list is clicked
 	 */
 	public void onImport() {
-		
+		Stage stage = (Stage) this.supplierTable.getScene().getWindow();
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Suppliers File");
+		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
+		File selectedFile = fileChooser.showOpenDialog(stage);
+		if (selectedFile != null) {
+			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
+			persist.importFile(selectedFile, DataType.SUPPLIER);
+		}
+		refreshTable();
 	}
 
 	/**

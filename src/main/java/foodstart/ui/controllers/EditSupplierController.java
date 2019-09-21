@@ -7,6 +7,7 @@ import foodstart.model.stock.Supplier;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -33,12 +34,27 @@ public class EditSupplierController {
     @FXML
     private ComboBox<PhoneType> phoneTypeComboBox;
 
+    @FXML
+    private Label nameErrorLabel;
+
+    @FXML
+    private Label addressErrorLabel;
+
+    @FXML
+    private Label phoneErrorLabel;
+
+
     /**
      * Called when the controller is initialized
      */
     @FXML
     public void initialize() {
         this.phoneTypeComboBox.setItems(FXCollections.observableArrayList(PhoneType.values()));
+        this.phoneTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                phoneTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        }));
     }
 
     /**
@@ -56,6 +72,56 @@ public class EditSupplierController {
     }
 
     /**
+     * Checks if the name text field is valid
+     * @return if the name is valid or not
+     */
+    private Boolean isValidSupplierName() {
+        if (nameTextField.getText().isEmpty()) {
+            System.out.println("should be visible now");
+
+            nameErrorLabel.setText("Name field cannot be empty");
+            nameErrorLabel.setVisible(true);
+            return false;
+        } else {
+            System.out.println("should not be visible anymore");
+            nameErrorLabel.setVisible(false);
+            return true;
+        }
+    }
+
+    /**
+     * Checks if the address text field is valid
+     * @return if the address is valid or not
+     */
+    private Boolean isValidAddressName() {
+        if (addressTextField.getText().isEmpty()) {
+            addressErrorLabel.setText("Address field cannot be empty");
+            addressErrorLabel.setVisible(true);
+            return false;
+        } else {
+            addressErrorLabel.setVisible(false);
+            return true;
+        }
+
+    }
+
+    /**
+     * Checks if the phone number text field is valid
+     * @return if the phone number is valid or not
+     */
+    private Boolean isValidPhoneNumber() {
+        if (phoneTextField.getText().isEmpty()) {
+            phoneErrorLabel.setText("Phone number field cannot be empty");
+            phoneErrorLabel.setVisible(true);
+            return false;
+        } else {
+            phoneErrorLabel.setVisible(false);
+            return true;
+        }
+    }
+
+
+    /**
      * Called when the popup is to be closed
      */
     public void onCancel() {
@@ -69,14 +135,18 @@ public class EditSupplierController {
      * Replaces the existing supplier with a new supplier with the retrieved information
      */
     public void onConfirm() {
-        //TODO: Validations of the text fields
-        SupplierManager supplierManager = Managers.getSupplierManager();
-        int code = Integer.parseInt(codeText.getText());
-        supplierManager.removeSupplier(code);
-        supplierManager.addSupplier(code, nameTextField.getText(), phoneTextField.getText(), phoneTypeComboBox.getValue(),
-                emailTextField.getText(), websiteTextField.getText(), addressTextField.getText());
-        this.onCancel();
+        System.out.println("confirm");
+        boolean validAddress = isValidAddressName();
+        boolean validPhone = isValidPhoneNumber();
+        boolean validName = isValidSupplierName();
+        if (validAddress && validPhone && validName) {
+            SupplierManager supplierManager = Managers.getSupplierManager();
+            int code = Integer.parseInt(codeText.getText());
+            supplierManager.removeSupplier(code);
+            supplierManager.addSupplier(code, nameTextField.getText(), phoneTextField.getText(), phoneTypeComboBox.getValue(),
+                    emailTextField.getText(), websiteTextField.getText(), addressTextField.getText());
+            this.onCancel();
+        }
+
     }
-
-
 }
