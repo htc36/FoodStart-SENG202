@@ -1,6 +1,7 @@
 package foodstart.ui.controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 
 import foodstart.manager.Managers;
@@ -60,7 +61,7 @@ public class InventoryController implements Refreshable {
 		editPopup = new Stage();
 		editPopup.initModality(Modality.WINDOW_MODAL);
 		Scene editScene = new Scene(editLoader.getRoot());
-		editPopup.setTitle("Add Item");
+		editPopup.setTitle("Edit Item");
 		editPopup.setScene(editScene);
 		addPopup = new Stage();
 		addPopup.initModality(Modality.WINDOW_MODAL);
@@ -98,8 +99,26 @@ public class InventoryController implements Refreshable {
 		if (addPopup.getOwner() == null) {
 			addPopup.initOwner(this.inventoryView.getScene().getWindow());
 		}
+		System.out.println("testing");
 		addPopup.showAndWait();
 	}
+
+	public void removeIngredient() {
+		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
+		if (ingredient == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not ingredient as none was selected", ButtonType.OK);
+			alert.setHeaderText("No ingredient selected");
+			alert.showAndWait();
+		} else {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to remove this ingredient?", ButtonType.YES, ButtonType.NO);
+			Optional<ButtonType> selection = alert.showAndWait();
+			if (selection.isPresent() && selection.get() == ButtonType.YES) {
+				Managers.getIngredientManager(). removeIngredient(ingredient.getId());
+			}
+		}
+		populateTable();
+	}
+
 
 	public void editIngredient() {
 		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();

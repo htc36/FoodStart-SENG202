@@ -38,6 +38,9 @@ public class IngredientManager {
 		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
 		this.ingredients.put(id, ingredient);
 	}
+	public void removeIngredient(int id) {
+		this.ingredients.remove(id);
+	}
 
 	/**
 	 * Returns the map of all menu items modeled
