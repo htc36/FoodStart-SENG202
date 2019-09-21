@@ -99,8 +99,10 @@ public class InventoryController implements Refreshable {
 		if (addPopup.getOwner() == null) {
 			addPopup.initOwner(this.inventoryView.getScene().getWindow());
 		}
+        ((addIngredientController) addLoader.getController()).setNewID();
 		System.out.println("testing");
 		addPopup.showAndWait();
+		refreshTable();
 	}
 
 	public void removeIngredient() {

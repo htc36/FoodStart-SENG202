@@ -52,11 +52,18 @@ public class addIngredientController {
 
 	@FXML
 	public void initialize() {
-		id = Managers.getIngredientManager().generateNewID();
-		idDisplay.setText(Integer.toString(id));
+		setNewID();
 		unitComboBox.getItems().removeAll(unitComboBox.getItems());
 		//will need to change this to use the enum rather than hardcode
 		unitComboBox.getItems().addAll("ml", "g", "count");
+	}
+
+	/**
+	 * Called when a new code must be generated and set in the code text box
+	 */
+	public void setNewID() {
+		id = Managers.getIngredientManager().generateNewID();
+		idDisplay.setText(Integer.toString(id));
 	}
 
 	//used to check if kitchen stock and truck stock fields are ints
@@ -128,6 +135,7 @@ public class addIngredientController {
 			manager.addIngredient(unit, nameInput.getText(), id, safeFor,
 					Integer.parseInt(kitchenStockInput.getText()), Integer.parseInt(truckStockInput.getText()));
 			this.closeSelf();
+			clearFields();
 		}
 		
 	}
@@ -135,5 +143,20 @@ public class addIngredientController {
 	private void closeSelf() {
 		Stage stage = (Stage) this.nameInput.getScene().getWindow();
 		stage.close();
+	}
+
+	/**
+	 * Called when the text fields are to be cleared
+	 */
+	private void clearFields() {
+		nameInput.clear();
+		truckStockInput.clear();
+		kitchenStockInput.clear();
+		unitComboBox.getSelectionModel().clearSelection();
+		vegan.setSelected(false);
+		vegetarian.setSelected(false);
+		glutenFree.setSelected(false);
+		nutFree.setSelected(false);
+		dairyFree.setSelected(false);
 	}
 }
