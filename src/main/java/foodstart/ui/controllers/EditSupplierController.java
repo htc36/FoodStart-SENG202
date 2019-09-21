@@ -77,13 +77,10 @@ public class EditSupplierController {
      */
     private Boolean isValidSupplierName() {
         if (nameTextField.getText().isEmpty()) {
-            System.out.println("should be visible now");
-
             nameErrorLabel.setText("Name field cannot be empty");
             nameErrorLabel.setVisible(true);
             return false;
         } else {
-            System.out.println("should not be visible anymore");
             nameErrorLabel.setVisible(false);
             return true;
         }
@@ -135,7 +132,6 @@ public class EditSupplierController {
      * Replaces the existing supplier with a new supplier with the retrieved information
      */
     public void onConfirm() {
-        System.out.println("confirm");
         boolean validAddress = isValidAddressName();
         boolean validPhone = isValidPhoneNumber();
         boolean validName = isValidSupplierName();
