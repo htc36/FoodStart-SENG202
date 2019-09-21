@@ -11,9 +11,13 @@ Feature: Inventory feature.
         Then The ingredients will be displayed in ascending order of stocks available 
 
     Scenario: Adding an ingredient to the list (FR14) 
-        Given Ingredient is not found in the list 
-        When It is manually added 
-        Then It will be stored in the list of ingredients 
+        Given That ingredient "Relish" is not found in the inventory
+        And Its unit type is "grams" (g)
+        And Its kitchen stock is 200
+        And Its truck stock is 50
+        And It is vegan, vegetarian, gluten free, nut free and dairy free
+        When Ingredient "Relish" is manually added to the inventory
+        Then It will be stored under "Relish" in the inventory
 
     Scenario: Removing an ingredient (FR14) 
         Given The ingredient will no longer be needed 

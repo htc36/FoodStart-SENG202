@@ -1,13 +1,20 @@
 Feature: ImportExport feature.  
     Scenario: Importing data successfully (FR1) 
-        Given The manager needs to import ingredients into the system 
-        When The XML file for ingredients is imported complies with the DTD 
-        Then The data has been successfully imported 
+        Given The manager imports an XML file
+        And The file is of type "ingredients"
+        When The file succeeds validation against the DTD
+        And The file parses correctly
+        Then The data has been imported successfully
 
-    Scenario: Importing data unsuccessfully (FR1) 
-        Given The manager needs to import ingredients into the system 
-        When The XML file for ingredients is imported does not comply with the DTD 
-        Then The manager is informed that the XML file does not comply with the DTD 
+    @skip_scenario
+    Scenario: Displaying successfully imported data
+
+    Scenario: Importing data unsuccessfully from non-compliant XML (FR1)
+        Given The manager imports an XML file
+        And The file is of type "ingredients"
+        When The file does not succeed validation against the DTD
+        Then The data has been imported unsuccessfully
+        And The manger is informed of the import failure due to non-compliant XML
 
     Scenario: Importing existing data (FR1) 
         Given The manager needs to import ingredients into the system 
