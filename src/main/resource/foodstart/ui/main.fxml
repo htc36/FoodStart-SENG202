@@ -9,6 +9,11 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#saveEverything" text="Save" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Order">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showOrder" text="Create Order" />

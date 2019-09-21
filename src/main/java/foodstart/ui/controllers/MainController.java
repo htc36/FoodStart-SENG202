@@ -2,9 +2,12 @@ package foodstart.ui.controllers;
 
 import java.io.IOException;
 
+import foodstart.manager.Managers;
 import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 
 public class MainController {
@@ -99,5 +102,9 @@ public class MainController {
 			((Refreshable)loader.getController()).refreshTable();
 		}
 		rootPane.setCenter(loader.getRoot());
+	}
+	
+	public void saveEverything() {
+		Managers.getDefaultPersistence().saveAllFiles();
 	}
 }
