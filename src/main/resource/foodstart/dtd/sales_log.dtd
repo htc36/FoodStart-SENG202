@@ -10,6 +10,9 @@
 <!ELEMENT recipes (recipe+)>
 <!ELEMENT recipe (recipe_id, ingredients?, quantity)>
 <!ELEMENT recipe_id (#PCDATA)>
-<!ELEMENT ingredients (ingredient_id+)>
+<!ELEMENT ingredients (ingredient+, otf_price)>
+<!ELEMENT ingredient (ingredient_id, ingredient_quantity)>
 <!ELEMENT ingredient_id (#PCDATA)>
+<!ELEMENT ingredient_quantity (#PCDATA)>
+<!ELEMENT otf_price (#PCDATA)>
 <!ELEMENT quantity (#PCDATA)>

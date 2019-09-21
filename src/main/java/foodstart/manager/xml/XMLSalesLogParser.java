@@ -5,9 +5,11 @@ import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.DataType;
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
+import foodstart.model.stock.Ingredient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -48,7 +50,7 @@ public class XMLSalesLogParser extends XMLParser {
     }
 
     private Map<Recipe, Integer> getSaleItems(Element element) {
-    	//TODO: Add parsing for OTF recipes
+    	//TODO: Ensure OTF Parsing works
 	    Map<Recipe, Integer> recipes = new HashMap<Recipe, Integer>();
 	    NodeList recipeNodes = element.getElementsByTagName("recipes").item(0).getChildNodes();
 	    for (int i = 0; i < recipeNodes.getLength(); i++) {
@@ -57,11 +59,36 @@ public class XMLSalesLogParser extends XMLParser {
 		    	Element recipeEl = (Element) node;
 			    int recipeId = Integer.parseInt(recipeEl.getElementsByTagName("recipe_id").item(0).getTextContent());
 			    int quantity = Integer.parseInt(recipeEl.getElementsByTagName("quantity").item(0).getTextContent());
-			    Recipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
+			    PermanentRecipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
 			    if (recipe == null) {
 				    throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 			    }
-			    recipes.put(recipe, quantity);
+			    if (((Element) node).hasAttribute("ingredients")) {
+			        //Then it's an OTF Recipe
+                    Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
+                    NodeList ingredientNodes = element.getElementsByTagName("ingredients").item(0).getChildNodes();
+                    float price = 0;
+                    for (int j = 0; j < ingredientNodes.getLength(); j++) {
+                        Node ingredientNode = ingredientNodes.item(j);
+                        if (ingredientNode.getNodeName().equalsIgnoreCase("ingredient")) {
+                            Element ingredientElement = (Element) ingredientNode;
+                            int ingredientId = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
+                            int ingredientQuantity = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_quantity").item(0).getTextContent());
+                            Ingredient ingredient = Managers.getIngredientManager().getIngredient(ingredientId);
+                            if (ingredient == null) {
+                                throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
+                            }
+                            ingredients.put(ingredient, ingredientQuantity);
+                        } else if (ingredientNode.getNodeName().equalsIgnoreCase("otf_price")) {
+                            Element priceElement = (Element) ingredientNode;
+                            price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
+                        }
+                    }
+                    OnTheFlyRecipe onTheFlyRecipe = new OnTheFlyRecipe(recipe, ingredients, price);
+                    recipes.put(onTheFlyRecipe, quantity);
+                } else {
+                    recipes.put(recipe, quantity);
+                }
 		    }
 	    }
 	    return recipes;
