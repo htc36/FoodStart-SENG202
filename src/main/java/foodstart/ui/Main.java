@@ -160,14 +160,8 @@ public class Main extends Application {
 		} catch (IOException e) {
 			throw new ImportFailureException("Could not copy DTD files into target directory");
 		}
-		File[] importOrder = new File[]{
-				new File(directory, "ingredients.xml"),
-				new File(directory, "recipes.xml"),
-				new File(directory, "menu.xml"),
-				new File(directory, "sales_log.xml"),
-				new File(directory, "suppliers.xml")
-		};
-		for (File file : importOrder) {
+		
+		for (File file : Constants.importOrder) {
 			if (file.isFile()) {
 				switch (file.getName().toLowerCase()) {
 					case "ingredients.xml":
