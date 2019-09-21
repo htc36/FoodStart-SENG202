@@ -100,9 +100,9 @@ public class XMLPersistence extends Persistence {
 	@Override
 	public void exportFile(File file, DataType dataType) {
 		if (dBuilder == null) {
-			throw new ImportFailureException("DocumentBuilder class not initialized");
+			throw new ExportFailureException("DocumentBuilder class not initialized");
 		} else if (transformer == null) {
-			throw new ImportFailureException("Transformer class not initialized");
+			throw new ExportFailureException("Transformer class not initialized");
 		}
 		
 		Document doc = dBuilder.newDocument();
