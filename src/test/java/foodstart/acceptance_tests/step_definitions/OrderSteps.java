@@ -1,17 +1,35 @@
 package foodstart.acceptance_tests.step_definitions;
 
+import foodstart.model.order.Order;
+import gherkin.ast.Scenario;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+
 public class OrderSteps {
-    @Given("A {string} costs ${double}")
-    public void aCosts$(String string, Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+
+    private float hamburgerCost;
+    private float chipsCost;
+
+
+    @Given("A {string} costs ${float}")
+    public void aCosts$(String recipeName, float cost) {
+        switch (recipeName) {
+            case "hamburger":
+                this.hamburgerCost = cost;
+                break;
+            case "chips":
+                chipsCost = cost;
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
     }
 
     @When("The customer orders {int} {string}")
-    public void theCustomerOrders(Integer int1, String string) {
+    public void theCustomerOrders(Integer quantity, String recipeName) {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
     }
