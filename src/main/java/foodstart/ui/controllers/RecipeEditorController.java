@@ -10,7 +10,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -18,6 +20,21 @@ import java.util.Optional;
 import java.util.Set;
 
 public class RecipeEditorController implements Refreshable {
+	class IngredientStringConverter extends StringConverter<Ingredient> {
+		@Override
+		public String toString(Ingredient ingredient) {
+			if (ingredient == null) {
+				return "Please select an ingredient";
+			} else {
+				return ingredient.getName();
+			}
+		}
+
+		@Override
+		public Ingredient fromString(String s) {
+			return Managers.getIngredientManager().getIngredientByName(s);
+		}
+	}
 	@FXML
 	Button confirmButton;
 	@FXML
@@ -45,6 +62,14 @@ public class RecipeEditorController implements Refreshable {
 	@FXML
 	public void initialize() {
 		populateTable();
+		this.ingredientQuantityInput.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue.matches("\\d{0,7}")) {
+				ingredientQuantityInput.setText(oldValue);
+			}
+		});
+		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) -> {
+			ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.get((t1))));
+		}));
 	}
 
 	private void populateTable() {
@@ -59,6 +84,8 @@ public class RecipeEditorController implements Refreshable {
 	private void populateCB() {
 		Set<Ingredient> ingredientsSet = Managers.getIngredientManager().getIngredientSet();
 		this.ingredientsCB.setItems(FXCollections.observableArrayList(ingredientsSet));
+		this.ingredientsCB.setCellFactory(ComboBoxListCell.<Ingredient>forListView(new IngredientStringConverter()));
+		this.ingredientsCB.setConverter(new IngredientStringConverter());
 	}
 
 	public void setRecipe(Recipe recipe) {
@@ -90,7 +117,17 @@ public class RecipeEditorController implements Refreshable {
 
 	@FXML
 	private void addIngredient() {
-
+		Ingredient ingredient = ingredientsCB.getSelectionModel().getSelectedItem();
+		String amount = ingredientQuantityInput.getText();
+		if (ingredient == null || amount == "") {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not add ingredient as there ", ButtonType.OK);
+			alert.setHeaderText("No recipe selected");
+			alert.showAndWait();
+		} else {
+			Integer amountInt = Integer.parseInt(amount);
+			ingredients.put(ingredient, amountInt);
+		}
+		refreshTable();
 	}
 
 	@FXML

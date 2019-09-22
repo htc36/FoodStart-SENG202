@@ -150,12 +150,12 @@ public class EditOrderItemsController implements Refreshable {
 	@FXML
 	private void modifyRecipe() {
 		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
-		Map<Ingredient, Integer> ingredients= recipe.getIngredients();
 		if (recipe == null) {
-			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove recipe as none was selected", ButtonType.OK);
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not modify recipe as none was selected", ButtonType.OK);
 			alert.setHeaderText("No recipe selected");
 			alert.showAndWait();
 		} else {
+			Map<Ingredient, Integer> ingredients = recipe.getIngredients();
 			if (editPopup.getOwner() == null) {
 				editPopup.initOwner(this.recipesTableView.getScene().getWindow());
 			}
