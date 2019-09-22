@@ -17,6 +17,8 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,7 +136,7 @@ public class XMLSalesLogParser extends XMLParser {
         for (Order sale : manager.getOrderSet()) {
             Element root = doc.createElement("sale");
 
-            Element saleId = doc.createElement("sale_id");
+            Element saleId = doc.createElement("id");
             saleId.appendChild(doc.createTextNode(String.valueOf(sale.getId())));
             root.appendChild(saleId);
 
@@ -143,7 +145,7 @@ public class XMLSalesLogParser extends XMLParser {
             root.appendChild(saleName);
 
             Element saleDate = doc.createElement("date");
-            saleDate.appendChild(doc.createTextNode(String.valueOf(sale.getTimePlaced())));
+            saleDate.appendChild(doc.createTextNode(String.valueOf(sale.getTimePlaced().toEpochSecond(ZoneOffset.UTC)*1000L)));
             root.appendChild(saleDate);
 
             Element saleCost = doc.createElement("cost");
