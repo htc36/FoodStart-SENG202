@@ -53,13 +53,13 @@ public class MenuSteps {
         throw new cucumber.api.PendingException();
     }
 
-    @Then("The corresponding recipes \\(Vegan, GF etc) of the menu item are displayed")
+    @Then("The corresponding recipes of the menu item are displayed")
     public void theCorrespondingRecipesVeganGFEtcOfTheMenuItemAreDisplayed() {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
     }
 
-    @When("The employee edits a specific a menu item \\(i.e the description, name and recipes)")
+    @When("The employee edits a specific a menu item")
     public void theEmployeeEditsASpecificAMenuItemIETheDescriptionNameAndRecipes() {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
@@ -89,7 +89,7 @@ public class MenuSteps {
         throw new cucumber.api.PendingException();
     }
 
-    @When("The employee edits a specific menu set \\(i.e add and remove)")
+    @When("The employee edits a specific menu set")
     public void theEmployeeEditsASpecificMenuSetIEAddAndRemove() {
         // Write code here that turns the phrase above into concrete actions
         throw new cucumber.api.PendingException();
