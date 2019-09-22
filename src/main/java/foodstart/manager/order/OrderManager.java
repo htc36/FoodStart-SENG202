@@ -126,7 +126,7 @@ public class OrderManager {
 		String output = "";
 		Map<Recipe, Integer> items = order.getItems();
 		for (Recipe recipe : items.keySet()) {
-			output += recipe.getDisplayName() + ", ";
+			output += String.format("%dx %s, ", items.get(recipe), recipe.getDisplayName());
 		}
 		return output.substring(0, output.length() - 2);
 	}
