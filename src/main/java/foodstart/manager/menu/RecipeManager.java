@@ -16,11 +16,14 @@ public class RecipeManager {
 	 */
 	private Map<Integer, PermanentRecipe> recipes;
 
+	private OTFManager otfManager;
+
 	/**
 	 * Constructs an instance of a recipe manager
 	 */
 	public RecipeManager() {
 		this.recipes = new HashMap<Integer, PermanentRecipe>();
+		this.otfManager = new OTFManager();
 	}
 
 	/**
@@ -132,4 +135,12 @@ public class RecipeManager {
 		}
 		return out;
 	}
+}
+
+/**
+ * Aids in the management of on the fly recipes
+ */
+class OTFManager {
+
+	OTFManager() {}
 }
