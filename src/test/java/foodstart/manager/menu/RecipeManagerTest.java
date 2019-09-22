@@ -1,4 +1,4 @@
-package foodstart.managers.menu;
+package foodstart.manager.menu;
 
 import foodstart.manager.menu.RecipeManager;
 import foodstart.model.Unit;

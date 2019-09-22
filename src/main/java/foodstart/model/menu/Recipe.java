@@ -117,5 +117,7 @@ public abstract class Recipe {
 		return this.ingredients.remove(ingredient);
 	}
 
+	public abstract String getDisplayName();
+
 }
 

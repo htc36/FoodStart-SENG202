@@ -6,12 +6,18 @@ import foodstart.model.PaymentMethod;
 import foodstart.model.order.Order;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class OrderEditorController {
@@ -31,6 +37,9 @@ public class OrderEditorController {
 	private ComboBox<PaymentMethod> paymentMethodCB;
 
 	private Order order;
+	private FXMLLoader editorLoader;
+	private Stage popupStage;
+	private Parent orderEditorFXML;
 
 	public void initialize() {
 		this.paymentMethodCB.setItems(FXCollections.observableArrayList(PaymentMethod.values()));
@@ -39,6 +48,17 @@ public class OrderEditorController {
 				priceField.setText(oldValue);
 			}
 		});
+
+		try {
+			editorLoader = new FXMLLoader(getClass().getResource("editOrderItems.fxml"));
+			orderEditorFXML = editorLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Screen screen = Screen.getPrimary();
+		popupStage = new Stage();
+		popupStage.initModality(Modality.WINDOW_MODAL);
+		popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
 	}
 
 	public void setOrder(Order order) {
@@ -52,7 +72,11 @@ public class OrderEditorController {
 	}
 
 	public void editItems() {
-		//TODO: Add editor for recipe items
+		if (popupStage.getOwner() == null) {
+			popupStage.initOwner(this.nameField.getScene().getWindow());
+		}
+		((EditOrderItemsController) editorLoader.getController()).setOrder(order);
+		popupStage.showAndWait();
 	}
 
 	public void confirmEdit() {
