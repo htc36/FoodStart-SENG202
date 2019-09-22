@@ -3,7 +3,9 @@ package foodstart.ui.controllers;
 import foodstart.manager.Managers;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
+import foodstart.model.stock.Ingredient;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class OrderEditorController {
 	@FXML
@@ -40,6 +43,7 @@ public class OrderEditorController {
 	private FXMLLoader editorLoader;
 	private Stage popupStage;
 	private Parent orderEditorFXML;
+	private Map<Recipe, Integer> newRecipes;
 
 	public void initialize() {
 		this.paymentMethodCB.setItems(FXCollections.observableArrayList(PaymentMethod.values()));
@@ -76,7 +80,10 @@ public class OrderEditorController {
 			popupStage.initOwner(this.nameField.getScene().getWindow());
 		}
 		((EditOrderItemsController) editorLoader.getController()).setOrder(order);
+		((EditOrderItemsController) editorLoader.getController()).pushRecipes(newRecipes);
 		popupStage.showAndWait();
+		this.newRecipes = ((EditOrderItemsController) editorLoader.getController()).getNewRecipes();
+
 	}
 
 	public void confirmEdit() {
@@ -87,6 +94,9 @@ public class OrderEditorController {
 		LocalDateTime timePlaced = dateTimePicker.getDateTimeValue();
 		PaymentMethod paymentMethod = this.paymentMethodCB.getValue();
 		manager.mutateOrder(id, name, timePlaced, price, paymentMethod);
+		if (newRecipes != null) {
+			manager.mutateOrderItems(id, newRecipes);
+		}
 		closeSelf();
 	}
 

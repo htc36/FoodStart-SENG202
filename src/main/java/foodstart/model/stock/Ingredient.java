@@ -179,7 +179,7 @@ public class Ingredient {
 	@Override
 	public boolean equals(Object target) {
 	    boolean result = true;
-	    if (target.getClass() != Ingredient.class) {
+	    if (target == null || target.getClass() != Ingredient.class) {
 	        result = false;
 	    } else {
     	    if (this.unit != ((Ingredient) target).getUnit()) result = false;

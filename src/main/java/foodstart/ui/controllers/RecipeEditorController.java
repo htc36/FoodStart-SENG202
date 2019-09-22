@@ -67,6 +67,10 @@ public class RecipeEditorController implements Refreshable {
 		refreshTable();
 	}
 
+	public void setPrice(float price) {
+		//TODO
+	}
+
 	@Override
 	public void refreshTable() {
 		this.observableIngredients.setAll(ingredients.keySet());
@@ -109,5 +113,14 @@ public class RecipeEditorController implements Refreshable {
 	private void closeSelf() {
 		Stage stage = (Stage) this.ingredientsTable.getScene().getWindow();
 		stage.close();
+	}
+
+	public Map<Ingredient, Integer> getIngredients() {
+		return this.ingredients;
+	}
+
+	public float getPrice() {
+		//TODO
+		return 0;
 	}
 }
