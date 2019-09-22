@@ -1,6 +1,7 @@
 package foodstart.manager.menu;
 
 import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 
 import java.util.*;
@@ -110,6 +111,24 @@ public class RecipeManager {
 		String out = "";
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
 			out = out.concat(String.format("%dx %s ", ingredient.getTruckStock(), ingredient.getName()));
+		}
+		return out;
+	}
+
+	/**
+	 * Returns the ingredients and their truck stock quantity as a string.
+	 * This version is intended for use when unable to differentiate between permanent and on the fly recipes
+	 *
+	 * @param recipe The recipe to get the ingredients of
+	 * @return out The ingredients and their truck stock quantity as a string
+	 */
+	public String getIngredientsAsString(Recipe recipe) {
+		if (recipe == null) {
+			return "";
+		}
+		String out = "";
+		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
+			out = out.concat(String.format("%s, ", ingredient.getName()));
 		}
 		return out;
 	}

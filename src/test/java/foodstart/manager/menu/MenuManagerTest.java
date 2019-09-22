@@ -1,4 +1,4 @@
-package foodstart.managers.menu;
+package foodstart.manager.menu;
 
 import static org.junit.Assert.*;
 

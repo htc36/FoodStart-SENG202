@@ -1,8 +1,6 @@
 package foodstart.manager.order;
 
 import foodstart.model.PaymentMethod;
-import foodstart.model.menu.OnTheFlyRecipe;
-import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 
@@ -128,15 +126,9 @@ public class OrderManager {
 		String output = "";
 		Map<Recipe, Integer> items = order.getItems();
 		for (Recipe recipe : items.keySet()) {
-			if (recipe instanceof PermanentRecipe) {
-				//Permanent recipe
-				output += String.format("%dx %s", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
-			} else {
-				//OTF Recipe
-				output += String.format("%dx %s (Modified)", items.get(recipe), ((OnTheFlyRecipe) recipe).getBasedOn().getDisplayName());
-			}
+			output += recipe.getDisplayName() + ", ";
 		}
-		return output;
+		return output.substring(0, output.length() - 2);
 	}
 
 	/**
@@ -188,6 +180,16 @@ public class OrderManager {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Returns all recipes included in the order of a given id
+	 * @param id the id of the order
+	 * @return a set of all permanent and on the fly recipes in the sale
+	 */
+	public Set<Recipe> getOrderRecipes(int id) {
+		Order order = this.orders.get(id);
+		return order.getItems().keySet();
 	}
 }
 
