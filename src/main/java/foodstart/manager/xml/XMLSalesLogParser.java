@@ -30,8 +30,11 @@ public class XMLSalesLogParser extends XMLParser {
     }
 
     @Override
+	/**
+	 * Parses a log of sales document and writes to the model
+	 * @param doc Document to parse
+	 */
     public void parse(Document doc) {
-        //TODO: Finish implementing parser
         NodeList salesNodes = doc.getChildNodes();
         for (int j = 0; j < salesNodes.getLength(); j++) {
             if (salesNodes.item(j) instanceof Element && salesNodes.item(j).getNodeName().equalsIgnoreCase("sales")) {
@@ -49,7 +52,12 @@ public class XMLSalesLogParser extends XMLParser {
         }
     }
 
-    private Map<Recipe, Integer> getSaleItems(Element element) {
+	/**
+	 * Parses a single sale for the items in it
+	 * @param element the sale element to parse
+	 * @return a map of the recipe items in the sale to the quantity ordered
+	 */
+	private Map<Recipe, Integer> getSaleItems(Element element) {
     	//TODO: Ensure OTF Parsing works
 	    Map<Recipe, Integer> recipes = new HashMap<Recipe, Integer>();
 	    NodeList recipeNodes = element.getElementsByTagName("recipes").item(0).getChildNodes();
@@ -63,11 +71,13 @@ public class XMLSalesLogParser extends XMLParser {
 			    if (recipe == null) {
 				    throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 			    }
-			    if (((Element) node).hasAttribute("ingredients")) {
+			    System.out.println(recipeEl.getElementsByTagName("ingredients"));
+			    NodeList ingredientNodes = recipeEl.getElementsByTagName("ingredients");
+			    if (ingredientNodes.getLength() > 0) {
 			        //Then it's an OTF Recipe
                     Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-                    NodeList ingredientNodes = element.getElementsByTagName("ingredients").item(0).getChildNodes();
                     float price = 0;
+                    System.out.println(ingredientNodes.getLength());
                     for (int j = 0; j < ingredientNodes.getLength(); j++) {
                         Node ingredientNode = ingredientNodes.item(j);
                         if (ingredientNode.getNodeName().equalsIgnoreCase("ingredient")) {
@@ -79,7 +89,9 @@ public class XMLSalesLogParser extends XMLParser {
                                 throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
                             }
                             ingredients.put(ingredient, ingredientQuantity);
-                        } else if (ingredientNode.getNodeName().equalsIgnoreCase("otf_price")) {
+                        }
+                        if (ingredientNode.getNodeName().equalsIgnoreCase("otf_price")) {
+                            System.out.println("OTF Recipe");
                             Element priceElement = (Element) ingredientNode;
                             price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
                         }
