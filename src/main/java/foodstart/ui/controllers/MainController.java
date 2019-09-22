@@ -76,10 +76,6 @@ public class MainController {
 		changeView(manageRecipes);
 	}
 
-	public void showManageIngredients() {
-
-	}
-
 	public void showStockInventory() {
 		changeView(stockInventory);
 	}
