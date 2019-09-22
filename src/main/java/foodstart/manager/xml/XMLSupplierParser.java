@@ -56,8 +56,14 @@ public class XMLSupplierParser extends XMLParser {
 		String phone = element.getElementsByTagName("phone").item(0).getTextContent();
 		Element phoneTypeElement = (Element) element.getElementsByTagName("phone").item(0);
 		PhoneType phoneType = PhoneType.matchType(phoneTypeElement.getAttribute("type"));
-		String email = element.getElementsByTagName("email").item(0).getTextContent();
-		String url = element.getElementsByTagName("url").item(0).getTextContent();
+		String email = "";
+		if (element.getElementsByTagName("email").getLength() == 1) {
+			email = element.getElementsByTagName("email").item(0).getTextContent();
+		}
+		String url = "";
+		if (element.getElementsByTagName("url").getLength() == 1) {
+			url = element.getElementsByTagName("url").item(0).getTextContent();
+		}
 		Managers.getSupplierManager().addSupplier(sid, name, phone, phoneType, email, url, address);
 	}
 	
@@ -91,18 +97,23 @@ public class XMLSupplierParser extends XMLParser {
 			root.appendChild(address);
 			
 			Element phone = doc.createElement("phone");
-			phone.setAttribute("type", String.valueOf(supplier.getPhoneType()));
-			root.appendChild(doc.createTextNode(String.valueOf(supplier.getPhoneNumber())));
+			phone.setAttribute("type", String.valueOf(supplier.getPhoneType()).toLowerCase());
+			phone.appendChild(doc.createTextNode(String.valueOf(supplier.getPhoneNumber())));
+			root.appendChild(phone);
 			
-			Element email = doc.createElement("email");
-			email.appendChild(doc.createTextNode(String.valueOf(supplier.getEmail())));
-			root.appendChild(email);
+			if (supplier.getEmail().length() > 0) {
+				Element email = doc.createElement("email");
+				email.appendChild(doc.createTextNode(String.valueOf(supplier.getEmail())));
+				root.appendChild(email);
+			}
 			
+			if (supplier.getUrl().length() > 0) {
 			Element url = doc.createElement("url");
-			url.appendChild(doc.createTextNode(String.valueOf(supplier.getUrl())));
-			root.appendChild(url);
+				url.appendChild(doc.createTextNode(String.valueOf(supplier.getUrl())));
+				root.appendChild(url);
+			}
+			
 			supplierRoot.appendChild(root);
-
 		}
 		doc.appendChild(supplierRoot);
 	}
