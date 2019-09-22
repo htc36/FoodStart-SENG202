@@ -13,8 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class EditOrderItemsController implements Refreshable {
@@ -41,6 +43,7 @@ public class EditOrderItemsController implements Refreshable {
 
 	private ObservableList<Recipe> observableRecipes;
 	private Order order;
+	private Map<Recipe, Integer> items;
 
 	@FXML
 	public void initialize() {
@@ -61,11 +64,48 @@ public class EditOrderItemsController implements Refreshable {
 
 	public void setOrder(Order order) {
 		this.order = order;
+		items = order.getItems();
 		refreshTable();
 	}
 
 	@Override
 	public void refreshTable() {
-		this.observableRecipes.setAll(order.getItems().keySet());
+		this.observableRecipes.setAll(items.keySet());
+	}
+
+	@FXML
+	private void confirm() {
+
+		closeSelf();
+	}
+
+	@FXML
+	private void cancel() {
+		closeSelf();
+	}
+
+	@FXML
+	private void addRecipe() {
+
+	}
+
+	@FXML
+	private void removeRecipe() {
+
+	}
+
+	@FXML
+	private void modifyRecipe() {
+
+	}
+
+	@FXML
+	private void viewRecipe() {
+
+	}
+
+	private void closeSelf() {
+		Stage stage = (Stage) this.recipesTableView.getScene().getWindow();
+		stage.close();
 	}
 }
