@@ -62,7 +62,7 @@ public class XMLSalesLogParser extends XMLParser {
 	 * @param basis        the recipe that the on the fly recipe is based on
 	 * @return the id of the fly recipe generated from the data
 	 */
-	private int parseOTFRecipe(NodeList otfDataNodes, PermanentRecipe basis) {
+	private int parseOTFRecipe(NodeList otfDataNodes, int basis) {
 		Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
 		float price = 0;
 		for (int j = 0; j < otfDataNodes.getLength(); j++) {
@@ -91,7 +91,7 @@ public class XMLSalesLogParser extends XMLParser {
 				}
 			}
 		}
-		int id = Managers.getRecipeManager().getOtfManager().addRecipe(basis, ingredients, price);
+		int id = Managers.getRecipeManager().otfManager.addRecipe(basis, ingredients, price);
 		return id;
 	}
 
@@ -118,8 +118,8 @@ public class XMLSalesLogParser extends XMLParser {
 				NodeList ingredientNodes = recipeEl.getElementsByTagName("ingredients");
 				if (ingredientNodes.getLength() > 0) {
 					//Then it's an OTF Recipe
-					int onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipe);
-					recipes.put(manager.getOtfManager().getRecipe(onTheFlyRecipe), quantity);
+					int onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipeId);
+					recipes.put(manager.otfManager.getRecipe(onTheFlyRecipe), quantity);
 				} else {
 					recipes.put(recipe, quantity);
 				}

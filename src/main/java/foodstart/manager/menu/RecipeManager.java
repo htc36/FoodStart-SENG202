@@ -51,23 +51,13 @@ public class RecipeManager {
 		}
 
 		/**
-		 * Adds a recipe to the map of all on the fly recipes
-		 * @param basis the permanent recipe that the OTF recipe is based on
-		 * @param ingredients the ingredients in the OTF recipe
-		 * @param price the price of the OTF recipe
+		 * Returns the on the fly recipe with the given value, or null if it does not exist
+		 * @param id the internal id of the otf recipe
+		 * @return the requested on the fly recipe
 		 */
-		public int addRecipe(PermanentRecipe basis, Map<Ingredient, Integer> ingredients, float price) {
-			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basis, ingredients, price);
-			int id = counter;
-			counter++;
-			onTheFlyRecipes.put(id, recipe);
-			return id;
-		}
-
 		public OnTheFlyRecipe getRecipe(int id) {
 			return this.onTheFlyRecipes.get(id);
 		}
-
 	}
 
 	/**
@@ -78,7 +68,7 @@ public class RecipeManager {
 	/**
 	 * An instance of the inner OTF manager
 	 */
-	private OTFManager otfManager;
+	public final OTFManager otfManager;
 
 	/**
 	 * Constructs an instance of a recipe manager
@@ -196,9 +186,5 @@ public class RecipeManager {
 			out = out.concat(String.format("%s, ", ingredient.getName()));
 		}
 		return out.substring(0, out.length() - 2);
-	}
-
-	public OTFManager getOtfManager() {
-		return this.otfManager;
 	}
 }
