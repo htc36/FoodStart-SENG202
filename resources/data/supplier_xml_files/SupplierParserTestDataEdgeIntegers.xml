@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppliers SYSTEM "../../dtd/suppliers.dtd" >
+<suppliers>
+    <supplier>
+        <sid>12</sid>
+        <name>Normal</name>
+        <address>dummy address</address>
+        <phone type="home">+64062485584</phone>
+        <email>dummy email</email>
+        <url>dummy email</url>
+    </supplier>
+    <supplier>
+        <sid>0</sid>
+        <name>Zero</name>
+        <address>dummy address</address>
+        <phone type="home">0</phone>
+        <email>dummy email</email>
+        <url>dummy email</url>
+    </supplier>
+    <supplier>
+        <sid>-1</sid>
+        <name>Negative</name>
+        <address>dummy address</address>
+        <phone type="work">-2</phone>
+        <email>dummy email</email>
+        <url>dummy email</url>
+    </supplier>
+    <supplier>
+        <sid>2345678909876543</sid>
+        <name>Big</name>
+        <address>dummy address</address>
+        <phone type="mobile">2345678909876543</phone>
+        <email>dummy email</email>
+        <url>dummy email</url>
+    </supplier>
+</suppliers>

@@ -46,6 +46,13 @@ public class SupplierManager {
 	public void removeSupplier(Integer id) {
 		this.suppliers.remove(id);
 	}
+	
+	/**
+     * Removes all suppliers from the map of suppliers.
+     */
+    public void removeAllSuppliers() {
+        this.suppliers.clear();
+    }
 
 	/**
 	 * Returns the map of suppliers
