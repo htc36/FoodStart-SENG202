@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
+import foodstart.manager.order.OrderManager;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
@@ -113,9 +114,6 @@ public class EditOrderItemsController implements Refreshable {
 
 	@FXML
 	private void confirm() {
-		for (Recipe item : items.keySet()) {
-			System.out.println(String.format("%d %s", items.get(item), item.getDisplayName()));
-		}
 		closeSelf();
 	}
 
@@ -163,12 +161,25 @@ public class EditOrderItemsController implements Refreshable {
 			editPopup.showAndWait();
 			Map<Ingredient, Integer> moddedIngredients = ((RecipeEditorController) editLoader.getController()).getIngredients();
 			float price = ((RecipeEditorController) editLoader.getController()).getPrice();
-			if (!moddedIngredients.equals(ingredients)) {
+			if (checkMaps(ingredients, moddedIngredients)) {
 				int otfID = Managers.getRecipeManager().otfManager.addRecipe(recipe.getId(), moddedIngredients, price);
-				order.removeItem(recipe);
+				items.put(Managers.getRecipeManager().otfManager.getRecipe(otfID), order.getItems().get(recipe));
+				items.remove(recipe);
 			}
 			refreshTable();
 		}
+	}
+
+	private boolean checkMaps(Map<Ingredient, Integer> m1, Map<Ingredient, Integer> m2) {
+		if (!m1.keySet().equals(m2.keySet())) {
+			return false;
+		}
+		for (Ingredient ingredient : m1.keySet()) {
+			if (m1.get(ingredient) != m2.get(ingredient)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@FXML
