@@ -9,7 +9,7 @@ import static io.cucumber.junit.CucumberOptions.*;
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty", "html:target/cucumber"},
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        features = "src/main/resource/foodstart/features",
+        features = "src/test/java/foodstart/acceptance_tests/features",
         tags = {"not @skip_scenario"},
         glue = "step_definitions")
 

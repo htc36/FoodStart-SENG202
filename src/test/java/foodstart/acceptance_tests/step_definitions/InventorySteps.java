@@ -8,6 +8,7 @@ import cucumber.api.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,22 +34,22 @@ public class InventorySteps {
         assertNull(ingredientManager.getIngredientByName(ingredientName));
     }
 
-    @Given("Its unit type is {string}")
+    @And("Its unit type is {string}")
     public void itsUnitTypeIs(String unitType) {
         this.unitType = Unit.matchUnit(unitType);
     }
 
-    @Given("Its kitchen stock is {int}")
+    @And("Its kitchen stock is {int}")
     public void itsKitchenStockIs(Integer kitchenStock) {
         this.kitchenStock = kitchenStock;
     }
 
-    @Given("Its truck stock is {int}")
+    @And("Its truck stock is {int}")
     public void itsTruckStockIs(Integer truckStock) {
         this.truckStock = truckStock;
     }
 
-    @Given("Its dietary requirement is {string}")
+    @And("Its dietary requirement is {string}")
     public void itsDietaryRequirementIs(String dietaryRequirement) {
         this.safeFor.put(DietaryRequirement.matchDietaryRequirement(dietaryRequirement), true);
     }
@@ -62,4 +63,6 @@ public class InventorySteps {
     public void itWillBeStoredUnderInTheInventory(String ingredientName) {
         assertNotNull((ingredientManager.getIngredientByName(ingredientName)));
     }
+
+
 }

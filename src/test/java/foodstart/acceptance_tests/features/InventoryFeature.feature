@@ -6,7 +6,7 @@ Feature: Inventory feature.
         Given An employee wants to view all ingredients
         When The ingredients list is displayed
         Then All relevant information is shown, i.e. name, amount in each location (Truck & depot)
-        
+
     @skip_scenario
     Scenario: Check ingredients that are low in quantity (FR13)
         Given The list of ingredients are shown
