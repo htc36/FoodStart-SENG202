@@ -100,7 +100,6 @@ public class XMLSalesLogParser extends XMLParser {
 	 * @return a map of the recipe items in the sale to the quantity ordered
 	 */
 	private Map<Recipe, Integer> getSaleItems(Element element) {
-		//TODO: Ensure OTF Parsing works
 		Map<Recipe, Integer> recipes = new HashMap<Recipe, Integer>();
 		NodeList recipeNodes = element.getElementsByTagName("recipes").item(0).getChildNodes();
 		for (int i = 0; i < recipeNodes.getLength(); i++) {
@@ -118,7 +117,6 @@ public class XMLSalesLogParser extends XMLParser {
 					//Then it's an OTF Recipe
 					OnTheFlyRecipe onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipe);
 					recipes.put(onTheFlyRecipe, quantity);
-					System.out.println(onTheFlyRecipe.getIngredients());
 				} else {
 					recipes.put(recipe, quantity);
 				}
