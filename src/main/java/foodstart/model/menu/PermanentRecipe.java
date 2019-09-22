@@ -56,6 +56,7 @@ public class PermanentRecipe extends Recipe {
 		this.instructions = instructions;
 	}
 
+	@Override
 	/**
 	 * Returns the display name of the recipe
 	 *
