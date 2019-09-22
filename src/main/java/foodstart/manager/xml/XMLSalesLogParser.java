@@ -1,6 +1,7 @@
 package foodstart.manager.xml;
 
 import foodstart.manager.Managers;
+import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.DataType;
@@ -172,7 +173,14 @@ public class XMLSalesLogParser extends XMLParser {
 
             for (Recipe recipe : sale.getItems().keySet()) {
                 int quantity = sale.getItems().get(recipe);
-                Element recipeElement = exportPermanentRecipe(doc,(PermanentRecipe) recipe, quantity);
+                Element recipeElement;
+                if (recipe.getClass() == PermanentRecipe.class) {
+                    recipeElement  = exportPermanentRecipe(doc,(PermanentRecipe) recipe, quantity);
+                } else if (recipe.getClass() == OnTheFlyRecipe.class) {
+                    recipeElement = exportOnTheFlyRecipe(doc,(OnTheFlyRecipe) recipe, quantity);
+                } else {
+                    throw new ExportFailureException("Unknown onject type as recipe.");
+                }
                 saleRecipes.appendChild(recipeElement);
             }
 
@@ -200,6 +208,36 @@ public class XMLSalesLogParser extends XMLParser {
         Element recipeQuantity = doc.createElement("quantity");
         recipeQuantity.appendChild(doc.createTextNode(String.valueOf(quantity)));
         recipeElement.appendChild(recipeQuantity);
+
+        return recipeElement;
+    }
+    
+    /**
+     * Turn a OnTheFlyRecipe into an element with respect to the specified document instance
+     * @param doc Document to create elements with
+     * @param recipe Recipe to export
+     * @return The recipe node in the XML document to export with
+     */
+
+    private Element exportOnTheFlyRecipe(Document doc, OnTheFlyRecipe recipe, int quantity) {
+        Element recipeElement = doc.createElement("recipe");
+
+        Element recipeIdElement = doc.createElement("recipe_id");
+        recipeIdElement.appendChild(doc.createTextNode(String.valueOf(recipe.getBasedOn().getId())));
+        recipeElement.appendChild(recipeIdElement);
+        
+        Element ingredientsElement = doc.createElement("ingredients");
+        for (Ingredient ingredient: recipe.getIngredients().keySet()) {
+            Element ingredientIDElement = doc.createElement("ingredient_id");
+            ingredientIDElement.appendChild(doc.createTextNode(String.valueOf(ingredient.getId())));  
+            ingredientsElement.appendChild(ingredientIDElement);
+        }
+        recipeElement.appendChild(ingredientsElement);
+        
+        
+        Element quantityElement = doc.createElement("quantity");
+        quantityElement.appendChild(doc.createTextNode(String.valueOf(quantity)));
+        recipeElement.appendChild(quantityElement);
 
         return recipeElement;
     }
