@@ -11,7 +11,7 @@ import static io.cucumber.junit.CucumberOptions.*;
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         features = "src/main/resource/foodstart/features",
         tags = {"not @skip_scenario"},
-        glue = "step_definitions")
+        glue = "foodstart.acceptance_tests.step_definitions")
 
 public class RunCucumberTests {
 }
