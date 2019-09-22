@@ -1,10 +1,5 @@
 package foodstart.ui.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.Set;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
@@ -30,6 +25,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.Set;
 
 public class SalesController implements Refreshable {
 
@@ -126,7 +126,7 @@ public class SalesController implements Refreshable {
 				Managers.getOrderManager().removeOrder(order.getId());
 			}
 		}
-		populateTable();
+		refreshTable();
 	}
 
 	public void editSale() {

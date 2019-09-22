@@ -2,22 +2,24 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
-import foodstart.manager.order.OrderManager;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
+import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 
 public class EditOrderItemsController implements Refreshable {
 	@FXML
@@ -45,15 +47,38 @@ public class EditOrderItemsController implements Refreshable {
 	private Order order;
 	private Map<Recipe, Integer> items;
 
+	private FXMLLoader editLoader;
+	private Parent editFXML;
+	private Stage editPopup;
+
+	private FXMLLoader addLoader;
+	private Parent addFXML;
+	private Stage addPopup;
+
 	@FXML
 	public void initialize() {
+		try {
+			editLoader = new FXMLLoader(getClass().getResource("recipeEditor.fxml"));
+			editFXML = editLoader.load();
+			//addLoader = new FXMLLoader(getClass().getResource("addRecipe.fxml"));
+			//addFXML = addLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Screen screen = Screen.getPrimary();
+		editPopup = new Stage();
+		editPopup.initModality(Modality.WINDOW_MODAL);
+		editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
+
+		//addPopup = new Stage();
+		//addPopup.initModality(Modality.WINDOW_MODAL);
+		//addPopup.setScene(new Scene(addFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
+
 		populateTable();
 	}
 
 	public void populateTable() {
-		OrderManager orderManager = Managers.getOrderManager();
 		RecipeManager recipeManager = Managers.getRecipeManager();
-		//Set<Recipe> recipes = orderManager.getOrderRecipes(order.getId());
 		Set<Recipe> recipes = new HashSet<Recipe>();
 		observableRecipes = FXCollections.observableArrayList(recipes);
 		recipesTableView.setItems(observableRecipes);
@@ -64,7 +89,7 @@ public class EditOrderItemsController implements Refreshable {
 
 	public void setOrder(Order order) {
 		this.order = order;
-		items = order.getItems();
+		items = new HashMap<Recipe, Integer>(order.getItems());
 		refreshTable();
 	}
 
@@ -75,7 +100,7 @@ public class EditOrderItemsController implements Refreshable {
 
 	@FXML
 	private void confirm() {
-
+		Managers.getOrderManager().mutateOrderItems(order.getId(), items);
 		closeSelf();
 	}
 
@@ -91,12 +116,37 @@ public class EditOrderItemsController implements Refreshable {
 
 	@FXML
 	private void removeRecipe() {
-
+		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
+		if (recipe == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove recipe as none was selected", ButtonType.OK);
+			alert.setHeaderText("No recipe selected");
+			alert.showAndWait();
+		} else {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to remove this recipe?", ButtonType.YES, ButtonType.NO);
+			Optional<ButtonType> selection = alert.showAndWait();
+			if (selection.isPresent() && selection.get() == ButtonType.YES) {
+				items.remove(recipe);
+			}
+		}
+		refreshTable();
 	}
 
 	@FXML
 	private void modifyRecipe() {
-
+		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
+		Map<Ingredient, Integer> ingredients= recipe.getIngredients();
+		if (recipe == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove recipe as none was selected", ButtonType.OK);
+			alert.setHeaderText("No recipe selected");
+			alert.showAndWait();
+		} else {
+			if (editPopup.getOwner() == null) {
+				editPopup.initOwner(this.recipesTableView.getScene().getWindow());
+			}
+			((RecipeEditorController) editLoader.getController()).setRecipe(recipe);
+			editPopup.showAndWait();
+			refreshTable();
+		}
 	}
 
 	@FXML
