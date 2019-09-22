@@ -61,9 +61,9 @@ public class XMLRecipeParser extends XMLParser {
 	}
 
 	/**
-	 * Parses a single recipe from the given element
+	 * Parses a single recipe from the given Element.
 	 *
-	 * @param element The XML element to parse
+	 * @param element The Element object representing a single recipe in a XML file to parse
 	 * @return Recipe that was parsed (also added to the registry)
 	 */
 	private int parseOneRecipe(Element element) {
