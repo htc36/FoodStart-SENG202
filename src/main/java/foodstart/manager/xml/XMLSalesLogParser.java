@@ -3,6 +3,7 @@ package foodstart.manager.xml;
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
+import foodstart.manager.menu.RecipeManager;
 import foodstart.manager.order.OrderManager;
 import foodstart.model.DataType;
 import foodstart.model.PaymentMethod;
@@ -59,9 +60,9 @@ public class XMLSalesLogParser extends XMLParser {
 	 *
 	 * @param otfDataNodes the NodeList that contains the nodes relevant ot the on the fly recipe
 	 * @param basis        the recipe that the on the fly recipe is based on
-	 * @return the on the fly recipe generated from the data
+	 * @return the id of the fly recipe generated from the data
 	 */
-	private OnTheFlyRecipe parseOTFRecipe(NodeList otfDataNodes, PermanentRecipe basis) {
+	private int parseOTFRecipe(NodeList otfDataNodes, PermanentRecipe basis) {
 		Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
 		float price = 0;
 		for (int j = 0; j < otfDataNodes.getLength(); j++) {
@@ -90,7 +91,8 @@ public class XMLSalesLogParser extends XMLParser {
 				}
 			}
 		}
-		return new OnTheFlyRecipe(basis, ingredients, price);
+		int id = Managers.getRecipeManager().getOtfManager().addRecipe(basis, ingredients, price);
+		return id;
 	}
 
 	/**
@@ -100,6 +102,7 @@ public class XMLSalesLogParser extends XMLParser {
 	 * @return a map of the recipe items in the sale to the quantity ordered
 	 */
 	private Map<Recipe, Integer> getSaleItems(Element element) {
+		RecipeManager manager = Managers.getRecipeManager();
 		Map<Recipe, Integer> recipes = new HashMap<Recipe, Integer>();
 		NodeList recipeNodes = element.getElementsByTagName("recipes").item(0).getChildNodes();
 		for (int i = 0; i < recipeNodes.getLength(); i++) {
@@ -108,15 +111,15 @@ public class XMLSalesLogParser extends XMLParser {
 				Element recipeEl = (Element) node;
 				int recipeId = Integer.parseInt(recipeEl.getElementsByTagName("recipe_id").item(0).getTextContent());
 				int quantity = Integer.parseInt(recipeEl.getElementsByTagName("quantity").item(0).getTextContent());
-				PermanentRecipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
+				PermanentRecipe recipe = manager.getRecipe(recipeId);
 				if (recipe == null) {
 					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 				}
 				NodeList ingredientNodes = recipeEl.getElementsByTagName("ingredients");
 				if (ingredientNodes.getLength() > 0) {
 					//Then it's an OTF Recipe
-					OnTheFlyRecipe onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipe);
-					recipes.put(onTheFlyRecipe, quantity);
+					int onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipe);
+					recipes.put(manager.getOtfManager().getRecipe(onTheFlyRecipe), quantity);
 				} else {
 					recipes.put(recipe, quantity);
 				}

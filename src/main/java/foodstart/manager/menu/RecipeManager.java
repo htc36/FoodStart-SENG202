@@ -1,5 +1,6 @@
 package foodstart.manager.menu;
 
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
@@ -10,12 +11,73 @@ import java.util.*;
  * Acts as a controller, storing and managing the recipes in the model
  */
 public class RecipeManager {
+	/**
+	 * Aids in the management of on the fly recipes
+	 */
+	public class OTFManager {
+
+		/**
+		 * The map of all on the fly recipes modelled in the system
+		 */
+		private HashMap<Integer, OnTheFlyRecipe> onTheFlyRecipes;
+
+		/**
+		 * Counter for assigning ids to recipes
+		 */
+		private int counter;
+
+
+		/**
+		 * Constructs an instance of an OTFManager
+		 */
+		OTFManager() {
+			this.onTheFlyRecipes = new HashMap<Integer, OnTheFlyRecipe>();
+			counter = 0;
+		}
+
+		/**
+		 * Adds a recipe to the map of all on the fly recipes
+		 * @param basis the permanent recipe that the OTF recipe is based on
+		 * @param ingredients the ingredients in the OTF recipe
+		 * @param price the price of the OTF recipe
+		 */
+		public int addRecipe(int basis, Map<Ingredient, Integer> ingredients, float price) {
+			PermanentRecipe basisRecipe = recipes.get(basis);
+			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basisRecipe, ingredients, price);
+			int id = counter;
+			counter++;
+			onTheFlyRecipes.put(id, recipe);
+			return id;
+		}
+
+		/**
+		 * Adds a recipe to the map of all on the fly recipes
+		 * @param basis the permanent recipe that the OTF recipe is based on
+		 * @param ingredients the ingredients in the OTF recipe
+		 * @param price the price of the OTF recipe
+		 */
+		public int addRecipe(PermanentRecipe basis, Map<Ingredient, Integer> ingredients, float price) {
+			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basis, ingredients, price);
+			int id = counter;
+			counter++;
+			onTheFlyRecipes.put(id, recipe);
+			return id;
+		}
+
+		public OnTheFlyRecipe getRecipe(int id) {
+			return this.onTheFlyRecipes.get(id);
+		}
+
+	}
 
 	/**
 	 * The map of all permanent recipes modeled
 	 */
 	private Map<Integer, PermanentRecipe> recipes;
 
+	/**
+	 * An instance of the inner OTF manager
+	 */
 	private OTFManager otfManager;
 
 	/**
@@ -133,14 +195,10 @@ public class RecipeManager {
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
 			out = out.concat(String.format("%s, ", ingredient.getName()));
 		}
-		return out;
+		return out.substring(0, out.length() - 2);
 	}
-}
 
-/**
- * Aids in the management of on the fly recipes
- */
-class OTFManager {
-
-	OTFManager() {}
+	public OTFManager getOtfManager() {
+		return this.otfManager;
+	}
 }
