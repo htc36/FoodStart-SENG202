@@ -58,12 +58,14 @@ public class EditIngredientController {
 	@FXML
 	public void initialize() {
 		this.unitComboBox.setItems(FXCollections.observableArrayList(Unit.values()));
-		//unitComboBox.getItems().removeAll(unitComboBox.getItems());
-		//will need to change this to use the enum rather than hardcode
-		//unitComboBox.getItems().addAll("ml", "g", "count");
 	}
 
-	//used to check if kitchen stock and truck stock fields are ints
+
+    /**
+     * Checks if the text feild given is an integer
+     * @param input the specific entry to test
+     * @return boolean if it is an integer or not
+     */
 	private boolean isInt(TextField input) {
 		try {
 			int value = Integer.parseInt(input.getText());
@@ -72,6 +74,13 @@ public class EditIngredientController {
 			return false;
 		}
 	}
+
+    /**
+     * Validates if text feild is not empty and if it is not an integer
+     * @param field specific entry to test
+     * @param label Displays message
+     * @return true if field passes all tests, false if not
+     */
 	private boolean textFieldValidate(TextField field, Label label) {
 		String message = null;
 		boolean isValid = true;
@@ -86,6 +95,13 @@ public class EditIngredientController {
 		label.setText(message);
 		return isValid;
 		}
+
+	/**
+	 * Validates weather an integer feild is valid
+ 	 * @param field specific entry to test
+	 * @param label message to be displayed
+	 * @return true if field passes all the tests, false if not
+	 */
 	private boolean integerFieldValidate(TextField field, Label label) {
 		String message = null;
 		boolean isValid = true;
@@ -97,10 +113,20 @@ public class EditIngredientController {
 			isValid = false;
 			message = "Input must be an integer";
 		}
+		else if (Integer.parseInt(field.getText()) < 0){
+			isValid = false;
+			message = "Input must be greater than 0";
+		}
 		label.setText(message);
 		return isValid;
 	}
-	private boolean comboBoxValidate(ComboBox<String> field, Label label) {
+	/**
+	 * Validates weather an combobox feild is valid
+	 * @param field specific entry to test
+	 * @param label message to be displayed
+	 * @return true if field passes all the tests, false if not
+	 */
+	private boolean comboBoxValidate(ComboBox<Unit> field, Label label) {
 		boolean isValid = true;
 		String message = null;
 		if (field.getValue() == null) {
@@ -110,6 +136,11 @@ public class EditIngredientController {
 		label.setText(message);
 		return isValid;
 	}
+
+	/**
+	 * Sets up popup screen with all the current inputs for a specific ingredient
+	 * @param ingredient the ingredient to be edited
+	 */
 	public void setIngredient(Ingredient ingredient) {
 		this.ingredient = ingredient;
 		if (ingredient != null) {
@@ -127,16 +158,15 @@ public class EditIngredientController {
 		}
 	}
 
+	/**
+	 * Checks if all fields are valid then adds the ingredient to the system and closes popup
+	 */
 	public void submit() {
 		boolean isNameValid = textFieldValidate(nameInput, nameError);
 		boolean isKitchenStockValid = integerFieldValidate(kitchenStockInput, kitchenStockError);
 		boolean isTruckStockValid = integerFieldValidate(truckStockInput, truckStockError);
-		//boolean isUnitComboBoxValid = comboBoxValidate(unitComboBox, unitBoxError);
-		boolean isUnitComboBoxValid = true;
+		boolean isUnitComboBoxValid = comboBoxValidate(unitComboBox, unitBoxError);
 		String unitString = unitComboBox.getValue().getDBName();
-		/*
-		if (isInt(truckStockInput) && isInt(kitchenStockInput) && ! isInt(nameInput) && unitString != "") {
-		 */
 		HashMap<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 		safeFor.put(DietaryRequirement.VEGAN, vegan.isSelected());
 		safeFor.put(DietaryRequirement.VEGETARIAN, vegetarian.isSelected());
@@ -152,6 +182,10 @@ public class EditIngredientController {
 		}
 		
 	}
+
+	/**
+	 * Closes the current popup stage
+	 */
 
 	private void closeSelf() {
 		Stage stage = (Stage) this.nameInput.getScene().getWindow();

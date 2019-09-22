@@ -1,13 +1,20 @@
 package foodstart.ui.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
 import foodstart.manager.Managers;
+import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.stock.IngredientManager;
+import foodstart.model.DataFileType;
+import foodstart.model.DataType;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
+import foodstart.ui.FXExceptionDisplay;
+import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -19,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -71,6 +79,10 @@ public class InventoryController implements Refreshable {
 		populateTable();
 	}
 
+	/**
+	 * Adds all ingredients to the table
+	 */
+
 	public void populateTable() {
 		IngredientManager ingredientManager = Managers.getIngredientManager();
 		Set<Ingredient> ingredientSet = ingredientManager.getIngredientSet();
@@ -95,6 +107,9 @@ public class InventoryController implements Refreshable {
 		this.observableList.setAll(Managers.getIngredientManager().getIngredientSet());
 	}
 
+	/**
+	 * Displays popup screen for adding an ingredient
+	 */
 	public void addIngredient() {
 		if (addPopup.getOwner() == null) {
 			addPopup.initOwner(this.inventoryView.getScene().getWindow());
@@ -104,6 +119,10 @@ public class InventoryController implements Refreshable {
 		refreshTable();
 	}
 
+
+	/**
+	 * Asks for confimation then removes selected item, if none selected display warning message
+	 */
 	public void removeIngredient() {
 		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
 		if (ingredient == null) {
@@ -120,7 +139,45 @@ public class InventoryController implements Refreshable {
 		populateTable();
 	}
 
+	/**
+	 * Imports ingredients then updates table view
+	 */
+	public void importIngredients() {
+		Stage stage = (Stage) this.inventoryView.getScene().getWindow();
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Inventory File");
+		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
+		File selectedFile = fileChooser.showOpenDialog(stage);
+		if (selectedFile != null) {
+			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
+			persist.importFile(selectedFile, DataType.INGREDIENT);
+		}
+		refreshTable();
+	}
 
+
+	/**
+	 * Exports ingredients then updates table view
+	 */
+    public void exportIngredients() {
+        Stage stage = (Stage) this.inventoryView.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Inventory File");
+        fileChooser.getExtensionFilters().addAll(Main.generateFilters());
+        File selectedFile = fileChooser.showSaveDialog(stage);
+        if (selectedFile != null) {
+            Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
+            try {
+                persist.exportFile(selectedFile, DataType.INGREDIENT);
+            } catch (ExportFailureException e) {
+                FXExceptionDisplay.showException(e, false);
+            }
+        }
+    }
+
+	/**
+	 * Displays edit ingredient popup then refreshes the table
+	 */
 	public void editIngredient() {
 		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
 		if (ingredient == null) {
@@ -135,10 +192,6 @@ public class InventoryController implements Refreshable {
 			editPopup.showAndWait();
 			refreshTable();
 		}
-	}
-
-	public void closeAddIngredient() {
-		stage.close();
 	}
 
 }
