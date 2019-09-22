@@ -75,6 +75,7 @@ public class PermanentRecipe extends Recipe {
 		this.displayName = displayName;
 	}
 
+	@Override
 	/**
 	 * Gets the ID that this recipe is given in data files
 	 *

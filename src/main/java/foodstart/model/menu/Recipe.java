@@ -119,5 +119,10 @@ public abstract class Recipe {
 
 	public abstract String getDisplayName();
 
+	/**
+	 * Returns the id of the recipe that this is based on
+	 * @return the id of the recipe that this is based on
+	 */
+	public abstract int getId();
 }
 

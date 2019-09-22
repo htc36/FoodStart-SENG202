@@ -6,20 +6,30 @@ import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.*;
+
+import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
 
 public class EditOrderItemsController implements Refreshable {
 	@FXML
@@ -41,7 +51,7 @@ public class EditOrderItemsController implements Refreshable {
 	@FXML
 	TableColumn<Recipe, String> ingredientCol;
 	@FXML
-	TableColumn<Recipe, String> quantityCol;
+	TableColumn<Recipe, Integer> quantityCol;
 
 	private ObservableList<Recipe> observableRecipes;
 	private Order order;
@@ -78,13 +88,16 @@ public class EditOrderItemsController implements Refreshable {
 	}
 
 	public void populateTable() {
+		recipesTableView.setEditable(true);
 		RecipeManager recipeManager = Managers.getRecipeManager();
 		Set<Recipe> recipes = new HashSet<Recipe>();
 		observableRecipes = FXCollections.observableArrayList(recipes);
 		recipesTableView.setItems(observableRecipes);
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
 		ingredientCol.setCellValueFactory(cell -> new SimpleStringProperty(recipeManager.getIngredientsAsString(cell.getValue())));
-		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(order.getItems().get(cell.getValue()))));
+		quantityCol.setCellValueFactory(cell -> new SimpleIntegerProperty(items.get(cell.getValue())).asObject());
+		quantityCol.setCellFactory(TextFieldTableCell.<Recipe, Integer>forTableColumn(new IntegerStringConverter()));
+		quantityCol.setOnEditCommit(e -> items.put(e.getRowValue(), e.getNewValue()));
 	}
 
 	public void setOrder(Order order) {
@@ -100,12 +113,15 @@ public class EditOrderItemsController implements Refreshable {
 
 	@FXML
 	private void confirm() {
-		Managers.getOrderManager().mutateOrderItems(order.getId(), items);
+		for (Recipe item : items.keySet()) {
+			System.out.println(String.format("%d %s", items.get(item), item.getDisplayName()));
+		}
 		closeSelf();
 	}
 
 	@FXML
 	private void cancel() {
+		items = null;
 		closeSelf();
 	}
 
@@ -145,6 +161,12 @@ public class EditOrderItemsController implements Refreshable {
 			}
 			((RecipeEditorController) editLoader.getController()).setRecipe(recipe);
 			editPopup.showAndWait();
+			Map<Ingredient, Integer> moddedIngredients = ((RecipeEditorController) editLoader.getController()).getIngredients();
+			float price = ((RecipeEditorController) editLoader.getController()).getPrice();
+			if (!moddedIngredients.equals(ingredients)) {
+				int otfID = Managers.getRecipeManager().otfManager.addRecipe(recipe.getId(), moddedIngredients, price);
+				order.removeItem(recipe);
+			}
 			refreshTable();
 		}
 	}
@@ -157,5 +179,16 @@ public class EditOrderItemsController implements Refreshable {
 	private void closeSelf() {
 		Stage stage = (Stage) this.recipesTableView.getScene().getWindow();
 		stage.close();
+	}
+
+	public Map<Recipe, Integer> getNewRecipes() {
+		return items;
+	}
+
+	public void pushRecipes(Map<Recipe, Integer> pushedRecipes) {
+		if (pushedRecipes != null) {
+			this.items = pushedRecipes;
+			refreshTable();
+		}
 	}
 }
