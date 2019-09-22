@@ -1,5 +1,10 @@
 package foodstart.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.xml.XMLPersistence;
@@ -11,19 +16,19 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Main/Bootstrap class that launches the application
@@ -120,6 +125,22 @@ public class Main extends Application {
 		loadUserData();
 		loadFXMLFiles(); //this is done 2nd so initialize methods can access user data
 		prepareMainScreen();
+		
+		primaryStage.setOnCloseRequest(event -> {
+			Alert closeConfirmation = new Alert(
+	                Alert.AlertType.CONFIRMATION,
+	                "Any unsaved changed will be lost."
+	        );
+	        closeConfirmation.setHeaderText("Are you sure you want to exit?");
+	        closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+	        closeConfirmation.initOwner(primaryStage);
+
+	        Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+	        if (!ButtonType.OK.equals(closeResponse.get())) {
+	            event.consume();
+	        }
+		});
+		
 		long duration = System.currentTimeMillis() - startTime;
 		if (duration < 1000) {
 			Thread.sleep(1000 - duration);
