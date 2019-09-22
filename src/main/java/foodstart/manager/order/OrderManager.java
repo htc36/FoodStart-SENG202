@@ -130,13 +130,13 @@ public class OrderManager {
 		for (Recipe recipe : items.keySet()) {
 			if (recipe instanceof PermanentRecipe) {
 				//Permanent recipe
-				output += String.format("%dx %s", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
+				output += String.format("%dx %s, ", items.get(recipe), ((PermanentRecipe) recipe).getDisplayName());
 			} else {
 				//OTF Recipe
-				output += String.format("%dx %s (Modified)", items.get(recipe), ((OnTheFlyRecipe) recipe).getBasedOn().getDisplayName());
+				output += String.format("%dx %s (Modified), ", items.get(recipe), ((OnTheFlyRecipe) recipe).getBasedOn().getDisplayName());
 			}
 		}
-		return output;
+		return output.substring(0, output.length() - 2);
 	}
 
 	/**

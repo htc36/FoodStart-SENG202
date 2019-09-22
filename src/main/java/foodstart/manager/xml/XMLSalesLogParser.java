@@ -17,7 +17,6 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,13 +72,11 @@ public class XMLSalesLogParser extends XMLParser {
 			    if (recipe == null) {
 				    throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 			    }
-			    System.out.println(recipeEl.getElementsByTagName("ingredients"));
 			    NodeList ingredientNodes = recipeEl.getElementsByTagName("ingredients");
 			    if (ingredientNodes.getLength() > 0) {
 			        //Then it's an OTF Recipe
                     Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
                     float price = 0;
-                    System.out.println(ingredientNodes.getLength());
                     for (int j = 0; j < ingredientNodes.getLength(); j++) {
                         Node ingredientNode = ingredientNodes.item(j);
                         if (ingredientNode.getNodeName().equalsIgnoreCase("ingredient")) {
