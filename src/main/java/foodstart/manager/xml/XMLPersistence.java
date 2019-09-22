@@ -25,7 +25,9 @@ import org.xml.sax.SAXException;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.exceptions.ImportFailureException;
+import foodstart.model.Constants;
 import foodstart.model.DataType;
+import foodstart.ui.FXExceptionDisplay;
 
 /**
  * Parses an XML file with a given DataType
@@ -100,11 +102,11 @@ public class XMLPersistence extends Persistence {
 	@Override
 	public void exportFile(File file, DataType dataType) {
 		if (dBuilder == null) {
-			throw new ImportFailureException("DocumentBuilder class not initialized");
+			throw new ExportFailureException("DocumentBuilder class not initialized");
 		} else if (transformer == null) {
-			throw new ImportFailureException("Transformer class not initialized");
+			throw new ExportFailureException("Transformer class not initialized");
 		}
-		
+
 		Document doc = dBuilder.newDocument();
 		parsers.get(dataType).export(doc, transformer);
 
@@ -125,8 +127,7 @@ public class XMLPersistence extends Persistence {
 	 * This will copy DTD files into the target directory, overwriting files if
 	 * necessary
 	 *
-	 * @param directory
-	 *            Directory that the DTD files should be copied into
+	 * @param directory Directory that the DTD files should be copied into
 	 */
 	public void copyDTDFiles(File directory) throws IOException {
 		for (DataType type : DataType.values()) {
@@ -142,5 +143,35 @@ public class XMLPersistence extends Persistence {
 				output.close();
 			}
 		}
+	}
+
+	@Override
+	public boolean saveAllFiles() {
+		boolean succeeded = true;
+		for (File file : Constants.importOrder) {
+			try {
+				switch (file.getName().toLowerCase()) {
+				case "ingredients.xml":
+					exportFile(file, DataType.INGREDIENT);
+					break;
+				case "menu.xml":
+					exportFile(file, DataType.MENU);
+					break;
+				case "recipes.xml":
+					exportFile(file, DataType.RECIPE);
+					break;
+				case "sales_log.xml":
+					exportFile(file, DataType.SALES_LOG);
+					break;
+				case "suppliers.xml":
+					exportFile(file, DataType.SUPPLIER);
+					break;
+				}
+			} catch (ExportFailureException e) {
+				succeeded = false;
+				FXExceptionDisplay.showException(e, false);
+			}
+		}
+		return succeeded;
 	}
 }
