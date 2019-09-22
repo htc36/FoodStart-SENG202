@@ -1,11 +1,11 @@
 Feature: Order feature. 
     Scenarios involving orders
 
-#    @skip_scenario
 #    Scenario: Ordering a single item (FR11)
 #        Given A "hamburger" costs $5.00
 #        When The customer orders 1 "hamburger"
 #        Then The customer will be charged $5.00 total
+#
 #    @skip_scenario
 #    Scenario: Ordering multiple items (FR11)
 #        Given A "hamburger" costs $5.00
@@ -13,6 +13,7 @@ Feature: Order feature.
 #        When The customer orders 1 "hamburger"
 #        When The customer orders 1 "chips"
 #        Then The customer will be charged $8.50 total
+
 #    @skip_scenario
 #    Scenario: Removing an item in the order (FR11)
 #        Given The current order has 1 "hamburger"
