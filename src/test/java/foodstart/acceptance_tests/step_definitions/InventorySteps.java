@@ -34,22 +34,22 @@ public class InventorySteps {
         assertNull(ingredientManager.getIngredientByName(ingredientName));
     }
 
-    @And("Its unit type is {string}")
+    @Given("Its unit type is {string}")
     public void itsUnitTypeIs(String unitType) {
         this.unitType = Unit.matchUnit(unitType);
     }
 
-    @And("Its kitchen stock is {int}")
+    @Given("Its kitchen stock is {int}")
     public void itsKitchenStockIs(Integer kitchenStock) {
         this.kitchenStock = kitchenStock;
     }
 
-    @And("Its truck stock is {int}")
+    @Given("Its truck stock is {int}")
     public void itsTruckStockIs(Integer truckStock) {
         this.truckStock = truckStock;
     }
 
-    @And("Its dietary requirement is {string}")
+    @Given("Its dietary requirement is {string}")
     public void itsDietaryRequirementIs(String dietaryRequirement) {
         this.safeFor.put(DietaryRequirement.matchDietaryRequirement(dietaryRequirement), true);
     }
