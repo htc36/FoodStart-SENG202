@@ -55,6 +55,44 @@ public class XMLSalesLogParser extends XMLParser {
     }
 
 	/**
+	 * Parses an on the fly recipe if it is detected during parsing
+	 * @param otfDataNodes the NodeList that contains the nodes relevant ot the on the fly recipe
+	 * @param basis the recipe that the on the fly recipe is based on
+	 * @return the on the fly recipe generated from the data
+	 */
+	private OnTheFlyRecipe parseOTFRecipe(NodeList otfDataNodes, PermanentRecipe basis) {
+        Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
+        float price = 0;
+        for (int j = 0; j < otfDataNodes.getLength(); j++) {
+            //May be either an ingredients list or the price of the recipe
+            Node dataNode = otfDataNodes.item(j);
+
+            if (dataNode.getNodeName().equalsIgnoreCase("ingredients")) {
+            NodeList ingredientsNodes = dataNode.getChildNodes();
+            for (int k = 0; k < ingredientsNodes.getLength(); k++) {
+	            Node ingredientNode = ingredientsNodes.item(k);
+	            if (ingredientNode.getNodeName().equalsIgnoreCase("ingredient")) {
+		            Element ingredientElement = (Element) ingredientNode;
+		            int ingredientId = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
+		            int ingredientQuantity = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_quantity").item(0).getTextContent());
+		            Ingredient ingredient = Managers.getIngredientManager().getIngredient(ingredientId);
+		            if (ingredient == null) {
+			            throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
+		            }
+		            ingredients.put(ingredient, ingredientQuantity);
+	            }
+            }
+
+            if (dataNode.getNodeName().equalsIgnoreCase("otf_price")) {
+            	Element priceElement = (Element) dataNode;
+            	price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
+            }
+            }
+        }
+        return new OnTheFlyRecipe(basis, ingredients, price);
+    }
+
+	/**
 	 * Parses a single sale for the items in it
 	 * @param element the sale element to parse
 	 * @return a map of the recipe items in the sale to the quantity ordered
@@ -76,28 +114,9 @@ public class XMLSalesLogParser extends XMLParser {
 			    NodeList ingredientNodes = recipeEl.getElementsByTagName("ingredients");
 			    if (ingredientNodes.getLength() > 0) {
 			        //Then it's an OTF Recipe
-                    Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-                    float price = 0;
-                    for (int j = 0; j < ingredientNodes.getLength(); j++) {
-                        Node ingredientNode = ingredientNodes.item(j);
-                        if (ingredientNode.getNodeName().equalsIgnoreCase("ingredient")) {
-                            Element ingredientElement = (Element) ingredientNode;
-                            int ingredientId = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
-                            int ingredientQuantity = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_quantity").item(0).getTextContent());
-                            Ingredient ingredient = Managers.getIngredientManager().getIngredient(ingredientId);
-                            if (ingredient == null) {
-                                throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
-                            }
-                            ingredients.put(ingredient, ingredientQuantity);
-                        }
-                        if (ingredientNode.getNodeName().equalsIgnoreCase("otf_price")) {
-                            System.out.println("OTF Recipe");
-                            Element priceElement = (Element) ingredientNode;
-                            price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
-                        }
-                    }
-                    OnTheFlyRecipe onTheFlyRecipe = new OnTheFlyRecipe(recipe, ingredients, price);
+                    OnTheFlyRecipe onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipe);
                     recipes.put(onTheFlyRecipe, quantity);
+                    System.out.println(onTheFlyRecipe.getIngredients());
                 } else {
                     recipes.put(recipe, quantity);
                 }
