@@ -8,6 +8,7 @@ import cucumber.api.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,4 +63,6 @@ public class InventorySteps {
     public void itWillBeStoredUnderInTheInventory(String ingredientName) {
         assertNotNull((ingredientManager.getIngredientByName(ingredientName)));
     }
+
+
 }
