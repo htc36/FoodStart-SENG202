@@ -56,7 +56,7 @@ public class OrderBuilder {
 	 * @param recipe   Recipe to see if it can be added
 	 * @param quantity How much of this recipe to try and add
 	 * @return True if the item can be added to the order with the current stock,
-	 * false otherwise
+	 *         false otherwise
 	 */
 	public boolean canAddItem(Recipe recipe, int quantity) {
 		for (Map.Entry<Ingredient, Integer> recipeItem : recipe.getIngredients().entrySet()) {
@@ -72,9 +72,10 @@ public class OrderBuilder {
 	/**
 	 * Adds the item to the order
 	 *
-	 * @param recipe the recipe to add
+	 * @param recipe   the recipe to add
 	 * @param quantity the number of the recipe to add
-	 * @throws InsufficientStockException when there isn't enough truck stock to add this to the order
+	 * @throws InsufficientStockException when there isn't enough truck stock to add
+	 *                                    this to the order
 	 */
 	public void addItem(Recipe recipe, int quantity) {
 		if (!canAddItem(recipe, quantity)) {
@@ -104,7 +105,8 @@ public class OrderBuilder {
 	 * @param paymentMethod Payment method used
 	 */
 	public void build(String customerName, PaymentMethod paymentMethod) {
-		int id = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+		int id = Managers.getOrderManager().getOrders().keySet().size() == 0 ? 0
+				: Collections.max(Managers.getOrderManager().getOrders().keySet()) + 1;
 		while (Managers.getOrderManager().getOrder(id) != null) {
 			id++; // make sure the order id is unique
 		}
@@ -166,7 +168,8 @@ public class OrderBuilder {
 	public int calculateRequiredStock(Ingredient ingredient) {
 		int required = 0;
 		for (Map.Entry<Recipe, Integer> item : currentOrder.entrySet()) {
-			if (editing.contains(item.getKey())) continue;
+			if (editing.contains(item.getKey()))
+				continue;
 			if (item.getKey().getIngredients().containsKey(ingredient)) {
 				required += item.getKey().getIngredients().get(ingredient) * item.getValue();
 			}
