@@ -29,23 +29,56 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controls the UI for the inventory screen
+ */
 public class InventoryController implements Refreshable {
-	private Stage stage;
+
+	/**
+	 * Table view for the inventory ingredients
+	 */
 	@FXML
 	private TableView<Ingredient> inventoryView;
+	/**
+	 * Table column for the ingredients id
+	 */
 	@FXML
 	private TableColumn<Ingredient, String> id;
+	/**
+	 * Table column for the ingredient names
+	 */
 	@FXML
 	private TableColumn<Ingredient, String> name;
+	/**
+	 * Table column for the ingredient truck stock
+	 */
 	@FXML
 	private TableColumn<Ingredient, String> truckStock;
+	/**
+	 * Table column for the ingredient kitchen stock
+	 */
 	@FXML
 	private TableColumn<Ingredient, String> kitchenStock;
+	/**
+	 * Table column for the ingredient dietary requirements
+	 */
 	@FXML
 	private TableColumn<Ingredient, String> dietary;
+	/**
+	 * FXML loader for add ingredient popup
+	 */
 	private FXMLLoader addLoader;
+	/**
+	 * FXML loader for edit ingredient popup
+	 */
 	private FXMLLoader editLoader;
+	/**
+	 * Stage for the edit ingredients popup
+	 */
 	private Stage editPopup;
+	/**
+	 * Stage for the add ingredients popup
+	 */
 	private Stage addPopup;
 
 	/**
@@ -53,6 +86,9 @@ public class InventoryController implements Refreshable {
 	 */
 	private ObservableList<Ingredient> observableList;
 
+	/**
+	 * Initialises the InventoryController
+	 */
 	@FXML
 	public void initialize() {
 		editLoader = new FXMLLoader(getClass().getResource("editIngredient.fxml"));
@@ -81,7 +117,6 @@ public class InventoryController implements Refreshable {
 	/**
 	 * Adds all ingredients to the table
 	 */
-
 	public void populateTable() {
 		IngredientManager ingredientManager = Managers.getIngredientManager();
 		Set<Ingredient> ingredientSet = ingredientManager.getIngredientSet();
