@@ -1,23 +1,23 @@
 Feature: Order feature
     Scenarios involving orders
 
-    Scenario: Ordering a single item (FR11)
+  @skip_scenario
+  Scenario: Ordering a single item (FR11)
         Given A "hamburger" costs $5.00, which is a "permanent recipe"
         When The customer "Sally" orders 1 "hamburger" and pays by "cash"
         Then The customer will be charged $5.00 total
 
-
-    Scenario: Ordering multiple items (FR11)
-        Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
-        When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
-        Then The customer will be charged $8.50 total
-
-    Scenario: Removing an item in the order (FR11)
+  Scenario: Ordering multiple items (FR11)
       Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
-      And The current order has 1 "hamburger" and 1 "chips" with a current total of $8.50
-      When 1 "chips" is removed from the order
-      Then Only 1 "hamburger" appears in the order and does not contain "chips"
-      And The customer will be charged $5.00 total
+      When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
+      Then The customer will be charged $8.50 total
+
+  Scenario: Removing an item in the order (FR11)
+    Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
+    And The current order has 1 "hamburger" and 1 "chips" with a current total of $8.50
+    When 1 "chips" is removed from the order
+    Then Only 1 "hamburger" appears in the order and does not contain "chips"
+    And The customer will be charged $5.00 total
 
 #    @skip_scenario
 #    Scenario: Editing ingredients in an item (FR11)
@@ -25,11 +25,12 @@ Feature: Order feature
 #        When The customer wants to remove "cheese" from the "hamburger"
 #        Then The "hamburger" has no "cheese"
 
-#    @skip_scenario
-#    Scenario: Ordering the same item more than once (FR11)
-#        Given A "hamburger" costs $5.00
-#        When The customer orders 8 "hamburger"
-#        And The customer will be charged $40.00 total
+  @skip_scenario
+  Scenario: Ordering the same item more than once (FR11)
+      Given A "hamburger" costs $5.00, which is a "permanent recipe"
+      When The customer "Sally" orders 8 "hamburger" and pays by "eftpos"
+      Then The customer will be charged $40.00 total
+
 #    @skip_scenario
 #    Scenario: Editing an order (FR11)
 #        Given The current order has 1 "orange slushy"

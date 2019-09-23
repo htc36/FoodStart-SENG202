@@ -164,7 +164,6 @@ public class OrderSteps {
     }
 
     @Then("The customer will be charged ${float} total")
-
     public void theCustomerWillBeCharged$Total(float totalCost) {
         assertTrue(totalCost == order.getTotalCost());
     }

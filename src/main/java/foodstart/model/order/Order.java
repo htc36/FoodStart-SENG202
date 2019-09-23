@@ -321,6 +321,15 @@ public class Order {
 		this.price = total;
 	}
 
+//	private void calculateCost() {
+//		Set<Recipe> recipes = this.items.keySet();
+//		float total = 0;
+//		for (Recipe recipe : recipes) {
+//			total += recipe.getPrice() * getItems().get(recipe);
+//		}
+//		this.price = total;
+//	}
+
 	/**
 	 * Sets the total price of the order, used if the cost of recipes changes
 	 *
