@@ -53,6 +53,7 @@ public class MenuItem {
 
 	/**
 	 * Sets the data base ID
+	 * @param id the id of the menu item
 	 */
 	public void setDatabaseId(int id) {
 		this.id = id;
@@ -69,6 +70,7 @@ public class MenuItem {
 
 	/**
 	 * Sets the name of the menu item
+	 * @param name the name of the menu item
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -85,6 +87,7 @@ public class MenuItem {
 
 	/**
 	 * Sets the description of the menu item
+	 * @param description the description of the menu item
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -114,6 +117,7 @@ public class MenuItem {
 
 	/**
 	 * Sets the variants of the menu item
+	 * @param variants the possible variants of the menu item
 	 */
 	public void setVariants(List<PermanentRecipe> variants) {
 		this.variants = variants;

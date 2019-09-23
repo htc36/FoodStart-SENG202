@@ -38,6 +38,11 @@ public class IngredientManager {
 		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
 		this.ingredients.put(id, ingredient);
 	}
+
+	/**
+	 * Removes an ingredient from the model
+	 * @param id the id of the ingredient to remove
+	 */
 	public void removeIngredient(int id) {
 		this.ingredients.remove(id);
 	}
@@ -152,6 +157,12 @@ public class IngredientManager {
 		return new HashSet<Ingredient>(this.ingredients.values());
 	}
 
+	/**
+	 * Returns a string of the dietary requirements that the given ingredient meets
+	 *
+	 * @param id the id of the ingredient to get the string for
+	 * @return a string of the dietary requirements met
+	 */
 	public String safeForString(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
 		if (ingredient == null) {
@@ -166,6 +177,11 @@ public class IngredientManager {
 		}
 		return String.join(", ", safeForList);
 	}
+
+	/**
+	 * Generates a new id for an ingredient to add to the model
+	 * @return a new id for an ingredient
+	 */
 	public int generateNewID() {
 		return ingredients.keySet().size() == 0 ? 0 : Collections.max(ingredients.keySet()) + 1;
 	}

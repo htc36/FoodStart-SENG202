@@ -32,11 +32,11 @@ public class XMLSalesLogParser extends XMLParser {
 		super(DataType.SALES_LOG);
 	}
 
-	@Override
 	/**
 	 * Parses a log of sales document and writes to the model
 	 * @param doc Document to parse
 	 */
+	@Override
 	public void parse(Document doc) {
 		NodeList salesNodes = doc.getChildNodes();
 		for (int j = 0; j < salesNodes.getLength(); j++) {
@@ -213,7 +213,8 @@ public class XMLSalesLogParser extends XMLParser {
 	 *
 	 * @param doc    Document to create elements with
 	 * @param recipe Recipe to export
-	 * @return The XML element to export with
+	 * @param quantity the quantity of the recipe
+     * @return The XML element to export with
 	 */
 
 	private Element exportPermanentRecipe(Document doc, PermanentRecipe recipe, int quantity) {
@@ -235,7 +236,8 @@ public class XMLSalesLogParser extends XMLParser {
 	 *
 	 * @param doc    Document to create elements with
 	 * @param recipe Recipe to export
-	 * @return The recipe node in the XML document to export with
+	 * @param quantity the quantity of the recipe
+     * @return The recipe node in the XML document to export with
 	 */
 
 	private Element exportOnTheFlyRecipe(Document doc, OnTheFlyRecipe recipe, int quantity) {

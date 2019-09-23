@@ -289,7 +289,8 @@ public class Order {
 	/**
 	 * Gets the recipe amount ordered
 	 *
-	 * @return variantCount the amount of the ordered recipe
+	 * @param recipe the recipe to get the number quantity of
+     * @return variantCount the amount of the ordered recipe
 	 */
 	public int getVariantCount(Recipe recipe) {
 		return this.items.get(recipe);

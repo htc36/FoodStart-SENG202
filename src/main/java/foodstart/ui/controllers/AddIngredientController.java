@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.sql.SQLOutput;
 import java.util.HashMap;
 
+/**
+ * Controls ui for add ingredients screen
+ */
 public class AddIngredientController {
 
 	@FXML
