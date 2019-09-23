@@ -76,9 +76,6 @@ public class OrderSteps {
             default:
                 throw new cucumber.api.PendingException();
         }
-        System.out.println(recipeManager.getRecipe(2).getDisplayName());
-        System.out.println(recipeManager.getRecipe(2).getPrice());
-
     }
 
     @When("The customer {string} orders {int} {string} and pays by {string}")
@@ -152,9 +149,6 @@ public class OrderSteps {
         order = new Order(orderId, orderItems, "Sam", LocalDateTime.now(), PaymentMethod.EFTPOS);
         order.addItem(recipeManager.getRecipeByDisplayName(recipe1Name), recipe1Quantity);
         order.addItem(recipeManager.getRecipeByDisplayName(recipe2Name), recipe2Quantity);
-        //System.out.print(currentTotal);
-        //System.out.print(order.getTotalCost());
-
         assertTrue(currentTotal == order.getTotalCost());
     }
 
@@ -172,9 +166,7 @@ public class OrderSteps {
     @Then("The customer will be charged ${float} total")
     public void theCustomerWillBeCharged$Total(float totalCost) {
         System.out.println(totalCost);
-
         System.out.println(order.getTotalCost());
         assertTrue(totalCost == order.getTotalCost());
-//        System.out.println(order.getTotalCost());
     }
 }
