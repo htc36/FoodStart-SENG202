@@ -40,6 +40,7 @@ public class RecipeManager {
 		 * @param basis the permanent recipe that the OTF recipe is based on
 		 * @param ingredients the ingredients in the OTF recipe
 		 * @param price the price of the OTF recipe
+		 * @return the id of the recipe created
 		 */
 		public Integer addRecipe(int basis, Map<Ingredient, Integer> ingredients, float price) {
 			PermanentRecipe basisRecipe = recipes.get(basis);

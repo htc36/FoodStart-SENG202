@@ -52,9 +52,7 @@ public class FXExceptionDisplay {
 		alert.show();
 
 		if (exiting) {
-			alert.setOnHidden((e) -> {
-				System.exit(1);
-			});
+			alert.setOnHidden((e) -> System.exit(1));
 		}
 	}
 }

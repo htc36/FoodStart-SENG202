@@ -70,9 +70,7 @@ public class RecipeBuilder {
 		stage.setScene(scene);
 		stage.show();
 
-		stage.setOnCloseRequest((event) -> {
-			cancel();
-		});
+		stage.setOnCloseRequest((event) -> cancel());
 
 		this.controller.populateFields(baseItem);
 	}
@@ -108,9 +106,7 @@ public class RecipeBuilder {
 		stage.setScene(scene);
 		stage.show();
 
-		stage.setOnCloseRequest((event) -> {
-			cancel();
-		});
+		stage.setOnCloseRequest((event) -> cancel());
 
 		this.controller.populateFields(baseRecipe, quantity);
 	}

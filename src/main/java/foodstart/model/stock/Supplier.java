@@ -240,8 +240,7 @@ public class Supplier {
         if (url == null) {
             if (other.url != null)
                 return false;
-        } else if (!url.equals(other.url))
-            return false;
+        } else return url.equals(other.url);
         return true;
     }
 	

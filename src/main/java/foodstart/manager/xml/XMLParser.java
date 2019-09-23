@@ -13,8 +13,15 @@ import org.w3c.dom.Document;
  */
 public abstract class XMLParser {
 
+	/**
+	 * The data type that is parsed
+	 */
 	private final DataType dataType;
 
+	/**
+	 * Constructs an instance of an XML parser for a given data type
+	 * @param dataType the data type of the parser
+	 */
 	public XMLParser(DataType dataType) {
 		this.dataType = dataType;
 	}
@@ -38,7 +45,7 @@ public abstract class XMLParser {
 	/**
 	 * Export a given XML document
 	 * @param doc Document to populate with data
-	 * @param transformer 
+	 * @param transformer transformer for the XML tree
 	 */
 	public abstract void export(Document doc, Transformer transformer);
 

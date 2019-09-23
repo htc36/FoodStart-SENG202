@@ -6,6 +6,9 @@ import org.xml.sax.SAXParseException;
 
 import foodstart.manager.exceptions.ImportFailureException;
 
+/**
+ * SAX event exception
+ */
 public class SAXErrorHandler implements ErrorHandler {
 	
 	public void warning(SAXParseException e) throws SAXException {

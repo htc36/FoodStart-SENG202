@@ -4,7 +4,14 @@ package foodstart.model;
  * The possible types of payment methods
  */
 public enum PaymentMethod {
-	CASH("Cash"), EFTPOS("EFTPOS");
+	/**
+	 * Customer pays with cash
+	 */
+	CASH("Cash"),
+	/**
+	 * Customer pays with EFTPOS
+	 */
+	EFTPOS("EFTPOS");
 
 	/**
 	 * The nice human readable name for this

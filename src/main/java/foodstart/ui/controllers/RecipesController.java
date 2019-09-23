@@ -13,16 +13,33 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controls the UI of the recipe management screen
+ */
 public class RecipesController implements Refreshable {
-
+	/**
+	 * Table of permanent recipes
+	 */
 	@FXML
 	private TableView<PermanentRecipe> recipesTableView;
+	/**
+	 * Table column for recipe id
+	 */
 	@FXML
 	private TableColumn<PermanentRecipe, String> recIDCol;
+	/**
+	 * Table column for recipe name
+	 */
 	@FXML
 	private TableColumn<PermanentRecipe, String> nameCol;
+	/**
+	 * Table column for recipe price
+	 */
 	@FXML
 	private TableColumn<PermanentRecipe, String> priceCol;
+	/**
+	 * Table column for recipe ingredients
+	 */
 	@FXML
 	private TableColumn<PermanentRecipe, String> ingredientsCol;
 	
@@ -31,11 +48,17 @@ public class RecipesController implements Refreshable {
 	 */
 	ObservableList<PermanentRecipe> observableRecipes;
 
+	/**
+	 * Initialises the RecipesController
+	 */
 	@FXML
 	public void initialize() {
 		populateTable();
 	}
 
+	/**
+	 * Populates the recipe table with data
+	 */
 	public void populateTable() {
 		RecipeManager manager = Managers.getRecipeManager();
 		Set<PermanentRecipe> recipesSet = manager.getRecipeSet();
@@ -49,6 +72,9 @@ public class RecipesController implements Refreshable {
 
 	}
 
+	/**
+	 * Refreshes the recipe table
+	 */
 	@Override
 	public void refreshTable() {
 		observableRecipes.setAll(Managers.getRecipeManager().getRecipeSet());
