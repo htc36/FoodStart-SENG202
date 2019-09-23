@@ -11,7 +11,6 @@ import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
-import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
@@ -114,7 +113,7 @@ public class InventoryController implements Refreshable {
 		if (addPopup.getOwner() == null) {
 			addPopup.initOwner(this.inventoryView.getScene().getWindow());
 		}
-        ((addIngredientController) addLoader.getController()).setNewID();
+        ((AddIngredientController) addLoader.getController()).setNewID();
 		addPopup.showAndWait();
 		refreshTable();
 	}

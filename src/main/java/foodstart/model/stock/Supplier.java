@@ -189,5 +189,62 @@ public class Supplier {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+        result = prime * result + ((phoneType == null) ? 0 : phoneType.hashCode());
+        result = prime * result + ((supplierName == null) ? 0 : supplierName.hashCode());
+        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Supplier other = (Supplier) obj;
+        if (address == null) {
+            if (other.address != null)
+                return false;
+        } else if (!address.equals(other.address))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        if (id != other.id)
+            return false;
+        if (phoneNumber == null) {
+            if (other.phoneNumber != null)
+                return false;
+        } else if (!phoneNumber.equals(other.phoneNumber))
+            return false;
+        if (phoneType != other.phoneType)
+            return false;
+        if (supplierName == null) {
+            if (other.supplierName != null)
+                return false;
+        } else if (!supplierName.equals(other.supplierName))
+            return false;
+        if (url == null) {
+            if (other.url != null)
+                return false;
+        } else if (!url.equals(other.url))
+            return false;
+        return true;
+    }
+	
+	
 }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppliers SYSTEM "../../dtd/suppliers.dtd" >
+<suppliers>
+	<supplier>
+		<sid>bad integer value</sid>
+		<name>bad integers name</name>
+		<address>bad integers address</address>
+		<phone type="mobile">bad integer value</phone>
+	</supplier>
+</suppliers>

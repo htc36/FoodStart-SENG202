@@ -1,10 +1,13 @@
 package foodstart.manager.xml;
 
 import foodstart.manager.Managers;
+import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.stock.SupplierManager;
 import foodstart.model.DataType;
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
+
+import java.util.HashMap;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -34,14 +37,20 @@ public class XMLSupplierParser extends XMLParser {
 	public void parse(Document doc) {
 
 		NodeList supplierNodes = doc.getDocumentElement().getChildNodes();
-
-		for (int i = 0; i < supplierNodes.getLength(); i++) {
-			Node node = supplierNodes.item(i);
-
-			if (node instanceof Element) {
-				Element element = (Element) node;
-				parseOneSupplier(element);
-			}
+		HashMap<Integer, Supplier> parsedSuppliers = new HashMap<Integer, Supplier>();
+		try {
+    		for (int i = 0; i < supplierNodes.getLength(); i++) {
+    			Node node = supplierNodes.item(i);
+    
+    			if (node instanceof Element) {
+    				Element element = (Element) node;
+    				Supplier parsedSupplier = parseOneSupplier(element);
+    				parsedSuppliers.put(parsedSupplier.getId(), parsedSupplier);
+    			}
+    		}
+    		Managers.getSupplierManager().addSuppliers(parsedSuppliers);
+		} catch (NumberFormatException e) {
+		    //throw new ImportFailureException("Invalid entry in ID field in XML file.");
 		}
 	}
 
@@ -49,7 +58,7 @@ public class XMLSupplierParser extends XMLParser {
 	 * Parse a single supplier element
 	 * @param element The supplier XML element to parse
 	 */
-	private void parseOneSupplier(Element element) {
+	private Supplier parseOneSupplier(Element element) {
 		int sid = Integer.parseInt(element.getElementsByTagName("sid").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String address = element.getElementsByTagName("address").item(0).getTextContent();
@@ -64,7 +73,7 @@ public class XMLSupplierParser extends XMLParser {
 		if (element.getElementsByTagName("url").getLength() == 1) {
 			url = element.getElementsByTagName("url").item(0).getTextContent();
 		}
-		Managers.getSupplierManager().addSupplier(sid, name, phone, phoneType, email, url, address);
+		return new Supplier(sid, name, phone, phoneType, email, url, address);
 	}
 	
 	

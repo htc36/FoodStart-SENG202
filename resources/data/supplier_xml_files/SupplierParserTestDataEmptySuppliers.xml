@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppliers SYSTEM "../../dtd/suppliers.dtd" >
+<suppliers>
+    <supplier>
+        <sid>0</sid>
+        <name></name>
+        <address></address>
+        <phone type="home"></phone>
+    </supplier>
+    <supplier>
+        <sid>1</sid>
+        <name></name>
+        <address></address>
+        <phone type="work"></phone>
+    </supplier>
+    <supplier>
+        <sid>2</sid>
+        <name></name>
+        <address></address>
+        <phone type="mobile"></phone>
+    </supplier>
+    <supplier>
+        <sid>3</sid>
+        <name></name>
+        <address></address>
+        <phone type="home"></phone>
+        <email></email>
+        <url></url>
+    </supplier>
+    <supplier>
+        <sid>4</sid>
+        <name></name>
+        <address></address>
+        <phone type="home"></phone>
+        <email></email>
+    </supplier>
+    <supplier>
+        <sid>5</sid>
+        <name></name>
+        <address></address>
+        <phone type="home"></phone>
+        <url></url>
+    </supplier>
+</suppliers>

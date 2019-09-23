@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.sql.SQLOutput;
 import java.util.HashMap;
 
-public class addIngredientController {
+public class AddIngredientController {
 
 	@FXML
 	private TextField idInput;
