@@ -17,44 +17,92 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
+/**
+ * Controls ui for the edit ingredient screen
+ */
 public class EditIngredientController {
-
-	@FXML
-	private TextField idInput;
+	/**
+	 * Input field for ingredient name
+	 */
 	@FXML
 	private TextField nameInput;
+	/**
+	 * Input field for ingredient truck stock
+	 */
 	@FXML
 	private TextField truckStockInput;
+	/**
+	 * Input field for ingredient kitchen stock
+	 */
 	@FXML
 	private TextField kitchenStockInput;
+	/**
+	 * Checkbox for if ingredient is vegan
+	 */
 	@FXML
 	private CheckBox vegan;
+	/**
+	 * Checkbox for if ingredient is vegetarian
+	 */
 	@FXML
 	private CheckBox vegetarian;
+	/**
+	 * Checkbox for if ingredient is gluten free
+	 */
 	@FXML
 	private CheckBox glutenFree;
+	/**
+	 * Checkbox for if ingredient is nut free
+	 */
 	@FXML
 	private CheckBox nutFree;
+	/**
+	 * Checkbox for if ingredient is dairy free
+	 */
 	@FXML
 	private CheckBox dairyFree;
+	/**
+	 * Combo box for ingredient unit
+	 */
 	@FXML
 	private ComboBox<Unit> unitComboBox;
+	/**
+	 * Label for if there is an error with the name input
+	 */
 	@FXML
 	private Label nameError;
-
+	/**
+	 * Label for if there is an error with the kitchen stock input
+	 */
 	@FXML 
 	private Label kitchenStockError;
+	/**
+	 * Label for if there is an error with the truck stock input
+	 */
 	@FXML 
 	private Label truckStockError;
+	/**
+	 * Label for if there is an error with the unit input
+	 */
 	@FXML 
 	private Label unitBoxError;
+	/**
+	 * Label for ingredient id display
+	 */
 	@FXML
 	private Label idDisplay;
-
+	/**
+	 * ID of the ingredient
+	 */
 	private int id;
+	/**
+	 * Model of the ingredient
+	 */
 	private Ingredient ingredient;
 
-
+	/**
+	 * Initialises the EditIngredientController
+	 */
 	@FXML
 	public void initialize() {
 		this.unitComboBox.setItems(FXCollections.observableArrayList(Unit.values()));

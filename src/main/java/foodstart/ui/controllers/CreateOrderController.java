@@ -30,28 +30,44 @@ import javafx.scene.text.TextAlignment;
  * @author Alex Hobson on 04/09/2019
  */
 public class CreateOrderController {
-
+	/**
+	 * Flow pane for menu items
+	 */
 	@FXML
 	private FlowPane flowPane;
-
+	/**
+	 * Table view for current order items
+	 */
 	@FXML
 	private TableView<Recipe> orderTable;
-
+	/**
+	 * Table column for current order item quantity
+	 */
 	@FXML
 	private TableColumn<Recipe, Integer> columnQty;
-
+	/**
+	 * Table column for current order items
+	 */
 	@FXML
 	private TableColumn<Recipe, String> columnItem;
-
+	/**
+	 * Table column for current order items price
+	 */
 	@FXML
 	private TableColumn<Recipe, String> columnPrice;
-
+	/**
+	 * Input field for customer name
+	 */
 	@FXML
 	private TextField orderCustomerName;
-
+	/**
+	 * Combo box for order payment method
+	 */
 	@FXML
 	private ComboBox<String> orderPaymentMethod;
-
+	/**
+	 * Text area  for the order price
+	 */
 	@FXML
 	private Text orderPrice;
 
