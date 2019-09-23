@@ -76,7 +76,7 @@ public class EditIngredientController {
 	}
 
     /**
-     * Validates if text feild is not empty and if it is not an integer
+     * Validates if text field is not empty and if it is not an integer
      * @param field specific entry to test
      * @param label Displays message
      * @return true if field passes all tests, false if not
@@ -97,7 +97,7 @@ public class EditIngredientController {
 		}
 
 	/**
-	 * Validates weather an integer feild is valid
+	 * Validates weather an integer field is valid
  	 * @param field specific entry to test
 	 * @param label message to be displayed
 	 * @return true if field passes all the tests, false if not
@@ -121,7 +121,7 @@ public class EditIngredientController {
 		return isValid;
 	}
 	/**
-	 * Validates weather an combobox feild is valid
+	 * Validates weather an combobox field is valid
 	 * @param field specific entry to test
 	 * @param label message to be displayed
 	 * @return true if field passes all the tests, false if not
