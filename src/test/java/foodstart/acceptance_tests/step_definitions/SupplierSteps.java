@@ -10,8 +10,7 @@ import io.cucumber.java.en.When;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class SupplierSteps {
     private SupplierManager supplierManager = new SupplierManager();
@@ -137,15 +136,22 @@ public class SupplierSteps {
 
 
     @When("Supplier with code {int} is manually removed from the supplier list")
-    public void supplierWithCodeIsManuallyRemovedFromTheSupplierList(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    public void supplierWithCodeIsManuallyRemovedFromTheSupplierList(Integer supplierCode) {
+        supplierManager.removeSupplier(supplierCode);
     }
 
     @Then("Supplier with code {int} will not exist in the supplier list")
-    public void supplierWithCodeWillNotExistInTheSupplierList(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    public void supplierWithCodeWillNotExistInTheSupplierList(Integer supplierCode) {
+        assertNull(supplierManager.getSupplier(supplierCode));
     }
 
+    @When("The name of the supplier with code {int} is changed to {string}")
+    public void theNameOfTheSupplierWithCodeIsChangedTo(Integer supplierCode, String newSupplierName) {
+        name = newSupplierName;
+        Supplier supplier = supplierManager.getSupplier(supplierCode);
+        Supplier editedSupplier = new Supplier(supplierCode, newSupplierName, supplier.getPhoneNumber(), supplier.getPhoneType(),
+                supplier.getEmail(), supplier.getUrl(), supplier.getAddress());
+        supplierManager.removeSupplier(supplierCode);
+        supplierManager.addSupplier(editedSupplier);
+    }
 }

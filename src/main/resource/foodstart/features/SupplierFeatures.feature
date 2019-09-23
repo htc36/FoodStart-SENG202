@@ -33,12 +33,19 @@ Feature: Supplier feature
         When Supplier with code 12 is manually added to the supplier list
         Then An ExistingSupplierException is thrown
 
-    @skip_scenario
     Scenario: Removing a supplier from the suppliers list (UC13)
         Given There are 2 suppliers in the suppliers list
-        And Supplier with code 1807 exists in the supplier list
-        When Supplier with code 1807 is manually removed from the supplier list
-        Then Supplier with code 1807 will not exist in the supplier list
+        And Supplier with code 123 exists in the supplier list
+        When Supplier with code 123 is manually removed from the supplier list
+        Then Supplier with code 123 will not exist in the supplier list
+
+    Scenario: Editing a supplier's name from the suppliers list (UC13)
+        Given There are 2 suppliers in the suppliers list
+        And Supplier with code 1 exists in the supplier list
+        And Its code is 1
+        And Its name is "Under Value"
+        When The name of the supplier with code 1 is changed to "New Name"
+        Then Its name will be "New Name"
 
     @skip_scenario
     Scenario: View suppliers (UC8)
