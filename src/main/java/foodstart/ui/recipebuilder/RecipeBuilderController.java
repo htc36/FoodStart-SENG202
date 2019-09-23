@@ -24,40 +24,59 @@ import java.util.Map;
  * @author Alex Hobson on 07/09/2019
  */
 public class RecipeBuilderController {
-
+	/**
+	 * Text area for the menu item name
+	 */
 	@FXML
 	private Text itemNameText;
-
+	/**
+	 * Text area for the menu item description
+	 */
 	@FXML
 	private Text itemDescriptionText;
-
+	/**
+	 * Combo box for menu item variants
+	 */
 	@FXML
 	private ComboBox<String> variantsDropdown;
-
+	/**
+	 * Spinner for menu item quantity
+	 */
 	@FXML
 	private Spinner<Integer> masterQuantity;
-
+	/**
+	 * Table view of ingredients in recipe
+	 */
 	@FXML
 	private TableView<Ingredient> ingredientTable;
-
+	/**
+	 * Text field for price per unit of recipe
+	 */
 	@FXML
 	private TextField pricePerUnit;
-
+	/**
+	 * Text area for total price of recipe
+	 */
 	@FXML
 	private Text totalPriceText;
-
+	/**
+	 * Button to add recipe to order
+	 */
 	@FXML
 	private Button btnAddToOrder;
-
+	/**
+	 * Table column for ingredient name
+	 */
 	@FXML
 	private TableColumn<Ingredient, String> tableIngredientColumn;
-
+	/**
+	 * Table column for ingredient quantity
+	 */
 	@FXML
 	private TableColumn<Ingredient, Integer> tableQuantityColumn;
-
-	@FXML
-	private TableColumn<Ingredient, Integer> tableActionColumn;
-
+	/**
+	 * Combo box for all ingredients
+	 */
 	@FXML
 	private ComboBox<String> allIngredientsDropdown;
 

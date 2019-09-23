@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 
 /**
@@ -20,41 +19,84 @@ import java.util.HashMap;
  */
 public class AddIngredientController {
 
-	@FXML
-	private TextField idInput;
+	/**
+	 * Input field for ingredient name
+	 */
 	@FXML
 	private TextField nameInput;
+	/**
+	 * Input field for truck stock
+	 */
 	@FXML
 	private TextField truckStockInput;
+	/**
+	 * Input field for kitchen stock
+	 */
 	@FXML
 	private TextField kitchenStockInput;
+	/**
+	 * Checkbox for vegan dietary requirement
+	 */
 	@FXML
 	private CheckBox vegan;
+	/**
+	 * Checkbox for vegetarian dietary requirement
+	 */
 	@FXML
 	private CheckBox vegetarian;
+	/**
+	 * Checkbox for gluten dietary requirement
+	 */
 	@FXML
 	private CheckBox glutenFree;
+	/**
+	 * Checkbox for nut dietary requirement
+	 */
 	@FXML
 	private CheckBox nutFree;
+	/**
+	 * Checkbox for dairy dietary requirement
+	 */
 	@FXML
 	private CheckBox dairyFree;
+	/**
+	 * Combo box for unit
+	 */
 	@FXML
 	private ComboBox<Unit> unitComboBox;
+	/**
+	 * Label for if there is an error with the name input
+	 */
 	@FXML
 	private Label nameError;
-
+	/**
+	 * Label for if there is an error with the kitchen stock input
+	 */
 	@FXML 
 	private Label kitchenStockError;
+	/**
+	 * Label for if there is an error with the truck stock input
+	 */
 	@FXML 
 	private Label truckStockError;
+	/**
+	 * Label for if there is an error with the unit input
+	 */
 	@FXML 
 	private Label unitBoxError;
+	/**
+	 * Label for displaying the id
+	 */
 	@FXML
 	private Label idDisplay;
-
+	/**
+	 * The id of the ingredient
+	 */
 	private int id;
 
-
+	/**
+	 * Initialises the AddIngredientController
+	 */
 	@FXML
 	public void initialize() {
 		setNewID();

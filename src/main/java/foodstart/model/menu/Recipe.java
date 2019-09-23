@@ -52,6 +52,7 @@ public abstract class Recipe {
 	/**
 	 * Returns true if the menu item is available
 	 * Checks if all the menu items ingredients have a kitchen stock greater than 0
+	 * @return true if all ingredients have a stock greater than 0; false otherwise
 	 */
 	public boolean isAvailable() {
 		Set<Ingredient> ingredients = this.ingredients.keySet();
@@ -119,6 +120,10 @@ public abstract class Recipe {
 		return this.ingredients.remove(ingredient);
 	}
 
+	/**
+	 * Returns the name of the recipe
+	 * @return the name of the recipe
+	 */
 	public abstract String getDisplayName();
 
 	/**

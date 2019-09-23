@@ -2,20 +2,14 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
-import foodstart.manager.order.OrderManager;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,42 +24,100 @@ import javafx.util.converter.IntegerStringConverter;
 import java.io.IOException;
 import java.util.*;
 
-import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
-
+/**
+ * Controls the UI of the edit order items screen
+ */
 public class EditOrderItemsController implements Refreshable {
+	/**
+	 * Button for confirming input
+	 */
 	@FXML
 	Button confirmButton;
+	/**
+	 * Button for cancelling input
+	 */
 	@FXML
 	Button cancelButton;
+	/**
+	 * Button for adding a recipe
+	 */
 	@FXML
 	Button addRecipeButton;
+	/**
+	 * Button for removing a recipe
+	 */
 	@FXML
 	Button removeRecipeButton;
+	/**
+	 * Button for modifying a recipe
+	 */
 	@FXML
 	Button modifyRecipeButton;
+	/**
+	 * Button for viewing recipe details
+	 */
 	@FXML
 	Button viewRecipeButton;
+	/**
+	 * Table view of the recipes in the order
+	 */
 	@FXML
 	TableView<Recipe> recipesTableView;
+	/**
+	 * Table column for the recipe name
+	 */
 	@FXML
 	TableColumn<Recipe, String> nameCol;
+	/**
+	 * Table column for the recipe ingredients
+	 */
 	@FXML
 	TableColumn<Recipe, String> ingredientCol;
+	/**
+	 * Table column for the recipe quantity
+	 */
 	@FXML
 	TableColumn<Recipe, Integer> quantityCol;
-
+	/**
+	 * Observable list of the recipes in the order for the table view
+	 */
 	private ObservableList<Recipe> observableRecipes;
+	/**
+	 * The order being edited
+	 */
 	private Order order;
+	/**
+	 * The map of the new recipes for the order to their quantity
+	 */
 	private Map<Recipe, Integer> items;
-
+	/**
+	 * FXML loader for the edit recipe popup
+	 */
 	private FXMLLoader editLoader;
+	/**
+	 * The FXML for the edit recipe popup screen
+	 */
 	private Parent editFXML;
+	/**
+	 * The stage of the edit recipe popup screen
+	 */
 	private Stage editPopup;
-
+	/**
+	 * FXML loader for the add recipe popup
+	 */
 	private FXMLLoader addLoader;
+	/**
+	 * The FXML for the add recipe popup screen
+	 */
 	private Parent addFXML;
+	/**
+	 * The stage of the add recipe popup screen
+	 */
 	private Stage addPopup;
 
+	/**
+	 * Initialises the EditOrderItemsController
+	 */
 	@FXML
 	public void initialize() {
 		try {
@@ -88,6 +140,9 @@ public class EditOrderItemsController implements Refreshable {
 		populateTable();
 	}
 
+	/**
+	 * Populates the table view with data
+	 */
 	public void populateTable() {
 		recipesTableView.setEditable(true);
 		RecipeManager recipeManager = Managers.getRecipeManager();
@@ -101,33 +156,52 @@ public class EditOrderItemsController implements Refreshable {
 		quantityCol.setOnEditCommit(e -> items.put(e.getRowValue(), e.getNewValue()));
 	}
 
+	/**
+	 * Sets the order being edited
+	 * @param order the order being edited
+	 */
 	public void setOrder(Order order) {
 		this.order = order;
 		items = new HashMap<Recipe, Integer>(order.getItems());
 		refreshTable();
 	}
 
+	/**
+	 * Refreshes the table view
+	 */
 	@Override
 	public void refreshTable() {
 		this.observableRecipes.setAll(items.keySet());
 	}
 
+	/**
+	 * Confirms the order edit and closes
+	 */
 	@FXML
 	private void confirm() {
 		closeSelf();
 	}
 
+	/**
+	 * Cancels the order edit and closes
+	 */
 	@FXML
 	private void cancel() {
 		items = null;
 		closeSelf();
 	}
 
+	/**
+	 * Calls the add recipe popup screen
+	 */
 	@FXML
 	private void addRecipe() {
 
 	}
 
+	/**
+	 * Removes a recipe from the order
+	 */
 	@FXML
 	private void removeRecipe() {
 		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
@@ -145,6 +219,9 @@ public class EditOrderItemsController implements Refreshable {
 		refreshTable();
 	}
 
+	/**
+	 * Calls the edit recipe popup
+	 */
 	@FXML
 	private void modifyRecipe() {
 		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
@@ -170,32 +247,52 @@ public class EditOrderItemsController implements Refreshable {
 		}
 	}
 
+	/**
+	 * Compares two maps of ingredients to check is their key sets and values are the same
+	 * @param m1 the first map to check
+	 * @param m2 the second map to check
+	 * @return true if the maps are the same;false otherwise
+	 */
 	private boolean checkMaps(Map<Ingredient, Integer> m1, Map<Ingredient, Integer> m2) {
 		if (!m1.keySet().equals(m2.keySet())) {
 			return false;
 		}
 		for (Ingredient ingredient : m1.keySet()) {
-			if (m1.get(ingredient) != m2.get(ingredient)) {
+			if (!m1.get(ingredient).equals(m2.get(ingredient))) {
 				return false;
 			}
 		}
 		return true;
 	}
 
+	/**
+	 * Calls the view recipe details popup
+	 */
 	@FXML
 	private void viewRecipe() {
 
 	}
 
+	/**
+	 * Closes the stage
+	 */
 	private void closeSelf() {
 		Stage stage = (Stage) this.recipesTableView.getScene().getWindow();
 		stage.close();
 	}
 
+	/**
+	 * Returns the map of recipes to recipe quantity for the modified order
+	 * @return the map of recipes to recipe quantity for the modified order
+	 */
 	public Map<Recipe, Integer> getNewRecipes() {
 		return items;
 	}
 
+	/**
+	 * Pushes a map of items in the order back to this controller
+	 * @param pushedRecipes the map of recipes to recipe quantities
+	 */
 	public void pushRecipes(Map<Recipe, Integer> pushedRecipes) {
 		if (pushedRecipes != null) {
 			this.items = pushedRecipes;

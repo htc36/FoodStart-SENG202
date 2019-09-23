@@ -6,7 +6,18 @@ package foodstart.model;
  * @author Alex Hobson on 22/08/2019
  */
 public enum Unit {
-	MILLILITRES("ml"), GRAMS("g"), UNITS("count");
+	/**
+	 * Millilitres
+	 */
+	MILLILITRES("ml"),
+	/**
+	 * Grams
+	 */
+	GRAMS("g"),
+	/**
+	 * Generic unit
+	 */
+	UNITS("count");
 
 	/**
 	 * Locally stored dbName

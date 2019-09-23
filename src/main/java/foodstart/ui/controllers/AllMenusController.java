@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -19,13 +18,26 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controls ui for all menus screen
+ */
 public class AllMenusController {
+	/**
+	 * Flow pane for menu display
+	 */
 	@FXML
 	private FlowPane flowPane;
-
-
+	/**
+	 * Loader for popup fxml
+	 */
     private FXMLLoader loader;
-    private Stage popupStage;
+	/**
+	 * Stage for popup
+	 */
+	private Stage popupStage;
+	/**
+	 * Scene for popup
+	 */
     private Scene scene;
 
 
@@ -35,6 +47,9 @@ public class AllMenusController {
 	private Background boxBackground;
 
 
+	/**
+	 * Initialises the AllMenusController
+	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 		populateAllMenus(flowPane);

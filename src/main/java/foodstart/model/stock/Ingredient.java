@@ -176,8 +176,7 @@ public class Ingredient {
 	@Override
 	public Ingredient clone() {
 	    Map<DietaryRequirement, Boolean> mapCopy = new HashMap<DietaryRequirement, Boolean>(safeFor);
-	    Ingredient copy = new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
-	    return copy;
+		return new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
 	}
 	
 

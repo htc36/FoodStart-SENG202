@@ -23,10 +23,12 @@ import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Parses an XML sales log
+ */
 public class XMLSalesLogParser extends XMLParser {
 	/**
-	 * Constructor for recipe parser
+	 * Constructor for sales log parser
 	 */
 	public XMLSalesLogParser() {
 		super(DataType.SALES_LOG);
@@ -91,8 +93,7 @@ public class XMLSalesLogParser extends XMLParser {
 				}
 			}
 		}
-		int id = Managers.getRecipeManager().otfManager.addRecipe(basis, ingredients, price);
-		return id;
+		return Managers.getRecipeManager().otfManager.addRecipe(basis, ingredients, price);
 	}
 
 	/**

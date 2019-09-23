@@ -5,11 +5,9 @@ import foodstart.model.menu.Recipe;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 
 /**
@@ -65,6 +63,8 @@ public class Order {
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public Order(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
+
+
 		this.id = id;
 		this.items = items;
 		this.customerName = customerName;
@@ -219,7 +219,13 @@ public class Order {
 	 * @return the previous amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer addItem(Recipe recipe, int amount) {
-		return this.items.put(recipe, amount);
+		if (this.items.put(recipe, amount) == null)  {
+			return null;
+		} else {
+			Integer previousAmount = this.items.put(recipe, amount);
+			calculateCost();
+			return previousAmount;
+		}
 	}
 
 	/**
@@ -229,7 +235,14 @@ public class Order {
 	 * @return the amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer removeItem(Recipe recipe) {
-		return this.items.remove(recipe);
+
+		if (this.items.remove(recipe) == null)  {
+			return null;
+		} else {
+			Integer recipeAmount = this.items.remove(recipe);
+			calculateCost();
+			return recipeAmount;
+		}
 	}
 
 	/**
@@ -243,19 +256,6 @@ public class Order {
 	}
 
 	/**
-	 * MIGHT NOT NEED THIS BECAUSE OF THE addItem METHOD
-	 * Increases the amount of the recipe in the order
-	 *
-	 * @param recipe the recipe that requires its amount to be increased
-	 * @param amount the amount to add onto the current amount in the order
-	 */
-	public void increaseVariantAmount(Recipe recipe, int amount) {
-		if (this.items.containsKey(recipe)) {
-			setVariantAmount(recipe, (this.items.get(recipe) + amount));
-		} // else, should throw an exception about the recipe not already existing in the order
-	}
-
-	/**
 	 * Decreases the amount of the recipe in the order
 	 *
 	 * @param recipe the recipe that requires its amount to be decreased
@@ -265,10 +265,12 @@ public class Order {
 		if (this.items.containsKey(recipe)) {
 			if ((this.items.get(recipe) - amount) > 0) {
 				setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
+				calculateCost();
 			} else if ((this.items.get(recipe) - amount) == 0) {
 				removeItem(recipe); // removes the item completely from the order
+				calculateCost();
 			} else { // else, should throw an exception exceeding the lowest bound (negatives)
-				//throw new Exception
+//				throw new Exception
 			}
 		} // else, should throw an exception about the recipe not already existing in the order
 	}
@@ -300,13 +302,28 @@ public class Order {
 	 * Calculates the total price of the order based on the current price of the recipes included
 	 */
 	private void calculateCost() {
+		/*
 		Set<Recipe> recipes = this.items.keySet();
 		float total = 0;
 		for (Recipe recipe : recipes) {
 			total += recipe.getPrice();
 		}
+		this.price = total;*/
+		float total = 0;
+		for (Map.Entry<Recipe, Integer> entry : items.entrySet()) {
+			total += entry.getKey().getPrice() * entry.getValue();
+		}
 		this.price = total;
 	}
+
+//	private void calculateCost() {
+//		Set<Recipe> recipes = this.items.keySet();
+//		float total = 0;
+//		for (Recipe recipe : recipes) {
+//			total += recipe.getPrice() * getItems().get(recipe);
+//		}
+//		this.price = total;
+//	}
 
 	/**
 	 * Sets the total price of the order, used if the cost of recipes changes

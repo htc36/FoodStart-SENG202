@@ -30,28 +30,44 @@ import javafx.scene.text.TextAlignment;
  * @author Alex Hobson on 04/09/2019
  */
 public class CreateOrderController {
-
+	/**
+	 * Flow pane for menu items
+	 */
 	@FXML
 	private FlowPane flowPane;
-
+	/**
+	 * Table view for current order items
+	 */
 	@FXML
 	private TableView<Recipe> orderTable;
-
+	/**
+	 * Table column for current order item quantity
+	 */
 	@FXML
 	private TableColumn<Recipe, Integer> columnQty;
-
+	/**
+	 * Table column for current order items
+	 */
 	@FXML
 	private TableColumn<Recipe, String> columnItem;
-
+	/**
+	 * Table column for current order items price
+	 */
 	@FXML
 	private TableColumn<Recipe, String> columnPrice;
-
+	/**
+	 * Input field for customer name
+	 */
 	@FXML
 	private TextField orderCustomerName;
-
+	/**
+	 * Combo box for order payment method
+	 */
 	@FXML
 	private ComboBox<String> orderPaymentMethod;
-
+	/**
+	 * Text area  for the order price
+	 */
 	@FXML
 	private Text orderPrice;
 
@@ -121,26 +137,24 @@ public class CreateOrderController {
 		box.setBackground(boxBackground);
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
-		box.setOnMouseClicked((event) -> {
-			new RecipeBuilder(item, new RecipeBuilderRunnable() {
-				@Override
-				public boolean onRecipeComplete(Recipe recipe, int quantity) {
-					if (quantity == 0) return false;
-					if (orderBuilder.canAddItem(recipe, quantity)) {
-						orderBuilder.addItem(recipe, quantity);
-						updateOrderItems();
-						return true;
-					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Insufficient Stock");
-						alert.setHeaderText("Cannot add this item to the order as there is insufficient stock");
-						alert.setContentText("Modify the order and try again");
-						alert.show();
-						return false;
-					}
+		box.setOnMouseClicked((event) -> new RecipeBuilder(item, new RecipeBuilderRunnable() {
+			@Override
+			public boolean onRecipeComplete(Recipe recipe, int quantity) {
+				if (quantity == 0) return false;
+				if (orderBuilder.canAddItem(recipe, quantity)) {
+					orderBuilder.addItem(recipe, quantity);
+					updateOrderItems();
+					return true;
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Insufficient Stock");
+					alert.setHeaderText("Cannot add this item to the order as there is insufficient stock");
+					alert.setContentText("Modify the order and try again");
+					alert.show();
+					return false;
 				}
-			}, orderBuilder);
-		});
+			}
+		}, orderBuilder));
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT)));
