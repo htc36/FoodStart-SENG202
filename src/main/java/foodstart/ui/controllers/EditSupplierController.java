@@ -83,7 +83,7 @@ public class EditSupplierController {
 
     /**
      * Called to set the supplier so the correct information can be displayed
-     * @param supplier
+     * @param supplier the supplier to edit
      */
     public void setSupplier(Supplier supplier) {
         codeText.setText(Integer.toString(supplier.getId()));

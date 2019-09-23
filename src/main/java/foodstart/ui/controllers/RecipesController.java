@@ -13,6 +13,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Controls the UI of the recipe management screen
+ */
 public class RecipesController implements Refreshable {
 
 	@FXML

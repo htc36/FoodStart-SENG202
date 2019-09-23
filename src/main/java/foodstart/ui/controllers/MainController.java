@@ -126,6 +126,9 @@ public class MainController {
 		changeView(manageRecipes);
 	}
 
+	/**
+	 * Shows the manage inventory screen
+	 */
 	public void showStockInventory() {
 		changeView(stockInventory);
 	}
