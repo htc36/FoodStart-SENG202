@@ -44,21 +44,21 @@ public class OnTheFlyRecipe extends Recipe {
 		this.basedOn = basedOn;
 	}
 
-	@Override
 	/**
 	 * Returns the display name of the recipe this recipe is based on with the ending " (modified)"
 	 *
 	 * @return the display name of the recipe
 	 */
+	@Override
 	public String getDisplayName() {
 		return this.basedOn.getDisplayName().concat(" (modified)");
 	}
 
-	@Override
 	/**
 	 * Returns the id of the recipe that this is based on
 	 * @return the id of the recipe that this is based on
 	 */
+	@Override
 	public int getId() {
 		return this.basedOn.getId();
 	}

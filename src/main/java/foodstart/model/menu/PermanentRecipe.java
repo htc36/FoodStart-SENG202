@@ -26,7 +26,8 @@ public class PermanentRecipe extends Recipe {
 	/**
 	 * Constructs an instance of a permanent recipe
 	 *
-	 * @param name         the display name of the recipe
+	 * @param id the id of the recipe
+     * @param name         the display name of the recipe
 	 * @param instructions the instructions to make the recipe
 	 * @param price        the price of the recipe
 	 * @param ingredients  the ingredients that make up the recipe
@@ -56,12 +57,12 @@ public class PermanentRecipe extends Recipe {
 		this.instructions = instructions;
 	}
 
-	@Override
 	/**
 	 * Returns the display name of the recipe
 	 *
 	 * @return the display name of the recipe
 	 */
+	@Override
 	public String getDisplayName() {
 		return displayName;
 	}
@@ -75,12 +76,12 @@ public class PermanentRecipe extends Recipe {
 		this.displayName = displayName;
 	}
 
-	@Override
 	/**
 	 * Gets the ID that this recipe is given in data files
 	 *
 	 * @return Unique ID of this recipe
 	 */
+	@Override
 	public int getId() {
 		return id;
 	}

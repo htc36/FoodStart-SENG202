@@ -61,6 +61,7 @@ public class ViewMenuController {
     /**
      * Called when a popup stage is made.
      * Gives the controller class the popup stage
+     * @param popupStage the stage to give the controller
      */
     public void setStage(Stage popupStage) {
         stage = popupStage;
@@ -68,6 +69,7 @@ public class ViewMenuController {
 
     /**
      * Called to set up the view menu popup with the correct menu information
+     * @param menu the menu to give the view menu popup
      */
     public void setMenuInfo(Menu menu) {
         menuNameText.setText(menu.getTitle());

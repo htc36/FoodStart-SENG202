@@ -66,7 +66,7 @@ public abstract class Recipe {
 	/**
 	 * Gets the price of the recipe
 	 *
-	 * @return price
+	 * @return the price of the recipe
 	 */
 	public float getPrice() {
 		return price;
@@ -74,7 +74,8 @@ public abstract class Recipe {
 
 	/**
 	 * Sets the price of the recipe
-	 */
+     * @param price the price of the recipe
+     */
 	public void setPrice(float price) {
 		this.price = price;
 	}
@@ -82,7 +83,7 @@ public abstract class Recipe {
 	/**
 	 * Gets all ingredients that are part of the recipe
 	 *
-	 * @return ingredients
+	 * @return the map of ingredients in the recipe to their quantities
 	 */
 	public Map<Ingredient, Integer> getIngredients() {
 		return ingredients;
@@ -90,7 +91,8 @@ public abstract class Recipe {
 
 	/**
 	 * Sets all ingredients that are part of the recipe
-	 */
+     * @param ingredients the map of ingredients in the recipe to their quantities
+     */
 	public void setIngredients(Map<Ingredient, Integer> ingredients) {
 		this.ingredients = ingredients;
 	}
