@@ -196,6 +196,7 @@ public class RecipeBuilderController {
 	 * Populate the GUI with the given recipe
 	 *
 	 * @param recipe The recipe to populate it with
+     * @param quantity the quantity of the items in the recipe
 	 */
 	public void populateFields(Recipe recipe, int quantity) {
 		itemNameText.setText("Editing recipe");

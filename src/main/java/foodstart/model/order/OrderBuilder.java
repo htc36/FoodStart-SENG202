@@ -163,7 +163,8 @@ public class OrderBuilder {
 	 * Calculates the amount of stock needed of a particular ingredient to create
 	 * the current order
 	 *
-	 * @return Integer of how much is needed
+	 * @param ingredient the ingredient to calculate the required stock for
+     * @return Integer of how much is needed
 	 */
 	public int calculateRequiredStock(Ingredient ingredient) {
 		int required = 0;
