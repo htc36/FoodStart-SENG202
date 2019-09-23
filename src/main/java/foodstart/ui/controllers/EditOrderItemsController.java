@@ -97,7 +97,7 @@ public class EditOrderItemsController implements Refreshable {
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
 		ingredientCol.setCellValueFactory(cell -> new SimpleStringProperty(recipeManager.getIngredientsAsString(cell.getValue())));
 		quantityCol.setCellValueFactory(cell -> new SimpleIntegerProperty(items.get(cell.getValue())).asObject());
-		quantityCol.setCellFactory(TextFieldTableCell.<Recipe, Integer>forTableColumn(new IntegerStringConverter()));
+		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		quantityCol.setOnEditCommit(e -> items.put(e.getRowValue(), e.getNewValue()));
 	}
 

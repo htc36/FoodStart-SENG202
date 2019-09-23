@@ -82,7 +82,7 @@ public class CreateOrderController {
 		columnQty.setCellValueFactory(
 				cell -> new SimpleIntegerProperty(orderBuilder.getQuantity(cell.getValue())).asObject());
 		columnItem.setCellValueFactory(cell -> new SimpleStringProperty(
-				cell.getValue() instanceof PermanentRecipe ? ((PermanentRecipe) cell.getValue()).getDisplayName()
+				cell.getValue() instanceof PermanentRecipe ? cell.getValue().getDisplayName()
 						: ("(Custom) " + ((OnTheFlyRecipe) cell.getValue()).getBasedOn().getDisplayName())));
 		columnPrice.setCellValueFactory(cell -> new SimpleStringProperty(
 				String.format("%.02f", cell.getValue().getPrice() * orderBuilder.getQuantity(cell.getValue()))));

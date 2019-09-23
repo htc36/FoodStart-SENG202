@@ -84,7 +84,7 @@ public class RecipeEditorController implements Refreshable {
 	private void populateCB() {
 		Set<Ingredient> ingredientsSet = Managers.getIngredientManager().getIngredientSet();
 		this.ingredientsCB.setItems(FXCollections.observableArrayList(ingredientsSet));
-		this.ingredientsCB.setCellFactory(ComboBoxListCell.<Ingredient>forListView(new IngredientStringConverter()));
+		this.ingredientsCB.setCellFactory(ComboBoxListCell.forListView(new IngredientStringConverter()));
 		this.ingredientsCB.setConverter(new IngredientStringConverter());
 	}
 

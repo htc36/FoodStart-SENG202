@@ -79,7 +79,7 @@ public class OrderBuilder {
 	 */
 	public void addItem(Recipe recipe, int quantity) {
 		if (!canAddItem(recipe, quantity)) {
-			String name = recipe instanceof PermanentRecipe ? ((PermanentRecipe) recipe).getDisplayName()
+			String name = recipe instanceof PermanentRecipe ? recipe.getDisplayName()
 					: "Custom recipe";
 			throw new InsufficientStockException("Insufficient stock to add '" + name + "' to the order");
 		}

@@ -15,7 +15,7 @@ public enum DataFileType {
 	 * @param description the description of the file type
 	 * @param extensions the possible extension of the file type
 	 */
-	private DataFileType(String description, String... extensions) {
+	DataFileType(String description, String... extensions) {
 		this.description = description;
 		this.extensions = Arrays.asList(extensions);
 	}

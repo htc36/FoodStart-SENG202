@@ -10,5 +10,5 @@ public interface Refreshable {
 	/**
 	 * Refresh the displayed entries on the table
 	 */
-	public void refreshTable();
+	void refreshTable();
 }
