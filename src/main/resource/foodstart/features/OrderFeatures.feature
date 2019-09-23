@@ -36,12 +36,11 @@ Feature: Order feature
 #        When The flavour is edited to tropical
 #        Then The system checks that it exists and replaces orange with tropical
 #
-    @skip_scenario
+
     Scenario: Customer has dietary requirements (FR11)
-        Given A customer with celiac disease and wants to know if the "mayo" is "gluten-free"
-        And "mayo" is gluten-free
-        When The employee checks the if "mayo" is "gluten-free"
-        Then The items available are filtered to only show items that are gluten-free
+        Given A customer wants to know if the "sandwich" is "gluten-free"
+        When The employee checks the if "sandwich" is "gluten-free"
+        Then The "sandwich" should be "gluten-free"
 
 #    @skip_scenario
 #    Scenario: An item is sold out (FR11)

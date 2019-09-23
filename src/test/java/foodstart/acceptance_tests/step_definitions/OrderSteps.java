@@ -5,6 +5,7 @@ import foodstart.manager.order.OrderManager;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.PaymentMethod;
 import foodstart.model.Unit;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
@@ -161,6 +162,7 @@ public class OrderSteps {
     @When("{int} {string} is removed from the order")
     public void isRemovedFromTheOrder(Integer quantity, String recipeName) {
         order.removeItem(recipeManager.getRecipeByDisplayName(recipeName));
+
     }
 
 
@@ -177,4 +179,38 @@ public class OrderSteps {
         assertTrue(totalCost == order.getTotalCost());
 //        System.out.println(order.getTotalCost());
     }
+
+    @Given("A customer wants to know if the {string} is {string}")
+    public void aCustomerWantsToKnowIfTheIs(String recipeName, String dietaryReq) {
+        Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
+        safeFor.put(DietaryRequirement.GLUTEN_FREE, true);
+        Ingredient gfBread = new Ingredient(Unit.GRAMS, "Bread GF", 1, safeFor, 150, 80);
+        Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
+        ingredients.put(gfBread, 2);
+        recipeManager.addRecipe(1, recipeName, "Recipe Instructions",12.5f, ingredients);
+    }
+
+    @When("The employee checks the if {string} is {string}")
+    public void theEmployeeChecksTheIfIs(String recipeName, String dietaryReq) {
+        switch (dietaryReq) {
+            case ("gluten-free"):
+                recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.GLUTEN_FREE);
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+    }
+
+    @Then("The {string} should be {string}")
+    public void theShouldBe(String recipeName, String dietaryReq) {
+        switch (dietaryReq) {
+            case ("gluten-free"):
+                assertTrue(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.GLUTEN_FREE));
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+    }
+
+
 }
