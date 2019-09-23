@@ -8,8 +8,8 @@ import foodstart.model.Unit;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
-import gherkin.ast.Scenario;
-import io.cucumber.java.Before;
+
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,14 +18,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class OrderSteps {
 
     private float recipeCost;
-    private Recipe recipe;
     private Ingredient ingredient1;
     private Ingredient ingredient2;
     private Map<Ingredient, Integer> recipeIngredients;
@@ -96,7 +94,6 @@ public class OrderSteps {
         orderId = 1;
         order = new Order(orderId, orderItems, customerName, LocalDateTime.now(), payment);
         order.addItem(recipeManager.getRecipeByDisplayName(recipeName), quantity);
-        orderManager.addOrder(orderId, order.getItems(), customerName, LocalDateTime.now(), payment);
     }
 
     @Given("A {string} costs ${double}, which is a {string} and {string} costs ${double}, which is a {string}")
@@ -123,12 +120,10 @@ public class OrderSteps {
             default:
                 throw new cucumber.api.PendingException();
         }
-
-        System.out.println(recipeManager.getRecipes());
     }
 
     @When("The customer {string} orders {int} {string} and {int} {string} and pays by {string}")
-    public void theCustomerOrdersItemsAndAndPaysBy(String customerName, int recipe1Quantity, String recipe1, int recipe2Quantity, String recipe2, String paymentMethod) {
+    public void theCustomerOrdersItemsAndAndPaysBy(String customerName, int recipe1Quantity, String recipe1Name, int recipe2Quantity, String recipe2Name, String paymentMethod) {
         PaymentMethod payment;
         switch (paymentMethod) {
             case "cash":
@@ -141,19 +136,36 @@ public class OrderSteps {
                 throw new cucumber.api.PendingException();
         }
         orderId = 1;
-        orderItems.put(recipeManager.getRecipeByDisplayName(recipe1), recipe1Quantity);
-        orderItems.put(recipeManager.getRecipeByDisplayName(recipe2), recipe2Quantity);
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipe1Name), recipe1Quantity);
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipe2Name), recipe2Quantity);
         order = new Order(orderId, orderItems, customerName, LocalDateTime.now(), payment);
-        orderManager.addOrder(orderId, order.getItems(), customerName, LocalDateTime.now(), payment);
+    }
+
+
+    @And("The current order has {int} {string} and {int} {string} with a current total of ${float}")
+    public void theCurrentOrderHasAnd(int recipe1Quantity, String recipe1Name, int recipe2Quantity, String recipe2Name, float currentTotal) {
+        orderId = 1;
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipe1Name), recipe1Quantity);
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipe2Name), recipe2Quantity);
+        order = new Order(orderId, orderItems, "Sam", LocalDateTime.now(), PaymentMethod.EFTPOS);
+        assertTrue(currentTotal == order.getTotalCost());
+    }
+
+    @When("{int} {string} is removed from the order")
+    public void isRemovedFromTheOrder(Integer quantity, String recipeName) {
+        order.removeItem(recipeManager.getRecipeByDisplayName(recipeName));
+
+    }
+
+
+    @Then("Only {int} {string} appears in the order and does not contain {string}")
+    public void onlyAppearsInTheOrderAndDoesNotContain(int quantity, String recipeName, String recipeRemoved) {
+        assertFalse(order.getItems().containsKey(recipeRemoved));
     }
 
     @Then("The customer will be charged ${float} total")
+
     public void theCustomerWillBeCharged$Total(float totalCost) {
-        order = orderManager.getOrder(orderId);
         assertTrue(totalCost == order.getTotalCost());
     }
-
-
-
-
 }

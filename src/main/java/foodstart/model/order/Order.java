@@ -219,7 +219,13 @@ public class Order {
 	 * @return the previous amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer addItem(Recipe recipe, int amount) {
-		return this.items.put(recipe, amount);
+		if (this.items.put(recipe, amount) == null)  {
+			return null;
+		} else {
+			Integer previousAmount = this.items.put(recipe, amount);
+			calculateCost();
+			return previousAmount;
+		}
 	}
 
 	/**
@@ -229,7 +235,14 @@ public class Order {
 	 * @return the amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer removeItem(Recipe recipe) {
-		return this.items.remove(recipe);
+
+		if (this.items.remove(recipe) == null)  {
+			return null;
+		} else {
+			Integer recipeAmount = this.items.remove(recipe);
+			calculateCost();
+			return recipeAmount;
+		}
 	}
 
 	/**
@@ -265,8 +278,10 @@ public class Order {
 		if (this.items.containsKey(recipe)) {
 			if ((this.items.get(recipe) - amount) > 0) {
 				setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
+				calculateCost();
 			} else if ((this.items.get(recipe) - amount) == 0) {
 				removeItem(recipe); // removes the item completely from the order
+				calculateCost();
 			} else { // else, should throw an exception exceeding the lowest bound (negatives)
 				//throw new Exception
 			}
