@@ -57,6 +57,7 @@ public class XMLSupplierParser extends XMLParser {
 	/**
 	 * Parse a single supplier element
 	 * @param element The supplier XML element to parse
+	 * @return the supplier generated from the parsed data
 	 */
 	private Supplier parseOneSupplier(Element element) {
 		int sid = Integer.parseInt(element.getElementsByTagName("sid").item(0).getTextContent());
@@ -87,7 +88,12 @@ public class XMLSupplierParser extends XMLParser {
 		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "supplier.dtd");
 		exportWithManager(doc, Managers.getSupplierManager());
 	}
-	
+
+	/**
+	 * Exports supplier model data to an XML file
+	 * @param doc the document to write the data to
+	 * @param manager the supplier manager to read the data from
+	 */
 	public void exportWithManager(Document doc, SupplierManager manager) {
 		Element supplierRoot = doc.createElement("suppliers");
 		for (Supplier supplier : manager.getSupplierSet()) {

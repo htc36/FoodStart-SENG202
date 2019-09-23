@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class RecipeEditorController implements Refreshable {
-	class IngredientStringConverter extends StringConverter<Ingredient> {
+	static class IngredientStringConverter extends StringConverter<Ingredient> {
 		@Override
 		public String toString(Ingredient ingredient) {
 			if (ingredient == null) {

@@ -26,6 +26,9 @@ import foodstart.model.stock.Ingredient;
  */
 public class XMLIngredientParser extends XMLParser {
 
+	/**
+	 * Constructs an instance of an XML ingredient parser
+	 */
 	public XMLIngredientParser() {
 		super(DataType.INGREDIENT);
 	}

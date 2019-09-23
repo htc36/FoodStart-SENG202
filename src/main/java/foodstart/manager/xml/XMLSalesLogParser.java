@@ -23,10 +23,12 @@ import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Parses an XML sales log
+ */
 public class XMLSalesLogParser extends XMLParser {
 	/**
-	 * Constructor for recipe parser
+	 * Constructor for sales log parser
 	 */
 	public XMLSalesLogParser() {
 		super(DataType.SALES_LOG);
