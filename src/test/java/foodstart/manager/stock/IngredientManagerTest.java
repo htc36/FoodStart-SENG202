@@ -158,8 +158,8 @@ public class IngredientManagerTest {
 		manager.addIngredient(Unit.GRAMS, "TestGetIngredient2", 2, null, 6, 16);
 		manager.addIngredient(Unit.UNITS, "TestGetIngredient3", 3, null, 7, 17);
 		manager.addIngredient(Unit.MILLILITRES, "TestGetIngredient4", 4, null, 8, 18);
-		assertEquals(5, manager.getIngredientSet().size());
-	}
+	assertEquals(5, manager.getIngredientSet().size());
+}
 
 	@Test
 	public void testGetIngredientSetAbuse() {

@@ -28,8 +28,11 @@ public class SupplierManager {
 	 * @param targetSupplier the Supplier object to be added.
 	 */
     public void addSupplier(Supplier targetSupplier) {
-        this.suppliers.put(targetSupplier.getId(), targetSupplier);
+		if (targetSupplier != null) {
+			this.suppliers.put(targetSupplier.getId(), targetSupplier);
+		}
     }
+
 	/**
 	 * Constructs and adds a new supplier to the map of suppliers based
 	 *
