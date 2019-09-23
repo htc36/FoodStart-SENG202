@@ -1,206 +1,159 @@
 package foodstart.acceptance_tests.step_definitions;
 
+import foodstart.manager.menu.RecipeManager;
+import foodstart.manager.order.OrderManager;
+import foodstart.model.DietaryRequirement;
+import foodstart.model.PaymentMethod;
+import foodstart.model.Unit;
+import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
+import foodstart.model.stock.Ingredient;
 import gherkin.ast.Scenario;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 
 public class OrderSteps {
 
-    private float hamburgerCost;
-    private float chipsCost;
+    private float recipeCost;
+    private Recipe recipe;
+    private Ingredient ingredient1;
+    private Ingredient ingredient2;
+    private Map<Ingredient, Integer> recipeIngredients;
+    private OrderManager orderManager;
+    private Order order;
+    private Map<Recipe, Integer> orderItems;
+    private int orderId;
+    private RecipeManager recipeManager;
 
 
-    @Given("A {string} costs ${float}")
-    public void aCosts$(String recipeName, float cost) {
-        switch (recipeName) {
-            case "hamburger":
-                this.hamburgerCost = cost;
+    public void setUp() {
+        recipeIngredients = new HashMap<Ingredient, Integer>();
+
+        Map<DietaryRequirement, Boolean> safeForIngredient1 = new HashMap<DietaryRequirement, Boolean>();
+        safeForIngredient1.put(DietaryRequirement.GLUTEN_FREE, true);
+        safeForIngredient1.put(DietaryRequirement.VEGETARIAN, true);
+
+        Map<DietaryRequirement, Boolean> safeForIngredient2 = new HashMap<DietaryRequirement, Boolean>();
+        safeForIngredient1.put(DietaryRequirement.GLUTEN_FREE, true);
+        safeForIngredient1.put(DietaryRequirement.VEGETARIAN, true);
+        safeForIngredient1.put(DietaryRequirement.NUT_ALLERGY, true);
+        safeForIngredient1.put(DietaryRequirement.VEGAN, true);
+        safeForIngredient1.put(DietaryRequirement.LACTOSE_INTOLERANT, true);
+
+        ingredient1 = new Ingredient(Unit.GRAMS, "Mayo", 1, safeForIngredient1, 150, 80);
+        ingredient2 = new Ingredient(Unit.GRAMS, "Peanut Butter", 2, safeForIngredient2, 120, 45);
+
+        recipeIngredients.put(ingredient1, 2);
+        recipeIngredients.put(ingredient2, 4);
+
+        recipeManager= new RecipeManager();
+        recipeManager.addRecipe(1, "Recipe Base", "Recipe Instructions",12.5f, recipeIngredients);
+        orderManager = new OrderManager();
+        orderItems = new HashMap<Recipe, Integer>();
+
+    }
+
+
+    @Given("A {string} costs ${double}, which is a {string}")
+    public void aCosts$WhichIsA(String recipeName, double cost, String recipeType) {
+        setUp();
+        recipeCost = (float) cost;
+        switch (recipeType) {
+            case "permanent recipe":
+                recipeManager.addRecipe(2, recipeName, "Recipe Instructions", recipeCost, recipeIngredients);
                 break;
-            case "chips":
-                chipsCost = cost;
+            case "on the fly recipe":
+                recipeManager.otfManager.addRecipe(recipeManager.getRecipeByDisplayName(recipeName).getId(), recipeIngredients, recipeCost);
                 break;
             default:
                 throw new cucumber.api.PendingException();
         }
     }
 
-    @When("The customer orders {int} {string}")
-    public void theCustomerOrders(Integer quantity, String recipeName) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @When("The customer {string} orders {int} {string} and pays by {string}")
+    public void theCustomerOrders(String customerName, int quantity, String recipeName, String paymentMethod) {
+        PaymentMethod payment;
+        switch (paymentMethod) {
+            case "cash":
+                payment = PaymentMethod.CASH;
+                break;
+            case "eftpos":
+                payment = PaymentMethod.EFTPOS;
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+        orderId = 1;
+        order = new Order(orderId, orderItems, customerName, LocalDateTime.now(), payment);
+        order.addItem(recipeManager.getRecipeByDisplayName(recipeName), quantity);
+        orderManager.addOrder(orderId, order.getItems(), customerName, LocalDateTime.now(), payment);
     }
 
-    @Then("The customer will be charged ${double} total")
-    public void theCustomerWillBeCharged$Total(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Given("A {string} costs ${double}, which is a {string} and {string} costs ${double}, which is a {string}")
+    public void aCosts$WhichIsAAndCosts$WhichIsA(String recipe1Name, double recipe1Cost, String recipe1Type, String recipe2Name, double recipe2Cost, String recipe2Type) {
+        setUp();
+        switch (recipe1Type) {
+            case "permanent recipe":
+                recipeManager.addRecipe(2, recipe1Name, "Recipe Instructions", (float) recipe1Cost, recipeIngredients);
+                break;
+            case "on the fly recipe":
+                recipeManager.otfManager.addRecipe(recipeManager.getRecipeByDisplayName(recipe1Name).getId(), recipeIngredients, (float) recipe1Cost);
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+
+        switch (recipe2Type) {
+            case "permanent recipe":
+                recipeManager.addRecipe(3, recipe2Name, "Recipe Instructions", (float) recipe2Cost, recipeIngredients);
+                break;
+            case "on the fly recipe":
+                recipeManager.otfManager.addRecipe(recipeManager.getRecipeByDisplayName(recipe1Name).getId(), recipeIngredients, (float) recipe2Cost);
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+
+        System.out.println(recipeManager.getRecipes());
     }
 
-    @Given("The current order has {int} {string}")
-    public void theCurrentOrderHas(Integer int1, String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @When("The customer {string} orders {int} {string} and {int} {string} and pays by {string}")
+    public void theCustomerOrdersItemsAndAndPaysBy(String customerName, int recipe1Quantity, String recipe1, int recipe2Quantity, String recipe2, String paymentMethod) {
+        PaymentMethod payment;
+        switch (paymentMethod) {
+            case "cash":
+                payment = PaymentMethod.CASH;
+                break;
+            case "eftpos":
+                payment = PaymentMethod.EFTPOS;
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+        orderId = 1;
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipe1), recipe1Quantity);
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipe2), recipe2Quantity);
+        order = new Order(orderId, orderItems, customerName, LocalDateTime.now(), payment);
+        orderManager.addOrder(orderId, order.getItems(), customerName, LocalDateTime.now(), payment);
     }
 
-    @Given("The order costs ${double} in total")
-    public void theOrderCosts$InTotal(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("The customer will be charged ${float} total")
+    public void theCustomerWillBeCharged$Total(float totalCost) {
+        order = orderManager.getOrder(orderId);
+        assertTrue(totalCost == order.getTotalCost());
     }
 
-    @When("{int} {string} is removed from the order")
-    public void isRemovedFromTheOrder(Integer int1, String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
 
-    @Then("Only {int} {string} appears in the order")
-    public void onlyAppearsInTheOrder(Integer int1, String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Given("A {string} contains {string}")
-    public void aContains(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("The customer wants to remove {string} from the {string}")
-    public void theCustomerWantsToRemoveFromThe(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The {string} has no {string}")
-    public void theHasNo(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-//    @When("The customer will be charged ${double} total")
-//    public void theCustomerWillBeCharged$Total(Double double1) {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new cucumber.api.PendingException();
-//    }
-
-    @When("The flavour is edited to tropical")
-    public void theFlavourIsEditedToTropical() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The system checks that it exists and replaces orange with tropical")
-    public void theSystemChecksThatItExistsAndReplacesOrangeWithTropical() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Given("A customer with celiac disease and would like to know what items are gluten-free")
-    public void aCustomerWithCeliacDiseaseAndWouldLikeToKnowWhatItemsAreGlutenFree() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("The employee selects gluten-free options")
-    public void theEmployeeSelectsGlutenFreeOptions() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The items available are filtered to only show items that are gluten-free")
-    public void theItemsAvailableAreFilteredToOnlyShowItemsThatAreGlutenFree() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Given("A customer wants a hamburger but is sold out")
-    public void aCustomerWantsAHamburgerButIsSoldOut() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("The employee is about to order the item")
-    public void theEmployeeIsAboutToOrderTheItem() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The employee will not be able to place hamburger to the order")
-    public void theEmployeeWillNotBeAbleToPlaceHamburgerToTheOrder() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Given("Customer {string} ordered {int} {string}")
-    public void customerOrdered(String string, Integer int1, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("The employee confirms the order")
-    public void theEmployeeConfirmsTheOrder() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("{string} will be charged ${double} total")
-    public void willBeCharged$Total(String string, Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The order is recorded in the sales history")
-    public void theOrderIsRecordedInTheSalesHistory() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Given("The total order costs ${double}")
-    public void theTotalOrderCosts$(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Given("The customer pays ${double}")
-    public void theCustomerPays$(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("The payment is finalised")
-    public void thePaymentIsFinalised() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The customer receives ${double} change")
-    public void theCustomerReceives$Change(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("The payment is short by ${double}")
-    public void thePaymentIsShortBy$(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @When("The manager looks for {string} in the sales log")
-    public void theManagerLooksForInTheSalesLog(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
-
-    @Then("All details are displayed i.e time, items sold, amounts and price")
-    public void allDetailsAreDisplayedIETimeItemsSoldAmountsAndPrice() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
 
 
 }

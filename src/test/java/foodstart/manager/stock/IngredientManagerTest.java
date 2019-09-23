@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,59 +66,157 @@ public class IngredientManagerTest {
 	}
 
 	@Test
-	public void getIngredientByNameValidName() {
+	public void testGetIngredientByNameValidName() {
 		Ingredient ingredient = manager.getIngredientByName("TestIngredient");
 		assertEquals(0, ingredient.getId());
 	}
 
 	@Test
-	public void getIngredientByNameInvalidName() {
+	public void testGetIngredientByNameInvalidName() {
 		Ingredient ingredient = manager.getIngredientByName("This doesn't exist");
 		assertNull(ingredient);
 	}
 
-	@Ignore
 	@Test
-	public void updateTruckStock() {
+	public void testUpdateTruckStock() {
+		assertEquals(200, manager.getIngredient(0).getTruckStock());
+		manager.updateTruckStock(0, 150);
+		assertEquals(150, manager.getIngredient(0).getTruckStock());
 	}
 
-	@Ignore
 	@Test
-	public void updateKitchenStock() {
+	public void testUpdateKitchenStock() {
+		assertEquals(100, manager.getIngredient(0).getKitchenStock());
+		manager.updateKitchenStock(0, 999999);
+		assertEquals(999999, manager.getIngredient(0).getKitchenStock());
 	}
 
-	@Ignore
 	@Test
-	public void isInTruckStock() {
+	public void testIsInTruckStockInStock() {
+		assertTrue(manager.isInTruckStock(0));
 	}
 
-	@Ignore
 	@Test
-	public void isInKitchenStock() {
+	public void testIsInTruckStockNotInStock() {
+		manager.updateTruckStock(0, 0);
+		assertFalse(manager.isInTruckStock(0));
 	}
 
-	@Ignore
 	@Test
-	public void testGetIngredients() {
+	public void testIsInTruckStockInvalidId() {
+		assertFalse(manager.isInTruckStock(15));
 	}
 
-	@Ignore
 	@Test
-	public void getIngredientSet() {
+	public void testIsInKitchenStockInStock() {
+		assertTrue(manager.isInKitchenStock(0));
 	}
 
-	@Ignore
 	@Test
-	public void safeForString() {
+	public void testIsInKitchenStockNotInStock() {
+		manager.updateKitchenStock(0, 0);
+		assertFalse(manager.isInKitchenStock(0));
 	}
 
-	@Ignore
 	@Test
-	public void generateNewID() {
+	public void testIsInKitchenStockInvalidId() {
+		assertFalse(manager.isInKitchenStock(15));
 	}
 
-	@Ignore
 	@Test
-	public void mutateIngredient() {
+	public void testGetIngredientsValidId() {
+		Collection<Integer> ids = new ArrayList<Integer>();
+		ids.add(0);
+		assertEquals(1, manager.getIngredients(ids).size());
+	}
+
+	@Test
+	public void testGetIngredientsInvalid() {
+		Collection<Integer> ids = new ArrayList<Integer>();
+		ids.add(0);
+		ids.add(5000);
+		assertEquals(1, manager.getIngredients(ids).size());
+	}
+
+	@Test
+	public void testGetIngredientsMultipleIds() {
+		manager.addIngredient(Unit.GRAMS, "TestGetIngredient1", 1, null, 5, 15);
+		manager.addIngredient(Unit.GRAMS, "TestGetIngredient2", 2, null, 6, 16);
+		manager.addIngredient(Unit.UNITS, "TestGetIngredient3", 3, null, 7, 17);
+		manager.addIngredient(Unit.MILLILITRES, "TestGetIngredient4", 4, null, 8, 18);
+		Collection<Integer> ids = new ArrayList<Integer>();
+		ids.add(0);
+		ids.add(4);
+		ids.add(2);
+		assertEquals(3, manager.getIngredients(ids).size());
+	}
+
+	@Test
+	public void testGetIngredientSet() {
+		assertEquals(1, manager.getIngredientSet().size());
+		manager.addIngredient(Unit.GRAMS, "TestGetIngredient1", 1, null, 5, 15);
+		manager.addIngredient(Unit.GRAMS, "TestGetIngredient2", 2, null, 6, 16);
+		manager.addIngredient(Unit.UNITS, "TestGetIngredient3", 3, null, 7, 17);
+		manager.addIngredient(Unit.MILLILITRES, "TestGetIngredient4", 4, null, 8, 18);
+	assertEquals(5, manager.getIngredientSet().size());
+}
+
+	@Test
+	public void testGetIngredientSetAbuse() {
+		Ingredient recipe = new Ingredient(Unit.GRAMS, "TestGetIngredient1", 1, null, 5, 15);
+		manager.getIngredients().put(1, recipe);
+		manager.getIngredients().put(2, recipe);
+		assertEquals(2, manager.getIngredientSet().size());
+	}
+
+	@Test
+	public void testSafeForStringValid() {
+		Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
+		safeFor.put(DietaryRequirement.NUT_ALLERGY, true);
+		safeFor.put(DietaryRequirement.LACTOSE_INTOLERANT, true);
+		safeFor.put(DietaryRequirement.VEGAN, false);
+		manager.addIngredient(Unit.GRAMS, "TestGetIngredient1", 1, safeFor, 5, 15);
+		String expected1 = "Dairy Free, Nut Free";
+		String expected2 = "Nut Free, Dairy Free";
+		String actual = manager.safeForString(1);
+		assertTrue(actual.equals(expected1)||actual.equals(expected2));
+	}
+
+	@Test
+	public void testSafeForStringEmptyMap() {
+		assertEquals("", manager.safeForString(0));
+	}
+
+	@Test
+	public void testSafeForStringInvalidId() {
+		assertNull(manager.safeForString(5));
+	}
+
+	@Test
+	public void testGenerateNewID() {
+		assertEquals(1, manager.generateNewID());
+		manager.addIngredient(Unit.GRAMS, "TestGetIngredient", 9998, null, 5, 15);
+		assertEquals(9999, manager.generateNewID());
+	}
+
+	@Test
+	public void testGenerateNewIDEmpty() {
+		IngredientManager newManager = new IngredientManager();
+		assertEquals(0, newManager.generateNewID());
+	}
+
+	@Test
+	public void testMutateIngredientValidId() {
+		manager.mutateIngredient(Unit.UNITS, "MutatedIngredient", 0, null, 8, 9);
+		Ingredient ingredient = manager.getIngredient(0);
+		assertEquals("MutatedIngredient", ingredient.getName());
+		assertEquals(null, ingredient.getSafeFor());
+	}
+
+	@Test
+	public void testMutateIngredientInvalidId() {
+		manager.mutateIngredient(Unit.UNITS, "MutatedIngredient", 99, null, 8, 9);
+		Ingredient ingredient = manager.getIngredient(0);
+		assertEquals("TestIngredient", ingredient.getName());
 	}
 }

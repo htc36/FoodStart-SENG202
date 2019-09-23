@@ -38,6 +38,17 @@ public class IngredientManager {
 		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
 		this.ingredients.put(id, ingredient);
 	}
+
+    /**
+     * Adds the specified Ingredient object to the Map of ingredients using it's ID as the key.
+     * @param targetIngredient the Supplier object to be added.
+     */
+    public void addIngredient(Ingredient targetIngredient) {
+        if (targetIngredient != null) {
+            this.ingredients.put(targetIngredient.getId(), targetIngredient);
+        }
+    }
+
 	public void removeIngredient(int id) {
 		this.ingredients.remove(id);
 	}
@@ -106,6 +117,9 @@ public class IngredientManager {
 	 */
 	public boolean isInTruckStock(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient == null) {
+			return false;
+		}
 		return ingredient.getTruckStock() > 0;
 	}
 
@@ -117,6 +131,9 @@ public class IngredientManager {
 	 */
 	public boolean isInKitchenStock(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient == null) {
+			return false;
+		}
 		return ingredient.getKitchenStock() > 0;
 	}
 
@@ -148,6 +165,9 @@ public class IngredientManager {
 
 	public String safeForString(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient == null) {
+			return null;
+		}
 		ArrayList<String> safeForList = new ArrayList<String>();
 		Map<DietaryRequirement, Boolean> safeDiets = ingredient.getSafeFor();
 		for (Map.Entry<DietaryRequirement, Boolean> entry : safeDiets.entrySet()) {
