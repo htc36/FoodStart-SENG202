@@ -128,8 +128,8 @@ public class RecipeManagerTest {
 
 	@Test
 	public void testGetIngredientsAsStringValidId() {
-		String expected1 = "10x TestIngredient1, 8x TestIngredient2";
-		String expected2 = "8x TestIngredient2, 10x TestIngredient1";
+		String expected1 = "10x TestIngredient1, 5x TestIngredient2";
+		String expected2 = "5x TestIngredient2, 10x TestIngredient1";
 		String actual = manager.getIngredientsAsString(0);
 		assertTrue(actual.equals(expected1) || actual.equals(expected2));
 	}
@@ -141,8 +141,8 @@ public class RecipeManagerTest {
 
 	@Test
 	public void testGetIngredientsAsStringPermanentRecipe() {
-		String expected1 = "TestIngredient1, TestIngredient2";
-		String expected2 = "TestIngredient2, TestIngredient1";
+		String expected1 = "10x TestIngredient1, 5x TestIngredient2";
+		String expected2 = "5x TestIngredient2, 10x TestIngredient1";
 		String actual = manager.getIngredientsAsString(permanentRecipe);
 		assertTrue(actual.equals(expected1) || actual.equals(expected2));
 	}
@@ -152,7 +152,7 @@ public class RecipeManagerTest {
 		HashMap<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>();
 		newIngredients.put(ingredient1, 5000);
 		OnTheFlyRecipe testRecipe = new OnTheFlyRecipe(permanentRecipe, newIngredients, 500);
-		String expected = "TestIngredient1";
+		String expected = "5000x TestIngredient1";
 		String actual = manager.getIngredientsAsString(testRecipe);
 		assertEquals(expected, actual);
 	}

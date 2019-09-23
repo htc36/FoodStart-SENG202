@@ -165,7 +165,7 @@ public class RecipeManager {
 	}
 
 	/**
-	 * Returns the ingredients and their truck stock quantity as a string
+	 * Returns the ingredients in a recipe and their quantity needed as a string
 	 *
 	 * @param id The id of the recipe
 	 * @return out The ingredients and their truck stock quantity as a string
@@ -177,13 +177,13 @@ public class RecipeManager {
 		}
 		String out = "";
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
-			out = out.concat(String.format("%dx %s, ", ingredient.getTruckStock(), ingredient.getName()));
+			out = out.concat(String.format("%dx %s, ", recipe.getIngredients().get(ingredient), ingredient.getName()));
 		}
 		return out.substring(0, out.length() - 2);
 	}
 
 	/**
-	 * Returns the ingredients as a string.
+	 * Returns the ingredients in a recipe and their quantity needed as a string
 	 * This version is intended for use when unable to differentiate between permanent and on the fly recipes
 	 *
 	 * @param recipe The recipe to get the ingredients of
@@ -195,7 +195,7 @@ public class RecipeManager {
 		}
 		String out = "";
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
-			out = out.concat(String.format("%s, ", ingredient.getName()));
+			out = out.concat(String.format("%dx %s, ", recipe.getIngredients().get(ingredient), ingredient.getName()));
 		}
 		return out.substring(0, out.length() - 2);
 	}
