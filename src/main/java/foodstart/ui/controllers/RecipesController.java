@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class recipesController implements Refreshable {
+public class RecipesController implements Refreshable {
 
 	@FXML
 	private TableView<PermanentRecipe> recipesTableView;
