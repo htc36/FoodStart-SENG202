@@ -1,11 +1,15 @@
 Feature: Menu feature. 
     Scenarios involving the menu 
 
-#    @skip_scenario
-#    Scenario: Viewing recipe (FR3)
-#        Given An employee wants to see a recipe
-#        When The employee selects a recipe
-#        Then The corresponding recipe is displayed
+    @skip_scenario
+    Scenario: Viewing recipe (FR3)
+        Given The recipe "Hamburger" is not in the menu
+        And Its price is 14.0
+        And Its ingredients are 2 "Patty"s and 1 "Bun"
+        And Its id is 5
+        And Its instructions are "Put pattys in bun"
+        When Recipe "Hamburger" is manually added
+        Then "Hamburger" that costs 14.0 with 2 "Patty"s and 1 "Bun", id being 5, instructions being "Put pattys in bun"
 #    @skip_scenario
 #    Scenario: Editing recipe (FR4)
 #        Given An employee is looking through recipes
