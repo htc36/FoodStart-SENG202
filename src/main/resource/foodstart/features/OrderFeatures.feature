@@ -1,4 +1,4 @@
-Feature: Order feature. 
+Feature: Order feature
     Scenarios involving orders
 
     @skip_scenario
