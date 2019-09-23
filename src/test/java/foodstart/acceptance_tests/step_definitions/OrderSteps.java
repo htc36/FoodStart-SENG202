@@ -145,12 +145,16 @@ public class OrderSteps {
     }
 
 
+
     @And("The current order has {int} {string} and {int} {string} with a current total of ${float}")
     public void theCurrentOrderHasAnd(int recipe1Quantity, String recipe1Name, int recipe2Quantity, String recipe2Name, float currentTotal) {
         orderId = 1;
-        orderItems.put(recipeManager.getRecipeByDisplayName(recipe1Name), recipe1Quantity);
-        orderItems.put(recipeManager.getRecipeByDisplayName(recipe2Name), recipe2Quantity);
         order = new Order(orderId, orderItems, "Sam", LocalDateTime.now(), PaymentMethod.EFTPOS);
+        order.addItem(recipeManager.getRecipeByDisplayName(recipe1Name), recipe1Quantity);
+        order.addItem(recipeManager.getRecipeByDisplayName(recipe2Name), recipe2Quantity);
+        //System.out.print(currentTotal);
+        //System.out.print(order.getTotalCost());
+
         assertTrue(currentTotal == order.getTotalCost());
     }
 

@@ -1,7 +1,6 @@
 Feature: Order feature
     Scenarios involving orders
 
-  @skip_scenario
   Scenario: Ordering a single item (FR11)
     Given A "hamburger" costs $5.00, which is a "permanent recipe"
     When The customer "Sally" orders 1 "hamburger" and pays by "cash"
@@ -12,6 +11,7 @@ Feature: Order feature
     When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
     Then The customer will be charged $8.50 total
 
+  @skip_scenario
   Scenario: Removing an item in the order (FR11)
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
     And The current order has 1 "hamburger" and 1 "chips" with a current total of $8.50
@@ -25,7 +25,6 @@ Feature: Order feature
 #        When The customer wants to remove "cheese" from the "hamburger"
 #        Then The "hamburger" has no "cheese"
 
-  @skip_scenario
   Scenario: Ordering the same item more than once (FR11)
     Given A "hamburger" costs $5.00, which is a "permanent recipe"
     When The customer "Sally" orders 8 "hamburger" and pays by "eftpos"
