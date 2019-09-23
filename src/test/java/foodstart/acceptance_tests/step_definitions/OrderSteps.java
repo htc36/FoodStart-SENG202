@@ -76,6 +76,9 @@ public class OrderSteps {
             default:
                 throw new cucumber.api.PendingException();
         }
+        System.out.println(recipeManager.getRecipe(2).getDisplayName());
+        System.out.println(recipeManager.getRecipe(2).getPrice());
+
     }
 
     @When("The customer {string} orders {int} {string} and pays by {string}")
@@ -92,8 +95,8 @@ public class OrderSteps {
                 throw new cucumber.api.PendingException();
         }
         orderId = 1;
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipeName), quantity);
         order = new Order(orderId, orderItems, customerName, LocalDateTime.now(), payment);
-        order.addItem(recipeManager.getRecipeByDisplayName(recipeName), quantity);
     }
 
     @Given("A {string} costs ${double}, which is a {string} and {string} costs ${double}, which is a {string}")
@@ -164,6 +167,9 @@ public class OrderSteps {
 
     @Then("The customer will be charged ${float} total")
     public void theCustomerWillBeCharged$Total(float totalCost) {
+        System.out.println(totalCost);
+
+        System.out.println(order.getTotalCost());
         assertTrue(totalCost == order.getTotalCost());
 //        System.out.println(order.getTotalCost());
     }
