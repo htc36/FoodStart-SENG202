@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE recipes SYSTEM "../dtd/recipes.dtd">
+<recipes>
+	<recipe>
+		<recipe_id>1234</recipe_id>
+		<name>Pickle burger</name>
+		<ingredients>
+			<ingredient>
+				<ingredient_id>8999</ingredient_id>
+				<quantity>2</quantity>
+			</ingredient>
+			<ingredient>
+				<ingredient_id>9001</ingredient_id>
+				<quantity>1</quantity>
+			</ingredient>
+		</ingredients>
+		<method>Put the pickle in the bun and serve it</method>
+		<price>2.5</price>
+	</recipe>
+	<recipe>
+		<recipe_id>1235</recipe_id>
+		<name>Just a Pickle</name>
+		<ingredients>
+			<ingredient>
+				<ingredient_id>9000</ingredient_id>
+				<quantity>1</quantity>
+			</ingredient>
+		</ingredients>
+		<method>Yum, pickles</method>
+		<price>1</price>
+	</recipe>
+</recipes>

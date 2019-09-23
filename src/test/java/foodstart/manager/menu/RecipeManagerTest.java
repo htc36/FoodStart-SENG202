@@ -2,6 +2,7 @@ package foodstart.manager.menu;
 
 import foodstart.manager.menu.RecipeManager;
 import foodstart.model.Unit;
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 import org.junit.Before;
@@ -21,18 +22,22 @@ public class RecipeManagerTest {
 	private RecipeManager manager;
 	private PermanentRecipe permanentRecipe;
 	private Map<Ingredient, Integer> ingredients;
+	private Ingredient ingredient1;
 
 	@Before
 	public void setUp() {
 		manager = new RecipeManager();
-		Ingredient ingredient1 = new Ingredient(Unit.UNITS, "TestIngredient1", 0, null, 5, 10);
+		ingredient1 = new Ingredient(Unit.UNITS, "TestIngredient1", 0, null, 5, 10);
 		Ingredient ingredient2 = new Ingredient(Unit.MILLILITRES, "TestIngredient2", 1, null, 4, 8);
 		ingredients = new HashMap<Ingredient, Integer>();
 		ingredients.put(ingredient1, 10);
 		ingredients.put(ingredient2, 5);
 		permanentRecipe = new PermanentRecipe(0, "TestPermRecipe", "TestInstruction", 5, ingredients);
-
 		manager.getRecipes().put(0, permanentRecipe);
+
+		HashMap<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>();
+		newIngredients.put(ingredient1, 5000);
+		manager.otfManager.addRecipe(0, newIngredients, 4);
 	}
 
 	@Test
@@ -62,11 +67,17 @@ public class RecipeManagerTest {
 		assertNull(manager.getRecipe(1024));
 	}
 
-	@Ignore
 	@Test
 	public void testGetRecipeByDisplayNameValidName() {
-		//TODO: Clarify some things about display name
-		fail("Not yet implemented");
+		PermanentRecipe recipe = manager.getRecipeByDisplayName("TestPermRecipe");
+		assertNotNull(recipe);
+		assertEquals(0, recipe.getId());
+	}
+
+	@Test
+	public void testGetRecipeByDisplayNameInvalidName() {
+		PermanentRecipe recipe = manager.getRecipeByDisplayName("This recipe doesn't exist");
+		assertNull(recipe);
 	}
 
 	@Test
@@ -117,15 +128,69 @@ public class RecipeManagerTest {
 
 	@Test
 	public void testGetIngredientsAsStringValidId() {
-		String expected = "";
-		for (Ingredient ingredient : ingredients.keySet()) {
-			expected = expected.concat(String.format("%dx %s ", ingredient.getTruckStock(), ingredient.getName()));
-		}
-		assertEquals(expected, manager.getIngredientsAsString(0));
+		String expected1 = "10x TestIngredient1, 5x TestIngredient2";
+		String expected2 = "5x TestIngredient2, 10x TestIngredient1";
+		String actual = manager.getIngredientsAsString(0);
+		assertTrue(actual.equals(expected1) || actual.equals(expected2));
 	}
 
 	@Test
 	public void testGetIngredientsAsStringInvalidId() {
 		assertEquals("", manager.getIngredientsAsString(300));
 	}
+
+	@Test
+	public void testGetIngredientsAsStringPermanentRecipe() {
+		String expected1 = "10x TestIngredient1, 5x TestIngredient2";
+		String expected2 = "5x TestIngredient2, 10x TestIngredient1";
+		String actual = manager.getIngredientsAsString(permanentRecipe);
+		assertTrue(actual.equals(expected1) || actual.equals(expected2));
+	}
+
+	@Test
+	public void testGetIngredientsAsStringOTFRecipe() {
+		HashMap<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>();
+		newIngredients.put(ingredient1, 5000);
+		OnTheFlyRecipe testRecipe = new OnTheFlyRecipe(permanentRecipe, newIngredients, 500);
+		String expected = "5000x TestIngredient1";
+		String actual = manager.getIngredientsAsString(testRecipe);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testGetIngredientsAsStringNull() {
+		String expected = "";
+		String actual = manager.getIngredientsAsString(null);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testOtfManagerAddRecipeValidBasis() {
+		assertEquals(1, manager.otfManager.getRecipes().size());
+		Integer id = manager.otfManager.addRecipe(0, null, 60);
+		assertNotNull(id);
+		assertEquals(1, (int) id);
+		assertEquals(2, manager.otfManager.getRecipes().size());
+	}
+
+	@Test
+	public void testOtfManagerAddRecipeInvalidBasis() {
+		assertEquals(1, manager.otfManager.getRecipes().size());
+		Integer id = manager.otfManager.addRecipe(1024, null, 60);
+		assertNull(id);
+		assertEquals(1, manager.otfManager.getRecipes().size());
+	}
+
+	@Test
+	public void testOtfManagerGetRecipeValidId() {
+		OnTheFlyRecipe recipe = manager.otfManager.getRecipe(0);
+		assertNotNull(recipe);
+		assertEquals(0, recipe.getId());
+	}
+
+	@Test
+	public void testOtfManagerGetRecipeInvalidId() {
+		assertNull(manager.otfManager.getRecipe(1024));
+	}
+
 }
