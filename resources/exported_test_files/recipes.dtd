@@ -1,0 +1,12 @@
+<!-- DTD for representing recipes -->
+<!-- FOREIGN KEYS: ingredient_id-->
+<!ELEMENT recipes (recipe*)>
+<!ELEMENT recipe (recipe_id, name, ingredients, method, price)>
+<!ELEMENT recipe_id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ELEMENT ingredients (ingredient+)>
+<!ELEMENT ingredient (ingredient_id, quantity)>
+<!ELEMENT ingredient_id (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
+<!ELEMENT method (#PCDATA)>

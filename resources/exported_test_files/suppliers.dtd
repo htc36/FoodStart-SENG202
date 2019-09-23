@@ -1,0 +1,10 @@
+<!-- DTD for representing suppliers -->
+<!ELEMENT suppliers (supplier*)>
+<!ELEMENT supplier (sid, name, address, phone, email?, url?)>
+<!ELEMENT sid (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT phone (#PCDATA)>
+<!ATTLIST phone type (mobile|work|home) #REQUIRED>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT url (#PCDATA)>

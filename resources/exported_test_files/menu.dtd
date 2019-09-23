@@ -1,0 +1,15 @@
+<!-- DTD for representing menu -->
+<!-- FOREIGN KEYS: item_id, recipe_id-->
+<!ELEMENT menus (menu*)>
+<!ELEMENT menu (menu_id, title, description, items)>
+<!ELEMENT menu_id (#PCDATA)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT items (item*)>
+<!ELEMENT item (item_id, name, item_description, recipes)>
+<!ELEMENT recipes (recipe_id*)>
+<!-- If is_prepared is true, recipe_id should be defined-->
+<!ELEMENT item_id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT item_description (#PCDATA)>
+<!ELEMENT recipe_id (#PCDATA)>

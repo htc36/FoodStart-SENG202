@@ -1,0 +1,20 @@
+<!-- DTD for representing ingredients -->
+<!-- (C) Neville Churcher 2019 -->
+<!-- FOREIGN KEYS: None-->
+<!ENTITY version "V0.01 (C) Neville Churcher 2019">
+<!ELEMENT ingredients (ingredient*)>
+<!ELEMENT ingredient (id, name, truck_stock, kitchen_stock, dietary)>
+<!ATTLIST ingredient unit (ml|g|count) #REQUIRED>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT truck_stock (#PCDATA)>
+<!ELEMENT kitchen_stock (#PCDATA)>
+<!-- List of dietary requirements -->
+<!ELEMENT dietary (vegan?, vegetarian?, nut_free?, egg_free?, gluten_free?, dairy_free?)>
+<!ELEMENT vegan (#PCDATA)>
+<!ELEMENT vegetarian (#PCDATA)>
+<!ELEMENT nut_free (#PCDATA)>
+<!ELEMENT egg_free (#PCDATA)>
+<!ELEMENT gluten_free (#PCDATA)>
+<!ELEMENT dairy_free (#PCDATA)>
+<!-- End list of dietary requirements -->
