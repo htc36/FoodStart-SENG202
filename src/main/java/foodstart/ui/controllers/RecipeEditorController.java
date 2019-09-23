@@ -112,9 +112,7 @@ public class RecipeEditorController implements Refreshable {
 				ingredientQuantityInput.setText(oldValue);
 			}
 		});
-		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) -> {
-			ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.get((t1))));
-		}));
+		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) -> ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.get((t1))))));
 	}
 
 	/**
@@ -190,7 +188,7 @@ public class RecipeEditorController implements Refreshable {
 	private void addIngredient() {
 		Ingredient ingredient = ingredientsCB.getSelectionModel().getSelectedItem();
 		String amount = ingredientQuantityInput.getText();
-		if (ingredient == null || amount == "") {
+		if (ingredient == null || amount.equals("")) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not add ingredient as there ", ButtonType.OK);
 			alert.setHeaderText("No recipe selected");
 			alert.showAndWait();

@@ -5,7 +5,6 @@ import foodstart.manager.order.OrderManager;
 import foodstart.model.PaymentMethod;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
-import foodstart.model.stock.Ingredient;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

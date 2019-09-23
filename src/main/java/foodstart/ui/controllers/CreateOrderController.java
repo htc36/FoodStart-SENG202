@@ -137,26 +137,24 @@ public class CreateOrderController {
 		box.setBackground(boxBackground);
 		box.setAlignment(Pos.CENTER);
 		box.setCursor(Cursor.HAND);
-		box.setOnMouseClicked((event) -> {
-			new RecipeBuilder(item, new RecipeBuilderRunnable() {
-				@Override
-				public boolean onRecipeComplete(Recipe recipe, int quantity) {
-					if (quantity == 0) return false;
-					if (orderBuilder.canAddItem(recipe, quantity)) {
-						orderBuilder.addItem(recipe, quantity);
-						updateOrderItems();
-						return true;
-					} else {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Insufficient Stock");
-						alert.setHeaderText("Cannot add this item to the order as there is insufficient stock");
-						alert.setContentText("Modify the order and try again");
-						alert.show();
-						return false;
-					}
+		box.setOnMouseClicked((event) -> new RecipeBuilder(item, new RecipeBuilderRunnable() {
+			@Override
+			public boolean onRecipeComplete(Recipe recipe, int quantity) {
+				if (quantity == 0) return false;
+				if (orderBuilder.canAddItem(recipe, quantity)) {
+					orderBuilder.addItem(recipe, quantity);
+					updateOrderItems();
+					return true;
+				} else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Insufficient Stock");
+					alert.setHeaderText("Cannot add this item to the order as there is insufficient stock");
+					alert.setContentText("Modify the order and try again");
+					alert.show();
+					return false;
 				}
-			}, orderBuilder);
-		});
+			}
+		}, orderBuilder));
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT)));

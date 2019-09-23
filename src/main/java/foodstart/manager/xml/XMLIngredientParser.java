@@ -1,16 +1,5 @@
 package foodstart.manager.xml;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.stock.IngredientManager;
@@ -18,6 +7,15 @@ import foodstart.model.DataType;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses ingredient XML files
@@ -150,7 +148,7 @@ public class XMLIngredientParser extends XMLParser {
 		NodeList dietaryNodes = element.getElementsByTagName("dietary").item(0).getChildNodes();
 		for (int k = 0; k < dietaryNodes.getLength(); k++) {
 			Node dietaryNode = dietaryNodes.item(k);
-			boolean value = Boolean.valueOf(dietaryNode.getTextContent());
+			boolean value = Boolean.parseBoolean(dietaryNode.getTextContent());
 			String dietaryName = dietaryNode.getNodeName();
 			DietaryRequirement requirement = DietaryRequirement.matchDietaryRequirement(dietaryName);
 			if (requirement != null) {

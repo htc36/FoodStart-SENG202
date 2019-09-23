@@ -1,14 +1,12 @@
 package foodstart.ui.controllers;
 
-import java.io.IOException;
-
 import foodstart.manager.Managers;
 import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
 
 /**
  * Main controller for application UI

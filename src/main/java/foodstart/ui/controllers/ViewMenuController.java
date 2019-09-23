@@ -1,13 +1,9 @@
 package foodstart.ui.controllers;
 
-import foodstart.manager.Managers;
-import foodstart.manager.menu.MenuManager;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
-import foodstart.model.menu.PermanentRecipe;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -16,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.List;
 import java.util.Set;
 
 /**

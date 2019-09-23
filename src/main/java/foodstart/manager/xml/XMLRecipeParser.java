@@ -4,22 +4,15 @@ import foodstart.manager.Managers;
 import foodstart.manager.exceptions.DuplicateDataException;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.manager.menu.RecipeManager;
-import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DataType;
-import foodstart.model.DietaryRequirement;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.w3c.dom.*;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses recipe XML files

@@ -1,8 +1,4 @@
 package foodstart.ui.controllers;
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-
 
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
@@ -21,12 +17,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Controls the UI for the suppliers management screen

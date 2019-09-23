@@ -2,20 +2,14 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
-import foodstart.manager.order.OrderManager;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,8 +23,6 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.*;
-
-import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
 
 /**
  * Controls the UI of the edit order items screen
@@ -266,7 +258,7 @@ public class EditOrderItemsController implements Refreshable {
 			return false;
 		}
 		for (Ingredient ingredient : m1.keySet()) {
-			if (m1.get(ingredient) != m2.get(ingredient)) {
+			if (!m1.get(ingredient).equals(m2.get(ingredient))) {
 				return false;
 			}
 		}

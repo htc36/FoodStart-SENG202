@@ -1,21 +1,18 @@
 package foodstart.manager.xml;
 
 import foodstart.manager.Managers;
-import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.stock.SupplierManager;
 import foodstart.model.DataType;
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
-
-import java.util.HashMap;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import java.util.HashMap;
 
 /**
  * Parses supplier XML files
