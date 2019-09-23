@@ -28,28 +28,66 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controls the UI for the suppliers management screen
+ */
 public class SupplierController implements Refreshable {
-
+	/**
+	 * Table of suppliers
+	 */
 	@FXML
 	private TableView<Supplier> supplierTable;
+	/**
+	 * Table column of supplier IDs
+	 */
 	@FXML
 	private TableColumn<Supplier, String> codeColumn;
+	/**
+	 * Table column of supplier names
+	 */
 	@FXML
 	private TableColumn<Supplier, String> supplierNameColumn;
+	/**
+	 * Table column of supplier addresses
+	 */
 	@FXML
 	private TableColumn<Supplier, String> addressColumn;
+	/**
+	 * Table column of supplier websites
+	 */
 	@FXML
 	private TableColumn<Supplier, String> websiteColumn;
+	/**
+	 * Table column of supplier emails
+	 */
 	@FXML
 	private TableColumn<Supplier, String> emailColumn;
+	/**
+	 * Table column of supplier phones
+	 */
 	@FXML
 	private TableColumn<Supplier, String> phoneColumn;
+	/**
+	 * Table column of supplier phone types
+	 */
 	@FXML
 	private TableColumn<Supplier, String> phoneTypeColumn;
 
+	/**
+	 * FXML loader for edit suppliers popup
+	 */
 	private FXMLLoader editLoader;
+	/**
+	 * Stage for the edit suppliers popup
+	 */
 	private Stage editPopup;
+	/**
+	 * FXML loader for add supplier popup
+	 */
 	private FXMLLoader addLoader;
+	/**
+	 * Stage for the add supplier popup
+	 */
 	private Stage addPopup;
 	
 	/**

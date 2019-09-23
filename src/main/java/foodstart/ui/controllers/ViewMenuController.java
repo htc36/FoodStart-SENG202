@@ -19,36 +19,58 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Controls the UI for the view menu screen
+ */
 public class ViewMenuController {
-
-
+    /**
+     * Table for menu items in menu
+     */
     @FXML
     private TableView<MenuItem> menuTable;
-
+    /**
+     * Text area for menu item names
+     */
     @FXML
     private Text menuNameText;
-
+    /**
+     * Text area for menu item descriptions
+     */
     @FXML
     private Text menuDescriptionText;
-
+    /**
+     * Table column for menu item IDs
+     */
     @FXML
     private TableColumn<MenuItem, String> tableIDColumn;
-
+    /**
+     * Table column for menu item names
+     */
     @FXML
     private TableColumn<MenuItem, String> tableNameColumn;
-
+    /**
+     * Table column for menu item descriptions
+     */
     @FXML
     private TableColumn<MenuItem, String> tableDescriptionColumn;
-
+    /**
+     * Table column for menu item recipe variants
+     */
     @FXML
     private TableColumn<MenuItem, String> tableVariantsColumn;
-
+    /**
+     * Button to set menu as current menu
+     */
     @FXML
     private Button btnSetCurrentMenu;
-
+    /**
+     * Button to cancel action
+     */
     @FXML
     private Button btnCancel;
-
+    /**
+     * The stage of the current screen
+     */
     Stage stage;
 
     /**
@@ -79,8 +101,8 @@ public class ViewMenuController {
 
     /**
      * Called to populate the table view with the menu information
+     * @param menu the menu to populate the table with data of
      */
-    private int test = 0;
     private void populateTable(Menu menu) {
         Set<MenuItem> menuItems = menu.getMenuItems();
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -104,6 +126,9 @@ public class ViewMenuController {
 
     }
 
+    /**
+     * Closes stage on cancel
+     */
     public void onCancel() {
         stage.close();
     }

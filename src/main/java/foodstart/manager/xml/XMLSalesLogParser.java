@@ -93,8 +93,7 @@ public class XMLSalesLogParser extends XMLParser {
 				}
 			}
 		}
-		int id = Managers.getRecipeManager().otfManager.addRecipe(basis, ingredients, price);
-		return id;
+		return Managers.getRecipeManager().otfManager.addRecipe(basis, ingredients, price);
 	}
 
 	/**
