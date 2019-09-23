@@ -106,6 +106,9 @@ public class IngredientManager {
 	 */
 	public boolean isInTruckStock(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient == null) {
+			return false;
+		}
 		return ingredient.getTruckStock() > 0;
 	}
 
@@ -117,6 +120,9 @@ public class IngredientManager {
 	 */
 	public boolean isInKitchenStock(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient == null) {
+			return false;
+		}
 		return ingredient.getKitchenStock() > 0;
 	}
 
@@ -148,6 +154,9 @@ public class IngredientManager {
 
 	public String safeForString(int id) {
 		Ingredient ingredient = this.ingredients.get(id);
+		if (ingredient == null) {
+			return null;
+		}
 		ArrayList<String> safeForList = new ArrayList<String>();
 		Map<DietaryRequirement, Boolean> safeDiets = ingredient.getSafeFor();
 		for (Map.Entry<DietaryRequirement, Boolean> entry : safeDiets.entrySet()) {
