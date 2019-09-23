@@ -4,11 +4,10 @@ import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
-import cucumber.api.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.java.en.And;
+import org.junit.Before;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +24,28 @@ public class InventorySteps {
     private int truckStock;
     private Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
 
-    @Given("That ingredient {string} is not found in the inventory")
-    public void thatIngredientIsNotFoundInTheInventory(String ingredientName) {
+    @Before
+    public void setUp() {
         IngredientManager manager = new IngredientManager();
         this.ingredientManager = manager;
+
+        Map<DietaryRequirement, Boolean> safeForIngredient1 = new HashMap<DietaryRequirement, Boolean>();
+        safeForIngredient1.put(DietaryRequirement.GLUTEN_FREE, true);
+        safeForIngredient1.put(DietaryRequirement.VEGETARIAN, true);
+
+        Map<DietaryRequirement, Boolean> safeForIngredient2 = new HashMap<DietaryRequirement, Boolean>();
+        safeForIngredient1.put(DietaryRequirement.GLUTEN_FREE, true);
+        safeForIngredient1.put(DietaryRequirement.VEGETARIAN, true);
+        safeForIngredient1.put(DietaryRequirement.NUT_ALLERGY, true);
+        safeForIngredient1.put(DietaryRequirement.VEGAN, true);
+        safeForIngredient1.put(DietaryRequirement.LACTOSE_INTOLERANT, true);
+
+        ingredientManager.addIngredient(Unit.GRAMS, "Mayo", 1, safeForIngredient1, 150, 80);
+        ingredientManager.addIngredient(Unit.GRAMS, "Peanut Butter", 2, safeForIngredient2, 120, 45);
+    }
+
+    @Given("That ingredient {string} is not found in the inventory")
+    public void thatIngredientIsNotFoundInTheInventory(String ingredientName) {
         this.ingredientName = ingredientName;
 
         assertNull(ingredientManager.getIngredientByName(ingredientName));
@@ -63,6 +80,29 @@ public class InventorySteps {
     public void itWillBeStoredUnderInTheInventory(String ingredientName) {
         assertNotNull((ingredientManager.getIngredientByName(ingredientName)));
     }
+
+    @Given("An employee wants to view the inventory")
+    public void anEmployeeWantsToViewTheInventory() {
+        throw new cucumber.api.PendingException();
+    }
+
+    @Given("An employee wants to view the {int} ingredients stored inventory")
+    public void anEmployeeWantsToViewTheIngredientsStoredInventory(int inventorySize) {
+        assertTrue(ingredientManager.getIngredients().size() == inventorySize);
+    }
+
+    @When("The inventory is displayed")
+    public void theInventoryIsDisplayed() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
+    @Then("The ID, name, truck stock, kitchen stock and dietary requirements for all {int} ingredients are displayed")
+    public void theIDNameTruckStockKitchenStockAndDietaryRequirementsForAllIngredientsAreDisplayed(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new cucumber.api.PendingException();
+    }
+
 
 
 }

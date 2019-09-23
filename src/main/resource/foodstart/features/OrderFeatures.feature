@@ -1,10 +1,11 @@
 Feature: Order feature. 
     Scenarios involving orders
 
-#    Scenario: Ordering a single item (FR11)
-#        Given A "hamburger" costs $5.00
-#        When The customer orders 1 "hamburger"
-#        Then The customer will be charged $5.00 total
+    @skip_scenario
+    Scenario: Ordering a single item (FR11)
+        Given A "hamburger" costs $5.00, which is a "permanent recipe"
+        When The customer "Sally" orders 1 "hamburger" and pays by "cash"
+        Then The customer will be charged $5.00 total
 #
 #    @skip_scenario
 #    Scenario: Ordering multiple items (FR11)
