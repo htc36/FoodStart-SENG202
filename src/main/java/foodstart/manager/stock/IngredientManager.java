@@ -38,6 +38,17 @@ public class IngredientManager {
 		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
 		this.ingredients.put(id, ingredient);
 	}
+
+	/**
+	 * Adds the specified Ingredient object to the Map of ingredients using it's ID as the key.
+	 * @param targetIngredient the Supplier object to be added.
+	 */
+	public void addIngredient(Ingredient targetIngredient) {
+		if (targetIngredient != null) {
+			this.ingredients.put(targetIngredient.getId(), targetIngredient);
+		}
+	}
+
 	public void removeIngredient(int id) {
 		this.ingredients.remove(id);
 	}

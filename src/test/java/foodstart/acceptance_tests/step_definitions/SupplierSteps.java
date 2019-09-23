@@ -26,7 +26,6 @@ public class SupplierSteps {
 
     /**
      * Creates a set of suppliers that can be added to the supplier list before testing if needed
-     * @return
      */
     private void createSupplierSet() {
         HashMap<Integer, Supplier> supplierSet = new HashMap<Integer, Supplier>();
