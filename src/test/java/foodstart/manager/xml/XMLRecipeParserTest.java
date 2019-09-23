@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.DuplicateDataException;
+import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.model.DataType;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
@@ -70,13 +72,35 @@ public class XMLRecipeParserTest {
 		Ingredient one = ingredientIterator.next();
 		Ingredient two = ingredientIterator.next();
 		
-		if (one.getId() == 1000) {
+		if (one.getId() == 9000) {
 			assertEquals(2, (int) ingredients.get(one));
 			assertEquals(1, (int) ingredients.get(two));
 		} else {
 			assertEquals(1, (int) ingredients.get(one));
 			assertEquals(2, (int) ingredients.get(two));
 		}
+	}
+	
+	@Test
+	public void testBadFileDuplicateRecipeIds() {
+		boolean threwException = false;
+		try {
+			persistence.importFile(new File("resources/data/TestBadRecipes1.xml"), DataType.RECIPE);
+		} catch (DuplicateDataException e) {
+			threwException = true;
+		}
+		assertTrue(threwException);
+	}
+	
+	@Test
+	public void testBadFileBadIngredientIds() {
+		boolean threwException = false;
+		try {
+			persistence.importFile(new File("resources/data/TestBadRecipes2.xml"), DataType.RECIPE);
+		} catch (IDLeadsNowhereException e) {
+			threwException = true;
+		}
+		assertTrue(threwException);
 	}
 
 }
