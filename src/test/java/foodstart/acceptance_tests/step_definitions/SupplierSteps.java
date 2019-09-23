@@ -154,4 +154,26 @@ public class SupplierSteps {
         supplierManager.removeSupplier(supplierCode);
         supplierManager.addSupplier(editedSupplier);
     }
+
+    @When("The supplier with code {int} is edited to name {string}, phone {string}, type {string}, email {string}, website {string}, address {string}")
+    public void theSupplierWithCodeIsEditedToNamePhoneTypeEmailWebsiteAddress(Integer supplierCode, String newName, String newPhone,
+                                                                       String newType, String newEmail, String newWebsite, String newAddress) {
+        name = newName;
+        phoneNumber = newPhone;
+        phoneType = PhoneType.matchType(newType);
+        email = newEmail;
+        website = newWebsite;
+        address = newAddress;
+        Supplier supplier = supplierManager.getSupplier(supplierCode);
+        Supplier editedSupplier = new Supplier(supplierCode, newName, newPhone, PhoneType.matchType(newType), newEmail, newWebsite,
+                newAddress);
+        supplierManager.removeSupplier(supplierCode);
+        supplierManager.addSupplier(editedSupplier);
+    }
+
+    @Then("Its code will be {int}")
+    public void itsCodeWillBe(Integer supplierCode) {
+        assertEquals(supplierCode, code);
+    }
+
 }

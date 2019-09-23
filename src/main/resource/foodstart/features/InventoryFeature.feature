@@ -1,10 +1,9 @@
-Feature: Inventory feature. 
+Feature: Inventory feature
     Scenarios involving Ingredients
 
     @skip_scenario
     Scenario: View inventory(Functional Requirement 13)
-        Given An employee wants to view the inventory
-        And There are 2 ingredients in the inventory
+        Given An employee wants to view the 2 ingredients stored inventory
         When The inventory is displayed
         Then The ID, name, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
 
