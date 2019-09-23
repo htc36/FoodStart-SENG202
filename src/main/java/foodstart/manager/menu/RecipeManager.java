@@ -199,4 +199,12 @@ public class RecipeManager {
 		}
 		return out.substring(0, out.length() - 2);
 	}
+
+	/**
+	 * Removes a recipe given an ID
+	 * @param id the ID of the recipe to be removed
+	 */
+	public void removeRecipe(int id){
+		this.recipes.remove(id);
+	}
 }
