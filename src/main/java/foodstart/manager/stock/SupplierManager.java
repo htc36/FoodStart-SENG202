@@ -4,6 +4,7 @@ import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 
 /**
@@ -23,6 +24,13 @@ public class SupplierManager {
 	}
 
 	/**
+	 * Adds the specified Supplier object to the Map of suppliers using it's ID as the key.
+	 * @param targetSupplier the Supplier object to be added.
+	 */
+    public void addSupplier(Supplier targetSupplier) {
+        this.suppliers.put(targetSupplier.getId(), targetSupplier);
+    }
+	/**
 	 * Constructs and adds a new supplier to the map of suppliers based
 	 *
 	 * @param databaseId   the UID of the supplier
@@ -37,6 +45,17 @@ public class SupplierManager {
 		Supplier supplier = new Supplier(databaseId, supplierName, phoneNumber, phoneType, email, url, address);
 		this.suppliers.put(databaseId, supplier);
 	}
+	
+	/**
+	 * Adds all Supplier objects from the specified Map to this manager.
+	 * @param targetMap The target Map object.
+	 */
+	public void addSuppliers(Map<Integer, Supplier> targetMap) {
+	    for (Supplier supplier: targetMap.values()) {
+	        addSupplier(supplier);
+	    }
+	}
+	
 
 	/**
 	 * Removes a supplier from the map of suppliers

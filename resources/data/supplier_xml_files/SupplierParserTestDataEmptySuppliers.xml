@@ -2,25 +2,25 @@
 <!DOCTYPE suppliers SYSTEM "../../dtd/suppliers.dtd" >
 <suppliers>
     <supplier>
-        <sid></sid>
+        <sid>0</sid>
         <name></name>
         <address></address>
         <phone type="home"></phone>
     </supplier>
     <supplier>
-        <sid></sid>
+        <sid>1</sid>
         <name></name>
         <address></address>
         <phone type="work"></phone>
     </supplier>
     <supplier>
-        <sid></sid>
+        <sid>2</sid>
         <name></name>
         <address></address>
         <phone type="mobile"></phone>
     </supplier>
     <supplier>
-        <sid></sid>
+        <sid>3</sid>
         <name></name>
         <address></address>
         <phone type="home"></phone>
@@ -28,14 +28,14 @@
         <url></url>
     </supplier>
     <supplier>
-        <sid></sid>
+        <sid>4</sid>
         <name></name>
         <address></address>
         <phone type="home"></phone>
         <email></email>
     </supplier>
     <supplier>
-        <sid></sid>
+        <sid>5</sid>
         <name></name>
         <address></address>
         <phone type="home"></phone>
