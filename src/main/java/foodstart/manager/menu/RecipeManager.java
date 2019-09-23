@@ -41,8 +41,11 @@ public class RecipeManager {
 		 * @param ingredients the ingredients in the OTF recipe
 		 * @param price the price of the OTF recipe
 		 */
-		public int addRecipe(int basis, Map<Ingredient, Integer> ingredients, float price) {
+		public Integer addRecipe(int basis, Map<Ingredient, Integer> ingredients, float price) {
 			PermanentRecipe basisRecipe = recipes.get(basis);
+			if (basisRecipe == null) {
+				return null;
+			}
 			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basisRecipe, ingredients, price);
 			int id = counter;
 			counter++;
@@ -57,6 +60,15 @@ public class RecipeManager {
 		 */
 		public OnTheFlyRecipe getRecipe(int id) {
 			return this.onTheFlyRecipes.get(id);
+		}
+
+		/**
+		 * Returns the map of all OTF recipes modeled
+		 *
+		 * @return the map of all OTF recipes modeled
+		 */
+		public Map<Integer, OnTheFlyRecipe> getRecipes() {
+			return this.onTheFlyRecipes;
 		}
 	}
 
@@ -165,13 +177,13 @@ public class RecipeManager {
 		}
 		String out = "";
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
-			out = out.concat(String.format("%dx %s ", ingredient.getTruckStock(), ingredient.getName()));
+			out = out.concat(String.format("%dx %s, ", ingredient.getTruckStock(), ingredient.getName()));
 		}
-		return out;
+		return out.substring(0, out.length() - 2);
 	}
 
 	/**
-	 * Returns the ingredients and their truck stock quantity as a string.
+	 * Returns the ingredients as a string.
 	 * This version is intended for use when unable to differentiate between permanent and on the fly recipes
 	 *
 	 * @param recipe The recipe to get the ingredients of
