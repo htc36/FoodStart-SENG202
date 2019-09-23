@@ -4,8 +4,25 @@ package foodstart.model;
  * Represents the possible dietary requirements that a customer might have
  */
 public enum DietaryRequirement {
-	VEGAN("vegan", "Vegan"), VEGETARIAN("vegetarian", "Vegetarian"),
-	NUT_ALLERGY("nut_free", "Nut Free"), GLUTEN_FREE("gluten_free", "Gluten Free"), 
+	/**
+	 * Vegan food
+	 */
+	VEGAN("vegan", "Vegan"),
+	/**
+	 * Vegetarian food
+	 */
+	VEGETARIAN("vegetarian", "Vegetarian"),
+	/**
+	 * Nut free food
+	 */
+	NUT_ALLERGY("nut_free", "Nut Free"),
+	/**
+	 * Gluten free food
+	 */
+	GLUTEN_FREE("gluten_free", "Gluten Free"),
+	/**
+	 * Lactose free food
+	 */
 	LACTOSE_INTOLERANT("dairy_free", "Dairy Free");
 
 	/**
@@ -22,6 +39,7 @@ public enum DietaryRequirement {
 	 * Constructor for Enum
 	 *
 	 * @param dbName The name as it should appear in the database (eg XML)
+     * @param name the name/description of the dietary requirement
 	 */
 	DietaryRequirement(String dbName, String name) {
 		this.dbName = dbName;

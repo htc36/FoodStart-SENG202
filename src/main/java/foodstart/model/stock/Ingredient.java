@@ -73,6 +73,8 @@ public class Ingredient {
 
 	/**
 	 * Sets the ingredient's unit of measurement
+	 *
+	 * @param unit the unit of the ingredient
 	 */
 	public void setUnit(Unit unit) {
 		this.unit = unit;
@@ -89,6 +91,7 @@ public class Ingredient {
 
 	/**
 	 * Sets the ingredient's name
+	 * @param name the name of the ingredient
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -105,6 +108,7 @@ public class Ingredient {
 
 	/**
 	 * Sets the ingredient's identifier code
+	 * @param databaseId the id of the ingredient
 	 */
 	public void setId(int databaseId) {
 		this.id = databaseId;
@@ -121,6 +125,8 @@ public class Ingredient {
 
 	/**
 	 * Sets whether the ingredient complies with the dietary requirements
+	 *
+	 * @param safeFor the dietary requirements that the ingredient meets
 	 */
 	public void setSafeFor(Map<DietaryRequirement, Boolean> safeFor) {
 		this.safeFor = safeFor;
@@ -137,6 +143,8 @@ public class Ingredient {
 
 	/**
 	 * Sets the current stock available at the kitchen
+	 *
+	 * @param kitchenStock the kitchen stock of the ingredient
 	 */
 	public void setKitchenStock(int kitchenStock) {
 		this.kitchenStock = kitchenStock;
@@ -153,6 +161,8 @@ public class Ingredient {
 
 	/**
 	 * Sets the current stock available at the truck
+	 *
+	 * @param truckStock the truck stock of the ingredient
 	 */
 	public void setTruckStock(int truckStock) {
 		this.truckStock = truckStock;
@@ -166,8 +176,7 @@ public class Ingredient {
 	@Override
 	public Ingredient clone() {
 	    Map<DietaryRequirement, Boolean> mapCopy = new HashMap<DietaryRequirement, Boolean>(safeFor);
-	    Ingredient copy = new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
-	    return copy;
+		return new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
 	}
 	
 

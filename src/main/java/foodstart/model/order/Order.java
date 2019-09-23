@@ -5,11 +5,9 @@ import foodstart.model.menu.Recipe;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 
 /**
@@ -219,7 +217,13 @@ public class Order {
 	 * @return the previous amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer addItem(Recipe recipe, int amount) {
-		return this.items.put(recipe, amount);
+		if (this.items.put(recipe, amount) == null)  {
+			return null;
+		} else {
+			Integer previousAmount = this.items.put(recipe, amount);
+			calculateCost();
+			return previousAmount;
+		}
 	}
 
 	/**
@@ -229,7 +233,14 @@ public class Order {
 	 * @return the amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer removeItem(Recipe recipe) {
-		return this.items.remove(recipe);
+
+		if (this.items.remove(recipe) == null)  {
+			return null;
+		} else {
+			Integer recipeAmount = this.items.remove(recipe);
+			calculateCost();
+			return recipeAmount;
+		}
 	}
 
 	/**
@@ -265,8 +276,10 @@ public class Order {
 		if (this.items.containsKey(recipe)) {
 			if ((this.items.get(recipe) - amount) > 0) {
 				setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
+				calculateCost();
 			} else if ((this.items.get(recipe) - amount) == 0) {
 				removeItem(recipe); // removes the item completely from the order
+				calculateCost();
 			} else { // else, should throw an exception exceeding the lowest bound (negatives)
 				//throw new Exception
 			}
@@ -289,7 +302,8 @@ public class Order {
 	/**
 	 * Gets the recipe amount ordered
 	 *
-	 * @return variantCount the amount of the ordered recipe
+	 * @param recipe the recipe to get the number quantity of
+     * @return variantCount the amount of the ordered recipe
 	 */
 	public int getVariantCount(Recipe recipe) {
 		return this.items.get(recipe);
@@ -306,6 +320,15 @@ public class Order {
 		}
 		this.price = total;
 	}
+
+//	private void calculateCost() {
+//		Set<Recipe> recipes = this.items.keySet();
+//		float total = 0;
+//		for (Recipe recipe : recipes) {
+//			total += recipe.getPrice() * getItems().get(recipe);
+//		}
+//		this.price = total;
+//	}
 
 	/**
 	 * Sets the total price of the order, used if the cost of recipes changes

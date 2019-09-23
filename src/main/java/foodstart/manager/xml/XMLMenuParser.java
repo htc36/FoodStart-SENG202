@@ -76,6 +76,7 @@ public class XMLMenuParser extends XMLParser {
 	 * Parses one menu item from the given element
 	 *
 	 * @param element XML Element to parse
+	 * @return the id of the menu item
 	 */
 	private int parseOneMenuItem(Element element) {
 		int itemId = Integer.parseInt(element.getElementsByTagName("item_id").item(0).getTextContent());
@@ -92,7 +93,8 @@ public class XMLMenuParser extends XMLParser {
 	/**
 	 * Parses and validates the recipe list from the given NodeList
 	 *
-	 * @return Set of recipes
+	 * @param recipeIds the node list of the recipes ids
+     * @return Set of recipes
 	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
 	 */
 	private List<PermanentRecipe> parseRecipeList(NodeList recipeIds) {

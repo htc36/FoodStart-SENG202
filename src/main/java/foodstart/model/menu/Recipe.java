@@ -52,6 +52,7 @@ public abstract class Recipe {
 	/**
 	 * Returns true if the menu item is available
 	 * Checks if all the menu items ingredients have a kitchen stock greater than 0
+	 * @return true if all ingredients have a stock greater than 0; false otherwise
 	 */
 	public boolean isAvailable() {
 		Set<Ingredient> ingredients = this.ingredients.keySet();
@@ -66,7 +67,7 @@ public abstract class Recipe {
 	/**
 	 * Gets the price of the recipe
 	 *
-	 * @return price
+	 * @return the price of the recipe
 	 */
 	public float getPrice() {
 		return price;
@@ -74,7 +75,8 @@ public abstract class Recipe {
 
 	/**
 	 * Sets the price of the recipe
-	 */
+     * @param price the price of the recipe
+     */
 	public void setPrice(float price) {
 		this.price = price;
 	}
@@ -82,7 +84,7 @@ public abstract class Recipe {
 	/**
 	 * Gets all ingredients that are part of the recipe
 	 *
-	 * @return ingredients
+	 * @return the map of ingredients in the recipe to their quantities
 	 */
 	public Map<Ingredient, Integer> getIngredients() {
 		return ingredients;
@@ -90,7 +92,8 @@ public abstract class Recipe {
 
 	/**
 	 * Sets all ingredients that are part of the recipe
-	 */
+     * @param ingredients the map of ingredients in the recipe to their quantities
+     */
 	public void setIngredients(Map<Ingredient, Integer> ingredients) {
 		this.ingredients = ingredients;
 	}
@@ -117,6 +120,10 @@ public abstract class Recipe {
 		return this.ingredients.remove(ingredient);
 	}
 
+	/**
+	 * Returns the name of the recipe
+	 * @return the name of the recipe
+	 */
 	public abstract String getDisplayName();
 
 	/**

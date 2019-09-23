@@ -51,6 +51,9 @@ public class XMLPersistence extends Persistence {
 	 */
 	private Transformer transformer;
 
+	/**
+	 * Constructs an instance of an XML persistence manager
+	 */
 	public XMLPersistence() {
 		parsers = new HashMap<DataType, XMLParser>();
 		parsers.put(DataType.INGREDIENT, new XMLIngredientParser());
@@ -128,6 +131,7 @@ public class XMLPersistence extends Persistence {
 	 * necessary
 	 *
 	 * @param directory Directory that the DTD files should be copied into
+	 * @throws IOException if an exception occurs during file stream actions
 	 */
 	public void copyDTDFiles(File directory) throws IOException {
 		for (DataType type : DataType.values()) {

@@ -1,10 +1,10 @@
-Feature: Inventory feature. 
+Feature: Inventory feature
     Scenarios involving Ingredients
 
     @skip_scenario
     Scenario: View inventory(Functional Requirement 13)
-        Given An employee wants to view the inventory
-        And There are 2 ingredients in the inventory
+        Given There are 2 ingredients in the inventory
+        And An employee wants to view the 2 ingredients stored inventory
         When The inventory is displayed
         Then The ID, name, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
 
@@ -26,20 +26,20 @@ Feature: Inventory feature.
         Then It will be stored under "Relish" in the inventory
 
 
-    @skip_scenario
     Scenario: Removing an ingredient (FR14)
-        Given That ingredient "Cucumber" is in the inventory
-        And The ingredient's ID number is 6
+        Given There are 3 ingredients in the inventory
+        And The ingredient "Cucumber" is in the inventory
+        And The ingredient's ID number is 3
         When The ingredient "Cucumber" is manually removed
-        Then The ingredient ID 6 no longer exists in the inventory
+        Then The ingredient ID 3 no longer exists in the inventory
 
 
-    @skip_scenario
     Scenario: Decreasing the truck stock quantity of an ingredient in the inventory when an order is placed
-        Given That ingredient "Tomato" is in the inventory
+        Given There are 2 ingredients in the inventory
+        And The ingredient "Mayo" is in the inventory
         And Its truck stock is 20
-        When An order is placed that needs 5 of the ingredient "Tomato"
-        Then The truck stock for "Tomato" is 15
+        When An order is placed that needs 5 of the ingredient "Mayo"
+        Then The truck stock for "Mayo" is 15
 
 
     @skip_scenario

@@ -32,6 +32,7 @@ public abstract class Persistence {
 	/**
 	 * Saves all of the data stored in memory to internal storage (foodstart
 	 * directory)
+	 * @return true if the data was saved correctly; false otherwise
 	 */
 	public abstract boolean saveAllFiles();
 

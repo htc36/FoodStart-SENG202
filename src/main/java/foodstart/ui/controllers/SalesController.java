@@ -31,30 +31,71 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Controls the UI of the sales log management screen
+ */
 public class SalesController implements Refreshable {
-
+	/**
+	 * Table view of orders in the sales log
+	 */
 	@FXML
 	private TableView<Order> salesTableView;
+	/**
+	 * Table column for order IDs
+	 */
 	@FXML
 	private TableColumn<Order, String> tranIDCol;
+	/**
+	 * Table column for order names
+	 */
 	@FXML
 	private TableColumn<Order, String> nameCol;
+	/**
+	 * Table column for order recipes
+	 */
 	@FXML
 	private TableColumn<Order, String> itemsCol;
+	/**
+	 * Table column for total order prices
+	 */
 	@FXML
 	private TableColumn<Order, String> priceCol;
+	/**
+	 * Table column for order time
+	 */
 	@FXML
 	private TableColumn<Order, String> timeCol;
+	/**
+	 * Table column for order date
+	 */
 	@FXML
 	private TableColumn<Order, String> dateCol;
+	/**
+	 * Table column for order payment method
+	 */
 	@FXML
 	private TableColumn<Order, String> paymentMethodCol;
 
+	/**
+	 * FXML for the order editor popup
+	 */
 	private Parent orderEditorFXML;
+	/**
+	 * Stage for order editor popup
+	 */
 	private Stage popupStage;
+	/**
+	 * FXML loader for order editor popup
+	 */
 	private FXMLLoader editorLoader;
+	/**
+	 * Observable list of orders for table
+	 */
 	private ObservableList<Order> observableOrders;
 
+	/**
+	 * Initialises the SalesController
+	 */
 	@FXML
 	public void initialize() {
 		try {
@@ -70,6 +111,9 @@ public class SalesController implements Refreshable {
 		populateTable();
 	}
 
+	/**
+	 * Populates the sales table with data
+	 */
 	public void populateTable() {
 		OrderManager manager = Managers.getOrderManager();
 		Set<Order> orders = manager.getOrderSet();
@@ -84,6 +128,9 @@ public class SalesController implements Refreshable {
 		paymentMethodCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPaymentMethod().getNiceName()));
 	}
 
+	/**
+	 * Import sales log from a persistence files
+	 */
 	public void importSales() {
 		Stage stage = (Stage) this.salesTableView.getScene().getWindow();
 		FileChooser fileChooser = new FileChooser();
@@ -97,6 +144,9 @@ public class SalesController implements Refreshable {
 		refreshTable();
 	}
 
+	/**
+	 * Export sales log to a persistence files
+	 */
 	public void exportSales() {
 		Stage stage = (Stage) this.salesTableView.getScene().getWindow();
 		FileChooser fileChooser = new FileChooser();
@@ -113,6 +163,9 @@ public class SalesController implements Refreshable {
 		}
 	}
 
+	/**
+	 * Remove a sale from the sales log
+	 */
 	public void removeSale() {
 		Order order = salesTableView.getSelectionModel().getSelectedItem();
 		if (order == null) {
@@ -129,6 +182,9 @@ public class SalesController implements Refreshable {
 		refreshTable();
 	}
 
+	/**
+	 * Calls the edit order popup
+	 */
 	public void editSale() {
 		Order order = salesTableView.getSelectionModel().getSelectedItem();
 		if (order == null) {
@@ -145,6 +201,9 @@ public class SalesController implements Refreshable {
 		}
 	}
 
+	/**
+	 * Refreshes the order table
+	 */
 	@Override
 	public void refreshTable() {
 		this.observableOrders.setAll(Managers.getOrderManager().getOrderSet());

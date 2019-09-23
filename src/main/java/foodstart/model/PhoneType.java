@@ -4,10 +4,28 @@ package foodstart.model;
  * The possible types of phone numbers
  */
 public enum PhoneType {
-	MOBILE("Mobile"), WORK("Work"), HOME("Home");
+	/**
+	 * Cellphone
+	 */
+	MOBILE("Mobile"),
+	/**
+	 * Work/Company phone
+	 */
+	WORK("Work"),
+	/**
+	 * Personal phone
+	 */
+	HOME("Home");
 
+	/**
+	 * The name of the phone type
+	 */
 	private String name;
 
+	/**
+	 * Constructs an instance of a phone type
+	 * @param name the name of the phone type
+	 */
 	PhoneType(String name) {
 		this.name = name;
 	}

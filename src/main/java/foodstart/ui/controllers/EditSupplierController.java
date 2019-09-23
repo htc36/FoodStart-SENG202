@@ -12,34 +12,58 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Controls the UI for the edit suppliers screen
+ */
 public class EditSupplierController {
+    /**
+     * Input field for supplier name
+     */
     @FXML
     private TextField nameTextField;
-
+    /**
+     * Input field for supplier address
+     */
     @FXML
     private TextField addressTextField;
-
+    /**
+     * Input field for supplier website
+     */
     @FXML
     private TextField websiteTextField;
-
+    /**
+     * Input field for supplier email
+     */
     @FXML
     private TextField emailTextField;
-
+    /**
+     * Input field for supplier phone
+     */
     @FXML
     private TextField phoneTextField;
-
+    /**
+     * Text area for the supplier ID
+     */
     @FXML
     private Text codeText;
-
+    /**
+     * Combo box for supplier phone type
+     */
     @FXML
     private ComboBox<PhoneType> phoneTypeComboBox;
-
+    /**
+     * Label for if there is an error with the name input
+     */
     @FXML
     private Label nameErrorLabel;
-
+    /**
+     * Label for if there is an error with the address input
+     */
     @FXML
     private Label addressErrorLabel;
-
+    /**
+     * Label for if there is an error with the phone input
+     */
     @FXML
     private Label phoneErrorLabel;
 
@@ -59,7 +83,7 @@ public class EditSupplierController {
 
     /**
      * Called to set the supplier so the correct information can be displayed
-     * @param supplier
+     * @param supplier the supplier to edit
      */
     public void setSupplier(Supplier supplier) {
         codeText.setText(Integer.toString(supplier.getId()));

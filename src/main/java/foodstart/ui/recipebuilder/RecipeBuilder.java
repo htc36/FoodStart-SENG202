@@ -48,6 +48,7 @@ public class RecipeBuilder {
 	 *
 	 * @param baseItem Menu item that the user clicked on to customise
 	 * @param callback What should be called when the user is finished
+     * @param stockCheck the order builder for this recipe builder
 	 */
 	public RecipeBuilder(MenuItem baseItem, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
 		this.callback = callback;
@@ -69,9 +70,7 @@ public class RecipeBuilder {
 		stage.setScene(scene);
 		stage.show();
 
-		stage.setOnCloseRequest((event) -> {
-			cancel();
-		});
+		stage.setOnCloseRequest((event) -> cancel());
 
 		this.controller.populateFields(baseItem);
 	}
@@ -81,7 +80,9 @@ public class RecipeBuilder {
 	 * to be opened to customise the already existing recipe
 	 *
 	 * @param baseRecipe Recipe to be edited
-	 * @param callback   What should be called when the user is finished
+	 * @param quantity the quantity of the recipe
+     * @param callback   What should be called when the user is finished
+     * @param stockCheck the order builder for this recipe builder
 	 */
 	public RecipeBuilder(Recipe baseRecipe, int quantity, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
 		this.callback = callback;
@@ -105,9 +106,7 @@ public class RecipeBuilder {
 		stage.setScene(scene);
 		stage.show();
 
-		stage.setOnCloseRequest((event) -> {
-			cancel();
-		});
+		stage.setOnCloseRequest((event) -> cancel());
 
 		this.controller.populateFields(baseRecipe, quantity);
 	}

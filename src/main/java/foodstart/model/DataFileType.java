@@ -1,13 +1,25 @@
 package foodstart.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Models the possible persistence files that the system can import and export
+ */
 public enum DataFileType {
+	/**
+	 * Extensible Markup Language
+	 */
 	XML("XML files", "*.xml");
 
+	/**
+	 * The name/description of the file type
+	 */
 	private String description;
+
+	/**
+	 * The possible extensions for the file type
+	 */
 	private List<String> extensions;
 
 	/**
@@ -36,6 +48,11 @@ public enum DataFileType {
 		return extensions;
 	}
 
+	/**
+	 * Returns the first DataFileType with the given extensions
+	 * @param extensions the extension of the DataFileType to get
+	 * @return the first DataFileType with the given extensions
+	 */
 	public static DataFileType getFromExtensions(List<String> extensions) {
 		for (DataFileType type: DataFileType.values()) {
 			if (extensions.equals(type.getExtensions())) {

@@ -1,10 +1,5 @@
 package foodstart.ui;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.xml.XMLPersistence;
@@ -17,18 +12,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Main/Bootstrap class that launches the application
@@ -37,9 +32,19 @@ import javafx.util.Duration;
  */
 public class Main extends Application {
 
+	/**
+	 * The primary stage of the application
+	 */
 	private Stage primaryStage;
+
+	/**
+	 * The stage for the splash screen
+	 */
 	private Stage splashStage;
 
+	/**
+	 * The root FXML file
+	 */
 	private Parent rootFXML;
 
 	/**
@@ -86,9 +91,7 @@ public class Main extends Application {
 
 		});
 
-		fadeOut.setOnFinished((e) -> {
-			splashStage.hide();
-		});
+		fadeOut.setOnFinished((e) -> splashStage.hide());
 
 		fadeIn.play();
 		splashStage.show();
@@ -98,6 +101,7 @@ public class Main extends Application {
 	 * Create the splash screen for the application and display it on the given stage
 	 *
 	 * @param stage Stage to display the splash screen on
+	 * @return the layout for the splash screen
 	 */
 	private VBox createSplash(Stage stage) {
 		stage.initStyle(StageStyle.TRANSPARENT);
@@ -118,7 +122,7 @@ public class Main extends Application {
 	 * Blocks until everything required to start the application is loaded
 	 * (at least 1 second)
 	 *
-	 * @throws Exception
+	 * @throws Exception if an exception is encountered while loading the FXML files or sleeping the thread
 	 */
 	private void loadEverything() throws Exception {
 		long startTime = System.currentTimeMillis();
