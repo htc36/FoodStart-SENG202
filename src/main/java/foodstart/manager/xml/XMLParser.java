@@ -40,8 +40,6 @@ public abstract class XMLParser {
 	 * @param doc Document to populate with data
 	 * @param transformer 
 	 */
-	public void export(Document doc, Transformer transformer) {
-		//TODO make this abstract
-	}
+	public abstract void export(Document doc, Transformer transformer);
 
 }
