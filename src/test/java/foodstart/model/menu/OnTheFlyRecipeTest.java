@@ -57,7 +57,6 @@ public class OnTheFlyRecipeTest {
     public void isAvailable() {
 		assertTrue(testOnTheFlyRecipe.isAvailable());
         assertTrue(testOnTheFlyRecipe.getIngredients().containsKey(testIngredient2));
-
         testIngredient2.setKitchenStock(0);
 		assertFalse(testOnTheFlyRecipe.isAvailable());
     }

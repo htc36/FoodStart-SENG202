@@ -154,7 +154,6 @@ public class OrderSteps {
     @When("{int} {string} is removed from the order")
     public void isRemovedFromTheOrder(Integer quantity, String recipeName) {
         order.removeItem(recipeManager.getRecipeByDisplayName(recipeName));
-
     }
 
 
@@ -166,5 +165,6 @@ public class OrderSteps {
     @Then("The customer will be charged ${float} total")
     public void theCustomerWillBeCharged$Total(float totalCost) {
         assertTrue(totalCost == order.getTotalCost());
+//        System.out.println(order.getTotalCost());
     }
 }

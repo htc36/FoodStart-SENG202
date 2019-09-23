@@ -8,11 +8,13 @@ import foodstart.model.Unit;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
+import net.bytebuddy.asm.Advice;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class OrderTest {
 		testRecipe = new PermanentRecipe(1, "TestRecipeName", "TestRecipeInstructions", 5, testIngredients);
 		testItems = new HashMap<Recipe, Integer>();
 		testItems.put(testRecipe, 1);
-		testOrder = new Order(1, testItems, "TestCustomerName", 0, PaymentMethod.CASH);
+		testOrder = new Order(1, testItems, "TestCustomerName", LocalDateTime.now(), PaymentMethod.CASH);
 	}
 
 	@Test
@@ -84,13 +86,17 @@ public class OrderTest {
 	}
 
 	@Test
-	public void getTimePlaced() {}
+	public void getTimePlaced() {
+		assertEquals(LocalDateTime.now(), testOrder.getTimePlaced());
+	}
 
-	@Ignore
 	@Test
-	public void setTimePlaced() {}
+	public void setTimePlaced() {
+		LocalDateTime setDate = LocalDateTime.now();
+		testOrder.setTimePlaced(setDate);
+		assertEquals(setDate, testOrder.getTimePlaced());
+	}
 
-	@Ignore
 	@Test
 	public void getPaymentMethod() {
 		assertEquals(PaymentMethod.CASH, testOrder.getPaymentMethod());
@@ -138,15 +144,11 @@ public class OrderTest {
 	}
 
 	@Test
-	public void setVariantAmount() {}
-
-	@Test
-	public void increaseVariantAmount() {
-		assertTrue(testOrder.getItems().containsKey(testRecipe));
-		assertTrue(1 == testOrder.getItems().get(testRecipe));
-        testOrder.increaseVariantAmount(testRecipe, 2);
-        assertTrue(3 == testOrder.getItems().get(testRecipe));
-    }
+	public void setVariantAmount() {
+		assertEquals(1, testOrder.getVariantCount(testRecipe));
+		testOrder.setVariantAmount(testRecipe, 2);
+		assertEquals(2, testOrder.getVariantCount(testRecipe));
+	}
 
 	@Test
 	public void decreaseVariantAmount() {
@@ -159,11 +161,12 @@ public class OrderTest {
 	@Test
 	public void getTotalItemCount() {
         assertEquals((Integer) 1, testOrder.getTotalItemCount());
-	    testOrder.increaseVariantAmount(testRecipe, 3);
-//        assertEquals((Integer) 3, testOrder.getTotalItemCount());
+	    testOrder.addItem(testRecipe, 3);
     }
 
 	@Test
-	public void getVariantCount() {}
+	public void getVariantCount() {
+		assertEquals(1, testOrder.getVariantCount(testRecipe));
+	}
 
 }

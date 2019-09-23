@@ -3,14 +3,14 @@ Feature: Order feature
 
   @skip_scenario
   Scenario: Ordering a single item (FR11)
-        Given A "hamburger" costs $5.00, which is a "permanent recipe"
-        When The customer "Sally" orders 1 "hamburger" and pays by "cash"
-        Then The customer will be charged $5.00 total
+    Given A "hamburger" costs $5.00, which is a "permanent recipe"
+    When The customer "Sally" orders 1 "hamburger" and pays by "cash"
+    Then The customer will be charged $5.00 total
 
   Scenario: Ordering multiple items (FR11)
-      Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
-      When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
-      Then The customer will be charged $8.50 total
+    Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
+    When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
+    Then The customer will be charged $8.50 total
 
   Scenario: Removing an item in the order (FR11)
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
@@ -27,25 +27,29 @@ Feature: Order feature
 
   @skip_scenario
   Scenario: Ordering the same item more than once (FR11)
-      Given A "hamburger" costs $5.00, which is a "permanent recipe"
-      When The customer "Sally" orders 8 "hamburger" and pays by "eftpos"
-      Then The customer will be charged $40.00 total
+    Given A "hamburger" costs $5.00, which is a "permanent recipe"
+    When The customer "Sally" orders 8 "hamburger" and pays by "eftpos"
+    Then The customer will be charged $40.00 total
 
 #    @skip_scenario
 #    Scenario: Editing an order (FR11)
 #        Given The current order has 1 "orange slushy"
 #        When The flavour is edited to tropical
 #        Then The system checks that it exists and replaces orange with tropical
-#    @skip_scenario
-#    Scenario: Customer has dietary requirements (FR11)
-#        Given A customer with celiac disease and would like to know what items are gluten-free
-#        When The employee selects gluten-free options
-#        Then The items available are filtered to only show items that are gluten-free
+#
+    @skip_scenario
+    Scenario: Customer has dietary requirements (FR11)
+        Given A customer with celiac disease and wants to know if the "mayo" is "gluten-free"
+        And "mayo" is gluten-free
+        When The employee checks the if "mayo" is "gluten-free"
+        Then The items available are filtered to only show items that are gluten-free
+
 #    @skip_scenario
 #    Scenario: An item is sold out (FR11)
 #        Given A customer wants a hamburger but is sold out
 #        When The employee is about to order the item
 #        Then The employee will not be able to place hamburger to the order
+
 #    @skip_scenario
 #    Scenario: Finalising an order (FR11)
 #        Given Customer "Sally" ordered 1 "hamburger"
@@ -53,18 +57,21 @@ Feature: Order feature
 #        When The employee confirms the order
 #        Then "Sally" will be charged $5.00 total
 #        And The order is recorded in the sales history
+
 #    @skip_scenario
 #    Scenario: Payment is overdue (FR11)
 #        Given The total order costs $8.50
 #        And The customer pays $10.00
 #        When The payment is finalised
 #        Then The customer receives $1.50 change
+
 #    @skip_scenario
 #    Scenario: Payment is under (FR11)
 #        Given The total order costs $8.50
 #        And The customer pays $5.00
 #        When The payment is finalised
 #        Then The payment is short by $3.50
+
 #    @skip_scenario
 #    Scenario: View Sales Log (FR12)
 #        Given Customer "Sally" ordered 1 "hamburger"

@@ -254,19 +254,6 @@ public class Order {
 	}
 
 	/**
-	 * MIGHT NOT NEED THIS BECAUSE OF THE addItem METHOD
-	 * Increases the amount of the recipe in the order
-	 *
-	 * @param recipe the recipe that requires its amount to be increased
-	 * @param amount the amount to add onto the current amount in the order
-	 */
-	public void increaseVariantAmount(Recipe recipe, int amount) {
-		if (this.items.containsKey(recipe)) {
-			setVariantAmount(recipe, (this.items.get(recipe) + amount));
-		} // else, should throw an exception about the recipe not already existing in the order
-	}
-
-	/**
 	 * Decreases the amount of the recipe in the order
 	 *
 	 * @param recipe the recipe that requires its amount to be decreased
@@ -281,7 +268,7 @@ public class Order {
 				removeItem(recipe); // removes the item completely from the order
 				calculateCost();
 			} else { // else, should throw an exception exceeding the lowest bound (negatives)
-				//throw new Exception
+//				throw new Exception
 			}
 		} // else, should throw an exception about the recipe not already existing in the order
 	}
