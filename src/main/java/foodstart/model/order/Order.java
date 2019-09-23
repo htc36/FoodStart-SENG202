@@ -63,6 +63,8 @@ public class Order {
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public Order(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
+
+
 		this.id = id;
 		this.items = items;
 		this.customerName = customerName;
@@ -300,10 +302,16 @@ public class Order {
 	 * Calculates the total price of the order based on the current price of the recipes included
 	 */
 	private void calculateCost() {
+		/*
 		Set<Recipe> recipes = this.items.keySet();
 		float total = 0;
 		for (Recipe recipe : recipes) {
 			total += recipe.getPrice();
+		}
+		this.price = total;*/
+		float total = 0;
+		for (Map.Entry<Recipe, Integer> entry : items.entrySet()) {
+			total += entry.getKey().getPrice() * entry.getValue();
 		}
 		this.price = total;
 	}
