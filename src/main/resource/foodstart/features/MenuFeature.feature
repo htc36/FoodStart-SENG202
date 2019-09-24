@@ -1,4 +1,4 @@
-Feature: Menu feature. 
+Feature: Menu feature
     Scenarios involving the menu
 
 #  @skip_scenario

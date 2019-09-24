@@ -10,7 +10,6 @@ Feature: Order feature
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
     When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
     Then The customer will be charged $8.50 total
-
   @skip_scenario
   Scenario: Removing an item in the order (FR11)
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
@@ -37,10 +36,15 @@ Feature: Order feature
 #        Then The system checks that it exists and replaces orange with tropical
 #
 
-    Scenario: Customer has dietary requirements (FR11)
-        Given A customer wants to know if the "sandwich" is "gluten-free"
-        When The employee checks the if "sandwich" is "gluten-free"
-        Then The "sandwich" should be "gluten-free"
+  Scenario: Customer has dietary requirements and the menu item meets the requirement (FR11)
+      Given A customer wants to know if the "sandwich" is "gluten-free"
+      When The employee checks the if "sandwich" is "gluten-free"
+      Then The "sandwich" should be "gluten-free"
+
+  Scenario: Customer has dietary requirements and the menu item does not the requirement (FR11)
+    Given A customer wants to know if the "sandwich" is "vegan", but it is not
+    When The employee checks the if "sandwich" is "vegan"
+    Then The "sandwich" should not be "vegan"
 
 #    @skip_scenario
 #    Scenario: An item is sold out (FR11)

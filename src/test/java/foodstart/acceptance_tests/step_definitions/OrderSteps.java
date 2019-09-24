@@ -33,6 +33,7 @@ public class OrderSteps {
     private Map<Recipe, Integer> orderItems;
     private int orderId;
     private RecipeManager recipeManager;
+    private boolean booleanReq;
 
 
     public void setUp() {
@@ -182,11 +183,32 @@ public class OrderSteps {
 
     @Given("A customer wants to know if the {string} is {string}")
     public void aCustomerWantsToKnowIfTheIs(String recipeName, String dietaryReq) {
+        setUp();
         Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
-        safeFor.put(DietaryRequirement.GLUTEN_FREE, true);
-        Ingredient gfBread = new Ingredient(Unit.GRAMS, "Bread GF", 1, safeFor, 150, 80);
+        switch (dietaryReq) {
+            case "gluten-free":
+                safeFor.put(DietaryRequirement.GLUTEN_FREE, true);
+                break;
+            case "vegan":
+                safeFor.put(DietaryRequirement.VEGAN, true);
+                break;
+            case "vegetarian":
+                safeFor.put(DietaryRequirement.VEGETARIAN, true);
+                break;
+            case "containing dairy":
+                safeFor.put(DietaryRequirement.LACTOSE_INTOLERANT, true);
+                break;
+            case "containing nuts":
+                safeFor.put(DietaryRequirement.NUT_ALLERGY, true);
+                break;
+
+            default:
+                throw new cucumber.api.PendingException();
+        }
+
+        Ingredient ingredient = new Ingredient(Unit.GRAMS, "ingredient", 1, safeFor, 150, 80);
         Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
-        ingredients.put(gfBread, 2);
+        ingredients.put(ingredient, 2);
         recipeManager.addRecipe(1, recipeName, "Recipe Instructions",12.5f, ingredients);
     }
 
@@ -194,7 +216,19 @@ public class OrderSteps {
     public void theEmployeeChecksTheIfIs(String recipeName, String dietaryReq) {
         switch (dietaryReq) {
             case ("gluten-free"):
-                recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.GLUTEN_FREE);
+                booleanReq = recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.GLUTEN_FREE);
+                break;
+            case ("vegan"):
+                booleanReq = recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.VEGAN);
+                break;
+            case ("vegetarian"):
+                booleanReq = recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.VEGETARIAN);
+                break;
+            case ("containing dairy"):
+                booleanReq = recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.LACTOSE_INTOLERANT);
+                break;
+            case ("containing nuts"):
+                booleanReq = recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.NUT_ALLERGY);
                 break;
             default:
                 throw new cucumber.api.PendingException();
@@ -207,10 +241,56 @@ public class OrderSteps {
             case ("gluten-free"):
                 assertTrue(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.GLUTEN_FREE));
                 break;
+            case ("vegan"):
+                assertTrue(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.VEGAN));
+                break;
+            case ("vegetarian"):
+                assertTrue(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.VEGETARIAN));
+                break;
+            case ("containing dairy"):
+                assertTrue(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.LACTOSE_INTOLERANT));
+                break;
+            case ("containing nuts"):
+                assertTrue(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.NUT_ALLERGY));
+                break;
             default:
                 throw new cucumber.api.PendingException();
         }
     }
 
 
+
+
+    @Given("A customer wants to know if the {string} is {string}, but it is not")
+    public void aCustomerWantsToKnowIfTheIsButItIsNot(String recipeName, String dietaryReq) {
+        setUp();
+        Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
+        Ingredient ingredient = new Ingredient(Unit.GRAMS, "ingredient", 1, safeFor, 150, 80);
+        Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
+        ingredients.put(ingredient, 2);
+        recipeManager.addRecipe(1, recipeName, "Recipe Instructions",12.5f, ingredients);
+    }
+
+    @Then("The {string} should not be {string}")
+    public void theShouldNotBe(String recipeName, String dietaryReq) {
+        switch (dietaryReq) {
+            case ("gluten-free"):
+                assertFalse(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.GLUTEN_FREE));
+                break;
+            case ("vegan"):
+                assertFalse(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.VEGAN));
+                break;
+            case ("vegetarian"):
+                assertFalse(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.VEGETARIAN));
+                break;
+            case ("containing dairy"):
+                assertFalse(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.LACTOSE_INTOLERANT));
+                break;
+            case ("containing nuts"):
+                assertFalse(recipeManager.getRecipeByDisplayName(recipeName).isSafeFor(DietaryRequirement.NUT_ALLERGY));
+                break;
+            default:
+                throw new cucumber.api.PendingException();
+        }
+    }
 }
