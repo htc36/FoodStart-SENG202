@@ -2,7 +2,7 @@ Feature: Inventory feature
     Scenarios involving Ingredients
 
     @skip_scenario
-    Scenario: View inventory(Functional Requirement 13)
+    Scenario: View inventory(UC7)
         Given There are 2 ingredients in the inventory
         And An employee wants to view the 2 ingredients stored inventory
         When The inventory is displayed
@@ -10,13 +10,13 @@ Feature: Inventory feature
 
 
     @skip_scenario # This scenario is not currently relevant
-    Scenario: Check ingredients that are low in quantity (FR13)
+    Scenario: Check ingredients that are low in quantity (UC7)
         Given The list of ingredients are shown
         When Ingredients are filtered out by stock
         Then The ingredients will be displayed in ascending order of stocks available
 
 
-    Scenario: Adding an ingredient to the list (FR14)
+    Scenario: Adding an ingredient to the list (UC12)
         Given That ingredient "Relish" is not found in the inventory
         And Its unit type is "GRAMS"
         And Its kitchen stock is 200
@@ -26,7 +26,7 @@ Feature: Inventory feature
         Then It will be stored under "Relish" in the inventory
 
 
-    Scenario: Removing an ingredient (FR14)
+    Scenario: Removing an ingredient (UC12)
         Given There are 3 ingredients in the inventory
         And The ingredient "Cucumber" is in the inventory
         And The ingredient's ID number is 3
@@ -34,7 +34,7 @@ Feature: Inventory feature
         Then The ingredient ID 3 no longer exists in the inventory
 
 
-    Scenario: Decreasing the truck stock quantity of an ingredient in the inventory when an order is placed
+    Scenario: Decreasing the truck stock quantity of an ingredient in the inventory when an order is placed (UC4)
         Given There are 2 ingredients in the inventory
         And The ingredient "Mayo" is in the inventory
         And Its truck stock is 20
@@ -43,7 +43,7 @@ Feature: Inventory feature
 
 
     @skip_scenario
-    Scenario: Make an item unavailable due to an ingredient being sold out
+    Scenario: Make an item unavailable due to an ingredient being sold out (UC4)
         Given That ingredient "Lettuce" is in the inventory
         And Its truck stock is 0
         When An order is placed containing the ingredient "Lettuce"
@@ -51,7 +51,7 @@ Feature: Inventory feature
 
 
     @skip_scenario
-    Scenario: Editing an item in the inventory (FR16)
+    Scenario: Editing an item in the inventory (UC12)
         Given That ingredient "Mushroom" is in the inventory
         And Its unit type is "GRAMS"
         And Its truck stock is 50
