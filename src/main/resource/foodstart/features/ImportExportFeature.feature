@@ -1,4 +1,4 @@
-Feature: ImportExport feature.
+Feature: ImportExport feature
     Scenarios involving importing and exporting XML files
 
 #    @skip_scenario
