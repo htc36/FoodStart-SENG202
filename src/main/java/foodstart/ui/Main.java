@@ -1,5 +1,10 @@
 package foodstart.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.xml.XMLPersistence;
@@ -12,18 +17,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * Main/Bootstrap class that launches the application
@@ -138,9 +143,29 @@ public class Main extends Application {
 	        closeConfirmation.setHeaderText("Are you sure you want to exit?");
 	        closeConfirmation.initModality(Modality.APPLICATION_MODAL);
 	        closeConfirmation.initOwner(primaryStage);
+	        
+	        closeConfirmation.getButtonTypes().clear();
+	        
+	        closeConfirmation.getButtonTypes().add(ButtonType.OK);
+	        Button saveButton = (Button) closeConfirmation.getDialogPane().lookupButton(ButtonType.OK);
+            saveButton.textProperty().set("Save");
+	        
+	        closeConfirmation.getButtonTypes().add(ButtonType.APPLY);
+	        Button closeButton = (Button) closeConfirmation.getDialogPane().lookupButton(ButtonType.APPLY);
+            closeButton.textProperty().set("Don't Save");
+            
+            
+            closeConfirmation.getButtonTypes().add(ButtonType.CANCEL);
+	        Button cancelButton = (Button) closeConfirmation.getDialogPane().lookupButton(ButtonType.CANCEL);
+            cancelButton.textProperty().set("Cancel");
+	        
 
 	        Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
-	        if (!ButtonType.OK.equals(closeResponse.get())) {
+	        if (ButtonType.OK.equals(closeResponse.get())) {
+	        	if (!Managers.getDefaultPersistence().saveAllFiles()) {
+	        		event.consume();
+	        	}
+	        } else if (!closeResponse.isPresent() || ButtonType.CANCEL.equals(closeResponse.get())) {
 	            event.consume();
 	        }
 		});
