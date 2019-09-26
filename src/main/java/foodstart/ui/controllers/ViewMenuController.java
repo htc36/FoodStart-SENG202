@@ -1,5 +1,6 @@
 package foodstart.ui.controllers;
 
+import foodstart.manager.Managers;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import javafx.beans.property.SimpleStringProperty;
@@ -67,6 +68,11 @@ public class ViewMenuController {
      * The stage of the current screen
      */
     Stage stage;
+    
+    /**
+     * The displayed menu
+     */
+    int menuId;
 
     /**
      * Called when a menu box is clicked to be viewed
@@ -92,6 +98,7 @@ public class ViewMenuController {
         menuNameText.setText(menu.getTitle());
         menuDescriptionText.setText(menu.getDescription());
         populateTable(menu);
+        menuId = menu.getId();
     }
 
     /**
@@ -129,7 +136,13 @@ public class ViewMenuController {
     }
 
 
-
+    /**
+     * Sets the open menu as the current one in create order panel
+     */
+    public void setCurrentMenu() {
+    	Managers.getMenuManager().setCurrentMenu(menuId);
+    	stage.close();
+    }
 
 
 }

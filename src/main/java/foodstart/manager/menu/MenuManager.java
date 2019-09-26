@@ -1,9 +1,13 @@
 package foodstart.manager.menu;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
-
-import java.util.*;
 
 /**
  * Acts as a controller, storing and managing the menus in the model
@@ -14,6 +18,11 @@ public class MenuManager {
 	 * The map of all menus modeled in the system
 	 */
 	private Map<Integer, Menu> menus;
+	
+	/**
+	 * Current menu to display. 
+	 */
+	int currentMenu;
 
 	/**
 	 * Constructs an instance of a menu manager
@@ -79,4 +88,25 @@ public class MenuManager {
 	public Set<Menu> getMenuSet() {
 		return new HashSet<Menu>(this.menus.values());
 	}
+
+	/**
+	 * Gets the current menu to display
+	 * @return menu id on display, default 0
+	 */
+	public int getCurrentMenu() {
+		return currentMenu;
+	}
+
+	/**
+	 * Sets the current menu to display
+	 * @param currentMenu Menu id to display
+	 */
+	public void setCurrentMenu(int currentMenu) {
+		if (this.getMenu(currentMenu) == null) {
+			throw new RuntimeException("Set displayed menu to "+currentMenu+" but such a menu does not exist");
+		}
+		this.currentMenu = currentMenu;
+	}
+	
+	
 }

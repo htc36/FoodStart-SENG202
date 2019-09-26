@@ -43,7 +43,7 @@
       <ButtonBar buttonMinWidth="150.0" prefHeight="40.0" prefWidth="600.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
         <buttons>
             <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
-            <Button fx:id="btnSetCurrentMenu" mnemonicParsing="false" text="Set as Current Menu" />
+            <Button fx:id="btnSetCurrentMenu" mnemonicParsing="false" onAction="#setCurrentMenu" text="Set as Current Menu" />
         </buttons>
       </ButtonBar>
       <Text fx:id="menuDescriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="MENU-DESCRIPTION" GridPane.rowIndex="1">
