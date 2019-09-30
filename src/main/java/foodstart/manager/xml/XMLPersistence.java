@@ -136,7 +136,7 @@ public class XMLPersistence extends Persistence {
 	public void copyDTDFiles(File directory) throws IOException {
 		for (DataType type : DataType.values()) {
 			File file = new File(directory.getAbsolutePath() + File.separator + type.name().toLowerCase() + ".dtd");
-			InputStream dtdFile = getClass().getResourceAsStream("../../dtd/" + type.name().toLowerCase() + ".dtd");
+			InputStream dtdFile = getClass().getResourceAsStream("/foodstart/dtd/" + type.name().toLowerCase() + ".dtd");
 			if (dtdFile != null) {
 				FileOutputStream output = new FileOutputStream(file);
 				byte[] fileContents = new byte[16384]; // dtd file shouldn't be bigger than 16kB

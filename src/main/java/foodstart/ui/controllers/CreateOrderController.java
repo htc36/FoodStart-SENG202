@@ -1,12 +1,17 @@
 package foodstart.ui.controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import foodstart.manager.Managers;
 import foodstart.model.PaymentMethod;
+import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.OrderBuilder;
+import foodstart.ui.Refreshable;
 import foodstart.ui.recipebuilder.RecipeBuilder;
 import foodstart.ui.recipebuilder.RecipeBuilderRunnable;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -17,9 +22,21 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -29,7 +46,7 @@ import javafx.scene.text.TextAlignment;
  *
  * @author Alex Hobson on 04/09/2019
  */
-public class CreateOrderController {
+public class CreateOrderController implements Refreshable {
 	/**
 	 * Flow pane for menu items
 	 */
@@ -92,7 +109,7 @@ public class CreateOrderController {
 	@FXML
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-		populateMenu(flowPane);
+		refreshTable();
 		orderBuilder = new OrderBuilder();
 
 		columnQty.setCellValueFactory(
@@ -110,18 +127,6 @@ public class CreateOrderController {
 			orderPaymentMethod.getItems().add(method.getNiceName());
 		}
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
-	}
-
-	/**
-	 * Populate the FlowPane with all menu items
-	 *
-	 * @param flowPane The flowpane to populate
-	 */
-	public void populateMenu(FlowPane flowPane) {
-		flowPane.getChildren().clear();
-		for (MenuItem item : Managers.getMenuItemManager().getMenuItemSet()) {
-			flowPane.getChildren().add(createMenuItemBox(item));
-		}
 	}
 
 	/**
@@ -265,6 +270,23 @@ public class CreateOrderController {
 					}
 				}
 			}, orderBuilder);
+		}
+	}
+
+	@Override
+	public void refreshTable() {
+		flowPane.getChildren().clear();
+		int menuId = Managers.getMenuManager().getCurrentMenu();
+		Menu menu = Managers.getMenuManager().getMenu(menuId);
+		Set<MenuItem> items = new HashSet<MenuItem>();
+		if (menu == null) {
+			items.addAll(Managers.getMenuItemManager().getMenuItemSet());
+		} else {
+			items.addAll(menu.getMenuItems());
+		}
+		
+		for (MenuItem item : items) {
+			flowPane.getChildren().add(createMenuItemBox(item));
 		}
 	}
 }

@@ -55,10 +55,6 @@ public class InventorySteps {
         Ingredient peanutButter = new Ingredient(Unit.GRAMS, "Peanut Butter", 2, safeForIngredient2, 120, 45);
         Ingredient cucumber = new Ingredient(Unit.GRAMS, "Cucumber", 3, safeForIngredient3, 10, 100);
 
-        System.out.println(mayo.getId());
-        System.out.println(mayo.getName());
-        System.out.println(mayo.getTruckStock());
-
         ingredientSet.put(0, mayo);
         ingredientSet.put(1, peanutButter);
         ingredientSet.put(2, cucumber);
@@ -151,11 +147,19 @@ public class InventorySteps {
     @Then("The truck stock for {string} is {int}")
     public void theTruckStockForIs(String ingredientName, Integer count) {
         Integer current = ingredientManager.getIngredientByName(ingredientName).getTruckStock();
-        System.out.println(current);
-
-        System.out.println(count);
         assertEquals(count, current);
     }
 
+    @Then("The kitchen stock for {string} is {int}")
+    public void theKitchenStockForIs(String ingredientName, Integer count) {
+        Integer current = ingredientManager.getIngredientByName(ingredientName).getKitchenStock();
+        assertEquals(count, current);
+    }
 
+    @Then("The dietary requirement for {string} will have {string}")
+    public void theDietaryRequirementForWillHave(String ingredientName, String dietaryRequirement) {
+        DietaryRequirement dietaryFlag = DietaryRequirement.matchDietaryRequirement(dietaryRequirement);
+        Map<DietaryRequirement, Boolean> dietaryFlags = ingredientManager.getIngredientByName(ingredientName).getSafeFor();
+        assertTrue(dietaryFlags.get(dietaryFlag));
+    }
 }

@@ -78,6 +78,11 @@ public class AddSupplierController {
     public void initialize() {
         setNewCode();
         this.phoneTypeComboBox.setItems(FXCollections.observableArrayList(PhoneType.values()));
+        this.phoneTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                phoneTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        }));
         phoneTypeComboBox.getSelectionModel().select(PhoneType.WORK); // default phone type
     }
 

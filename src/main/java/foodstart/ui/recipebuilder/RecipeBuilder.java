@@ -90,7 +90,7 @@ public class RecipeBuilder {
 
 		orderBuilder.setEditing(baseRecipe, true);
 
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../customiseitem.fxml"));
+		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("customiseItem.fxml"));
 		try {
 			loader.load();
 		} catch (IOException e) {

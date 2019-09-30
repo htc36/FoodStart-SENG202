@@ -106,7 +106,6 @@ public class MainController {
 	 * Shows the manage menus screen
 	 */
 	public void showManageAllMenus() {
-		//((AllMenusController) manageAllMenus.getController()).populateAllMenus();
 		rootPane.setCenter(manageAllMenus.getRoot());
 	}
 
