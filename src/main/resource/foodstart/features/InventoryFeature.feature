@@ -22,8 +22,13 @@ Feature: Inventory feature
         And Its kitchen stock is 200
         And Its truck stock is 50
         And Its dietary requirement is "VEGAN"
+        And Its dietary requirement is "VEGETARIAN"
         When Ingredient "Relish" is manually added to the inventory
         Then It will be stored under "Relish" in the inventory
+        And The kitchen stock for "Relish" is 200
+        And The truck stock for "Relish" is 50
+        And The dietary requirement for "Relish" will have "VEGAN"
+        And The dietary requirement for "Relish" will have "VEGETARIAN"
 
 
     Scenario: Removing an ingredient (UC12)
@@ -32,6 +37,20 @@ Feature: Inventory feature
         And The ingredient's ID number is 3
         When The ingredient "Cucumber" is manually removed
         Then The ingredient ID 3 no longer exists in the inventory
+
+
+    Scenario Outline: Removing ingredients (UC12)
+        Given There are 3 ingredients in the inventory
+        And The ingredient <ingredientName> is in the inventory
+        And The ingredient's ID number is <id>
+        When The ingredient <ingredientName> is manually removed
+        Then The ingredient ID <id> no longer exists in the inventory
+        Examples:
+        | ingredientName | id |
+        | "Cucumber"     | 3  |
+        | "Peanut Butter"| 2  |
+        | "Mayo"         | 1  |
+
 
 
     Scenario: Decreasing the truck stock quantity of an ingredient in the inventory when an order is placed (UC4)
