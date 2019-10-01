@@ -1,11 +1,12 @@
 package foodstart.manager;
 
-import java.io.File;
-
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 
+import java.io.File;
+
 /**
+ * Represents a possible persistence manager
  * @author Alex Hobson on 22/08/2019
  */
 public abstract class Persistence {

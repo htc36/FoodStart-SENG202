@@ -53,6 +53,9 @@ public class OrderManager {
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+		if (items == null) {
+			items = new HashMap<Recipe, Integer>();
+		}
 		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
 		this.orders.put(id, order);
 	}
@@ -67,6 +70,9 @@ public class OrderManager {
 	 * @param paymentMethod The payment method that the customer chose
 	 */
 	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
+		if (items == null) {
+			items = new HashMap<Recipe, Integer>();
+		}
 		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
 		this.orders.put(id, order);
 	}
@@ -82,6 +88,9 @@ public class OrderManager {
 	 * @param cost          The total cost of the order
 	 */
 	public void addOrder(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod, float cost) {
+		if (items == null) {
+			items = new HashMap<Recipe, Integer>();
+		}
 		Order order = new Order(id, items, customerName, timePlaced, paymentMethod, cost);
 		this.orders.put(id, order);
 	}
@@ -189,7 +198,11 @@ public class OrderManager {
 	 */
 	public Set<Recipe> getOrderRecipes(int id) {
 		Order order = this.orders.get(id);
-		return order.getItems().keySet();
+		if (order != null) {
+			return order.getItems().keySet();
+		} else {
+			return null;
+		}
 	}
 }
 
