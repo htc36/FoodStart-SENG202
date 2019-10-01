@@ -250,10 +250,18 @@ public class XMLSalesLogParser extends XMLParser {
 
 		Element ingredientsElement = doc.createElement("ingredients");
 		for (Ingredient ingredient : recipe.getIngredients().keySet()) {
+			Element ingredientElement = doc.createElement("ingredient");
+			ingredientsElement.appendChild(ingredientElement);
 			Element ingredientIDElement = doc.createElement("ingredient_id");
 			ingredientIDElement.appendChild(doc.createTextNode(String.valueOf(ingredient.getId())));
-			ingredientsElement.appendChild(ingredientIDElement);
+			ingredientElement.appendChild(ingredientIDElement);
+			Element ingredientQuantityElement = doc.createElement("ingredient_quantity");
+			ingredientQuantityElement.appendChild(doc.createTextNode(String.valueOf(recipe.getIngredients().get(ingredient))));
+			ingredientElement.appendChild(ingredientQuantityElement);
 		}
+		Element otfPrice = doc.createElement("otf_price");
+		otfPrice.appendChild(doc.createTextNode(Float.toString(recipe.getPrice())));
+		ingredientsElement.appendChild(otfPrice);
 		recipeElement.appendChild(ingredientsElement);
 
 
