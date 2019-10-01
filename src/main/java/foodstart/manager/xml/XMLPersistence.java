@@ -119,6 +119,8 @@ public class XMLPersistence extends Persistence {
 			FileWriter writer = new FileWriter(file);
 			StreamResult result = new StreamResult(writer);
 			transformer.transform(source, result);
+			
+			writer.close();
 		} catch (IOException e) {
 			throw new ExportFailureException("Exporter threw an IO Exception: " + e.getMessage());
 		} catch (TransformerException e) {
