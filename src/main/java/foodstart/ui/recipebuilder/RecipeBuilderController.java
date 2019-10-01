@@ -1,29 +1,38 @@
 package foodstart.ui.recipebuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
+import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Controller for RecipeBuilder
  *
  * @author Alex Hobson on 07/09/2019
  */
-public class RecipeBuilderController {
+public class RecipeBuilderController implements Refreshable {
 	/**
 	 * Text area for the menu item name
 	 */
@@ -74,6 +83,11 @@ public class RecipeBuilderController {
 	 */
 	@FXML
 	private TableColumn<Ingredient, Integer> tableQuantityColumn;
+	/**
+	 * Table column for ingredient remove button
+	 */
+	@FXML
+	private TableColumn<Ingredient, Integer> tableActionsColumn;
 	/**
 	 * Combo box for all ingredients
 	 */
@@ -141,6 +155,7 @@ public class RecipeBuilderController {
 				+ Managers.getIngredientManager().safeForString(cell.getValue().getId()) + ")"));
 
 		tableQuantityColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
+		tableActionsColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
 
 		tableQuantityColumn.setCellFactory(param -> new TableCell<Ingredient, Integer>() {
 
@@ -153,6 +168,29 @@ public class RecipeBuilderController {
 					Ingredient ingredient = Managers.getIngredientManager().getIngredient(item);
 					if (ingredient != null) {
 						setGraphic(spinnerMap.get(ingredient));
+					}
+					setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+				}
+			}
+		});
+		
+		tableActionsColumn.setCellFactory(param -> new TableCell<Ingredient, Integer>() {
+
+			@Override
+			public void updateItem(Integer item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty) {
+					setGraphic(null);
+				} else {
+					Ingredient ingredient = Managers.getIngredientManager().getIngredient(item);
+					if (ingredient != null) {
+						Button removeButton = new Button("Remove");
+						removeButton.setPrefWidth(80);
+						removeButton.setOnAction((event) -> {
+							ingredientMap.remove(ingredient);
+							refreshTable();
+						});
+						setGraphic(removeButton);
 					}
 					setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 				}
@@ -254,7 +292,7 @@ public class RecipeBuilderController {
 	/**
 	 * Refreshes the table with all the ingredients and their quantities
 	 */
-	private void refreshTable() {
+	public void refreshTable() {
 		for (Ingredient ingredient : ingredientMap.keySet()) {
 			int quantity = ingredientMap.get(ingredient);
 			if (!spinnerMap.containsKey(ingredient)) {
