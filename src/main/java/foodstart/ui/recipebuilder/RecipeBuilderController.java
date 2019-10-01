@@ -10,6 +10,7 @@ import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.BetterStringConverter;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -150,6 +151,7 @@ public class RecipeBuilderController implements Refreshable {
 			quantity = newValue;
 			updateTotalPrice();
 		});
+		masterQuantity.valueFactoryProperty().get().setConverter(new BetterStringConverter(masterQuantity));
 
 		tableIngredientColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName() + " ("
 				+ Managers.getIngredientManager().safeForString(cell.getValue().getId()) + ")"));
@@ -319,6 +321,7 @@ public class RecipeBuilderController implements Refreshable {
 						isEdited = true;
 						ingredientMap.put(ingredient, newValue);
 					});
+					spinner.valueFactoryProperty().get().setConverter(new BetterStringConverter(spinner));
 				}
 				spinnerMap.put(ingredient, spinner);
 			} else {
