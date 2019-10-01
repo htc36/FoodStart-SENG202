@@ -36,4 +36,9 @@ public abstract class Persistence {
 	 */
 	public abstract boolean saveAllFiles();
 
+	/**
+	 * Loads all of the data stored in the foodstart directory to memory
+	 */
+	public abstract void loadAllFiles();
+
 }

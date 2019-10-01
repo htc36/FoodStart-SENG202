@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.exceptions.ImportFailureException;
@@ -179,5 +180,47 @@ public class XMLPersistence extends Persistence {
 			}
 		}
 		return succeeded;
+	}
+	
+	@Override
+	public void loadAllFiles() {
+		File directory = new File(Constants.persistencePath);
+		if (!directory.isDirectory()) {
+			if (directory.exists()) {
+				throw new ImportFailureException("File " + directory.getAbsolutePath() + " is not a directory");
+			} else {
+				if (!directory.mkdir()) {
+					throw new ImportFailureException("Permissions error creating directory " + directory.getAbsolutePath());
+				}
+			}
+		}
+		XMLPersistence persistence = (XMLPersistence) Managers.getDefaultPersistence();
+		try {
+			persistence.copyDTDFiles(directory);
+		} catch (IOException e) {
+			throw new ImportFailureException("Could not copy DTD files into target directory");
+		}
+		
+		for (File file : Constants.importOrder) {
+			if (file.isFile()) {
+				switch (file.getName().toLowerCase()) {
+					case "ingredients.xml":
+						persistence.importFile(file, DataType.INGREDIENT);
+						break;
+					case "menu.xml":
+						persistence.importFile(file, DataType.MENU);
+						break;
+					case "recipes.xml":
+						persistence.importFile(file, DataType.RECIPE);
+						break;
+					case "sales_log.xml":
+						persistence.importFile(file, DataType.SALES_LOG);
+						break;
+					case "suppliers.xml":
+						persistence.importFile(file, DataType.SUPPLIER);
+						break;
+				}
+			}
+		}
 	}
 }
