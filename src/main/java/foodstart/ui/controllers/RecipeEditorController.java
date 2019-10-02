@@ -14,10 +14,7 @@ import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Controls UI for recipe editor
@@ -112,7 +109,8 @@ public class RecipeEditorController implements Refreshable {
 				ingredientQuantityInput.setText(oldValue);
 			}
 		});
-		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) -> ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.get((t1))))));
+		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) ->
+				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 0)))));
 	}
 
 	/**
@@ -124,7 +122,7 @@ public class RecipeEditorController implements Refreshable {
 		observableIngredients = FXCollections.observableArrayList(ingredients);
 		ingredientsTable.setItems(observableIngredients);
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
-		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(recipe.getIngredients().get(cell.getValue()))));
+		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(this.ingredients.get(cell.getValue()))));
 	}
 
 	/**
@@ -143,7 +141,7 @@ public class RecipeEditorController implements Refreshable {
 	 */
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
-		ingredients = recipe.getIngredients();
+		this.ingredients = new HashMap<>(recipe.getIngredients());
 		refreshTable();
 	}
 
