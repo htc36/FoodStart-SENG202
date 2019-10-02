@@ -6,6 +6,7 @@ import foodstart.model.menu.Recipe;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -313,7 +314,50 @@ public class Order {
 		this.price = total;
 	}
 
+	
 	/**
+	 * Returns a deep copy of this order.
+	 * @return a deep copy of this order.
+	 */
+	public Order clone() {
+	    Map<Recipe, Integer> itemsCopy = new HashMap<Recipe, Integer>(items);
+	    return new Order(id, itemsCopy, customerName, timePlaced, paymentMethod);
+	}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Order other = (Order) obj;
+        if (customerName == null) {
+            if (other.customerName != null)
+                return false;
+        } else if (!customerName.equals(other.customerName))
+            return false;
+        if (id != other.id)
+            return false;
+        if (items == null) {
+            if (other.items != null)
+                return false;
+        } else if (!items.equals(other.items))
+            return false;
+        if (paymentMethod != other.paymentMethod)
+            return false;
+        if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
+            return false;
+        if (timePlaced == null) {
+            if (other.timePlaced != null)
+                return false;
+        } else if (!timePlaced.equals(other.timePlaced))
+            return false;
+        return true;
+    }
+
+    /**
 	 * Sets the total price of the order, used if the cost of recipes changes
 	 *
 	 * @param price the total price of the order

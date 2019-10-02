@@ -2,6 +2,7 @@ package foodstart.model.menu;
 
 import foodstart.model.stock.Ingredient;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -85,6 +86,37 @@ public class PermanentRecipe extends Recipe {
 	public int getId() {
 		return id;
 	}
+	
+	public PermanentRecipe clone() {
+	    Map<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>(getIngredients());
+	    return new PermanentRecipe(id, displayName, instructions, getPrice(), newIngredients);
+	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PermanentRecipe other = (PermanentRecipe) obj;
+        if (displayName == null) {
+            if (other.displayName != null)
+                return false;
+        } else if (!displayName.equals(other.displayName))
+            return false;
+        if (id != other.id)
+            return false;
+        if (instructions == null) {
+            if (other.instructions != null)
+                return false;
+        } else if (!instructions.equals(other.instructions))
+            return false;
+        return true;
+    }
+
+	
+	
 }
 

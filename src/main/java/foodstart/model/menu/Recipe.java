@@ -131,5 +131,26 @@ public abstract class Recipe {
 	 * @return the id of the recipe that this is based on
 	 */
 	public abstract int getId();
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Recipe other = (Recipe) obj;
+        if (ingredients == null) {
+            if (other.ingredients != null)
+                return false;
+        } else if (!ingredients.equals(other.ingredients))
+            return false;
+        if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
+            return false;
+        return true;
+    }
+	
+	
 }
 

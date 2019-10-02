@@ -2,6 +2,7 @@ package foodstart.model.menu;
 
 import foodstart.model.stock.Ingredient;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,5 +63,34 @@ public class OnTheFlyRecipe extends Recipe {
 	public int getId() {
 		return this.basedOn.getId();
 	}
+	
+	/**
+	 * Returns a deep copy of this on-the-fly recipe.
+	 * @return a deep copy of this object.
+	 */
+	public OnTheFlyRecipe clone() {
+        Map<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>(getIngredients());
+        return new OnTheFlyRecipe(basedOn, newIngredients, getPrice());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OnTheFlyRecipe other = (OnTheFlyRecipe) obj;
+        if (basedOn == null) {
+            if (other.basedOn != null)
+                return false;
+        } else if (!basedOn.equals(other.basedOn))
+            return false;
+        return true;
+    }
+	
+	
+	
 }
 

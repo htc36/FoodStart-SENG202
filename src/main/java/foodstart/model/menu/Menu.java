@@ -1,5 +1,8 @@
 package foodstart.model.menu;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -112,5 +115,41 @@ public class Menu {
 		removed = this.menuItems.remove(item);
 		return removed;
 	}
+	
+    public Menu clone() {
+        Set<MenuItem> itemsCopy = new HashSet<MenuItem>(menuItems);
+        return new Menu(itemsCopy, id, title, description);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Menu other = (Menu) obj;
+        if (description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!description.equals(other.description))
+            return false;
+        if (id != other.id)
+            return false;
+        if (menuItems == null) {
+            if (other.menuItems != null)
+                return false;
+        } else if (!menuItems.equals(other.menuItems))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
+        return true;
+    }
+	
+	
 }
 

@@ -1,5 +1,6 @@
 package foodstart.model.menu;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -122,7 +123,40 @@ public class MenuItem {
 	public void setVariants(List<PermanentRecipe> variants) {
 		this.variants = variants;
 	}
+	
+    public MenuItem clone() {
+        List<PermanentRecipe> variantsCopy = new LinkedList<PermanentRecipe>(variants);
+        return new MenuItem(id, name, description, variantsCopy);
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MenuItem other = (MenuItem) obj;
+        if (description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!description.equals(other.description))
+            return false;
+        if (id != other.id)
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (variants == null) {
+            if (other.variants != null)
+                return false;
+        } else if (!variants.equals(other.variants))
+            return false;
+        return true;
+    }	
 
 
 }

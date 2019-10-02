@@ -191,20 +191,6 @@ public class Supplier {
 	}
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((address == null) ? 0 : address.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-        result = prime * result + ((phoneType == null) ? 0 : phoneType.hashCode());
-        result = prime * result + ((supplierName == null) ? 0 : supplierName.hashCode());
-        result = prime * result + ((url == null) ? 0 : url.hashCode());
-        return result;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -242,6 +228,14 @@ public class Supplier {
                 return false;
         } else return url.equals(other.url);
         return true;
+    }
+    
+    /**
+     * Returns a deep copy of this Supplier object.
+     * @return a deep copy of this Supplier object. 
+     */
+    public Supplier clone() {
+        return new Supplier(id, supplierName, phoneNumber, phoneType, email, url, address);
     }
 	
 	
