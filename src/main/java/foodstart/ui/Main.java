@@ -1,16 +1,11 @@
 package foodstart.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import foodstart.manager.Managers;
-import foodstart.manager.exceptions.ImportFailureException;
-import foodstart.manager.xml.XMLPersistence;
-import foodstart.model.Constants;
 import foodstart.model.DataFileType;
-import foodstart.model.DataType;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -131,7 +126,7 @@ public class Main extends Application {
 	 */
 	private void loadEverything() throws Exception {
 		long startTime = System.currentTimeMillis();
-		loadUserData();
+		Managers.getDefaultPersistence().loadAllFiles();
 		loadFXMLFiles(); //this is done 2nd so initialize methods can access user data
 		prepareMainScreen();
 		
@@ -186,52 +181,6 @@ public class Main extends Application {
 		FXMLLoader rootFXMLLoader = new FXMLLoader(getClass().getResource("main.fxml"));
 		rootFXML = rootFXMLLoader.load();
 		//Loaded by calling initialize on MainController
-	}
-
-	/**
-	 * Loads all user data from the Constants.persistencePath path.
-	 * The order is important so things are not being loaded that depend
-	 * on IDs for things that haven't been loaded yet
-	 */
-	private void loadUserData() {
-		File directory = new File(Constants.persistencePath);
-		if (!directory.isDirectory()) {
-			if (directory.exists()) {
-				throw new ImportFailureException("File " + directory.getAbsolutePath() + " is not a directory");
-			} else {
-				if (!directory.mkdir()) {
-					throw new ImportFailureException("Permissions error creating directory " + directory.getAbsolutePath());
-				}
-			}
-		}
-		XMLPersistence persistence = (XMLPersistence) Managers.getDefaultPersistence();
-		try {
-			persistence.copyDTDFiles(directory);
-		} catch (IOException e) {
-			throw new ImportFailureException("Could not copy DTD files into target directory");
-		}
-		
-		for (File file : Constants.importOrder) {
-			if (file.isFile()) {
-				switch (file.getName().toLowerCase()) {
-					case "ingredients.xml":
-						persistence.importFile(file, DataType.INGREDIENT);
-						break;
-					case "menu.xml":
-						persistence.importFile(file, DataType.MENU);
-						break;
-					case "recipes.xml":
-						persistence.importFile(file, DataType.RECIPE);
-						break;
-					case "sales_log.xml":
-						persistence.importFile(file, DataType.SALES_LOG);
-						break;
-					case "suppliers.xml":
-						persistence.importFile(file, DataType.SUPPLIER);
-						break;
-				}
-			}
-		}
 	}
 
 	/**

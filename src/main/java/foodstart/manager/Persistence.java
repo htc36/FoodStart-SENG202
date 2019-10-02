@@ -1,11 +1,12 @@
 package foodstart.manager;
 
-import java.io.File;
-
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 
+import java.io.File;
+
 /**
+ * Represents a possible persistence manager
  * @author Alex Hobson on 22/08/2019
  */
 public abstract class Persistence {
@@ -35,5 +36,10 @@ public abstract class Persistence {
 	 * @return true if the data was saved correctly; false otherwise
 	 */
 	public abstract boolean saveAllFiles();
+
+	/**
+	 * Loads all of the data stored in the foodstart directory to memory
+	 */
+	public abstract void loadAllFiles();
 
 }

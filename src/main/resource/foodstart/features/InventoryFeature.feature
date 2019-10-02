@@ -21,14 +21,15 @@ Feature: Inventory feature
         And Its unit type is "GRAMS"
         And Its kitchen stock is 200
         And Its truck stock is 50
-        And Its dietary requirement is "VEGAN"
-        And Its dietary requirement is "VEGETARIAN"
+        And Its dietary requirement is "VEGAN,VEGETARIAN"
         When Ingredient "Relish" is manually added to the inventory
         Then It will be stored under "Relish" in the inventory
         And The kitchen stock for "Relish" is 200
         And The truck stock for "Relish" is 50
         And The dietary requirement for "Relish" will have "VEGAN"
         And The dietary requirement for "Relish" will have "VEGETARIAN"
+    
+    
 
 
     Scenario: Removing an ingredient (UC12)

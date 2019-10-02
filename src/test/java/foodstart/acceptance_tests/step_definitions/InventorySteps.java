@@ -8,7 +8,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static junit.framework.TestCase.*;
@@ -95,7 +97,10 @@ public class InventorySteps {
 
     @Given("Its dietary requirement is {string}")
     public void itsDietaryRequirementIs(String dietaryRequirement) {
-        safeFor.put(DietaryRequirement.matchDietaryRequirement(dietaryRequirement), true);
+        List<String> listOfRequirements = Arrays.asList(dietaryRequirement.split(","));
+        for (String requirement : listOfRequirements) {
+            safeFor.put(DietaryRequirement.matchDietaryRequirement(requirement), true);
+        }
     }
 
     @When("Ingredient {string} is manually added to the inventory")
