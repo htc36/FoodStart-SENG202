@@ -11,10 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewMenuController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewMenuController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="603.0" minWidth="10.0" prefWidth="469.0" />
-    <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="491.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="603.0" minWidth="10.0" prefWidth="537.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="11.0" />
+    <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="112.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="9.0" prefWidth="11.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="489.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="38.0" vgrow="NEVER" />
@@ -30,9 +33,10 @@
             <Font size="30.0" />
          </font>
       </Text>
-      <ButtonBar buttonMinWidth="150.0" prefHeight="180.0" prefWidth="961.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+      <ButtonBar buttonMinWidth="150.0" prefHeight="180.0" prefWidth="961.0" GridPane.columnSpan="5" GridPane.rowIndex="5">
         <buttons>
             <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+            <Button fx:id="btnSetCurrentMenu" mnemonicParsing="false" onAction="#setCurrentMenu" text="Set as Current Menu" />
         </buttons>
       </ButtonBar>
       <Text fx:id="menuDescriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="MENU-DESCRIPTION" GridPane.rowIndex="1">
@@ -40,25 +44,22 @@
             <Font name="System Italic" size="12.0" />
          </font>
       </Text>
-      <TableView fx:id="menuTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="371.0" prefWidth="832.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <TableView fx:id="menuTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="371.0" prefWidth="832.0" GridPane.rowIndex="2" GridPane.rowSpan="3">
          <columns>
             <TableColumn fx:id="tableIDColumn" minWidth="75.20001220703125" prefWidth="75.20001220703125" resizable="false" text="ID" />
             <TableColumn fx:id="tableNameColumn" editable="false" minWidth="120.0" prefWidth="158.39998626708984" resizable="false" sortable="false" text="Name" />
-            <TableColumn fx:id="tableDescriptionColumn" minWidth="120.0" prefWidth="269.6000671386719" text="Description" />
-            <TableColumn fx:id="tableVariantsColumn" prefWidth="454.0" text="Variants" />
+            <TableColumn fx:id="tableVariantsColumn" prefWidth="299.0" text="Variants" />
          </columns>
       </TableView>
-      <TableView fx:id="availableMenuItemsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="830.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+      <TableView fx:id="availableMenuItemsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="830.0" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.rowSpan="3">
          <columns>
             <TableColumn fx:id="availableIDColumn" minWidth="75.20001220703125" prefWidth="75.20001220703125" resizable="false" text="ID" />
             <TableColumn fx:id="availableNameColumn" editable="false" minWidth="120.0" prefWidth="158.39998626708984" resizable="false" sortable="false" text="Name" />
-            <TableColumn fx:id="availableDescriptionColumn" minWidth="120.0" prefWidth="269.6000671386719" text="Description" />
-            <TableColumn fx:id="availableVariantsColumn" prefWidth="454.0" text="Variants" />
+            <TableColumn fx:id="availableVariantsColumn" prefWidth="249.0" text="Variants" />
          </columns>
       </TableView>
-      <Button fx:id="btnAddMenuItem" mnemonicParsing="false" onAction="#onAddMenuItem" text="Add Menu Item" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Button fx:id="btnRemoveMenuItem" mnemonicParsing="false" onAction="#onRemoveMenuItem" text="Remove Menu Item" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Button fx:id="btnSetCurrentMenu" mnemonicParsing="false" onAction="#setCurrentMenu" text="Set as Current Menu" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowSpan="2" />
+      <Button fx:id="btnAddMenuItem" mnemonicParsing="false" onAction="#onAddMenuItem" text="Add Menu Item" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+      <Button fx:id="btnRemoveMenuItem" mnemonicParsing="false" onAction="#onRemoveMenuItem" text="Remove Menu Item" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

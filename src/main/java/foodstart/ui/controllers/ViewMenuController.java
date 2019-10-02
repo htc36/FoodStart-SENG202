@@ -136,7 +136,7 @@ public class ViewMenuController {
         Set<MenuItem> menuItems = menu.getMenuItems();
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        //tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         tableVariantsColumn.setCellValueFactory(cell -> {
             String output = cell.getValue().getVariantsAsString();
             return new SimpleStringProperty(output);
@@ -154,7 +154,7 @@ public class ViewMenuController {
 
         availableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         availableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        //availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         availableVariantsColumn.setCellValueFactory(cell -> {
             String output = cell.getValue().getVariantsAsString();
             return new SimpleStringProperty(output);
