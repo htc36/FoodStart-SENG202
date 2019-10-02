@@ -210,5 +210,13 @@ public class Ingredient {
 	public Boolean isSafeFor(DietaryRequirement requirement) {
 		return this.safeFor.getOrDefault(requirement, false);
 	}
+
+	/**
+	 * Returns the name of the ingredient
+	 * @return the name of the ingredient
+	 */
+	public String toString() {
+		return this.getName();
+	}
 }
 

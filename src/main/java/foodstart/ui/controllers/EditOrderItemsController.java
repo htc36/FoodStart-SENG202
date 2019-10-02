@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
@@ -15,10 +16,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
@@ -28,6 +31,25 @@ import java.util.*;
  * Controls the UI of the edit order items screen
  */
 public class EditOrderItemsController implements Refreshable {
+	/**
+	 * Converts a recipe to a string
+	 */
+	static class RecipeStringConverter extends StringConverter<PermanentRecipe> {
+		@Override
+		public String toString(PermanentRecipe recipe) {
+			if (recipe == null) {
+				return "Please select a recipe";
+			} else {
+				return recipe.getDisplayName();
+			}
+		}
+
+		@Override
+		public PermanentRecipe fromString(String s) {
+			return Managers.getRecipeManager().getRecipeByDisplayName(s);
+		}
+	}
+
 	/**
 	 * Button for confirming input
 	 */
@@ -57,7 +79,7 @@ public class EditOrderItemsController implements Refreshable {
 	 * Button for viewing recipe details
 	 */
 	@FXML
-	Button viewRecipeButton;
+	ComboBox<PermanentRecipe> recipesComboBox;
 	/**
 	 * Table view of the recipes in the order
 	 */
@@ -102,18 +124,6 @@ public class EditOrderItemsController implements Refreshable {
 	 * The stage of the edit recipe popup screen
 	 */
 	private Stage editPopup;
-	/**
-	 * FXML loader for the add recipe popup
-	 */
-	private FXMLLoader addLoader;
-	/**
-	 * The FXML for the add recipe popup screen
-	 */
-	private Parent addFXML;
-	/**
-	 * The stage of the add recipe popup screen
-	 */
-	private Stage addPopup;
 
 	/**
 	 * Initialises the EditOrderItemsController
@@ -123,8 +133,6 @@ public class EditOrderItemsController implements Refreshable {
 		try {
 			editLoader = new FXMLLoader(getClass().getResource("recipeEditor.fxml"));
 			editFXML = editLoader.load();
-			//addLoader = new FXMLLoader(getClass().getResource("addRecipe.fxml"));
-			//addFXML = addLoader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -132,12 +140,8 @@ public class EditOrderItemsController implements Refreshable {
 		editPopup = new Stage();
 		editPopup.initModality(Modality.WINDOW_MODAL);
 		editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
-
-		//addPopup = new Stage();
-		//addPopup.initModality(Modality.WINDOW_MODAL);
-		//addPopup.setScene(new Scene(addFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
-
 		populateTable();
+		populateCB();
 	}
 
 	/**
@@ -154,6 +158,16 @@ public class EditOrderItemsController implements Refreshable {
 		quantityCol.setCellValueFactory(cell -> new SimpleIntegerProperty(items.get(cell.getValue())).asObject());
 		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 		quantityCol.setOnEditCommit(e -> items.put(e.getRowValue(), e.getNewValue()));
+	}
+
+	/**
+	 * Populates the recipes combo box with data
+	 */
+	private void populateCB() {
+		Set<PermanentRecipe> recipesSet = Managers.getRecipeManager().getRecipeSet();
+		this.recipesComboBox.setItems(FXCollections.observableArrayList(recipesSet));
+		this.recipesComboBox.setCellFactory(ComboBoxListCell.forListView(new RecipeStringConverter()));
+		this.recipesComboBox.setConverter(new RecipeStringConverter());
 	}
 
 	/**
@@ -189,14 +203,6 @@ public class EditOrderItemsController implements Refreshable {
 	private void cancel() {
 		items = null;
 		closeSelf();
-	}
-
-	/**
-	 * Calls the add recipe popup screen
-	 */
-	@FXML
-	private void addRecipe() {
-
 	}
 
 	/**
@@ -254,6 +260,9 @@ public class EditOrderItemsController implements Refreshable {
 	 * @return true if the maps are the same;false otherwise
 	 */
 	private boolean checkMaps(Map<Ingredient, Integer> m1, Map<Ingredient, Integer> m2) {
+		if (m1 != m2 && (m1 == null || m2 == null)) {
+			return false;
+		}
 		if (!m1.keySet().equals(m2.keySet())) {
 			return false;
 		}
@@ -298,5 +307,23 @@ public class EditOrderItemsController implements Refreshable {
 			this.items = pushedRecipes;
 			refreshTable();
 		}
+	}
+
+	/**
+	 * Adds an ingredient to the new ingredients map
+	 */
+	@FXML
+	private void addRecipe() {
+		PermanentRecipe recipe = recipesComboBox.getSelectionModel().getSelectedItem();
+		if (recipe == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not add recipe as there was none selected", ButtonType.OK);
+			alert.setHeaderText("No recipe selected");
+			alert.showAndWait();
+		} else if (this.items.containsKey(recipe)) {
+			//Do nothing
+		} else {
+			this.items.put(recipe, 1);
+		}
+		refreshTable();
 	}
 }
