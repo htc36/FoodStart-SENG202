@@ -190,6 +190,7 @@ public class RecipeBuilderController implements Refreshable {
 						removeButton.setPrefWidth(80);
 						removeButton.setOnAction((event) -> {
 							ingredientMap.remove(ingredient);
+							isEdited = true;
 							refreshTable();
 						});
 						setGraphic(removeButton);
