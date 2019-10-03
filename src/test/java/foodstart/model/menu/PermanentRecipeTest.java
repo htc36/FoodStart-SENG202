@@ -5,6 +5,7 @@ import org.junit.Test;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
+import org.junit.Assert;
 
 import static org.junit.Assert.*;
 
@@ -113,5 +114,18 @@ public class PermanentRecipeTest {
     @Test
     public void getId() {
     	assertEquals(0, burgerRecipe.getId());
+    }
+    
+    @Test
+    public void testCloneBasic() {
+        PermanentRecipe copy = burgerRecipe.clone();
+        Assert.assertEquals(burgerRecipe, copy);
+    }
+    
+    @Test
+    public void testCloneIsDeep() {
+        PermanentRecipe copy = burgerRecipe.clone();
+        burgerRecipe.getIngredients().clear();
+        Assert.assertNotEquals(burgerRecipe, copy); 
     }
 }

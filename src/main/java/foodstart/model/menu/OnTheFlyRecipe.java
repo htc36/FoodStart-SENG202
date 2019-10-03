@@ -70,7 +70,7 @@ public class OnTheFlyRecipe extends Recipe {
 	 */
 	public OnTheFlyRecipe clone() {
         Map<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>(getIngredients());
-        return new OnTheFlyRecipe(basedOn, newIngredients, getPrice());
+        return new OnTheFlyRecipe(basedOn.clone(), newIngredients, getPrice());
     }
 
     @Override

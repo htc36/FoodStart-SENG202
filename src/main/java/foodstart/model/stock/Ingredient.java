@@ -185,24 +185,37 @@ public class Ingredient {
 	 * @param target - the Ingredient object being compared with.
 	 * @return True if all fields between the objects are equal; false otherwise.
 	 */
-	@Override
-	public boolean equals(Object target) {
-	    boolean result = true;
-	    if (target == null || target.getClass() != Ingredient.class) {
-	        result = false;
-	    } else {
-    	    if (this.unit != ((Ingredient) target).getUnit()) result = false;
-    	    else if (!this.name.equals(((Ingredient) target).getName())) result = false;
-    	    else if (this.id != ((Ingredient) target).getId()) result = false;
-    	    else if (this.kitchenStock != ((Ingredient) target).getKitchenStock()) result = false;
-    	    else if (this.truckStock != ((Ingredient) target).getTruckStock()) result = false;
-    	    else if (!this.safeFor.equals(((Ingredient) target).getSafeFor())) result = false;
-	    }
-	    return result;
-	    
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Ingredient other = (Ingredient) obj;
+        if (id != other.id)
+            return false;
+        if (kitchenStock != other.kitchenStock)
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (safeFor == null) {
+            if (other.safeFor != null)
+                return false;
+        } else if (!safeFor.equals(other.safeFor))
+            return false;
+        if (truckStock != other.truckStock)
+            return false;
+        if (unit != other.unit)
+            return false;
+        return true;
+    }
 
-	/**
+    /**
 	 * Checks if the ingredient is safe for some dietary requirement
 	 * @param requirement the dietary requirement to check
 	 * @return true of the ingredient is considered safe for the dietary requirement; false otherwise

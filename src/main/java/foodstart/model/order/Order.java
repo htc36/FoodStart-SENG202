@@ -220,12 +220,13 @@ public class Order {
 	 * @return the previous amount of the recipe, or null if the recipe did not exist
 	 */
 	public Integer addItem(Recipe recipe, int amount) {
-		if (this.items.put(recipe, amount) == null)  {
+		if (!this.items.containsKey(recipe))  {
 			this.items.put(recipe, amount);
 			calculateCost();
 			return null;
 		} else {
-			Integer previousAmount = this.items.put(recipe, amount);
+			Integer previousAmount = items.get(recipe);
+			items.put(recipe, previousAmount + amount);
 			calculateCost();
 
 			return previousAmount;
@@ -270,11 +271,9 @@ public class Order {
 			if ((this.items.get(recipe) - amount) > 0) {
 				setVariantAmount(recipe, (this.items.get(recipe) - amount)); // changes the amount of the item
 				calculateCost();
-			} else if ((this.items.get(recipe) - amount) == 0) {
+			} else if ((this.items.get(recipe) - amount) <= 0) {
 				removeItem(recipe); // removes the item completely from the order
 				calculateCost();
-			} else { // else, should throw an exception exceeding the lowest bound (negatives)
-//				throw new Exception
 			}
 		} // else, should throw an exception about the recipe not already existing in the order
 	}

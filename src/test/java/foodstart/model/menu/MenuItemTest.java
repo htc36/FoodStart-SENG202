@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,10 +20,12 @@ public class MenuItemTest {
 
     @Before
     public void setUp() throws Exception {
-       Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
-//       Ingredient ingredient = new Ingredient(Unit.GRAMS, "TestIngredient",
-//                0, safeFor, 5, 10);
+        Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
+        safeFor.put(DietaryRequirement.GLUTEN_FREE, true);
         List<PermanentRecipe> recipes = new ArrayList<PermanentRecipe>();
+        recipes.add(new PermanentRecipe(0, "Cheese", "method", 0, null));
+        recipes.add(new PermanentRecipe(1, "Nuts", "method", 0, null));
+        recipes.add(new PermanentRecipe(2, "Jesus", "method", 0, null));
         testitem = new MenuItem(0, "TestItem", "MenuItem test item", recipes);
     }
 
@@ -68,12 +71,27 @@ public class MenuItemTest {
 
     @Test
     public void setVariants() { 
-    	//Map<Ingredient, Integer> ingrediants = new HashMap<Ingredient, Integer>();
-    	//ingrediants.put(ingrediant, 2);
-    	//Recipe burgerRecipe = new PermanentRecipe("Burger", "Cook on high", 12, ingrediants);
-    	//recipes.add(burgerRecipe);
     	testitem.setVariants(recipes);
     	assertEquals((testitem.getVariants()), recipes);
 
+    }
+    
+    @Test
+    public void testGetVariantsAsString() {
+        String expected = "Cheese Nuts Jesus ", actual = testitem.getVariantsAsString();
+        Assert.assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void testCloneBasic() {
+        MenuItem copy = testitem.clone();
+        Assert.assertEquals(testitem, copy);
+    }
+    
+    @Test
+    public void testCloneIsDeep() {
+        MenuItem copy = testitem.clone();
+        testitem.getVariants().clear();
+        Assert.assertNotEquals(testitem, copy); 
     }
 }

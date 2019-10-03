@@ -8,7 +8,19 @@
         <phone type="mobile"/>
     </supplier>
     <supplier>
+        <sid>5</sid>
+        <name/>
+        <address/>
+        <phone type="home"/>
+    </supplier>
+    <supplier>
         <sid>3</sid>
+        <name/>
+        <address/>
+        <phone type="home"/>
+    </supplier>
+    <supplier>
+        <sid>0</sid>
         <name/>
         <address/>
         <phone type="home"/>
@@ -20,19 +32,7 @@
         <phone type="work"/>
     </supplier>
     <supplier>
-        <sid>5</sid>
-        <name/>
-        <address/>
-        <phone type="home"/>
-    </supplier>
-    <supplier>
         <sid>4</sid>
-        <name/>
-        <address/>
-        <phone type="home"/>
-    </supplier>
-    <supplier>
-        <sid>0</sid>
         <name/>
         <address/>
         <phone type="home"/>

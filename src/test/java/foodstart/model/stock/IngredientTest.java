@@ -3,6 +3,7 @@ package foodstart.model.stock;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -22,21 +23,12 @@ import foodstart.model.Unit;
 public class IngredientTest {
     
     Ingredient ingrNorm, ingrSilly, ingrEmpty, ingrNull;
-    static HashMap<DietaryRequirement, Boolean> dummyMap, testMap;
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        testMap = new HashMap<DietaryRequirement, Boolean>();
-        testMap.put(DietaryRequirement.GLUTEN_FREE, false);
-        testMap.put(DietaryRequirement.LACTOSE_INTOLERANT, false);
-        testMap.put(DietaryRequirement.NUT_ALLERGY, true);
-        testMap.put(DietaryRequirement.VEGAN, false);
-        testMap.put(DietaryRequirement.VEGETARIAN, true);
-        dummyMap = new HashMap<DietaryRequirement, Boolean>();
-    }
+    HashMap<DietaryRequirement, Boolean> dummyMap, testMap;
    
     @Before
     public void setUp() throws Exception {
+        testMap = buildTestMap();
+        dummyMap = new HashMap<DietaryRequirement, Boolean>();
         ingrNorm = new Ingredient(Unit.UNITS, "Buns", 12, testMap, 12, 7);
     }
 
@@ -48,25 +40,26 @@ public class IngredientTest {
         ingrNull = null;
     }
     
+    private HashMap<DietaryRequirement, Boolean> buildTestMap() {
+        HashMap<DietaryRequirement, Boolean> outputMap = new HashMap<DietaryRequirement, Boolean>();
+        outputMap.put(DietaryRequirement.GLUTEN_FREE, false);
+        outputMap.put(DietaryRequirement.LACTOSE_INTOLERANT, false);
+        outputMap.put(DietaryRequirement.NUT_ALLERGY, true);
+        outputMap.put(DietaryRequirement.VEGAN, false);
+        outputMap.put(DietaryRequirement.VEGETARIAN, true);
+        return outputMap;
+    }
+    
 
     @Test
     public void testClone() {
         Ingredient copy = ingrNorm.clone();
-        Assert.assertEquals(ingrNorm.getName(), copy.getName());
-        Assert.assertEquals(ingrNorm.getId(), copy.getId());
-        Assert.assertEquals(ingrNorm.getUnit(), copy.getUnit());
-        Assert.assertEquals(ingrNorm.getKitchenStock(), copy.getKitchenStock());
-        Assert.assertEquals(ingrNorm.getTruckStock(), copy.getTruckStock());
-        Assert.assertNotSame(ingrNorm.getSafeFor(), copy.getSafeFor());
-        for (DietaryRequirement d: DietaryRequirement.values()) {
-            Assert.assertEquals(ingrNorm.getSafeFor().get(d), copy.getSafeFor().get(d));
-        }
+        Assert.assertTrue(ingrNorm != copy);
+        Assert.assertEquals(copy, ingrNorm);
+        ingrNorm.getSafeFor().remove(DietaryRequirement.VEGAN);
+        Assert.assertNotEquals(copy, ingrNorm);
     }
     
-    @Test
-    public void testEquals() {
-        Assert.assertTrue(ingrNorm.equals(ingrNorm.clone()));
-    }
 
     @Test
     public void testIsSafeFor() {

@@ -2,11 +2,16 @@ package foodstart.manager.stock;
 
 import foodstart.model.PhoneType;
 import foodstart.model.stock.Supplier;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +25,9 @@ public class SupplierManagerTest {
         manager.addSupplier(0, "Don'tEatKFC",
                 "555-555-5555", PhoneType.HOME, "itSmellsAwful@truth.com",
                 "www.AndTastesBad.com", "TestAddress");
+        manager.addSupplier(1, "Lies!",
+                "666-666-6666", PhoneType.HOME, "KFCMayBeGarbageFood@hotmail.com",
+                "www.ButItsAmazingGarbageFood.com", "Don't Believe Their Lies");
     }
 
     @Test
@@ -54,9 +62,9 @@ public class SupplierManagerTest {
 
     @Test
     public void testAddSupplierPrebuiltNull() {
-        assertEquals(1, manager.getSuppliers().size());
+        assertEquals(2, manager.getSuppliers().size());
         manager.addSupplier(null);
-        assertEquals(1, manager.getSuppliers().size());
+        assertEquals(2, manager.getSuppliers().size());
     }
 
     @Test
@@ -103,21 +111,21 @@ public class SupplierManagerTest {
 
     @Test
     public void testRemoveSupplierValidId() {
-        assertEquals(1, manager.getSuppliers().size());
+        assertEquals(2, manager.getSuppliers().size());
         manager.removeSupplier(0);
-        assertEquals(0, manager.getSuppliers().size());
+        assertEquals(1, manager.getSuppliers().size());
     }
 
     @Test
     public void testRemoveSupplierInvalidId() {
-        assertEquals(1, manager.getSuppliers().size());
-        manager.removeSupplier(1);
-        assertEquals(1, manager.getSuppliers().size());
+        assertEquals(2, manager.getSuppliers().size());
+        manager.removeSupplier(-32);
+        assertEquals(2, manager.getSuppliers().size());
     }
 
     @Test
     public void testRemoveAllSuppliers() {
-        assertEquals(1, manager.getSuppliers().size());
+        assertEquals(2, manager.getSuppliers().size());
         manager.removeAllSuppliers();
         assertEquals(0, manager.getSuppliers().size());
     }
@@ -144,11 +152,11 @@ public class SupplierManagerTest {
 
     @Test
     public void testGetIngredientSet() {
-        assertEquals(1, manager.getSupplierSet().size());
+        assertEquals(2, manager.getSupplierSet().size());
         manager.addSupplier(2, "TestName2",
                 "555-555-5555", PhoneType.WORK, "smith@example.com",
                 "www.example.com", "TestAddress");
-        assertEquals(2, manager.getSupplierSet().size());
+        assertEquals(3, manager.getSupplierSet().size());
     }
 
     @Test
@@ -160,15 +168,27 @@ public class SupplierManagerTest {
         manager.getSuppliers().put(2, supplier);
         assertEquals(2, manager.getSupplierSet().size());
     }
-
+    
     @Test
-    public void testGenerateNewCode() {
-
+    public void testGetSuppliersNormal() {
+        Collection<Integer> normalIDs = new HashSet<Integer>();
+        normalIDs.add(0);
+        normalIDs.add(1);
+        Set<Supplier> returnVal = manager.getSuppliers(normalIDs);
+        assertEquals(2, returnVal.size());
+    }
+    
+    public void testGetSuppliersMissingID() {
+        Collection<Integer> missingIDs = new HashSet<Integer>();
+        missingIDs.add(4542);
+        missingIDs.add(-23);
+        Set<Supplier> returnVal = manager.getSuppliers(missingIDs);
+        assertTrue(returnVal.isEmpty());
     }
 
     @Test
     public void testGenerateNewID() {
-        assertEquals(1, manager.generateNewCode());
+        assertEquals(2, manager.generateNewCode());
         manager.addSupplier(1023, "TestName2",
                 "555-555-5555", PhoneType.WORK, "smith@example.com",
                 "www.example.com", "TestAddress");

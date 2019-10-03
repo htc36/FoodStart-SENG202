@@ -1,64 +1,18 @@
 package foodstart.model.stock;
 
 import org.junit.Test;
+import org.junit.Assert;
+import foodstart.model.PhoneType;
 
-import static org.junit.Assert.*;
 
 public class SupplierTest {
 
     @Test
-    public void getDatabaseId() {
+    public void testClone() {
+        Supplier test = new Supplier(0, "Joe", "123", PhoneType.WORK, "", "", "Blahble Road");
+        Supplier clone = test.clone();
+        Assert.assertEquals(test, clone);
+        Assert.assertNotSame(test, clone);
     }
-
-    @Test
-    public void setDatabaseId() {
-    }
-
-    @Test
-    public void getSupplierName() {
-    }
-
-    @Test
-    public void setSupplierName() {
-    }
-
-    @Test
-    public void getPhoneNumber() {
-    }
-
-    @Test
-    public void setPhoneNumber() {
-    }
-
-    @Test
-    public void getPhoneType() {
-    }
-
-    @Test
-    public void setPhoneType() {
-    }
-
-    @Test
-    public void getEmail() {
-    }
-
-    @Test
-    public void setEmail() {
-    }
-
-    @Test
-    public void getUrl() {
-    }
-
-    @Test
-    public void setUrl() {
-    }
-
-    @Test
-    public void getAddress() {
-    }
-
-    @Test
-    public void setAddress() {
-    }
+    
 }

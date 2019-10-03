@@ -3,6 +3,8 @@ package foodstart.model.menu;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,22 +64,6 @@ public class OnTheFlyRecipeTest {
     }
 
     @Test
-    public void getPrice() {
-    }
-
-    @Test
-    public void setPrice() {
-    }
-
-    @Test
-    public void getIngredients() {
-    }
-
-    @Test
-    public void setIngredients() {
-    }
-
-    @Test
     public void addIngredient() {
         //Add an ingredient that doesn't exist on the current ingredients list of the item
         assertFalse(testOnTheFlyRecipe.getIngredients().containsKey(testIngredient3));
@@ -102,10 +88,15 @@ public class OnTheFlyRecipeTest {
     }
 
     @Test
-    public void getBasedOn() {
+    public void testCloneBasic() {
+        OnTheFlyRecipe copy = testOnTheFlyRecipe.clone();
+        Assert.assertEquals(testOnTheFlyRecipe, copy);
     }
-
+    
     @Test
-    public void setBasedOn() {
+    public void testCloneIsDeep() {
+        OnTheFlyRecipe copy = testOnTheFlyRecipe.clone();
+        testOnTheFlyRecipe.getBasedOn().getIngredients().clear();
+        Assert.assertNotEquals(testOnTheFlyRecipe, copy); 
     }
 }

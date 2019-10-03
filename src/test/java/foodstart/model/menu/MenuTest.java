@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,5 +62,18 @@ public class MenuTest {
     public void removeMenuItem() {
     	testMenu.addMenuItem(testitem);
     	assertEquals(true, testMenu.removeMenuItem(testitem));
+    }
+    
+    @Test
+    public void testCloneBasic() {
+        Menu copy = testMenu.clone();
+        Assert.assertEquals(testMenu, copy);
+    }
+    
+    @Test
+    public void testCloneIsDeep() {
+        Menu copy = testMenu.clone();
+        testMenu.getMenuItems().add(testitem);
+        Assert.assertNotEquals(testMenu, copy); 
     }
 }

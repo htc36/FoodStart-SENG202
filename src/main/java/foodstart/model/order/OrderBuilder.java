@@ -83,10 +83,14 @@ public class OrderBuilder {
 					: "Custom recipe";
 			throw new InsufficientStockException("Insufficient stock to add '" + name + "' to the order");
 		}
-		if (currentOrder.containsKey(recipe)) {
-			quantity += currentOrder.get(recipe);
+		if (quantity > 0) {
+    		if (currentOrder.containsKey(recipe)) {
+    			quantity += currentOrder.get(recipe);
+    		}
+    		currentOrder.put(recipe, quantity);
+		} else {
+		    throw new IllegalArgumentException("Invalid value " + Integer.toString(quantity) + ": Quantity must be a positive integer.");
 		}
-		currentOrder.put(recipe, quantity);
 	}
 
 	/**
@@ -131,7 +135,7 @@ public class OrderBuilder {
 	 * @return Quantity of this item in the order
 	 */
 	public int getQuantity(Recipe recipe) {
-		return this.currentOrder.get(recipe);
+		return currentOrder.get(recipe);
 	}
 
 	/**
