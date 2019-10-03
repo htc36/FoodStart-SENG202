@@ -1,7 +1,10 @@
 package foodstart.manager.stock;
 
+import foodstart.manager.Managers;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
+import foodstart.model.menu.OnTheFlyRecipe;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 
 import java.util.*;
@@ -54,7 +57,15 @@ public class IngredientManager {
 	 * @param id the id of the ingredient to remove from the model
 	 */
 	public void removeIngredient(int id) {
-		this.ingredients.remove(id);
+		Ingredient removed = this.ingredients.remove(id);
+		Set<PermanentRecipe> permRecipes = Managers.getRecipeManager().getRecipeSet();
+		for (PermanentRecipe recipe : permRecipes) {
+			recipe.removeIngredient(removed);
+		}
+		Set<OnTheFlyRecipe> otfRecipes = Managers.getRecipeManager().otfManager.getRecipeSet();
+		for (OnTheFlyRecipe recipe : otfRecipes) {
+			recipe.removeIngredient(removed);
+		}
 	}
 
 	/**

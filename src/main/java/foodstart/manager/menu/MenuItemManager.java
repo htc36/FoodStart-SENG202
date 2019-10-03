@@ -1,5 +1,7 @@
 package foodstart.manager.menu;
 
+import foodstart.manager.Managers;
+import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 
@@ -93,5 +95,18 @@ public class MenuItemManager {
 			sum += recipe.getPrice();
 		}
 		return sum / item.getVariants().size();
+	}
+
+	/**
+	 * Removes a menu item from the system. Cascades this deletion through the menu model
+	 *
+	 * @param id the id of the menu item to remove
+	 */
+	public void removeMenuItem(int id) {
+		MenuItem removed = this.menuItems.remove(id);
+		Set<Menu> menus = Managers.getMenuManager().getMenuSet();
+		for (Menu menu : menus) {
+			menu.removeMenuItem(removed);
+		}
 	}
 }

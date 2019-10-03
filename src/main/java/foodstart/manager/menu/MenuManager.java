@@ -107,6 +107,13 @@ public class MenuManager {
 		}
 		this.currentMenu = currentMenu;
 	}
-	
-	
+
+	/**
+	 * Removes a menu from the model
+	 *
+	 * @param id the id of the menu to delete
+	 */
+	public void removeMenu(int id) {
+		this.menus.remove(id);
+	}
 }

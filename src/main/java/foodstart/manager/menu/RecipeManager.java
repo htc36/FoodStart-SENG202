@@ -1,5 +1,7 @@
 package foodstart.manager.menu;
 
+import foodstart.manager.Managers;
+import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
@@ -70,6 +72,15 @@ public class RecipeManager {
 		 */
 		public Map<Integer, OnTheFlyRecipe> getRecipes() {
 			return this.onTheFlyRecipes;
+		}
+
+		/**
+		 * Returns the set of all OTF recipes modeled
+		 *
+		 * @return the set of all OTF recipes modeled
+		 */
+		public Set<OnTheFlyRecipe> getRecipeSet() {
+			return new HashSet<OnTheFlyRecipe>(this.onTheFlyRecipes.values());
 		}
 	}
 
@@ -202,10 +213,15 @@ public class RecipeManager {
 	}
 
 	/**
-	 * Removes a recipe given an ID
+	 * Removes a recipe given an ID. Cascades through the menu items model
+	 *
 	 * @param id the ID of the recipe to be removed
 	 */
-	public void removeRecipe(int id){
-		this.recipes.remove(id);
+	public void removeRecipe(int id) {
+		PermanentRecipe removed = this.recipes.remove(id);
+		Set<MenuItem> menuItems = Managers.getMenuItemManager().getMenuItemSet();
+		for (MenuItem menuItem : menuItems) {
+			menuItem.remove(removed);
+		}
 	}
 }

@@ -156,8 +156,15 @@ public class MenuItem {
         } else if (!variants.equals(other.variants))
             return false;
         return true;
-    }	
+	}
 
-
+	/**
+	 * Removes a recipe from the menu item
+	 *
+	 * @param removed the recipe to be removed
+	 */
+	public void remove(PermanentRecipe removed) {
+		this.variants.remove(removed);
+	}
 }
 
