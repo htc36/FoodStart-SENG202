@@ -21,7 +21,6 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Manage Menu">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#showManageCurrentMenu" text="Current Menu" />
                   <MenuItem mnemonicParsing="false" onAction="#showManageAllMenus" text="All Menus" />
                   <MenuItem mnemonicParsing="false" onAction="#showManageMenuItems" text="Menu Items" />
                   <MenuItem mnemonicParsing="false" onAction="#showManageRecipes" text="Recipes" />
