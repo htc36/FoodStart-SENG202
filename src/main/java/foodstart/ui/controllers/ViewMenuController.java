@@ -197,6 +197,12 @@ public class ViewMenuController {
 
     }
 
+    public void onResetMenuItems() {
+    }
+
+    public void onApplyChanges() {
+    }
+
     private void refreshTables() {
         Menu menu = Managers.getMenuManager().getMenu(menuId);
         populateAllMenuItemsTable(menu);
