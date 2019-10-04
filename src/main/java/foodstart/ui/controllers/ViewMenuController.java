@@ -176,7 +176,6 @@ public class ViewMenuController {
     	
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        //tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         tableVariantsColumn.setCellValueFactory(cell -> {
             String output = cell.getValue().getVariantsAsString();
             return new SimpleStringProperty(output);
@@ -187,14 +186,9 @@ public class ViewMenuController {
     }
 
     private void populateAllMenuItemsTable(Menu menu) {
-    	/*
-    	if (currentAvailableMenuItems == null) {
-    		setAvailableMenuItems(menu);
-    		observableAvailableItems = FXCollections.observableArrayList(currentAvailableMenuItems);
-    	}*/
+
         availableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         availableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        //availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         availableVariantsColumn.setCellValueFactory(cell -> {
             String output = cell.getValue().getVariantsAsString();
             return new SimpleStringProperty(output);
@@ -223,24 +217,28 @@ public class ViewMenuController {
 
     public void onAddMenuItem() {
         MenuItem selectedMenuItem = availableMenuItemsTable.getSelectionModel().getSelectedItem();
-        //Menu currentMenu = Managers.getMenuManager().getMenu(menuId);
-        observableCurrentItems.add(selectedMenuItem);
-        observableAvailableItems.remove(selectedMenuItem);
-        refreshTables();
+        if (selectedMenuItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the available menu items table");
+            alert.setHeaderText("No Menu Item Selected");
+            alert.showAndWait();
+        } else {
+            observableCurrentItems.add(selectedMenuItem);
+            observableAvailableItems.remove(selectedMenuItem);
+            refreshTables();
+        }
     }
 
     public void onRemoveMenuItem() {
         MenuItem selectedMenuItem = menuTable.getSelectionModel().getSelectedItem();
-        //Menu currentMenu = Managers.getMenuManager().getMenu(menuId);
         if (selectedMenuItem == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the current menu table");
 			alert.setHeaderText("No Menu Item Selected");
 			alert.showAndWait();
+        } else {
+            observableCurrentItems.remove(selectedMenuItem);
+            observableAvailableItems.add(selectedMenuItem);
+            refreshTables();
         }
-        observableCurrentItems.remove(selectedMenuItem);
-        observableAvailableItems.add(selectedMenuItem);
-
-        refreshTables();
 
     }
 
