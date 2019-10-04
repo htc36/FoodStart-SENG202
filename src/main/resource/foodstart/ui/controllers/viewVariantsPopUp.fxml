@@ -11,18 +11,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="foodstart.ui.controllers.ViewVariantsPopupController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="250.0" minWidth="400.0" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewVariantsPopupController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="115.59998168945313" minHeight="0.0" prefHeight="36.200006103515626" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="240.8" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="299.40000305175784" minHeight="10.0" prefHeight="250.6000244140625" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="295.6000274658203" minHeight="10.0" prefHeight="16.999975585937477" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="295.6000274658203" minHeight="10.0" prefHeight="49.79999694824221" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="115.59998168945313" minHeight="35.0" prefHeight="36.200006103515626" vgrow="NEVER" />
+    <RowConstraints maxHeight="240.8" minHeight="35.0" prefHeight="38.0" vgrow="NEVER" />
+    <RowConstraints maxHeight="299.40000305175784" minHeight="35.0" prefHeight="250.6000244140625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="295.6000274658203" minHeight="10.0" prefHeight="16.999975585937477" vgrow="NEVER" />
+      <RowConstraints maxHeight="295.6000274658203" minHeight="35.0" prefHeight="49.79999694824221" vgrow="NEVER" />
   </rowConstraints>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
