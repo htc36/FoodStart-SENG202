@@ -52,7 +52,7 @@ public class AllMenusController {
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-		populateAllMenus(flowPane);
+		populateAllMenus();
 
 
 	}
@@ -60,9 +60,8 @@ public class AllMenusController {
 	/**
 	 * Populate the FlowPane with all menu items
 	 *
-	 * @param flowPane The flowpane to populate
 	 */
-	public void populateAllMenus(FlowPane flowPane) {
+	public void populateAllMenus() {
 		flowPane.getChildren().clear();
         for (Menu menu : Managers.getMenuManager().getMenuSet()) {
 			flowPane.getChildren().add(createMenuBox(menu));

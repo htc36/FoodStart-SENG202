@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewMenuController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -51,7 +50,7 @@
          <columns>
             <TableColumn fx:id="tableIDColumn" minWidth="5.0" prefWidth="100.0" text="ID" />
             <TableColumn fx:id="tableNameColumn" editable="false" minWidth="100.0" prefWidth="100.0" sortable="false" text="Name" />
-            <TableColumn fx:id="tableVariantsColumn" minWidth="250.0" prefWidth="234.40008544921875" text="Variants" />
+            <TableColumn fx:id="tableDescriptionColumn" minWidth="250.0" prefWidth="234.40008544921875" text="Description" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -61,7 +60,7 @@
          <columns>
             <TableColumn fx:id="availableIDColumn" minWidth="5.0" prefWidth="100.0" text="ID" />
             <TableColumn fx:id="availableNameColumn" editable="false" minWidth="100.0" prefWidth="100.0" sortable="false" text="Name" />
-            <TableColumn fx:id="availableVariantsColumn" minWidth="250.0" prefWidth="234.40008544921875" text="Variants" />
+            <TableColumn fx:id="availableDescriptionColumn" minWidth="250.0" prefWidth="234.40008544921875" text="Description" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -140,6 +139,14 @@
                </children>
             </AnchorPane>
          </children>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
       </GridPane>
    </children>
    <padding>

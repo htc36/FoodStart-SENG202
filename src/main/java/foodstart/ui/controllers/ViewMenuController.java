@@ -4,15 +4,18 @@ import foodstart.manager.Managers;
 import foodstart.manager.menu.MenuManager;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,12 +29,12 @@ public class ViewMenuController {
     @FXML
     private TableView<MenuItem> menuTable;
     /**
-     * Text area for menu item names
+     * Text field for menu name
      */
     @FXML
     private Text menuNameText;
     /**
-     * Text area for menu item descriptions
+     * Text area for menu description
      */
     @FXML
     private Text menuDescriptionText;
@@ -46,10 +49,10 @@ public class ViewMenuController {
     @FXML
     private TableColumn<MenuItem, String> tableNameColumn;
     /**
-     * Table column for menu item recipe variants
+     * Table column for menu item recipe descriptions
      */
     @FXML
-    private TableColumn<MenuItem, String> tableVariantsColumn;
+    private TableColumn<MenuItem, String> tableDescriptionColumn;
     /**
      * Table for the available menu items that are not already in the current menu
      */
@@ -65,6 +68,11 @@ public class ViewMenuController {
      */
     @FXML
     private TableColumn<MenuItem, String> availableNameColumn;
+    /**
+     * Table column for the available menu item recipe descriptions
+     */
+    @FXML
+    private TableColumn<MenuItem, String> availableDescriptionColumn;
     /**
      * Table column for the available menu item recipe variants
      */
@@ -91,6 +99,14 @@ public class ViewMenuController {
      * The stage of the current screen
      */
     private Stage stage;
+    /**
+     * Loader for popup fxml
+     */
+    private FXMLLoader loader;
+    /**
+     * Stage for popup
+     */
+    private Stage popupStage;
     /**
      * The displayed menu
      */
@@ -148,27 +164,56 @@ public class ViewMenuController {
      * Called to set the available menu items to be added to the menu
      */
     private void setAvailableMenuItems(Menu menu) {
-
-
-    	//currentAvailableMenuItems.removeAll(menu.getMenuItems());
-    	currentAvailableMenuItems = Managers.getMenuItemManager().getMenuItemSet();
-    	
+        currentAvailableMenuItems = Managers.getMenuItemManager().getMenuItemSet();
     	for (MenuItem inMenu : menu.getMenuItems()) {
 	    	currentAvailableMenuItems.remove(Managers.getMenuItemManager().getMenuItem(inMenu.getId()));
-    		
     	}
     }
-    
+
+    private void showMenuItemDetails(MenuItem menuItem) {
+        loader = new FXMLLoader(getClass().getResource("viewVariantsPopUp.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ((ViewVariantsPopupController) loader.getController()).setMenuItem(menuItem);
+
+        Scene scene = new Scene(loader.getRoot());
+
+        popupStage = new Stage();
+        popupStage.initModality(Modality.WINDOW_MODAL);
+
+        ((ViewVariantsPopupController) loader.getController()).setStage(popupStage);
+
+
+        if (popupStage.getOwner() == null) {
+            popupStage.initOwner(this.menuTable.getScene().getWindow());
+        }
+        popupStage.setTitle("View Menu Item");
+        popupStage.setScene(scene);
+        popupStage.showAndWait();
+    }
+
     /**
      * Called to populate the current menu's menu items table view with the menu information
      */
     private void populateCurrentMenuTable() {
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        tableVariantsColumn.setCellValueFactory(cell -> {
-            String output = cell.getValue().getVariantsAsString();
-            return new SimpleStringProperty(output);
+        tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        menuTable.setRowFactory( tv -> {
+            TableRow<MenuItem> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 & (! row.isEmpty())) {
+                    MenuItem menuItem = row.getItem();
+                    showMenuItemDetails(menuItem);
+                }
+            });
+            return row;
         });
+
         menuTable.setItems(FXCollections.observableArrayList(observableCurrentItems));
     }
 
@@ -178,10 +223,19 @@ public class ViewMenuController {
     private void populateAllMenuItemsTable() {
         availableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         availableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        availableVariantsColumn.setCellValueFactory(cell -> {
-            String output = cell.getValue().getVariantsAsString();
-            return new SimpleStringProperty(output);
+        availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        availableMenuItemsTable.setRowFactory( tv -> {
+            TableRow<MenuItem> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 & (! row.isEmpty())) {
+                    MenuItem menuItem = row.getItem();
+                    showMenuItemDetails(menuItem);
+                }
+            });
+            return row;
         });
+
         availableMenuItemsTable.setItems(FXCollections.observableArrayList(observableAvailableItems));
     }
 
