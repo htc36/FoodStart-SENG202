@@ -86,6 +86,18 @@ public class RecipeEditorController implements Refreshable {
 	TableColumn<Ingredient, String> quantityCol;
 
 	/**
+	 * Input field for Name of recipe
+	 */
+	@FXML
+	TextField nameInput;
+
+	/**
+	 * Input field for price of recipe
+	 */
+	@FXML
+	TextField priceInput;
+
+	/**
 	 * An observable list of ingredients for the table
 	 */
 	private ObservableList<Ingredient> observableIngredients;
@@ -97,6 +109,11 @@ public class RecipeEditorController implements Refreshable {
 	 * A map of ingredients to ingredient quantities to set the recipe to have
 	 */
 	private Map<Ingredient, Integer> ingredients;
+
+	/**
+	 * ID of recipe to be edited
+	 */
+	private int id;
 
 	/**
 	 * Initialises the RecipeEditorController
@@ -142,6 +159,18 @@ public class RecipeEditorController implements Refreshable {
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
 		this.ingredients = new HashMap<>(recipe.getIngredients());
+		refreshTable();
+	}
+
+	/**
+	 * Sets the recipe and text fields
+	 */
+	public void setRecipeAndFields(Recipe recipe) {
+		this.id = recipe.getId();
+		this.recipe = recipe;
+		this.ingredients = new HashMap<>(recipe.getIngredients());
+		this.nameInput.setText(recipe.getDisplayName());
+		this.priceInput.setText(Float.toString(recipe.getPrice()));
 		refreshTable();
 	}
 
@@ -215,6 +244,11 @@ public class RecipeEditorController implements Refreshable {
 			}
 		}
 		refreshTable();
+	}
+	@FXML
+	private void confirmFromRecipePage() {
+		Managers.getRecipeManager().mutateRecipe(id, nameInput.getText(), "", Float.parseFloat(priceInput.getText()), ingredients);
+		closeSelf();
 	}
 
 	/**
