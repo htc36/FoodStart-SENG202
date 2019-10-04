@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE suppliers SYSTEM "suppliers.dtd">
+<!DOCTYPE suppliers SYSTEM "supplier.dtd">
 <suppliers>
     <supplier>
         <sid>2</sid>
@@ -17,16 +17,16 @@
         <url>cfoods.co.nz</url>
     </supplier>
     <supplier>
+        <sid>4</sid>
+        <name>Dave's Drinks</name>
+        <address>Unit 5, Bert's Business Park, Christchurch</address>
+        <phone type="home">3515666</phone>
+    </supplier>
+    <supplier>
         <sid>1</sid>
         <name>Countup</name>
         <address>12 High Street, Christchurch</address>
         <phone type="work">3451234</phone>
         <url>countup.co.nz/high</url>
-    </supplier>
-    <supplier>
-        <sid>4</sid>
-        <name>Dave's Drinks</name>
-        <address>Unit 5, Bert's Business Park, Christchurch</address>
-        <phone type="home">3515666</phone>
     </supplier>
 </suppliers>
