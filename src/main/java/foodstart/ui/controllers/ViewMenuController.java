@@ -79,13 +79,20 @@ public class ViewMenuController {
     /**
      * The list of menu items in the current menu that will be displayed in the table
      */
-    private ObservableList<MenuItem> observableCurrentItems ;
+    private ObservableList<MenuItem> observableCurrentItems;
     
     /**
      * The list of menu items available to be added to the menu that will be displayed in the table
      */
     private ObservableList<MenuItem> observableAvailableItems;
-
+    /**
+     * The initial menu items in the menu
+     */
+    private Set<MenuItem> currentMenuItems;
+    /**
+     * The initial available menu items
+     */
+    private Set<MenuItem> currentAvailableMenuItems;
 
 
     Stage stage;
@@ -95,8 +102,7 @@ public class ViewMenuController {
      */
     int menuId;
     
-    private Set<MenuItem> currentMenuItems;
-    private Set<MenuItem> currentAvailableMenuItems;
+
     
 
     /**
@@ -123,6 +129,10 @@ public class ViewMenuController {
         menuNameText.setText(menu.getTitle());
         menuDescriptionText.setText(menu.getDescription());
         menuId = menu.getId();
+        setCurrentMenuIems(menu);
+        setAvailableMenuItems(menu);
+        observableCurrentItems = FXCollections.observableArrayList(currentMenuItems);
+        observableAvailableItems = FXCollections.observableArrayList(currentAvailableMenuItems);
         populateCurrentMenuTable(menu);
         populateAllMenuItemsTable(menu);
     }
@@ -143,8 +153,12 @@ public class ViewMenuController {
     	//currentAvailableMenuItems.removeAll(menu.getMenuItems());
     	currentAvailableMenuItems = Managers.getMenuItemManager().getMenuItemSet();
     	
-    
-    	currentAvailableMenuItems.removeAll(menu.getMenuItems());
+    	for (MenuItem inMenu : menu.getMenuItems()) {
+	    	currentAvailableMenuItems.remove(Managers.getMenuItemManager().getMenuItem(inMenu.getId()));
+    		
+    	}
+    	//currentAvailableMenuItems.remove(Managers.getMenuItemManager().getMenuItem(1));
+
         
 
     }
@@ -154,10 +168,11 @@ public class ViewMenuController {
      * @param menu the menu to populate the table with data of
      */
     private void populateCurrentMenuTable(Menu menu) {
+    	/*
     	if (currentMenuItems == null) {
     		setCurrentMenuIems(menu);
     		observableCurrentItems = FXCollections.observableArrayList(currentMenuItems);
-    	}
+    	}*/
     	
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -172,10 +187,11 @@ public class ViewMenuController {
     }
 
     private void populateAllMenuItemsTable(Menu menu) {
+    	/*
     	if (currentAvailableMenuItems == null) {
     		setAvailableMenuItems(menu);
     		observableAvailableItems = FXCollections.observableArrayList(currentAvailableMenuItems);
-    	}
+    	}*/
         availableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         availableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         //availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
