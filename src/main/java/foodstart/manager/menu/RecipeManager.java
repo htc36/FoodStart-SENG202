@@ -224,4 +224,13 @@ public class RecipeManager {
 			menuItem.remove(removed);
 		}
 	}
+	public void mutateRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients){
+		PermanentRecipe recipe = this.recipes.get(id);
+		if (recipe != null) {
+		    recipe.setDisplayName(name);
+		    recipe.setPrice(price);
+		    //recipe.setInstructions();
+			recipe.setIngredients(ingredients);
+		}
+	}
 }
