@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
@@ -98,6 +99,12 @@ public class RecipeEditorController implements Refreshable {
 	TextField priceInput;
 
 	/**
+	 * Input field for instructions
+	 */
+	@FXML
+	TextArea instructionsInput;
+
+	/**
 	 * An observable list of ingredients for the table
 	 */
 	private ObservableList<Ingredient> observableIngredients;
@@ -165,13 +172,26 @@ public class RecipeEditorController implements Refreshable {
 	/**
 	 * Sets the recipe and text fields
 	 */
-	public void setRecipeAndFields(Recipe recipe) {
+	public void setRecipeAndFields(PermanentRecipe recipe) {
 		this.id = recipe.getId();
 		this.recipe = recipe;
 		this.ingredients = new HashMap<>(recipe.getIngredients());
 		this.nameInput.setText(recipe.getDisplayName());
 		this.priceInput.setText(Float.toString(recipe.getPrice()));
+		this.instructionsInput.setText(recipe.getInstructions());
 		refreshTable();
+	}
+	/**
+	 * Clears fields, used when wanting to add new item
+	 */
+	public void clearFields() {
+		this.id = Managers.getRecipeManager().generateNewId();
+		this.ingredients = new HashMap<>();
+		this.nameInput.clear();
+		this.priceInput.clear();
+		this.instructionsInput.clear();
+		refreshTable();
+
 	}
 
 	/**
@@ -247,7 +267,13 @@ public class RecipeEditorController implements Refreshable {
 	}
 	@FXML
 	private void confirmFromRecipePage() {
-		Managers.getRecipeManager().mutateRecipe(id, nameInput.getText(), "", Float.parseFloat(priceInput.getText()), ingredients);
+		RecipeManager manager = Managers.getRecipeManager();
+		if (manager.idExists(id)) {
+			manager.mutateRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+		} else {
+		    manager.addRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+        }
+
 		closeSelf();
 	}
 

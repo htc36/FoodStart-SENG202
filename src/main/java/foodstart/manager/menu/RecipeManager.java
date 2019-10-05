@@ -229,8 +229,17 @@ public class RecipeManager {
 		if (recipe != null) {
 		    recipe.setDisplayName(name);
 		    recipe.setPrice(price);
-		    //recipe.setInstructions();
+		    recipe.setInstructions(instructions);
 			recipe.setIngredients(ingredients);
 		}
+	}
+	public int generateNewId() {
+		return recipes.keySet().size() == 0 ? 0 : Collections.max(recipes.keySet()) + 1;
+	}
+	public boolean idExists(int id) {
+		if (recipes.containsKey(id)) {
+			return true;
+		}
+		return false;
 	}
 }

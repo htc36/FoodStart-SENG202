@@ -33,6 +33,7 @@
                             <MenuItem mnemonicParsing="false" onAction="#importRecipe" text="Import" />
                             <MenuItem mnemonicParsing="false" onAction="#exportRecipe" text="Export" />
                               <MenuItem mnemonicParsing="false" onAction="#removeRecipe" text="Remove" />
+                              <MenuItem mnemonicParsing="false" onAction="#addRecipe" text="Add" />
                               <MenuItem mnemonicParsing="false" onAction="#modifyRecipe" text="Edit" />
                           </items>
                         </MenuButton>

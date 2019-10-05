@@ -187,7 +187,7 @@ public class RecipesController implements Refreshable {
 	 */
 	@FXML
 	private void modifyRecipe() {
-		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
+		PermanentRecipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
 		if (recipe == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not modify recipe as none was selected", ButtonType.OK);
 			alert.setHeaderText("No has been selected");
@@ -201,6 +201,19 @@ public class RecipesController implements Refreshable {
 			editPopup.showAndWait();
 			refreshTable();
 		}
+	}
+	/**
+	 * Calls add recipe popup
+	 */
+	@FXML void addRecipe() {
+        if (editPopup.getOwner() == null) {
+            editPopup.initOwner(this.recipesTableView.getScene().getWindow());
+        }
+		((RecipeEditorController) editLoader.getController()).clearFields();
+        editPopup.showAndWait();
+        refreshTable();
+
+
 	}
 
 }
