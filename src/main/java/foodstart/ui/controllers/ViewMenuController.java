@@ -131,6 +131,8 @@ public class ViewMenuController {
      */
     public void setStage(Stage popupStage) {
         stage = popupStage;
+        stage.setMinWidth(700);
+        stage.setMinHeight(400);
         stage.setOnCloseRequest(event -> {
             onCancel();
             event.consume();
