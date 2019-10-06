@@ -128,13 +128,20 @@ public class RecipeEditorController implements Refreshable {
 	@FXML
 	public void initialize() {
 		populateTable();
+		if (this.priceInput != null) {
+			this.priceInput.textProperty().addListener((observable, oldValue, newValue) -> {
+				if (!newValue.matches("\\d{0,7}([.]\\d{0,2})?")) {
+					priceInput.setText(oldValue);
+				}
+			});
+		}
 		this.ingredientQuantityInput.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (!newValue.matches("\\d{0,7}")) {
 				ingredientQuantityInput.setText(oldValue);
 			}
 		});
 		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) ->
-				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 0)))));
+				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 1)))));
 	}
 
 	/**
@@ -179,6 +186,8 @@ public class RecipeEditorController implements Refreshable {
 		this.nameInput.setText(recipe.getDisplayName());
 		this.priceInput.setText(Float.toString(recipe.getPrice()));
 		this.instructionsInput.setText(recipe.getInstructions());
+		ingredientsCB.getSelectionModel().clearSelection();
+
 		refreshTable();
 	}
 	/**
@@ -190,6 +199,7 @@ public class RecipeEditorController implements Refreshable {
 		this.nameInput.clear();
 		this.priceInput.clear();
 		this.instructionsInput.clear();
+		ingredientsCB.getSelectionModel().clearSelection();
 		refreshTable();
 
 	}
@@ -239,7 +249,12 @@ public class RecipeEditorController implements Refreshable {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not add ingredient as there ", ButtonType.OK);
 			alert.setHeaderText("No recipe selected");
 			alert.showAndWait();
-		} else {
+		} else if (Integer.parseInt(amount) == 0) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "You can not add an ingredient with amount 0", ButtonType.OK);
+			alert.setHeaderText("Amount error");
+			alert.showAndWait();
+		}
+		else {
 			Integer amountInt = Integer.parseInt(amount);
 			ingredients.put(ingredient, amountInt);
 		}
@@ -267,14 +282,20 @@ public class RecipeEditorController implements Refreshable {
 	}
 	@FXML
 	private void confirmFromRecipePage() {
-		RecipeManager manager = Managers.getRecipeManager();
-		if (manager.idExists(id)) {
-			manager.mutateRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+	    if (ingredients.isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "There must be at least one ingredient in the recipe", ButtonType.OK);
+			alert.setHeaderText("No ingredients selected");
+			alert.showAndWait();
 		} else {
-		    manager.addRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
-        }
+			RecipeManager manager = Managers.getRecipeManager();
+			if (manager.idExists(id)) {
+				manager.mutateRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+			} else {
+				manager.addRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+			}
 
-		closeSelf();
+			closeSelf();
+		}
 	}
 
 	/**
