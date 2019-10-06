@@ -4,6 +4,7 @@ import foodstart.manager.Managers;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 
 import java.util.*;
 
@@ -107,6 +108,17 @@ public class MenuItemManager {
 		Set<Menu> menus = Managers.getMenuManager().getMenuSet();
 		for (Menu menu : menus) {
 			menu.removeMenuItem(removed);
+		}
+	}
+	public int generateNewId() {
+		return menuItems.keySet().size() == 0 ? 0 : Collections.max(menuItems.keySet()) + 1;
+	}
+	public void mutateMenuItem(int id, String name, String description, List<PermanentRecipe> recipes){
+		MenuItem menuItem = this.menuItems.get(id);
+		if (menuItem != null) {
+			menuItem.setName(name);
+			menuItem.setDescription(description);
+			menuItem.setVariants(recipes);
 		}
 	}
 }

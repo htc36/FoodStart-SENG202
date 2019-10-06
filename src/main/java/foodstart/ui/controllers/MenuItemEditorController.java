@@ -1,7 +1,9 @@
 package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
+import foodstart.manager.menu.MenuItemManager;
 import foodstart.manager.menu.RecipeManager;
+import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
@@ -49,12 +51,18 @@ public class MenuItemEditorController implements Refreshable {
 	Button removeIngredientButton;
 
 	@FXML
-	TableView<Ingredient> ingredientsTable;
+	TableView<PermanentRecipe> recipesTable;
 	/**
 	 * Table column for ingredient name
 	 */
 	@FXML
-	TableColumn<Ingredient, String> nameCol;
+	TableColumn<PermanentRecipe, String> nameCol;
+
+	@FXML
+	TextArea descriptionInput;
+
+	@FXML
+	TextField nameInput;
 
 	/**
 	 * FXML loader for the edit recipe popup
@@ -73,12 +81,14 @@ public class MenuItemEditorController implements Refreshable {
 	/**
 	 * An observable list of ingredients for the table
 	 */
-	private ObservableList<Ingredient> observableIngredients;
+	private ObservableList<PermanentRecipe> observableRecipes;
 
 	/**
 	 * A map of ingredients to ingredient quantities to set the recipe to have
 	 */
-	private Map<Ingredient, Integer> ingredients;
+	private Set<PermanentRecipe> recipesSet;
+
+	private int id;
 
 
 	/**
@@ -86,17 +96,16 @@ public class MenuItemEditorController implements Refreshable {
 	 */
 	@FXML
 	public void initialize() {
-//		try {
-//			editLoader = new FXMLLoader(getClass().getResource("allRecipesDisplay.fxml"));
-//			editFXML = editLoader.load();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		Screen screen = Screen.getPrimary();
-//		editPopup = new Stage();
-//		editPopup.initModality(Modality.WINDOW_MODAL);
-//		editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() / 4, screen.getVisualBounds().getHeight() / 2));
-//		editPopup.setScene(new Scene(editFXML));
+		try {
+			editLoader = new FXMLLoader(getClass().getResource("allRecipesDisplay.fxml"));
+			editFXML = editLoader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Screen screen = Screen.getPrimary();
+		editPopup = new Stage();
+		editPopup.initModality(Modality.WINDOW_MODAL);
+		editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() / 4, screen.getVisualBounds().getHeight() / 2));
 		populateTable();
 	}
 
@@ -104,6 +113,10 @@ public class MenuItemEditorController implements Refreshable {
 	 * Populates the table with data
 	 */
 	private void populateTable() {
+		recipesSet = new HashSet<>();
+		observableRecipes = FXCollections.observableArrayList(recipesSet);
+		recipesTable.setItems(observableRecipes);
+		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
 
 	}
 
@@ -112,12 +125,29 @@ public class MenuItemEditorController implements Refreshable {
 	 */
 	@Override
 	public void refreshTable() {
-		this.observableIngredients.setAll(ingredients.keySet());
+		this.observableRecipes.setAll(recipesSet);
+	}
+	public void clearFields() {
+		id = Managers.getMenuItemManager().generateNewId();
+		nameInput.clear();
+		descriptionInput.clear();
+		recipesSet.clear();
+		refreshTable();
+	}
+	public void setFields(MenuItem menuItem) {
+		id = menuItem.getId();
+		nameInput.setText(menuItem.getName());
+		descriptionInput.setText(menuItem.getDescription());
+		recipesSet.clear();
+		recipesSet.addAll(menuItem.getVariants());
+		refreshTable();
+
 	}
 
 
+
 	/**
-	 * Adds an ingredient to the new ingredients map
+	 * Adds a recipe to the new recipe map
 	 */
 	@FXML
 	private void addRecipe() {
@@ -125,6 +155,42 @@ public class MenuItemEditorController implements Refreshable {
 			editPopup.initOwner(this.addRecipeButton.getScene().getWindow());
 		}
 		editPopup.showAndWait();
+		PermanentRecipe selectedRecipe = ((AllRecipesDisplayController) editLoader.getController()).getSelectedRecipe();
+		if (selectedRecipe != null) {
+			recipesSet.add(selectedRecipe);
+			refreshTable();
+		}
+	}
+	@FXML
+	private void cancel() {
+		closeSelf();
+	}
+
+	@FXML
+	private void confirm() {
+		if (recipesSet.isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "There must be at least one recipe in the menu item", ButtonType.OK);
+			alert.setHeaderText("No recipes selected");
+			alert.showAndWait();
+		}else if (nameInput.getText() == null || nameInput.getText().isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "The name field must have an input", ButtonType.OK);
+			alert.setHeaderText("Name field empty");
+			alert.showAndWait();
+		}else if (descriptionInput.getText() == null || descriptionInput.getText().isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "The description field must have an input", ButtonType.OK);
+			alert.setHeaderText("Description field empty");
+			alert.showAndWait();
+		} else{
+			MenuItemManager manager = Managers.getMenuItemManager();
+			List<PermanentRecipe> recipesList = new ArrayList<>();
+			recipesList.addAll(recipesSet);
+			if (manager.getMenuItems().containsKey(id)) {
+				manager.mutateMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);
+			}else {
+				manager.addMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);
+			}
+			closeSelf();
+		}
 	}
 
 
@@ -132,7 +198,7 @@ public class MenuItemEditorController implements Refreshable {
 	 * Closes the stage
 	 */
 	private void closeSelf() {
-		Stage stage = (Stage) this.ingredientsTable.getScene().getWindow();
+		Stage stage = (Stage) this.recipesTable.getScene().getWindow();
 		stage.close();
 	}
 

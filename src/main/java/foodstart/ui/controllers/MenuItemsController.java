@@ -105,7 +105,7 @@ public class MenuItemsController {
         box.setAlignment(Pos.CENTER);
         box.setCursor(Cursor.HAND);
         box.setOnMouseClicked((event) -> {
-
+            editMenuItem(item);
         });
         FlowPane.setMargin(box, new Insets(5));
         box.setBorder(new Border(
@@ -132,11 +132,21 @@ public class MenuItemsController {
         if (editPopup.getOwner() == null) {
             editPopup.initOwner(this.flowPane.getScene().getWindow());
         }
+        ((MenuItemEditorController) editLoader.getController()).clearFields();
         editPopup.showAndWait();
-//        refreshTable();
+        populateMenuItems(flowPane);
+    }
 
+    public void editMenuItem(MenuItem menuItem) {
+        if (editPopup.getOwner() == null) {
+            editPopup.initOwner(this.flowPane.getScene().getWindow());
+        }
+        ((MenuItemEditorController) editLoader.getController()).setFields(menuItem);
+        editPopup.showAndWait();
+        populateMenuItems(flowPane);
 
     }
+
 
 
 }

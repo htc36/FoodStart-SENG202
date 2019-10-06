@@ -59,6 +59,8 @@ public class AllRecipesDisplayController implements Refreshable {
 	@FXML
 	private TableColumn<PermanentRecipe, String> ingredientsCol;
 
+	private PermanentRecipe selectedRecipe;
+
 
 	/**
 	 * List of currently shown recipes
@@ -78,14 +80,14 @@ public class AllRecipesDisplayController implements Refreshable {
 	 * Populates the recipe table with data
 	 */
 	public void populateTable() {
-//		RecipeManager manager = Managers.getRecipeManager();
-//		Set<PermanentRecipe> recipesSet = manager.getRecipeSet();
-//		observableRecipes = FXCollections.observableArrayList(recipesSet);
-//
-//		recipesTableView.setItems(observableRecipes);
-//		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
-//		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
-//		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
+		RecipeManager manager = Managers.getRecipeManager();
+		Set<PermanentRecipe> recipesSet = manager.getRecipeSet();
+		observableRecipes = FXCollections.observableArrayList(recipesSet);
+
+		recipesTableView.setItems(observableRecipes);
+		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
+		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
+		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
 
 	}
 
@@ -97,4 +99,30 @@ public class AllRecipesDisplayController implements Refreshable {
 		observableRecipes.setAll(Managers.getRecipeManager().getRecipeSet());
 	}
 
+	public void addRecipe() {
+		selectedRecipe = recipesTableView.getSelectionModel().getSelectedItem();
+		if (selectedRecipe == null) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a recipe to add", ButtonType.OK);
+			alert.setHeaderText("No recipe selected");
+			alert.showAndWait();
+		} else {
+			closeSelf();
+		}
+	}
+
+	public void cancel() {
+		selectedRecipe = null;
+		closeSelf();
+	}
+	public PermanentRecipe getSelectedRecipe() {
+		return selectedRecipe;
+	}
+
+	/**
+	 * Closes the stage
+	 */
+	private void closeSelf() {
+		Stage stage = (Stage) this.recipesTableView.getScene().getWindow();
+		stage.close();
+	}
 }
