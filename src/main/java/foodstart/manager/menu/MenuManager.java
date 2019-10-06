@@ -1,13 +1,9 @@
 package foodstart.manager.menu;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
+
+import java.util.*;
 
 /**
  * Acts as a controller, storing and managing the menus in the model
@@ -18,6 +14,11 @@ public class MenuManager {
 	 * The map of all menus modeled in the system
 	 */
 	private Map<Integer, Menu> menus;
+
+	/**
+	 * A buffer for putting menus in before writing them to the system
+	 */
+	private Map<Integer, Menu> buffer;
 	
 	/**
 	 * Current menu to display. 
@@ -29,6 +30,7 @@ public class MenuManager {
 	 */
 	public MenuManager() {
 		this.menus = new HashMap<Integer, Menu>();
+		this.buffer = new HashMap<Integer, Menu>();
 	}
 
 	/**
@@ -115,5 +117,26 @@ public class MenuManager {
 	 */
 	public void removeMenu(int id) {
 		this.menus.remove(id);
+	}
+
+	/**
+	 * Pushes a new menu to the buffer
+	 *
+	 * @param menuItems   the menu items that are in the menu
+	 * @param id          the UID of the menu
+	 * @param title       the name of the menu
+	 * @param description a description of the menu
+	 */
+	public void pushToBuffer(Set<MenuItem> menuItems, int id, String title, String description) {
+		Menu menu = new Menu(menuItems, id, title, description);
+		this.buffer.put(id, menu);
+	}
+
+	/**
+	 * Writes the data in the buffer into the system
+	 */
+	public void writeBuffer() {
+		this.menus.putAll(this.buffer);
+		this.buffer.clear();
 	}
 }

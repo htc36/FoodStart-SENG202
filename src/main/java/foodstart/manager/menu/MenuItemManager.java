@@ -19,10 +19,16 @@ public class MenuItemManager {
 	private Map<Integer, MenuItem> menuItems;
 
 	/**
+	 * A buffer for putting MenuItems in before writing them to the manager
+	 */
+	private Map<Integer, MenuItem> buffer;
+
+	/**
 	 * Constructs an instance of a menu item manager.
 	 */
 	public MenuItemManager() {
 		this.menuItems = new HashMap<Integer, MenuItem>();
+		this.buffer = new HashMap<Integer, MenuItem>();
 	}
 
 	/**
@@ -110,15 +116,44 @@ public class MenuItemManager {
 			menu.removeMenuItem(removed);
 		}
 	}
+
 	public int generateNewId() {
 		return menuItems.keySet().size() == 0 ? 0 : Collections.max(menuItems.keySet()) + 1;
 	}
-	public void mutateMenuItem(int id, String name, String description, List<PermanentRecipe> recipes){
-		MenuItem menuItem = this.menuItems.get(id);
-		if (menuItem != null) {
-			menuItem.setName(name);
-			menuItem.setDescription(description);
-			menuItem.setVariants(recipes);
+	public void mutateMenuItem(int id, String name, String description, List<PermanentRecipe> recipes) {
+		MenuItem menuItem2 = this.menuItems.get(id);
+		if (menuItem2 != null) {
+			menuItem2.setName(name);
+			menuItem2.setDescription(description);
+			menuItem2.setVariants(recipes);
 		}
+	}
+
+	/**
+	 * Pushes a new menu item to the buffer
+	 *
+	 * @param id          the UID of the menu item
+	 * @param name        the name of the menu item
+	 * @param description a description of the menu item
+	 * @param variants    a set of all recipes that make up the menu item
+	 */
+	public void pushToBuffer(int id, String name, String description, List<PermanentRecipe> variants) {
+		MenuItem menuItem = new MenuItem(id, name, description, variants);
+		this.buffer.put(id, menuItem);
+	}
+
+	/**
+	 * Adds the current data in the buffer to the modeled menus
+	 */
+	public void writeBuffer() {
+		this.menuItems.putAll(this.buffer);
+		buffer.clear();
+	}
+
+	/**
+	 * Drops the current data in the buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
 	}
 }

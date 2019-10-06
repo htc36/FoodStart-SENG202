@@ -19,12 +19,17 @@ public class IngredientManager {
 	 */
 	private Map<Integer, Ingredient> ingredients;
 
+	/**
+	 * The map of all ingredients modeled
+	 */
+	private Map<Integer, Ingredient> buffer;
 
 	/**
 	 * Constructs an instance of an ingredient manager
 	 */
 	public IngredientManager() {
 		this.ingredients = new HashMap<Integer, Ingredient>();
+		this.buffer = new HashMap<Integer, Ingredient>();
 	}
 
 	/**
@@ -225,6 +230,36 @@ public class IngredientManager {
 			ingredient.setKitchenStock(kitchenStock);
 			ingredient.setTruckStock(truckStock);
 		}
+	}
+
+	/**
+	 * Pushes a new ingredient to the buffer
+	 *
+	 * @param unit         Unit of the ingredient
+	 * @param name         Name of the ingredient
+	 * @param id           Identifier code of the ingredient
+	 * @param safeFor      map of dietary requirements to whether or not the ingredient is considered safe for that requirement
+	 * @param kitchenStock Amount of current stock in the kitchen
+	 * @param truckStock   Amount of current stock in the truck
+	 */
+	public void pushToBuffer(Unit unit, String name, int id, Map<DietaryRequirement, Boolean> safeFor, int kitchenStock, int truckStock) {
+		Ingredient ingredient = new Ingredient(unit, name, id, safeFor, kitchenStock, truckStock);
+		this.buffer.put(id, ingredient);
+	}
+
+	/**
+	 * Adds the current data in the buffer to the modeled ingredients
+	 */
+	public void writeBuffer() {
+		this.ingredients.putAll(this.buffer);
+		buffer.clear();
+	}
+
+	/**
+	 * Drops the current data in the buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
 	}
 }
 
