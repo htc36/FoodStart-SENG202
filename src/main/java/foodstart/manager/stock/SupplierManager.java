@@ -16,10 +16,16 @@ public class SupplierManager {
 	private Map<Integer, Supplier> suppliers;
 
 	/**
+	 * A buffer for placing suppliers in before writing them to the system
+	 */
+	private Map<Integer, Supplier> buffer;
+
+	/**
 	 * Constructs an instance of a supplier manager
 	 */
 	public SupplierManager() {
 		this.suppliers = new HashMap<Integer, Supplier>();
+		this.buffer = new HashMap<Integer, Supplier>();
 	}
 
 	/**
@@ -57,7 +63,6 @@ public class SupplierManager {
 	        addSupplier(supplier);
 	    }
 	}
-	
 
 	/**
 	 * Removes a supplier from the map of suppliers
@@ -129,5 +134,35 @@ public class SupplierManager {
 		return suppliers.keySet().size() == 0 ? 0 : Collections.max(suppliers.keySet()) + 1;
 	}
 
+	/**
+	 * Pushes a new supplier to the buffer
+	 *
+	 * @param databaseId   the UID of the supplier
+	 * @param supplierName name of the supplier
+	 * @param phoneNumber  supplier contact phone number
+	 * @param phoneType    supplier contact phone type
+	 * @param email        supplier email address
+	 * @param url          supplier website URL
+	 * @param address      supplier physical address
+	 */
+	public void pushToBuffer(int databaseId, String supplierName, String phoneNumber, PhoneType phoneType, String email, String url, String address) {
+		Supplier supplier = new Supplier(databaseId, supplierName, phoneNumber, phoneType, email, url, address);
+		this.buffer.put(databaseId, supplier);
+	}
+
+	/**
+	 * Adds the current data in the buffer to the modeled orders
+	 */
+	public void writeBuffer() {
+		this.suppliers.putAll(this.buffer);
+		buffer.clear();
+	}
+
+	/**
+	 * Drops the current data in the buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
+	}
 }
 

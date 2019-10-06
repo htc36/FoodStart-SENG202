@@ -14,75 +14,9 @@ import java.util.*;
  */
 public class RecipeManager {
 	/**
-	 * Aids in the management of on the fly recipes
+	 * A buffer for putting permanent recipes in before writing them to the system
 	 */
-	public class OTFManager {
-
-		/**
-		 * The map of all on the fly recipes modelled in the system
-		 */
-		private HashMap<Integer, OnTheFlyRecipe> onTheFlyRecipes;
-
-		/**
-		 * Counter for assigning ids to recipes
-		 */
-		private int counter;
-
-
-		/**
-		 * Constructs an instance of an OTFManager
-		 */
-		OTFManager() {
-			this.onTheFlyRecipes = new HashMap<Integer, OnTheFlyRecipe>();
-			counter = 0;
-		}
-
-		/**
-		 * Adds a recipe to the map of all on the fly recipes
-		 * @param basis the permanent recipe that the OTF recipe is based on
-		 * @param ingredients the ingredients in the OTF recipe
-		 * @param price the price of the OTF recipe
-		 * @return the id of the recipe created
-		 */
-		public Integer addRecipe(int basis, Map<Ingredient, Integer> ingredients, float price) {
-			PermanentRecipe basisRecipe = recipes.get(basis);
-			if (basisRecipe == null) {
-				return null;
-			}
-			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basisRecipe, ingredients, price);
-			int id = counter;
-			counter++;
-			onTheFlyRecipes.put(id, recipe);
-			return id;
-		}
-
-		/**
-		 * Returns the on the fly recipe with the given value, or null if it does not exist
-		 * @param id the internal id of the otf recipe
-		 * @return the requested on the fly recipe
-		 */
-		public OnTheFlyRecipe getRecipe(int id) {
-			return this.onTheFlyRecipes.get(id);
-		}
-
-		/**
-		 * Returns the map of all OTF recipes modeled
-		 *
-		 * @return the map of all OTF recipes modeled
-		 */
-		public Map<Integer, OnTheFlyRecipe> getRecipes() {
-			return this.onTheFlyRecipes;
-		}
-
-		/**
-		 * Returns the set of all OTF recipes modeled
-		 *
-		 * @return the set of all OTF recipes modeled
-		 */
-		public Set<OnTheFlyRecipe> getRecipeSet() {
-			return new HashSet<OnTheFlyRecipe>(this.onTheFlyRecipes.values());
-		}
-	}
+	private Map<Integer, PermanentRecipe> buffer;
 
 	/**
 	 * The map of all permanent recipes modeled
@@ -90,16 +24,31 @@ public class RecipeManager {
 	private Map<Integer, PermanentRecipe> recipes;
 
 	/**
+	 * Constructs an instance of a recipe manager
+	 */
+	public RecipeManager() {
+		this.recipes = new HashMap<Integer, PermanentRecipe>();
+		this.buffer = new HashMap<Integer, PermanentRecipe>();
+		this.otfManager = new OTFManager();
+	}
+
+	/**
 	 * An instance of the inner OTF manager
 	 */
 	public final OTFManager otfManager;
 
 	/**
-	 * Constructs an instance of a recipe manager
+	 * Pushes a new permanent recipe to the buffer
+	 *
+	 * @param id           the UID of the recipe
+	 * @param name         the display name of the recipe
+	 * @param instructions the instructions to make the recipe
+	 * @param price        the price of the recipe
+	 * @param ingredients  the ingredients that make up the recipe
 	 */
-	public RecipeManager() {
-		this.recipes = new HashMap<Integer, PermanentRecipe>();
-		this.otfManager = new OTFManager();
+	public void pushToBuffer(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients) {
+		PermanentRecipe recipe = new PermanentRecipe(id, name, instructions, price, ingredients);
+		this.buffer.put(id, recipe);
 	}
 
 	/**
@@ -236,10 +185,138 @@ public class RecipeManager {
 	public int generateNewId() {
 		return recipes.keySet().size() == 0 ? 0 : Collections.max(recipes.keySet()) + 1;
 	}
+
 	public boolean idExists(int id) {
 		if (recipes.containsKey(id)) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Adds the current data in the buffer to the modeled recipes
+	 */
+	public void writeBuffer() {
+		this.recipes.putAll(this.buffer);
+		buffer.clear();
+	}
+
+	/**
+	 * Drops the current data in the buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
+	}
+
+	/**
+	 * Aids in the management of on the fly recipes
+	 */
+	public class OTFManager {
+
+		/**
+		 * The map of all on the fly recipes modelled in the system
+		 */
+		private HashMap<Integer, OnTheFlyRecipe> onTheFlyRecipes;
+
+		/**
+		 * A buffer for putting on the fly recipes in before writing them to the manager
+		 */
+		private HashMap<Integer, OnTheFlyRecipe> buffer;
+
+		/**
+		 * Counter for assigning ids to recipes
+		 */
+		private int counter;
+
+
+		/**
+		 * Constructs an instance of an OTFManager
+		 */
+		OTFManager() {
+			this.onTheFlyRecipes = new HashMap<Integer, OnTheFlyRecipe>();
+			this.buffer = new HashMap<Integer, OnTheFlyRecipe>();
+			counter = 0;
+		}
+
+		/**
+		 * Adds a recipe to the map of all on the fly recipes
+		 * @param basis the permanent recipe that the OTF recipe is based on
+		 * @param ingredients the ingredients in the OTF recipe
+		 * @param price the price of the OTF recipe
+		 * @return the id of the recipe created
+		 */
+		public Integer addRecipe(int basis, Map<Ingredient, Integer> ingredients, float price) {
+			PermanentRecipe basisRecipe = recipes.get(basis);
+			if (basisRecipe == null) {
+				return null;
+			}
+			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basisRecipe, ingredients, price);
+			int id = counter;
+			counter++;
+			onTheFlyRecipes.put(id, recipe);
+			return id;
+		}
+
+		/**
+		 * Returns the on the fly recipe with the given value, or null if it does not exist
+		 * @param id the internal id of the otf recipe
+		 * @return the requested on the fly recipe
+		 */
+		public OnTheFlyRecipe getRecipe(int id) {
+			return this.onTheFlyRecipes.get(id);
+		}
+
+		/**
+		 * Returns the map of all OTF recipes modeled
+		 *
+		 * @return the map of all OTF recipes modeled
+		 */
+		public Map<Integer, OnTheFlyRecipe> getRecipes() {
+			return this.onTheFlyRecipes;
+		}
+
+		/**
+		 * Returns the set of all OTF recipes modeled
+		 *
+		 * @return the set of all OTF recipes modeled
+		 */
+		public Set<OnTheFlyRecipe> getRecipeSet() {
+			return new HashSet<OnTheFlyRecipe>(this.onTheFlyRecipes.values());
+		}
+
+		/**
+		 * Pushes a new on the fly recipe to the buffer
+		 *
+		 * @param basis       the permanent recipe that the OTF recipe is based on
+		 * @param ingredients the ingredients in the OTF recipe
+		 * @param price       the price of the OTF recipe
+		 * @return the id of the recipe created
+		 */
+		public Integer pushToBuffer(int basis, Map<Ingredient, Integer> ingredients, float price) {
+			PermanentRecipe basisRecipe = recipes.get(basis);
+			if (basisRecipe == null) {
+				return null;
+			}
+			OnTheFlyRecipe recipe = new OnTheFlyRecipe(basisRecipe, ingredients, price);
+			int id = counter;
+			counter++;
+			onTheFlyRecipes.put(id, recipe);
+			return id;
+		}
+
+		/**
+		 * Adds the current data in the buffer to the modeled on the fly recipes
+		 */
+		public void writeBuffer() {
+			this.onTheFlyRecipes.putAll(this.buffer);
+			buffer.clear();
+		}
+
+		/**
+		 * Drops the current data in the buffer
+		 */
+		public void dropBuffer() {
+			this.buffer.clear();
+		}
 	}
 }
