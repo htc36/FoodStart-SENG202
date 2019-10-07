@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -32,7 +33,10 @@
                      <children>
                         <AnchorPane GridPane.columnIndex="1">
                            <children>
-                              <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="Manage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER" />
+                              <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="Manage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                                 <items>
+                                    <MenuItem fx:id="addButton" mnemonicParsing="false" onAction="#onAdd" text="Add" />
+                                 </items></MenuButton>
                            </children>
                            <GridPane.margin>
                               <Insets bottom="10.0" right="10.0" top="10.0" />

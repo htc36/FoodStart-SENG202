@@ -62,8 +62,22 @@ public class AllMenusController {
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-		populateAllMenus();
 
+		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
+		try {
+			addLoader.load();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		addPopup = new Stage();
+		addPopup.initModality(Modality.WINDOW_MODAL);
+		addPopup.setTitle("Add New Menu");
+		Scene addScene = new Scene(addLoader.getRoot());
+		addPopup.setScene(addScene);
+
+		populateAllMenus();
 
 	}
 
@@ -127,6 +141,10 @@ public class AllMenusController {
 		box.getChildren().add(menuName);
 
 		return box;
+	}
+
+	public void onAdd() {
+		addPopup.showAndWait();
 	}
 
 
