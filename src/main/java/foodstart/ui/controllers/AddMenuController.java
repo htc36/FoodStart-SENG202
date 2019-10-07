@@ -1,13 +1,20 @@
 package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
+import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.Set;
 
 
 /**
@@ -23,7 +30,7 @@ public class AddMenuController {
      * Table for the available menu items that are not already in the current menu
      */
     @FXML
-    private TableView<MenuItem> menuItemTableView;
+    private TableView<MenuItem> menuItemTable;
     /**
      * Table column for menu item IDs
      */
@@ -59,6 +66,23 @@ public class AddMenuController {
      */
     @FXML
     private TableColumn<MenuItem, String> availableDescriptionColumn;
+    /**
+     * The list of menu items in the current menu that will be displayed in the table
+     */
+    private ObservableList<MenuItem> observableCurrentItems;
+
+    /**
+     * The list of menu items available to be added to the menu that will be displayed in the table
+     */
+    private ObservableList<MenuItem> observableAvailableItems;
+    /**
+     * The initial menu items in the menu
+     */
+    private Set<MenuItem> currentMenuItems;
+    /**
+     * The initial available menu items
+     */
+    private Set<MenuItem> currentAvailableMenuItems;
 
     @FXML
     private TextField nameTextField;
@@ -72,10 +96,67 @@ public class AddMenuController {
     /**
      * Menu id
      */
-    private int code;
+    private int newMenuId;
 
     public void setNewCode() {
-        code = Managers.getMenuManager().generateNewID();
+        newMenuId = Managers.getMenuManager().generateNewID();
+    }
+
+    public void setUpMenuInfo() {
+        setNewCode();
+        setAvailableMenuItems();
+        populateAllMenuItemsTable();
+    }
+
+    /**
+     * Called to set the available menu items to be added to the menu
+     */
+    private void setAvailableMenuItems() {
+        currentAvailableMenuItems = Managers.getMenuItemManager().getMenuItemSet();
+    }
+
+    /**
+     * Called to populate the current menu's menu items table view with the menu information
+     */
+    private void populateCurrentMenuTable() {
+        tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        menuItemTable.setRowFactory( tv -> {
+            TableRow<MenuItem> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 & (! row.isEmpty())) {
+                    MenuItem menuItem = row.getItem();
+//                    showMenuItemDetails(menuItem);
+                }
+            });
+            return row;
+        });
+
+        menuItemTable.setItems(FXCollections.observableArrayList(observableCurrentItems));
+    }
+
+    /**
+     * Called to populate the available menu items table view with the menu information
+     */
+    private void populateAllMenuItemsTable() {
+        availableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        availableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        availableMenuItemsTable.setRowFactory( tv -> {
+            TableRow<MenuItem> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 & (! row.isEmpty())) {
+                    MenuItem menuItem = row.getItem();
+//                    showMenuItemDetails(menuItem);
+                }
+            });
+            return row;
+        });
+
+        availableMenuItemsTable.setItems(FXCollections.observableArrayList(observableAvailableItems));
     }
 
     public void onAddMenuItem() {
