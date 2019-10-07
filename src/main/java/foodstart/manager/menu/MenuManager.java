@@ -139,4 +139,12 @@ public class MenuManager {
 		this.menus.putAll(this.buffer);
 		this.buffer.clear();
 	}
+
+	/**
+	 * Generates an ID for a menu
+	 * @return an ID for a menu
+	 */
+	public int generateNewID() {
+		return menus.keySet().size() == 0 ? 0 : Collections.max(menus.keySet()) + 1;
+	}
 }
