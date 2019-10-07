@@ -48,9 +48,9 @@ public class OrderBuilderTest {
         ingredientMapFraction.put(fraction, QTY_USED);
         permMap2.put(empty, QTY_USED);
         
-        prAvailable = new PermanentRecipe(0, "Cheese", "dummy", 10 , permMap1);
-        prFraction = new PermanentRecipe(1, "Cheese", "dummy", 7 , ingredientMapFraction);
-        prUnavailable = new PermanentRecipe(3, "ElectricBoogaloo", "dummy", 4 , permMap2);
+        prAvailable = new PermanentRecipe(0, "Plate of Cheese", "dummy", 10 , permMap1);
+        prFraction = new PermanentRecipe(1, "Potato and Cheese", "dummy", 7 , ingredientMapFraction);
+        prUnavailable = new PermanentRecipe(2, "Plate of ElectricBoogaloo", "dummy", 4 , permMap2);
         
         normOrderItems = new HashMap<Recipe, Integer>();
         emptyOrderItems = new HashMap<Recipe, Integer>();
@@ -71,7 +71,6 @@ public class OrderBuilderTest {
     @Before
     public void setUp() throws Exception {
         testBuilder = new OrderBuilder();
-        testBuilder.currentOrder.putAll(normOrderItems);
         setStockLevels();
     }
 

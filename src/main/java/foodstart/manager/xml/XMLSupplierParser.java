@@ -82,7 +82,7 @@ public class XMLSupplierParser extends XMLParser {
 	 */
 	@Override
 	public void export(Document doc, Transformer transformer) {
-		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "supplier.dtd");
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "suppliers.dtd");
 		exportWithManager(doc, Managers.getSupplierManager());
 	}
 
