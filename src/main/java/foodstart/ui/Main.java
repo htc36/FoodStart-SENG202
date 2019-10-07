@@ -65,6 +65,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+		primaryStage.setMinWidth(950);
+		primaryStage.setMinHeight(700);
 
 		splashStage = new Stage();
 		VBox splashLayout = createSplash(splashStage);
@@ -109,6 +111,8 @@ public class Main extends Application {
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 
 		ImageView splashImage = new ImageView(new Image(getClass().getResourceAsStream("splash.png")));
+		splashImage.setFitWidth(700);
+		splashImage.setFitHeight(450);
 		VBox splashLayout = new VBox();
 		splashLayout.getChildren().add(splashImage);
 		Scene splashScene = new Scene(splashLayout, 700, 450);
