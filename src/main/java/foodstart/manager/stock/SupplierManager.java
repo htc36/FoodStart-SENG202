@@ -151,6 +151,17 @@ public class SupplierManager {
 	}
 
 	/**
+	 * Adds the specified Supplier object to the buffer
+	 *
+	 * @param targetSupplier the Supplier object to be added
+	 */
+	public void pushToBuffer(Supplier targetSupplier) {
+		if (targetSupplier != null) {
+			this.suppliers.put(targetSupplier.getId(), targetSupplier);
+		}
+	}
+
+	/**
 	 * Adds the current data in the buffer to the modeled orders
 	 */
 	public void writeBuffer() {
