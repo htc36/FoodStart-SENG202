@@ -59,11 +59,23 @@ public class MenuItemEditorController implements Refreshable {
 	TableColumn<PermanentRecipe, String> nameCol;
 
 	@FXML
+	TableColumn<PermanentRecipe, String> priceCol;
+
+	@FXML
+	TableColumn<PermanentRecipe, String> ingredientsCol;
+
+
+	@FXML
 	TextArea descriptionInput;
 
 	@FXML
 	TextField nameInput;
 
+	@FXML
+	Label title;
+
+	@FXML
+	Button removeButton;
 	/**
 	 * FXML loader for the edit recipe popup
 	 */
@@ -113,10 +125,13 @@ public class MenuItemEditorController implements Refreshable {
 	 * Populates the table with data
 	 */
 	private void populateTable() {
+		RecipeManager manager = Managers.getRecipeManager();
 		recipesSet = new HashSet<>();
 		observableRecipes = FXCollections.observableArrayList(recipesSet);
 		recipesTable.setItems(observableRecipes);
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
+		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
+		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
 
 	}
 
@@ -128,6 +143,8 @@ public class MenuItemEditorController implements Refreshable {
 		this.observableRecipes.setAll(recipesSet);
 	}
 	public void clearFields() {
+		title.setText("Add Menu Item");
+		removeButton.setVisible(false);
 		id = Managers.getMenuItemManager().generateNewId();
 		nameInput.clear();
 		descriptionInput.clear();
@@ -135,6 +152,8 @@ public class MenuItemEditorController implements Refreshable {
 		refreshTable();
 	}
 	public void setFields(MenuItem menuItem) {
+		title.setText("Edit Menu Item");
+		removeButton.setVisible(true);
 		id = menuItem.getId();
 		nameInput.setText(menuItem.getName());
 		descriptionInput.setText(menuItem.getDescription());
@@ -189,6 +208,15 @@ public class MenuItemEditorController implements Refreshable {
 			}else {
 				manager.addMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);
 			}
+			closeSelf();
+		}
+	}
+
+	@FXML private void removeMenuItem() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to remove this Menu Item?", ButtonType.YES, ButtonType.NO);
+		Optional<ButtonType> selection = alert.showAndWait();
+		if (selection.isPresent() && selection.get() == ButtonType.YES) {
+			Managers.getMenuItemManager().removeMenuItem(id);
 			closeSelf();
 		}
 	}
