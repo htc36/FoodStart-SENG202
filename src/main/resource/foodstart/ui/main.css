@@ -1,0 +1,56 @@
+.root {
+    -fx-background-color: #00BCD4;
+}
+
+.dark {
+    -fx-background-color: #0097A7;
+}
+
+.semidark {
+	-fx-background-color: #4DD0E1;
+}
+
+.menuBar {
+	-fx-background-color: #4DD0E1;
+}
+
+.light {
+	-fx-background-color: #E0F7FA;
+}
+
+.table-view {
+	-fx-background-color: white;
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 8, 0, 0, 0);
+}
+
+.table-view .column-header-background, .table-view .filler {
+	-fx-background-color: linear-gradient(#00BCD4 0%, #0097A7 100%);
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+}
+
+.table-view .column-header-background .label{
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+	-fx-background-insets: 0;
+	-fx-padding: 0;
+}
+
+.table-view .column-header {
+	-fx-background-color: transparent;
+}
+
+.table-row-cell{
+    -fx-background-color: white;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: #EDFDFF;  
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #0097A7;
+    -fx-text-fill: white;
+}

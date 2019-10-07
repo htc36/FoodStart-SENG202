@@ -119,6 +119,7 @@ public class OrderEditorController {
 			this.dateTimePicker.setDateTimeValue(order.getTimePlaced());
 			this.paymentMethodCB.getSelectionModel().select(order.getPaymentMethod());
 		}
+		this.newRecipes = null;
 	}
 
 	/**
@@ -128,7 +129,7 @@ public class OrderEditorController {
 		if (popupStage.getOwner() == null) {
 			popupStage.initOwner(this.nameField.getScene().getWindow());
 		}
-		((EditOrderItemsController) editorLoader.getController()).setOrder(order);
+		((EditOrderItemsController) editorLoader.getController()).setOrder(this.order);
 		((EditOrderItemsController) editorLoader.getController()).pushRecipes(newRecipes);
 		popupStage.showAndWait();
 		this.newRecipes = ((EditOrderItemsController) editorLoader.getController()).getNewRecipes();

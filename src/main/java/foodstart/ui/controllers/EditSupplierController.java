@@ -75,8 +75,8 @@ public class EditSupplierController {
     public void initialize() {
         this.phoneTypeComboBox.setItems(FXCollections.observableArrayList(PhoneType.values()));
         this.phoneTextField.textProperty().addListener(((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                phoneTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches("[\\d|\\-|+|(|)| ]*")) {
+                phoneTextField.setText(newValue.replaceAll("[^\\d|\\-|+|(|)| ]", ""));
             }
         }));
     }

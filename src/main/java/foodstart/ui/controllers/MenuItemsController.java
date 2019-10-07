@@ -8,12 +8,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Controls the UI for the manage menu items screen
@@ -43,9 +48,35 @@ public class MenuItemsController {
     private Background boxBackground;
 
     /**
+     * The edit loader of the popup screen
+     */
+
+    private FXMLLoader editLoader;
+
+    /**
+     * The FXML for the edit recipe popup screen
+     */
+    private Parent editFXML;
+
+    /**
+     * The stage of the edit popup screen
+     */
+    private Stage editPopup;
+
+    /**
      * Initialises the MenuItemsController
      */
     public void initialize() {
+        try {
+            editLoader = new FXMLLoader(getClass().getResource("menuItemEditor.fxml"));
+            editFXML = editLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Screen screen = Screen.getPrimary();
+        editPopup = new Stage();
+        editPopup.initModality(Modality.WINDOW_MODAL);
+        editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() /4, screen.getVisualBounds().getHeight() / 2));
         boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
         populateMenuItems(flowPane);
     }
@@ -74,7 +105,7 @@ public class MenuItemsController {
         box.setAlignment(Pos.CENTER);
         box.setCursor(Cursor.HAND);
         box.setOnMouseClicked((event) -> {
-
+            editMenuItem(item);
         });
         FlowPane.setMargin(box, new Insets(5));
         box.setBorder(new Border(
@@ -93,6 +124,29 @@ public class MenuItemsController {
 
         return box;
     }
+
+    /**
+     * Calls add recipe popup
+     */
+    @FXML void addMenuItem() {
+        if (editPopup.getOwner() == null) {
+            editPopup.initOwner(this.flowPane.getScene().getWindow());
+        }
+        ((MenuItemEditorController) editLoader.getController()).clearFields();
+        editPopup.showAndWait();
+        populateMenuItems(flowPane);
+    }
+
+    public void editMenuItem(MenuItem menuItem) {
+        if (editPopup.getOwner() == null) {
+            editPopup.initOwner(this.flowPane.getScene().getWindow());
+        }
+        ((MenuItemEditorController) editLoader.getController()).setFields(menuItem);
+        editPopup.showAndWait();
+        populateMenuItems(flowPane);
+
+    }
+
 
 
 }

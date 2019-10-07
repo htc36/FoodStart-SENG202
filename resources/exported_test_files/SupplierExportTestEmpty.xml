@@ -2,10 +2,10 @@
 <!DOCTYPE suppliers SYSTEM "suppliers.dtd">
 <suppliers>
     <supplier>
-        <sid>2</sid>
+        <sid>4</sid>
         <name/>
         <address/>
-        <phone type="mobile"/>
+        <phone type="home"/>
     </supplier>
     <supplier>
         <sid>0</sid>
@@ -23,7 +23,7 @@
         <sid>3</sid>
         <name/>
         <address/>
-        <phone type="home"/>
+        <phone type="mobile"/>
     </supplier>
     <supplier>
         <sid>1</sid>
@@ -32,7 +32,7 @@
         <phone type="work"/>
     </supplier>
     <supplier>
-        <sid>4</sid>
+        <sid>3</sid>
         <name/>
         <address/>
         <phone type="home"/>

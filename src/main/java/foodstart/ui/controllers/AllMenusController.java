@@ -1,7 +1,11 @@
 package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
+import foodstart.manager.Persistence;
+import foodstart.model.DataFileType;
+import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
+import foodstart.ui.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -13,9 +17,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -36,9 +42,13 @@ public class AllMenusController {
 	 */
 	private Stage popupStage;
 	/**
-	 * Scene for popup
+	 * FXML loader for add menu popup
 	 */
-    private Scene scene;
+	private FXMLLoader addLoader;
+	/**
+	 * Stage for the add menu popup
+	 */
+	private Stage addPopup;
 
 
     /**
@@ -52,17 +62,30 @@ public class AllMenusController {
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-		populateAllMenus(flowPane);
 
+		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
+		try {
+			addLoader.load();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		addPopup = new Stage();
+		addPopup.initModality(Modality.WINDOW_MODAL);
+		addPopup.setTitle("Add New Menu");
+		Scene addScene = new Scene(addLoader.getRoot());
+		addPopup.setScene(addScene);
+
+		populateAllMenus();
 
 	}
 
 	/**
 	 * Populate the FlowPane with all menu items
 	 *
-	 * @param flowPane The flowpane to populate
 	 */
-	public void populateAllMenus(FlowPane flowPane) {
+	public void populateAllMenus() {
 		flowPane.getChildren().clear();
         for (Menu menu : Managers.getMenuManager().getMenuSet()) {
 			flowPane.getChildren().add(createMenuBox(menu));
@@ -119,5 +142,12 @@ public class AllMenusController {
 
 		return box;
 	}
+
+	public void onAdd() {
+		addPopup.showAndWait();
+	}
+
+
+
 
 }
