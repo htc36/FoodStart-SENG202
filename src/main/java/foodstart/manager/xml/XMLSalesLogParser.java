@@ -112,7 +112,7 @@ public class XMLSalesLogParser extends XMLParser {
 				Element recipeEl = (Element) node;
 				int recipeId = Integer.parseInt(recipeEl.getElementsByTagName("recipe_id").item(0).getTextContent());
 				int quantity = Integer.parseInt(recipeEl.getElementsByTagName("quantity").item(0).getTextContent());
-				PermanentRecipe recipe = manager.getRecipe(recipeId);
+				PermanentRecipe recipe = manager.getRecipeBuffer(recipeId);
 				if (recipe == null) {
 					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 				}
