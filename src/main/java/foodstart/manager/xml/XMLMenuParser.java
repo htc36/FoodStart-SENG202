@@ -68,7 +68,6 @@ public class XMLMenuParser extends XMLParser {
 				}
 			}
 		}
-		Managers.getMenuManager().writeBuffer();
 	}
 
 	/**

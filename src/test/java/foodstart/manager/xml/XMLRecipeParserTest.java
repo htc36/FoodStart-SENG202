@@ -1,16 +1,5 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.DuplicateDataException;
@@ -19,6 +8,16 @@ import foodstart.model.DataType;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class XMLRecipeParserTest {
 
@@ -31,6 +30,7 @@ public class XMLRecipeParserTest {
 		
 		persistence = new XMLPersistence();
 		persistence.importFile(new File("resources/data/TestRecipes1.xml"), DataType.RECIPE);
+		Managers.writeBuffer();
 	}
 	
 	@Test
@@ -86,6 +86,7 @@ public class XMLRecipeParserTest {
 		boolean threwException = false;
 		try {
 			persistence.importFile(new File("resources/data/TestBadRecipes1.xml"), DataType.RECIPE);
+			Managers.writeBuffer();
 		} catch (DuplicateDataException e) {
 			threwException = true;
 		}
@@ -97,6 +98,7 @@ public class XMLRecipeParserTest {
 		boolean threwException = false;
 		try {
 			persistence.importFile(new File("resources/data/TestBadRecipes2.xml"), DataType.RECIPE);
+			Managers.writeBuffer();
 		} catch (IDLeadsNowhereException e) {
 			threwException = true;
 		}

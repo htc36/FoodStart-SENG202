@@ -147,4 +147,11 @@ public class MenuManager {
 	public int generateNewID() {
 		return menus.keySet().size() == 0 ? 0 : Collections.max(menus.keySet()) + 1;
 	}
+
+	/**
+	 * Drops all data from the menu buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
+	}
 }

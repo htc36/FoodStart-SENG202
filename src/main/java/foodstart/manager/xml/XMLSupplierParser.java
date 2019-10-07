@@ -47,7 +47,6 @@ public class XMLSupplierParser extends XMLParser {
 		} catch (NumberFormatException e) {
 		    //throw new ImportFailureException("Invalid entry in ID field in XML file.");
 		}
-		Managers.getSupplierManager().writeBuffer();
 	}
 
 	/**

@@ -51,7 +51,6 @@ public class XMLRecipeParser extends XMLParser {
 				}
 			}
 		}
-		Managers.getRecipeManager().writeBuffer();
 	}
 
 	/**

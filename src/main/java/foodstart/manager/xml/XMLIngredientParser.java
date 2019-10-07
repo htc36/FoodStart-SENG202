@@ -47,7 +47,6 @@ public class XMLIngredientParser extends XMLParser {
 				parseOneIngredient(element);
 			}
 		}
-		Managers.getIngredientManager().writeBuffer();
 	}
 
 	/**

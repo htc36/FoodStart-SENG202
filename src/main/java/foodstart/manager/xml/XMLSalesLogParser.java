@@ -55,8 +55,6 @@ public class XMLSalesLogParser extends XMLParser {
 				}
 			}
 		}
-		Managers.getRecipeManager().otfManager.writeBuffer();
-		Managers.getOrderManager().writeBuffer();
 	}
 
 	/**
