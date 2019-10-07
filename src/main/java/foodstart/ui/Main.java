@@ -65,6 +65,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+		primaryStage.setMinWidth(950);
+		primaryStage.setMinHeight(700);
 
 		splashStage = new Stage();
 		VBox splashLayout = createSplash(splashStage);
