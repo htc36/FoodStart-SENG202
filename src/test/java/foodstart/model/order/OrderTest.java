@@ -1,20 +1,7 @@
 package foodstart.model.order;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
+import static org.junit.Assert.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import foodstart.model.DietaryRequirement;
 import foodstart.model.PaymentMethod;
@@ -22,6 +9,12 @@ import foodstart.model.Unit;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderTest {
 
@@ -184,66 +177,9 @@ public class OrderTest {
 	    Assert.assertEquals(testOrder, copy);	    
 	}
 	
-	@Test
 	public void testCloneIsDeepCopy() {
 	    Order copy = testOrder.clone();
 	    copy.getItems().put(testRecipe, 4);
 	    Assert.assertNotEquals(testOrder, copy);
-	}
-	
-	@Test
-	public void testEqualsSameInstance() {
-		Order order = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertTrue(order.equals(order));
-	}
-	
-	@Test
-	public void testNotEqualsNull() {
-		Order order = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals(null));
-	}
-	
-	@Test
-	public void testNotEqualsOtherObject() {
-		Order order = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals("Hello, World"));
-	}
-	
-	@Test
-	public void testNotEqualsNullName() {
-		Order order = new Order(0, new HashMap<Recipe, Integer>(), null, 10, PaymentMethod.CASH);
-		Order order2 = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals(order2));
-	}
-	
-	@Test
-	public void testNotEqualsDifferentName() {
-		Order order = new Order(0, new HashMap<Recipe, Integer>(), "B", 10, PaymentMethod.CASH);
-		Order order2 = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals(order2));
-	}
-	
-	@Test
-	public void testNotEqualsDifferentId() {
-		Order order = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		Order order2 = new Order(1, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals(order2));
-	}
-	
-	@Ignore("Items must not be null")
-	@Test
-	public void testNotEqualsNullItems() {
-		Order order = new Order(0, null, "A", 10, PaymentMethod.CASH);
-		Order order2 = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals(order2));
-	}
-	
-	@Test
-	public void testNotEqualsDifferentItems() {
-		HashMap<Recipe, Integer> itemMap = new HashMap<Recipe, Integer>();
-		itemMap.put(new PermanentRecipe(1, "A", "B", 1.0f, null), 3);
-		Order order = new Order(0, itemMap, "A", 10, PaymentMethod.CASH);
-		Order order2 = new Order(0, new HashMap<Recipe, Integer>(), "A", 10, PaymentMethod.CASH);
-		assertFalse(order.equals(order2));
 	}
 }

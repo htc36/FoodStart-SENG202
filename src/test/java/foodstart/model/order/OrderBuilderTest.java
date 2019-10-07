@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import foodstart.manager.exceptions.InsufficientStockException;
 import foodstart.model.DietaryRequirement;
+import foodstart.model.PaymentMethod;
 import foodstart.model.Unit;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
@@ -22,6 +23,7 @@ public class OrderBuilderTest {
     OrderBuilder testBuilder;
     static Ingredient inAllStock, fraction, empty;
     static Map<DietaryRequirement, Boolean> testDiet;
+    static Map<Recipe, Integer> normOrderItems, emptyOrderItems;
     static Recipe prAvailable, prFraction, prUnavailable,
         otfRecipe1, otfRecipe2; 
     static Order normalOrder, emptyOrder;
@@ -50,11 +52,11 @@ public class OrderBuilderTest {
         prFraction = new PermanentRecipe(1, "Cheese", "dummy", 7 , ingredientMapFraction);
         prUnavailable = new PermanentRecipe(3, "ElectricBoogaloo", "dummy", 4 , permMap2);
         
-        HashMap<Recipe, Integer> normOrderItems = new HashMap<Recipe, Integer>();
+        normOrderItems = new HashMap<Recipe, Integer>();
+        emptyOrderItems = new HashMap<Recipe, Integer>();
         normOrderItems.put(prAvailable, MAX_USES - 1);
-        HashMap<Ingredient, Integer> emptyOrderItems = new HashMap<Ingredient, Integer>();
         
-        //normalOrder = new Order(0, null, null, null, null);
+        normalOrder = new Order(0, normOrderItems, "Jom", 0, PaymentMethod.CASH);
     }
     
     private void setStockLevels() {
@@ -69,6 +71,7 @@ public class OrderBuilderTest {
     @Before
     public void setUp() throws Exception {
         testBuilder = new OrderBuilder();
+        testBuilder.currentOrder.putAll(normOrderItems);
         setStockLevels();
     }
 
@@ -153,6 +156,8 @@ public class OrderBuilderTest {
     }
     
     public void testBuildNormal() {
+        assertEquals("Checking setup is correct:", 2, testBuilder.currentOrder.size());
+        
         
     }
 

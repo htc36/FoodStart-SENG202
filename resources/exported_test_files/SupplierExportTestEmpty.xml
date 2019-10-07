@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE suppliers SYSTEM "supplier.dtd">
+<!DOCTYPE suppliers SYSTEM "suppliers.dtd">
 <suppliers>
     <supplier>
         <sid>4</sid>
@@ -20,7 +20,7 @@
         <phone type="home"/>
     </supplier>
     <supplier>
-        <sid>2</sid>
+        <sid>3</sid>
         <name/>
         <address/>
         <phone type="mobile"/>
