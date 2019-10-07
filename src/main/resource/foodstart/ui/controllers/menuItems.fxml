@@ -16,7 +16,7 @@
          <content>
             <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0">
                <center>
-                  <FlowPane fx:id="flowPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <FlowPane fx:id="flowPane" style="-fx-background-color: #e0f7fa;" BorderPane.alignment="CENTER" />
                </center>
                <bottom>
                   <GridPane BorderPane.alignment="CENTER">
@@ -33,13 +33,9 @@
                      <children>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                              <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" prefHeight="26.0" prefWidth="200.0" text="MenuButton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Import" />
-                                    <MenuItem mnemonicParsing="false" text="Export" />
-                                    <MenuItem mnemonicParsing="false" text="Remove" />
                                     <MenuItem mnemonicParsing="false" onAction="#addMenuItem" text="Add" />
-                                    <MenuItem mnemonicParsing="false" text="Edit" />
                                  </items>
                               </MenuButton>
                            </children>
