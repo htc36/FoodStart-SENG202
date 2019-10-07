@@ -47,6 +47,7 @@ public class XMLIngredientParser extends XMLParser {
 				parseOneIngredient(element);
 			}
 		}
+		Managers.getIngredientManager().writeBuffer();
 	}
 
 	/**
@@ -156,6 +157,6 @@ public class XMLIngredientParser extends XMLParser {
 			}
 		}
 
-		Managers.getIngredientManager().addIngredient(unit, name, id, dietaryRequirements, kitchenStock, truckStock);
+		Managers.getIngredientManager().pushToBuffer(unit, name, id, dietaryRequirements, kitchenStock, truckStock);
 	}
 }

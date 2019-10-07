@@ -4,7 +4,6 @@ import foodstart.manager.Managers;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
 
 import java.util.*;
 
@@ -155,5 +154,28 @@ public class MenuItemManager {
 	 */
 	public void dropBuffer() {
 		this.buffer.clear();
+	}
+
+	/**
+	 * Returns the set of menu items from the IDs specified.
+	 * Also checks the buffer for items, checking it before the model
+	 *
+	 * @param ids the IDs of the menu items to fetch.
+	 * @return the set of menu items requested.
+	 */
+	public Set<MenuItem> getMenuItemsBuffered(Collection<Integer> ids) {
+		Set<MenuItem> items = new HashSet<MenuItem>();
+		for (int id : ids) {
+			MenuItem item = this.buffer.get(id);
+			if (item != null) {
+				items.add(item);
+			} else {
+				item = this.menuItems.get(id);
+			}
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
 	}
 }
