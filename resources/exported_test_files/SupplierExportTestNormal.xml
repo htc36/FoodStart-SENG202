@@ -9,12 +9,10 @@
         <email>maryC@fkveg.co.nz</email>
     </supplier>
     <supplier>
-        <sid>3</sid>
-        <name>Admiral Benjamin's Seafoods</name>
-        <address>86 Low Street, Christchurch</address>
-        <phone type="mobile">021345666</phone>
-        <email>bigben@cfoods.co.nz</email>
-        <url>cfoods.co.nz</url>
+        <sid>4</sid>
+        <name>Dave's Drinks</name>
+        <address>Unit 5, Bert's Business Park, Christchurch</address>
+        <phone type="home">3515666</phone>
     </supplier>
     <supplier>
         <sid>1</sid>
@@ -24,9 +22,11 @@
         <url>countup.co.nz/high</url>
     </supplier>
     <supplier>
-        <sid>4</sid>
-        <name>Dave's Drinks</name>
-        <address>Unit 5, Bert's Business Park, Christchurch</address>
-        <phone type="home">3515666</phone>
+        <sid>3</sid>
+        <name>Admiral Benjamin's Seafoods</name>
+        <address>86 Low Street, Christchurch</address>
+        <phone type="mobile">021345666</phone>
+        <email>bigben@cfoods.co.nz</email>
+        <url>cfoods.co.nz</url>
     </supplier>
 </suppliers>
