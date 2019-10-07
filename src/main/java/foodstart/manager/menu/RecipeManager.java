@@ -332,5 +332,13 @@ public class RecipeManager {
 		public void dropBuffer() {
 			this.buffer.clear();
 		}
+
+		public OnTheFlyRecipe getOTFRecipeBuffered(int id) {
+			OnTheFlyRecipe recipe = this.buffer.get(id);
+			if (recipe == null) {
+				recipe = this.onTheFlyRecipes.get(id);
+			}
+			return recipe;
+		}
 	}
 }
