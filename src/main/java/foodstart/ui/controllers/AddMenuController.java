@@ -69,20 +69,7 @@ public class AddMenuController {
      */
     private Stage stage;
 
-    /**
-     * Called when a popup stage is made.
-     * Gives the controller class the popup stage
-     * @param popupStage the stage to give the controller
-     */
-    public void setStage(Stage popupStage) {
-        stage = popupStage;
-        stage.setMinWidth(900);
-        stage.setMinHeight(650);
-        stage.setOnCloseRequest(event -> {
-            onCancel();
-            event.consume();
-        });
-    }
+
 
 
     public void onAddMenuItem() {

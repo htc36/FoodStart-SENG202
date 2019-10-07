@@ -72,13 +72,6 @@ public class AllMenusController {
 
 		addPopup = new Stage();
 		addPopup.initModality(Modality.WINDOW_MODAL);
-
-		((AddMenuController) loader.getController()).setStage(popupStage);
-
-		if (popupStage.getOwner() == null) {
-			popupStage.initOwner(this.flowPane.getScene().getWindow());
-		}
-
 		addPopup.setTitle("Add New Menu");
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setScene(addScene);
