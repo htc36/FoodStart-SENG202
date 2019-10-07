@@ -209,6 +209,20 @@ public class RecipeManager {
 	}
 
 	/**
+	 * Gets a permanent recipe from the system. First checks the buffer and then the model
+	 *
+	 * @param id the id of the recipe to get
+	 * @return
+	 */
+	public PermanentRecipe getRecipeBuffer(int id) {
+		PermanentRecipe recipe = this.buffer.get(id);
+		if (recipe == null) {
+			recipe = this.recipes.get(id);
+		}
+		return recipe;
+	}
+
+	/**
 	 * Aids in the management of on the fly recipes
 	 */
 	public class OTFManager {
@@ -317,6 +331,14 @@ public class RecipeManager {
 		 */
 		public void dropBuffer() {
 			this.buffer.clear();
+		}
+
+		public OnTheFlyRecipe getOTFRecipeBuffered(int id) {
+			OnTheFlyRecipe recipe = this.buffer.get(id);
+			if (recipe == null) {
+				recipe = this.onTheFlyRecipes.get(id);
+			}
+			return recipe;
 		}
 	}
 }
