@@ -1,5 +1,6 @@
 package foodstart.ui.controllers;
 
+import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -68,15 +69,16 @@ public class AddMenuController {
      * Stage of the current screen
      */
     private Stage stage;
+    /**
+     * Menu id
+     */
+    private int code;
 
-
-
-
-    public void onAddMenuItem() {
-
+    public void setNewCode() {
+        code = Managers.getMenuManager().generateNewID();
     }
 
-    public void onApplyChanges() {
+    public void onAddMenuItem() {
 
     }
 
@@ -89,6 +91,10 @@ public class AddMenuController {
     }
 
     public void onResetMenuItems() {
+
+    }
+
+    public void onAddToMenus() {
 
     }
 
