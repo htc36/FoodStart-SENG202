@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE suppliers SYSTEM "suppliers.dtd">
+<!DOCTYPE suppliers SYSTEM "supplier.dtd">
 <suppliers>
     <supplier>
-        <sid>1</sid>
-        <name/>
-        <address/>
-        <phone type="work"/>
-    </supplier>
-    <supplier>
-        <sid>5</sid>
-        <name/>
-        <address/>
-        <phone type="home"/>
-    </supplier>
-    <supplier>
-        <sid>3</sid>
+        <sid>0</sid>
         <name/>
         <address/>
         <phone type="home"/>
@@ -26,15 +14,27 @@
         <phone type="home"/>
     </supplier>
     <supplier>
-        <sid>0</sid>
+        <sid>3</sid>
         <name/>
         <address/>
         <phone type="home"/>
+    </supplier>
+    <supplier>
+        <sid>1</sid>
+        <name/>
+        <address/>
+        <phone type="work"/>
     </supplier>
     <supplier>
         <sid>2</sid>
         <name/>
         <address/>
         <phone type="mobile"/>
+    </supplier>
+    <supplier>
+        <sid>5</sid>
+        <name/>
+        <address/>
+        <phone type="home"/>
     </supplier>
 </suppliers>
