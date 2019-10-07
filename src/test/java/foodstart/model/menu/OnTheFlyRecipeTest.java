@@ -14,8 +14,8 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class OnTheFlyRecipeTest {
-    private OnTheFlyRecipe testOnTheFlyRecipe;
-    private PermanentRecipe testPermanentRecipeBasis;
+    private OnTheFlyRecipe testOnTheFlyRecipe, nullRecipe;
+    private PermanentRecipe testPermanentRecipeBasis, dummyPermRecipe;
     private Map<Ingredient, Integer> testPermanentIngredients;
     private Map<Ingredient, Integer> testAddOnIngredients;
     private Ingredient testIngredient1;
@@ -43,7 +43,9 @@ public class OnTheFlyRecipeTest {
         testAddOnIngredients.put(testIngredient2, 2);
 
         testPermanentRecipeBasis = new PermanentRecipe(1, "PermanentRecipeName", "PermanentRecipeInstructions", 5, testPermanentIngredients);
+        dummyPermRecipe = new PermanentRecipe(0, null, null, 0, testAddOnIngredients);
         testOnTheFlyRecipe = new OnTheFlyRecipe(testPermanentRecipeBasis, testAddOnIngredients, 8);
+        nullRecipe = new OnTheFlyRecipe(null, null, 0);
     }
 
     @Test
@@ -86,6 +88,11 @@ public class OnTheFlyRecipeTest {
         //Remove an ingredient that doesn't exists on the current ingredients list of the item
         assertNull(testOnTheFlyRecipe.removeIngredient(testIngredient2));
     }
+    
+    @Test
+    public void testGetDisplayName() {
+        assertEquals(testOnTheFlyRecipe.getBasedOn().getDisplayName() + " (modified)", testOnTheFlyRecipe.getDisplayName());
+    }
 
     @Test
     public void testCloneBasic() {
@@ -98,5 +105,47 @@ public class OnTheFlyRecipeTest {
         OnTheFlyRecipe copy = testOnTheFlyRecipe.clone();
         testOnTheFlyRecipe.getBasedOn().getIngredients().clear();
         Assert.assertNotEquals(testOnTheFlyRecipe, copy); 
+    }
+    
+    @Test 
+    public void testEqualsIfSame() {
+        Object test = testOnTheFlyRecipe;
+        assertSame(testOnTheFlyRecipe, test);
+        assertEquals(testOnTheFlyRecipe, test);
+    }
+    
+    @Test 
+    public void testNotEqualsIfNull() {
+        assertNotEquals(testOnTheFlyRecipe, null);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentClass() {
+        Object notRecipe = new String("not an OTF Recipe");
+        assertNotEquals(testOnTheFlyRecipe, notRecipe);
+    }
+
+    @Test 
+    public void testNotEqualsIfOnlySelfNullBasedOn() {
+        OnTheFlyRecipe other = new OnTheFlyRecipe(dummyPermRecipe, null, 0);
+        assertNotEquals(nullRecipe, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentBasedOn() {
+        OnTheFlyRecipe other = new OnTheFlyRecipe(dummyPermRecipe, testAddOnIngredients, 8);
+        assertNotEquals(testOnTheFlyRecipe, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsNull() {
+        OnTheFlyRecipe other = new OnTheFlyRecipe(null, null, 0);
+        assertEquals(nullRecipe, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsMatch() {
+        OnTheFlyRecipe other = new OnTheFlyRecipe(testPermanentRecipeBasis, testAddOnIngredients, 8);
+        assertEquals(testOnTheFlyRecipe, other);
     }
 }

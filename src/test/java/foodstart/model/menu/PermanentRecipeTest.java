@@ -13,11 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 
 public class PermanentRecipeTest {
 
-	private PermanentRecipe burgerRecipe; 
-	private Map<Ingredient, Integer> ingredients;
+	private PermanentRecipe burgerRecipe, nullRecipe; 
+	private Map<Ingredient, Integer> ingredients, dummyIngredients;
 	private Ingredient yeast;
 
 	@Before
@@ -28,7 +29,9 @@ public class PermanentRecipeTest {
 		 yeast = new Ingredient(Unit.GRAMS, "second test ingredient", 0, safeFor, 3, 13);
 		 ingredients = new HashMap<Ingredient, Integer>();
 	     ingredients.put(flour, 2);
+	     dummyIngredients = new HashMap<Ingredient, Integer>();
 		 burgerRecipe = new PermanentRecipe(0, "Burger", "Cook on high", 12, ingredients);
+		 nullRecipe = new PermanentRecipe(0, null, null, 0, null);
 	}
 
     @Test
@@ -82,7 +85,8 @@ public class PermanentRecipeTest {
     	burgerRecipe.addIngredient(yeast, 5);
     	assertTrue(ingredients.equals(burgerRecipe.getIngredients()));
     }
-
+    
+    @Ignore
     @Test
     public void removeIngredient() {
     //	assertEquals()
@@ -127,5 +131,65 @@ public class PermanentRecipeTest {
         PermanentRecipe copy = burgerRecipe.clone();
         burgerRecipe.getIngredients().clear();
         Assert.assertNotEquals(burgerRecipe, copy); 
+    }
+    
+    @Test 
+    public void testEqualsIfSame() {
+        Object test = burgerRecipe;
+        assertSame(burgerRecipe, test);
+        assertEquals(burgerRecipe, test);
+    }
+    
+    @Test 
+    public void testNotEqualsIfNull() {
+        assertNotEquals(nullRecipe, null);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentClass() {
+        Recipe notRecipe = new OnTheFlyRecipe(burgerRecipe, ingredients, 12);
+        assertNotEquals(burgerRecipe, notRecipe);
+    }
+    
+    @Test 
+    public void testNotEqualIfOnlySelfNullName() {
+        Recipe other = new PermanentRecipe(0, "", null, 0, null);
+        assertNotEquals(nullRecipe, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentName() {
+        Recipe other = new PermanentRecipe(0, "ug", "Cook on high", 12, ingredients);
+        assertNotEquals(burgerRecipe, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentID() {
+        Recipe other = new PermanentRecipe(5, "Burger", "Cook on high", 12, ingredients);
+        assertNotEquals(burgerRecipe, other);
+    }
+    
+    @Test 
+    public void testNotEqualIfOnlySelfNullInstructions() {
+        Recipe other = new PermanentRecipe(0, null, "", 0, null);
+        assertNotEquals(nullRecipe, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentInstructions() {
+        Recipe other = new PermanentRecipe(0, "Burger", "Cn high", 12, ingredients);
+        assertNotEquals(burgerRecipe, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsNull() {
+        Recipe other = new PermanentRecipe(0, null, null, 0, null);
+        assertEquals(nullRecipe, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsMatch() {
+        Recipe other = new PermanentRecipe(0, "Burger", "Cook on high", 12, ingredients);
+        assertEquals(burgerRecipe, other);
     }
 }
