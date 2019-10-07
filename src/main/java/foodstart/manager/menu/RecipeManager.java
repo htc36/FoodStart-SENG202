@@ -307,7 +307,7 @@ public class RecipeManager {
 		 * @return the id of the recipe created
 		 */
 		public Integer pushToBuffer(int basis, Map<Ingredient, Integer> ingredients, float price) {
-			PermanentRecipe basisRecipe = recipes.get(basis);
+			PermanentRecipe basisRecipe = getRecipeBuffer(basis);
 			if (basisRecipe == null) {
 				return null;
 			}
