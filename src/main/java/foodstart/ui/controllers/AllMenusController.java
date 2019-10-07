@@ -62,7 +62,6 @@ public class AllMenusController {
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-
 		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
 		try {
 			addLoader.load();
@@ -73,6 +72,13 @@ public class AllMenusController {
 
 		addPopup = new Stage();
 		addPopup.initModality(Modality.WINDOW_MODAL);
+
+		((AddMenuController) loader.getController()).setStage(popupStage);
+
+		if (popupStage.getOwner() == null) {
+			popupStage.initOwner(this.flowPane.getScene().getWindow());
+		}
+
 		addPopup.setTitle("Add New Menu");
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setScene(addScene);

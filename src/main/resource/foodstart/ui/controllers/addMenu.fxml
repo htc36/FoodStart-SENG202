@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewMenuController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.AddMenuController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.9999755859375" minWidth="-Infinity" prefWidth="382.73330078125" />
       <ColumnConstraints hgrow="NEVER" maxWidth="368.4000549316406" minWidth="0.0" percentWidth="5.0" prefWidth="49.399993896484375" />
@@ -20,17 +20,17 @@
    </columnConstraints>
    <rowConstraints>
       <RowConstraints maxHeight="47.80000152587891" minHeight="36.0" percentHeight="7.0" prefHeight="36.0" vgrow="NEVER" />
-      <RowConstraints maxHeight="127.6" minHeight="0.0" prefHeight="66.26667175292968" vgrow="NEVER" />
-      <RowConstraints maxHeight="183.00000152587893" minHeight="0.0" prefHeight="119.53333740234379" vgrow="NEVER" />
-      <RowConstraints maxHeight="239.60000610351562" minHeight="-Infinity" prefHeight="53.86666259765627" vgrow="NEVER" />
-      <RowConstraints maxHeight="547.8" minHeight="60.0" prefHeight="437.3999877929688" vgrow="NEVER" />
-      <RowConstraints maxHeight="464.0" minHeight="0.0" prefHeight="48.000012207031205" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="464.0" minHeight="26.4000244140625" prefHeight="76.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="127.6" minHeight="0.0" prefHeight="76.46668853759766" vgrow="NEVER" />
+      <RowConstraints maxHeight="183.00000152587893" minHeight="0.0" prefHeight="68.13333129882814" vgrow="NEVER" />
+      <RowConstraints maxHeight="239.60000610351562" minHeight="-Infinity" prefHeight="47.4666717529297" vgrow="NEVER" />
+      <RowConstraints maxHeight="547.8" minHeight="60.0" prefHeight="278.33332824707037" vgrow="NEVER" />
+      <RowConstraints maxHeight="464.0" minHeight="0.0" prefHeight="38.066723632812455" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="464.0" minHeight="26.4000244140625" prefHeight="69.53327636718745" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <Text fx:id="menuNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Menu">
          <font>
-            <Font size="36.0" />
+            <Font size="30.0" />
          </font>
       </Text>
       <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -121,14 +121,14 @@
             </AnchorPane>
          </children>
       </GridPane>
-      <TextField prefHeight="41.0" prefWidth="413.0" promptText="Set Menu Name" GridPane.rowIndex="1">
+      <TextField fx:id="nameTextField" prefHeight="41.0" prefWidth="413.0" promptText="Set Menu Name" GridPane.rowIndex="1">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </TextField>
-      <TextField alignment="TOP_LEFT" prefHeight="124.0" prefWidth="860.0" promptText="Set Menu Description" GridPane.columnSpan="3" GridPane.rowIndex="2">
+      <TextField fx:id="descriptionTextField" alignment="TOP_LEFT" prefHeight="124.0" prefWidth="654.0" promptText="Set Menu Description" GridPane.columnSpan="3" GridPane.rowIndex="2">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
       </TextField>
    </children>
