@@ -41,11 +41,9 @@ public class XMLSupplierParser extends XMLParser {
     
     			if (node instanceof Element) {
     				Element element = (Element) node;
-    				Supplier parsedSupplier = parseOneSupplier(element);
-    				parsedSuppliers.put(parsedSupplier.getId(), parsedSupplier);
+					parseOneSupplier(element);
     			}
     		}
-    		Managers.getSupplierManager().addSuppliers(parsedSuppliers);
 		} catch (NumberFormatException e) {
 		    //throw new ImportFailureException("Invalid entry in ID field in XML file.");
 		}
@@ -54,9 +52,8 @@ public class XMLSupplierParser extends XMLParser {
 	/**
 	 * Parse a single supplier element
 	 * @param element The supplier XML element to parse
-	 * @return the supplier generated from the parsed data
 	 */
-	private Supplier parseOneSupplier(Element element) {
+	private void parseOneSupplier(Element element) {
 		int sid = Integer.parseInt(element.getElementsByTagName("sid").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String address = element.getElementsByTagName("address").item(0).getTextContent();
@@ -71,7 +68,7 @@ public class XMLSupplierParser extends XMLParser {
 		if (element.getElementsByTagName("url").getLength() == 1) {
 			url = element.getElementsByTagName("url").item(0).getTextContent();
 		}
-		return new Supplier(sid, name, phone, phoneType, email, url, address);
+		Managers.getSupplierManager().pushToBuffer(sid, name, phone, phoneType, email, url, address);
 	}
 	
 	
@@ -82,7 +79,7 @@ public class XMLSupplierParser extends XMLParser {
 	 */
 	@Override
 	public void export(Document doc, Transformer transformer) {
-		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "suppliers.dtd");
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "supplier.dtd");
 		exportWithManager(doc, Managers.getSupplierManager());
 	}
 

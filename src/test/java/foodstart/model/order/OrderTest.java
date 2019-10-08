@@ -260,7 +260,7 @@ public class OrderTest {
     
     @Test 
     public void testNotEqualsIfDifferentTime() {
-        Order other = new Order(1, testItems, "TestCustomerName", LocalDateTime.now(), PaymentMethod.CASH);
+        Order other = new Order(1, testItems, "TestCustomerName", LocalDateTime.now().plusMinutes(10), PaymentMethod.CASH);
         assertNotEquals(testOrder, other);
     }
     

@@ -4,6 +4,8 @@ import foodstart.manager.Managers;
 import foodstart.manager.menu.MenuManager;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,12 +34,12 @@ public class ViewMenuController {
      * Text field for menu name
      */
     @FXML
-    private Text menuNameText;
+    private TextField menuNameTextField;
     /**
      * Text area for menu description
      */
     @FXML
-    private Text menuDescriptionText;
+    private TextArea MenuDescriptionTextArea;
     /**
      * Table column for menu item IDs
      */
@@ -140,12 +142,25 @@ public class ViewMenuController {
     }
 
     /**
+     * Checks if the text field for the menu title or the text area for the menu description has changed
+     * Or if any other changes have been made to the menu items
+     * @return whether or not there have been changes
+     */
+    private boolean hasChanged() {
+    	Menu menu = Managers.getMenuManager().getMenu(menuId);
+    	if (!menuNameTextField.getText().equals(menu.getTitle()) || !(MenuDescriptionTextArea.getText().equals(menu.getDescription())) || changed == true) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    /**
      * Called to set up the view menu popup with the correct menu information
      * @param menu the menu to give the view menu popup
      */
     public void setMenuInfo(Menu menu) {
-        menuNameText.setText(menu.getTitle());
-        menuDescriptionText.setText(menu.getDescription());
+        menuNameTextField.setText(menu.getTitle());
+    	MenuDescriptionTextArea.setText(menu.getDescription());
         menuId = menu.getId();
         setCurrentMenuItems(menu);
         setAvailableMenuItems(menu);
@@ -172,6 +187,11 @@ public class ViewMenuController {
     	}
     }
 
+    /**
+     * When a menu item in a table is double clicked, this is called
+     * to show more details of the selected menu item
+     * @param menuItem the menu item to be viewed in more detail
+     */
     private void showMenuItemDetails(MenuItem menuItem) {
         loader = new FXMLLoader(getClass().getResource("viewVariantsPopUp.fxml"));
         try {
@@ -245,7 +265,7 @@ public class ViewMenuController {
      * Closes the menu popup on cancel
      */
     public void onCancel() {
-        if (changed) {
+        if (hasChanged()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to close with unapplied changes?");
             Optional<ButtonType> selection = alert.showAndWait();
             if (selection.isPresent() && selection.get() == ButtonType.OK) {
@@ -260,7 +280,7 @@ public class ViewMenuController {
      * Sets the open menu as the current one in create order panel
      */
     public void setCurrentMenu() {
-    	if (changed) {
+    	if (hasChanged()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Apply your changes before setting as current menu");
             alert.setHeaderText("You have unapplied changes");
             alert.showAndWait();
@@ -335,13 +355,16 @@ public class ViewMenuController {
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
-            if (changed) {
+            if (hasChanged()) {
                 MenuManager menuManager = Managers.getMenuManager();
                 Menu currentMenu = menuManager.getMenu(menuId);
                 currentMenuItems.clear();
                 currentMenuItems.addAll(observableCurrentItems);
-                menuManager.removeMenu(menuId);
-                menuManager.addMenu(currentMenuItems, currentMenu.getId(), currentMenu.getTitle(), currentMenu.getDescription());
+                //menuManager.removeMenu(menuId);
+                currentMenu.setTitle(menuNameTextField.getText());
+                currentMenu.setDescription(MenuDescriptionTextArea.getText());
+                currentMenu.setMenuItems(currentMenuItems);
+                //menuManager.addMenu(currentMenuItems, currentMenu.getId(), currentMenu.getTitle(), currentMenu.getDescription());
                 alert.setTitle("Changes applied");
                 alert.setContentText("Changes made have been applied");
                 changed = false;
@@ -352,7 +375,21 @@ public class ViewMenuController {
             alert.showAndWait();
         }
     }
-
+    
+    /**
+     * Called when the delete menu button is pressed
+     * Will delete this menu from the set of available menus
+     */
+    public void onDeleteMenu() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to remove this menu?", ButtonType.YES, ButtonType.NO);
+		Optional<ButtonType> selection = alert.showAndWait();
+		if (selection.isPresent() && selection.get() == ButtonType.YES) {
+			Managers.getMenuManager().removeMenu(menuId);
+			
+			onCancel();
+		}
+    }
+    
     /**
      * Called to refresh both table views
      */
@@ -361,4 +398,9 @@ public class ViewMenuController {
         populateAllMenuItemsTable();
     }
 
+    public void onChanged() {
+    	System.out.println("temp");
+    
+    }
+    
 }

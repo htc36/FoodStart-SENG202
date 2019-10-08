@@ -9,6 +9,7 @@ import foodstart.model.stock.Supplier;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.FileImporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -157,14 +158,8 @@ public class SupplierController implements Refreshable {
 	 */
 	public void onImport() {
 		Stage stage = (Stage) this.supplierTable.getScene().getWindow();
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Suppliers File");
-		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
-		File selectedFile = fileChooser.showOpenDialog(stage);
-		if (selectedFile != null) {
-			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
-			persist.importFile(selectedFile, DataType.SUPPLIER);
-		}
+		FileImporter importer = new FileImporter(stage, "Open Suppliers File", DataType.SUPPLIER);
+		importer.execute();
 		refreshTable();
 	}
 

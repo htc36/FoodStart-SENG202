@@ -1,18 +1,5 @@
 package foodstart.manager.xml;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.manager.menu.MenuManager;
@@ -20,6 +7,17 @@ import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Parses menu XML files
@@ -64,8 +62,8 @@ public class XMLMenuParser extends XMLParser {
 								menuItems.add(parseOneMenuItem((Element) menuItemNode));
 							}
 						}
-						Set<MenuItem> items = Managers.getMenuItemManager().getMenuItems(menuItems);
-						Managers.getMenuManager().addMenu(items, menuId, title, description);
+						Set<MenuItem> items = Managers.getMenuItemManager().getMenuItemsBuffered(menuItems);
+						Managers.getMenuManager().pushToBuffer(items, menuId, title, description);
 					}
 				}
 			}
@@ -86,7 +84,7 @@ public class XMLMenuParser extends XMLParser {
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
 		List<PermanentRecipe> recipes = parseRecipeList(recipeIds);
 
-		Managers.getMenuItemManager().addMenuItem(itemId, name, description, recipes);
+		Managers.getMenuItemManager().pushToBuffer(itemId, name, description, recipes);
 		return itemId;
 	}
 
@@ -103,7 +101,7 @@ public class XMLMenuParser extends XMLParser {
 			Node node = recipeIds.item(i);
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {
 				int recipeId = Integer.parseInt(node.getTextContent());
-				PermanentRecipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
+				PermanentRecipe recipe = Managers.getRecipeManager().getRecipeBuffer(recipeId);
 				if (recipe == null) {
 					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 				}
