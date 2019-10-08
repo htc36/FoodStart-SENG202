@@ -1,18 +1,15 @@
 package foodstart.manager.menu;
 
-import static org.junit.Assert.*;
-
 import foodstart.model.Unit;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
+
+import static org.junit.Assert.*;
 
 public class MenuManagerTest {
 
@@ -20,7 +17,7 @@ public class MenuManagerTest {
     private MenuItemManager itemManager;
     private Menu testMenu;
     private PermanentRecipe recipe1;
-    private List<PermanentRecipe> recipeList;
+	private Set<PermanentRecipe> recipeList;
 
     @Before
     public void setUp() {
@@ -30,9 +27,9 @@ public class MenuManagerTest {
         Ingredient ingredient1 = new Ingredient(Unit.UNITS, "ingredient1", 0, null, 10, 20);
         ingredients1.put(ingredient1, 20);
         recipe1 = new PermanentRecipe(1, "recipe1", "Create recipe one", 5, ingredients1);
-        recipeList = new ArrayList<PermanentRecipe>();
+		recipeList = new HashSet<PermanentRecipe>();
         recipeList.add(recipe1);
-        itemManager.addMenuItem(0, "test menu item", "a menu item test", recipeList);
+		itemManager.addMenuItem(0, "test menu item", "a menu item test", recipeList, recipe1);
         menuManager.addMenu(itemManager.getMenuItemSet(),0, "TestMenu", "A menu for testing");
     }
 
