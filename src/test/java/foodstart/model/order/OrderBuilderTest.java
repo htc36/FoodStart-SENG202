@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +19,7 @@ import foodstart.manager.exceptions.InsufficientStockException;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.PaymentMethod;
 import foodstart.model.Unit;
+import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
@@ -24,11 +27,11 @@ import foodstart.model.stock.Ingredient;
 public class OrderBuilderTest {
     
     OrderBuilder testBuilder;
-    static Ingredient inAllStock, fraction, empty;
+    static Ingredient ingrFull, ingrSome, ingrNone;
     static Map<DietaryRequirement, Boolean> testDiet;
     static Map<Recipe, Integer> normOrderItems, emptyOrderItems;
-    static Recipe prAvailable, prFraction, prUnavailable,
-        otfRecipe1, otfRecipe2; 
+    static Recipe prMaxAvailable, prSomeAvailable, prUnavailable,
+        otfMaxAvailable, otfSomeAvailable; 
     static Order normalOrder, emptyOrder;
     static final int QTY_USED = 5, MAX_USES = 4;
     static final int BASE_STOCK = QTY_USED * MAX_USES;
@@ -39,42 +42,46 @@ public class OrderBuilderTest {
         testDiet.put(DietaryRequirement.GLUTEN_FREE, true);
         testDiet.put(DietaryRequirement.NUT_ALLERGY, false);
         
-        inAllStock = new Ingredient(Unit.GRAMS, "Cheese", 0, testDiet, 0, 0);
-        fraction = new Ingredient(Unit.UNITS, "Potato", 1, testDiet, 0, 0);
-        empty = new Ingredient(Unit.UNITS, "Electric Boogaloo", 3, testDiet, 0, 0);
+        ingrFull = new Ingredient(Unit.GRAMS, "Cheese", 0, testDiet, 0, 0);
+        ingrSome = new Ingredient(Unit.UNITS, "Potato", 1, testDiet, 0, 0);
+        ingrNone = new Ingredient(Unit.UNITS, "Electric Boogaloo", 3, testDiet, 0, 0);
         
-        HashMap<Ingredient, Integer> permMap1 = new HashMap<Ingredient, Integer>();
-        HashMap<Ingredient, Integer> ingredientMapFraction = new HashMap<Ingredient, Integer>();
-        HashMap<Ingredient, Integer> permMap2 = new HashMap<Ingredient, Integer>();
-        permMap1.put(inAllStock, QTY_USED);
-        ingredientMapFraction.put(inAllStock, QTY_USED);
-        ingredientMapFraction.put(fraction, QTY_USED);
-        permMap2.put(empty, QTY_USED);
+        HashMap<Ingredient, Integer> ingrMapMaxAvailable = new HashMap<Ingredient, Integer>();
+        HashMap<Ingredient, Integer> ingrMapSomeAvailable = new HashMap<Ingredient, Integer>();
+        HashMap<Ingredient, Integer> ingrMapUnavailable = new HashMap<Ingredient, Integer>();
+        ingrMapMaxAvailable.put(ingrFull, QTY_USED);
+        ingrMapSomeAvailable.put(ingrFull, QTY_USED);
+        ingrMapSomeAvailable.put(ingrSome, QTY_USED);
+        ingrMapUnavailable.put(ingrNone, QTY_USED);
         
-        prAvailable = new PermanentRecipe(0, "Plate of Cheese", "dummy", 10 , permMap1);
-        prFraction = new PermanentRecipe(1, "Potato and Cheese", "dummy", 7 , ingredientMapFraction);
-        prUnavailable = new PermanentRecipe(2, "Plate of ElectricBoogaloo", "dummy", 4 , permMap2);
+        prMaxAvailable = new PermanentRecipe(0, "Plate of Cheese", "dummy", 10 , ingrMapMaxAvailable);
+        prSomeAvailable = new PermanentRecipe(1, "Potato and Cheese", "dummy", 7 , ingrMapSomeAvailable);
+        prUnavailable = new PermanentRecipe(2, "Plate of ElectricBoogaloo", "dummy", 4 , ingrMapUnavailable);
+        otfMaxAvailable = new OnTheFlyRecipe((PermanentRecipe) prMaxAvailable, ingrMapMaxAvailable, 11);
+        otfSomeAvailable = new OnTheFlyRecipe((PermanentRecipe) prUnavailable, ingrMapSomeAvailable, 1);
         
         normOrderItems = new HashMap<Recipe, Integer>();
         emptyOrderItems = new HashMap<Recipe, Integer>();
-        normOrderItems.put(prAvailable, MAX_USES - 1);
+        normOrderItems.put(prMaxAvailable, MAX_USES - 1);
         
         normalOrder = new Order(0, normOrderItems, "Jom", 0, PaymentMethod.CASH);
     }
     
     private void setStockLevels() {
-        inAllStock.setKitchenStock(BASE_STOCK);
-        inAllStock.setTruckStock(BASE_STOCK);
-        fraction.setKitchenStock(BASE_STOCK - 1);
-        fraction.setTruckStock(BASE_STOCK - 1);
-        empty.setKitchenStock(0);
-        empty.setTruckStock(0);
+        ingrFull.setKitchenStock(BASE_STOCK);
+        ingrFull.setTruckStock(BASE_STOCK);
+        ingrSome.setKitchenStock(BASE_STOCK - 1);
+        ingrSome.setTruckStock(BASE_STOCK - 1);
+        ingrNone.setKitchenStock(0);
+        ingrNone.setTruckStock(0);
     }
 
     @Before
     public void setUp() throws Exception {
         testBuilder = new OrderBuilder();
         setStockLevels();
+        Managers.getIngredientManager().getIngredients().clear();
+        Managers.getOrderManager().getOrders().clear();
     }
 
     @After
@@ -84,7 +91,7 @@ public class OrderBuilderTest {
     @Test
     public void testCanAddNegativeItems() {
         try {
-            testBuilder.canAddItem(prAvailable, -1);
+            testBuilder.canAddItem(prMaxAvailable, -1);
         } catch (Exception e) {
             
         }
@@ -92,29 +99,29 @@ public class OrderBuilderTest {
 
     @Test
     public void testCanAddSomeItems() {
-        assertTrue(testBuilder.canAddItem(prAvailable, MAX_USES - 1));
+        assertTrue(testBuilder.canAddItem(prMaxAvailable, MAX_USES - 1));
     }
     
     @Test
     public void testCanAddExactMaxItems() {
-        assertTrue(testBuilder.canAddItem(prAvailable, MAX_USES));
+        assertTrue(testBuilder.canAddItem(prMaxAvailable, MAX_USES));
     }
     
     @Test
     public void testCanAddExcessItems() {
-        testBuilder.addItem(prAvailable, 2);
-        assertFalse(testBuilder.canAddItem(prAvailable, MAX_USES));
+        testBuilder.addItem(prMaxAvailable, 2);
+        assertFalse(testBuilder.canAddItem(prMaxAvailable, MAX_USES));
     }
     
     @Test
     public void testCanAddExcessItemsFraction() {
-        assertFalse(testBuilder.canAddItem(prFraction, MAX_USES));
+        assertFalse(testBuilder.canAddItem(prSomeAvailable, MAX_USES));
     }
     
     @Test
     public void testAddNegativeItems() {
         try {
-            testBuilder.addItem(prAvailable, -5);
+            testBuilder.addItem(prMaxAvailable, -5);
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException e) {
             ;
@@ -124,20 +131,43 @@ public class OrderBuilderTest {
     
     @Test
     public void testAddSomeItems() {
-        testBuilder.addItem(prAvailable, MAX_USES - 1);
-        assertEquals(MAX_USES - 1, testBuilder.getQuantity(prAvailable));
+        testBuilder.addItem(prMaxAvailable, MAX_USES - 1);
+        assertEquals(MAX_USES - 1, testBuilder.getQuantity(prMaxAvailable));
     }
     
     @Test
     public void testAddMaxItems() {
-        testBuilder.addItem(prAvailable, MAX_USES);
-        assertEquals(MAX_USES, testBuilder.getQuantity(prAvailable));
+        testBuilder.addItem(prMaxAvailable, MAX_USES);
+        assertEquals(MAX_USES, testBuilder.getQuantity(prMaxAvailable));
     }
     
     @Test
     public void testAddExcessItems() {
         try {
-            testBuilder.addItem(prFraction, MAX_USES);
+            testBuilder.addItem(prSomeAvailable, MAX_USES);
+            fail("InsufficientStockException should have been thrown");
+        } catch (InsufficientStockException e) {
+            
+        }
+    }
+    
+    @Test
+    public void testAddExistingItems() {
+        testBuilder.addItem(prMaxAvailable, 1);
+        testBuilder.addItem(prMaxAvailable, MAX_USES - 1);
+        assertEquals(MAX_USES, testBuilder.getQuantity(prMaxAvailable));
+    }
+    
+    @Test
+    public void testAddCustomItems() {
+        testBuilder.addItem(otfMaxAvailable, MAX_USES - 1);
+        assertEquals(MAX_USES - 1, testBuilder.getQuantity(otfMaxAvailable));
+    }
+    
+    @Test
+    public void testAddExcessCustomItems() {
+        try {
+            testBuilder.addItem(otfSomeAvailable, MAX_USES);
             fail("InsufficientStockException should have been thrown");
         } catch (InsufficientStockException e) {
             
@@ -146,9 +176,9 @@ public class OrderBuilderTest {
     
     @Test
     public void testRemoveItem() {
-        testBuilder.addItem(prAvailable, 3);
-        testBuilder.removeItem(prAvailable);
-        assertFalse(testBuilder.getCurrentOrder().containsKey(prAvailable));
+        testBuilder.addItem(prMaxAvailable, 3);
+        testBuilder.removeItem(prMaxAvailable);
+        assertFalse(testBuilder.getCurrentOrder().containsKey(prMaxAvailable));
     }
     
     @Test
@@ -156,23 +186,58 @@ public class OrderBuilderTest {
         testBuilder.removeItem(prUnavailable);
         assertFalse(testBuilder.getCurrentOrder().containsKey(prUnavailable));
     }
-    /*
-     * leaving this until I figure out how do to implement this
+    
     @Test
-    public void testDeductStock() {
-        
-        
+    public void testGetTotalPriceEmpty() {
+        float price = testBuilder.getCurrentTotalPrice();
+        assertEquals(0.0, price, 0.005);
     }
     
     @Test
-    public void testCalculateRequiredStock() {
-        testBuilder.addItem(prAvailable, MAX_USES - 1);
-        Managers.getIngredientManager()
+    public void testGetTotalPriceNormal() {
+        int countPRMax = 2, countPRSome = 2;
+        testBuilder.addItem(prMaxAvailable, countPRMax);
+        testBuilder.addItem(prSomeAvailable, countPRSome);
+        float expectedPrice = countPRMax * prMaxAvailable.getPrice() + countPRSome * prSomeAvailable.getPrice(),
+                actualPrice = testBuilder.getCurrentTotalPrice();
+        assertEquals(expectedPrice, actualPrice, 0.005);
     }
+    
+    @Test
+    public void testCalculateRequiredIngredientAmountEmpty() {
+        assertEquals(0, testBuilder.calculateRequiredStock(ingrFull));
+        assertEquals(0, testBuilder.calculateRequiredStock(ingrSome));
+        assertEquals(0, testBuilder.calculateRequiredStock(ingrNone));
+    }
+    
+    @Test
+    public void testCalculateRequiredIngredientAmountBasic() {
+        int countPRMax = 2, countPRSome = 2;
+        testBuilder.addItem(prMaxAvailable, countPRMax);
+        testBuilder.addItem(prSomeAvailable, countPRSome);
+        int expectedCheese = (countPRMax + countPRSome) * QTY_USED, expectedPotato = countPRSome * QTY_USED;
+        assertEquals(expectedCheese, testBuilder.calculateRequiredStock(ingrFull));
+        assertEquals(expectedPotato, testBuilder.calculateRequiredStock(ingrSome));
+    }
+    
+    
+    @Test
+    public void testCalculateRequiredIngredientAmountWithEditing() {
+        int countPRMax = 2, countPRSome = 2;
+        testBuilder.addItem(prMaxAvailable, countPRMax);
+        testBuilder.addItem(prSomeAvailable, countPRSome);
+        testBuilder.setEditing(prMaxAvailable, true);
+        int expectedCheese = countPRSome * QTY_USED, expectedPotato = countPRSome * QTY_USED;
+        assertEquals(expectedCheese, testBuilder.calculateRequiredStock(ingrFull));
+        assertEquals(expectedPotato, testBuilder.calculateRequiredStock(ingrSome));
+    }
+
     
     @Test
     public void testBuildNormal() {
         String name = "Jom";
+        Managers.getIngredientManager().addIngredient(ingrFull);
+        Managers.getIngredientManager().addIngredient(ingrSome);
         int id = Managers.getOrderManager().getOrders().keySet().size() == 0 ? 0
                 : Collections.max(Managers.getOrderManager().getOrders().keySet()) + 1;
         while (Managers.getOrderManager().getOrder(id) != null) {
@@ -180,10 +245,48 @@ public class OrderBuilderTest {
         }
         LocalDateTime current = LocalDateTime.now();
         normalOrder = new Order(id, normOrderItems, name, current, PaymentMethod.CASH);
-        testBuilder.addItem(prAvailable, MAX_USES - 1);
+        testBuilder.addItem(prMaxAvailable, MAX_USES - 1);
         testBuilder.build(name, PaymentMethod.CASH);
         Managers.getOrderManager().getOrder(id).setTimePlaced(current);
         assertEquals("Check order has been built: ", normalOrder, Managers.getOrderManager().getOrder(id));
     }
-    */
+    
+    private Set<Recipe> setupEditing() {
+        testBuilder.setEditing(otfMaxAvailable, true);
+        testBuilder.setEditing(otfSomeAvailable, true);
+        testBuilder.setEditing(prMaxAvailable, false);
+        testBuilder.setEditing(prSomeAvailable, true);
+        testBuilder.setEditing(prUnavailable, false);
+        return new HashSet<Recipe>(testBuilder.editing);
+    }
+    
+    @Test
+    public void setEditingFromFalseToTrue() {
+        Set<Recipe> expected = setupEditing();
+        expected.add(prMaxAvailable);
+        testBuilder.setEditing(prMaxAvailable, true);
+        assertEquals(expected, testBuilder.editing);
+    }
+    
+    @Test
+    public void setEditingFromTrueToFalse() {
+        Set<Recipe> expected = setupEditing();
+        expected.remove(prSomeAvailable);
+        testBuilder.setEditing(prSomeAvailable, false);
+        assertEquals(expected, testBuilder.editing);
+    }
+    
+    @Test
+    public void setEditingFromFalseToFalse() {
+        Set<Recipe> expected = setupEditing();
+        testBuilder.setEditing(prMaxAvailable, false);
+        assertEquals(expected, testBuilder.editing);
+    }
+    
+    @Test
+    public void setEditingFromTrueToTrue() {
+        Set<Recipe> expected = setupEditing();
+        testBuilder.setEditing(prSomeAvailable, true);
+        assertEquals(expected, testBuilder.editing);
+    }
 }
