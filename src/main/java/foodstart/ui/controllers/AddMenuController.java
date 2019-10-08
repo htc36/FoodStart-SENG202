@@ -98,6 +98,21 @@ public class AddMenuController {
      */
     private int newMenuId;
 
+    public void initialize() {
+
+    }
+
+    public void setStage(Stage popupStage) {
+        stage = popupStage;
+        stage.setMinWidth(900);
+        stage.setMinHeight(650);
+        stage.setOnCloseRequest(event -> {
+            onCancel();
+            event.consume();
+        });
+    }
+
+
     public void setNewCode() {
         newMenuId = Managers.getMenuManager().generateNewID();
     }
@@ -105,6 +120,7 @@ public class AddMenuController {
     public void setUpMenuInfo() {
         setNewCode();
         setAvailableMenuItems();
+        observableAvailableItems = FXCollections.observableArrayList(currentAvailableMenuItems);
         populateAllMenuItemsTable();
     }
 

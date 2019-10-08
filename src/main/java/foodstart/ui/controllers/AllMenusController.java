@@ -63,22 +63,7 @@ public class AllMenusController implements Refreshable {
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
-		try {
-			addLoader.load();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		addPopup = new Stage();
-		addPopup.initModality(Modality.WINDOW_MODAL);
-		addPopup.setTitle("Add New Menu");
-		Scene addScene = new Scene(addLoader.getRoot());
-		addPopup.setScene(addScene);
-
 		refreshTable();
-
 	}
 
 	/**
@@ -147,6 +132,19 @@ public class AllMenusController implements Refreshable {
 
 	public void onAdd() {
 		refreshTable();
+		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
+		try {
+			addLoader.load();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		((AddMenuController) addLoader.getController()).setUpMenuInfo();
+		addPopup = new Stage();
+		addPopup.initModality(Modality.WINDOW_MODAL);
+		addPopup.setTitle("Add New Menu");
+		Scene addScene = new Scene(addLoader.getRoot());
+		addPopup.setScene(addScene);
 		addPopup.showAndWait();
 	}
 
