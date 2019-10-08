@@ -1,20 +1,17 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.File;
+
+import static org.junit.Assert.*;
 
 public class XMLIngredientParserTest {
 
@@ -28,12 +25,14 @@ public class XMLIngredientParserTest {
 	@Test
 	public void testImportCheckIngredientName() {
 		persistence.importFile(new File("resources/data/TestIngredients1.xml"), DataType.INGREDIENT);
+		Managers.writeBuffer();
 		assertEquals("Parse ingredient ID 0", 0, Managers.getIngredientManager().getIngredient(0).getId());
 	}
 
 	@Test
 	public void testImportCheckIngredientId() {
 		persistence.importFile(new File("resources/data/TestIngredients2.xml"), DataType.INGREDIENT);
+		Managers.writeBuffer();
 		assertEquals("Parses name correctly", 1,
 				Managers.getIngredientManager().getIngredientByName("TestItem1").getId());
 	}
@@ -41,6 +40,7 @@ public class XMLIngredientParserTest {
 	@Test
 	public void testImportCheckUnit() {
 		persistence.importFile(new File("resources/data/TestIngredients3.xml"), DataType.INGREDIENT);
+		Managers.writeBuffer();
 		assertEquals("ID 2 measured in grams", Unit.GRAMS, Managers.getIngredientManager().getIngredient(2).getUnit());
 		assertEquals("ID 3 measured in ml", Unit.MILLILITRES,
 				Managers.getIngredientManager().getIngredient(3).getUnit());
@@ -50,6 +50,7 @@ public class XMLIngredientParserTest {
 	@Test
 	public void testImportCheckStock() {
 		persistence.importFile(new File("resources/data/TestIngredients4.xml"), DataType.INGREDIENT);
+		Managers.writeBuffer();
 		assertEquals("ID 5 truck stock 10", 10, Managers.getIngredientManager().getIngredient(5).getTruckStock());
 		assertEquals("ID 5 kitchen stock 20", 20, Managers.getIngredientManager().getIngredient(5).getKitchenStock());
 		assertEquals("ID 6, no truck stock", 0, Managers.getIngredientManager().getIngredient(6).getTruckStock());
@@ -62,7 +63,7 @@ public class XMLIngredientParserTest {
 	@Test
 	public void testImportCheckDietary() {
 		persistence.importFile(new File("resources/data/TestIngredients5.xml"), DataType.INGREDIENT);
-
+		Managers.writeBuffer();
 		assertTrue("All true, vegan",
 				Managers.getIngredientManager().getIngredient(8).isSafeFor(DietaryRequirement.VEGAN));
 		assertTrue("All true, vegetarian",
@@ -114,6 +115,7 @@ public class XMLIngredientParserTest {
 		boolean threwException = false;
 		try {
 			persistence.importFile(new File("resources/data/TestBadIngredients1.xml"), DataType.INGREDIENT);
+			Managers.writeBuffer();
 		} catch (ImportFailureException e) {
 			threwException = true;
 		}
@@ -126,6 +128,7 @@ public class XMLIngredientParserTest {
 		boolean threwException = false;
 		try {
 			persistence.importFile(new File("resources/data/TestBadIngredients2.xml"), DataType.INGREDIENT);
+			Managers.writeBuffer();
 		} catch (ImportFailureException e) {
 			threwException = true;
 		}
@@ -138,6 +141,7 @@ public class XMLIngredientParserTest {
 		boolean threwException = false;
 		try {
 			persistence.importFile(new File("resources/data/TestBadIngredients3.xml"), DataType.INGREDIENT);
+			Managers.writeBuffer();
 		} catch (ImportFailureException e) {
 			threwException = true;
 		}
@@ -150,6 +154,7 @@ public class XMLIngredientParserTest {
 		boolean threwException = false;
 		try {
 			persistence.importFile(new File("resources/data/TestBadIngredients4.xml"), DataType.INGREDIENT);
+			Managers.writeBuffer();
 		} catch (ImportFailureException e) {
 			threwException = true;
 		}

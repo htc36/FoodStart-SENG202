@@ -121,9 +121,9 @@ public class RecipeBuilder {
 
 	/**
 	 * When the customisation process is finished, this method should be called to
-	 * finialise it
+	 * finalise it
 	 *
-	 * @param isEdited    Whether the order was changed from the permanentrecipe variant
+	 * @param isEdited    Whether the order was changed from the permanent recipe variant
 	 * @param variant     The original recipe this is based on
 	 * @param ingredients The ingredients (which might be changed)
 	 * @param quantity    Quantity of this item to add to the order
@@ -131,6 +131,7 @@ public class RecipeBuilder {
 	 */
 	public void addToOrder(boolean isEdited, PermanentRecipe variant, Map<Ingredient, Integer> ingredients,
 	                       int quantity, float price) {
+		//TODO: Implement usage of OTF manager
 		Recipe recipe = variant;
 		if (isEdited && (!ingredients.equals(variant.getIngredients()) || price != variant.getPrice())) {
 			// the order could be the same if, for example, the price was changed then

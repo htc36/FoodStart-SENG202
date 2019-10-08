@@ -1,9 +1,5 @@
 package foodstart.ui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import foodstart.manager.Managers;
 import foodstart.model.DataFileType;
 import javafx.animation.FadeTransition;
@@ -18,12 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Main/Bootstrap class that launches the application
@@ -65,6 +61,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+		primaryStage.setMinWidth(950);
+		primaryStage.setMinHeight(700);
 
 		splashStage = new Stage();
 		VBox splashLayout = createSplash(splashStage);
@@ -109,6 +107,8 @@ public class Main extends Application {
 		stage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
 
 		ImageView splashImage = new ImageView(new Image(getClass().getResourceAsStream("splash.png")));
+		splashImage.setFitWidth(700);
+		splashImage.setFitHeight(450);
 		VBox splashLayout = new VBox();
 		splashLayout.getChildren().add(splashImage);
 		Scene splashScene = new Scene(splashLayout, 700, 450);
@@ -127,6 +127,7 @@ public class Main extends Application {
 	private void loadEverything() throws Exception {
 		long startTime = System.currentTimeMillis();
 		Managers.getDefaultPersistence().loadAllFiles();
+		Managers.writeBuffer();
 		loadFXMLFiles(); //this is done 2nd so initialize methods can access user data
 		prepareMainScreen();
 		

@@ -73,7 +73,7 @@ public class XMLRecipeParser extends XMLParser {
 				Element recipeElement = (Element) ingredientNode;
 				int ingredientId = Integer.parseInt(recipeElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
 				int quantity = Integer.parseInt(recipeElement.getElementsByTagName("quantity").item(0).getTextContent());
-				Ingredient ingredient = Managers.getIngredientManager().getIngredient(ingredientId);
+				Ingredient ingredient = Managers.getIngredientManager().getIngredientBuffered(ingredientId);
 				if (ingredient == null) {
 					throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
 				}
@@ -86,7 +86,7 @@ public class XMLRecipeParser extends XMLParser {
 				throw new DuplicateDataException(DataType.RECIPE, name);
 			}
 		}
-		Managers.getRecipeManager().addRecipe(recipeId, name, method, price, ingredients);
+		Managers.getRecipeManager().pushToBuffer(recipeId, name, method, price, ingredients);
 		return recipeId;
 	}
 	

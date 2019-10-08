@@ -1,22 +1,21 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.model.DataType;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class XMLMenuParserTest {
 
@@ -32,6 +31,7 @@ public class XMLMenuParserTest {
 	public void setUp() throws Exception {
 		persistence = new XMLPersistence();
 		persistence.importFile(new File("resources/data/TestMenu1.xml"), DataType.MENU);
+		Managers.writeBuffer();
 	}
 
 	@Test
@@ -67,6 +67,7 @@ public class XMLMenuParserTest {
 	@Test
 	public void testImportMultipleMenus() {
 		persistence.importFile(new File("resources/data/TestMenu2.xml"), DataType.MENU);
+		Managers.writeBuffer();
 		assertTrue("Menu with ID 1 should exist", Managers.getMenuManager().getMenu(1) != null);
 		assertTrue("Menu with ID 2 should exist", Managers.getMenuManager().getMenu(2) != null);
 	}

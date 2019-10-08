@@ -261,5 +261,13 @@ public class IngredientManager {
 	public void dropBuffer() {
 		this.buffer.clear();
 	}
+
+	public Ingredient getIngredientBuffered(int id) {
+		Ingredient ingredient = this.buffer.get(id);
+		if (ingredient == null) {
+			ingredient = this.ingredients.get(id);
+		}
+		return ingredient;
+	}
 }
 

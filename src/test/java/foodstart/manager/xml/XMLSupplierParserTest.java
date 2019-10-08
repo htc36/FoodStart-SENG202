@@ -1,24 +1,21 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.DataType;
 import foodstart.model.PhoneType;
-import foodstart.model.stock.Ingredient;
 import foodstart.model.stock.Supplier;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class XMLSupplierParserTest {
     
@@ -51,6 +48,7 @@ public class XMLSupplierParserTest {
     public void importNormalDataTest() {
         dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataNormal.xml");
         persistence.importFile(dataFile, DataType.SUPPLIER);
+        Managers.writeBuffer();
         expectedSuppliers = buildNormalSupplierMap();
         assertTrue("Check suppliers loaded", actualSuppliers.size() == 4);
         for (Integer id: expectedSuppliers.keySet()) {
@@ -64,6 +62,7 @@ public class XMLSupplierParserTest {
         dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataWrongFormat.xml");
         try {
             persistence.importFile(dataFile, DataType.SUPPLIER);
+            Managers.writeBuffer();
             fail("Bad file format; should have thrown an ImportFailureException");
         } catch (ImportFailureException e){;
         } 
@@ -73,6 +72,7 @@ public class XMLSupplierParserTest {
     public void importNoSuppliersDataTest() {
         dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataNoSuppliers.xml");
         persistence.importFile(dataFile, DataType.SUPPLIER);
+        Managers.writeBuffer();
         assertEquals("SupplierManager should have no suppliers", 0, actualSuppliers.size());
     }
     
@@ -81,6 +81,7 @@ public class XMLSupplierParserTest {
         dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataEmptySuppliers.xml");
         try {
             persistence.importFile(dataFile, DataType.SUPPLIER);
+            Managers.writeBuffer();
             assertTrue("Check suppliers loaded", actualSuppliers.size() == 6);
             expectedSuppliers = buildEmptySupplierMap();
             for (Integer id: actualSuppliers.keySet()) {
@@ -98,6 +99,7 @@ public class XMLSupplierParserTest {
         dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataNonIntegers.xml");
         try {
             persistence.importFile(dataFile, DataType.SUPPLIER);
+            Managers.writeBuffer();
             assertTrue("Import should have cancelled, SupplierManager should have no suppliers", actualSuppliers.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();
