@@ -6,6 +6,7 @@ import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
 import foodstart.ui.Main;
+import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -27,7 +28,7 @@ import java.io.IOException;
 /**
  * Controls ui for all menus screen
  */
-public class AllMenusController {
+public class AllMenusController implements Refreshable {
 	/**
 	 * Flow pane for menu display
 	 */
@@ -76,7 +77,7 @@ public class AllMenusController {
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setScene(addScene);
 
-		populateAllMenus();
+		refreshTable();
 
 	}
 
@@ -84,7 +85,7 @@ public class AllMenusController {
 	 * Populate the FlowPane with all menu items
 	 *
 	 */
-	public void populateAllMenus() {
+	public void refreshTable() {
 		flowPane.getChildren().clear();
         for (Menu menu : Managers.getMenuManager().getMenuSet()) {
 			flowPane.getChildren().add(createMenuBox(menu));
@@ -143,8 +144,11 @@ public class AllMenusController {
 	}
 
 	public void onAdd() {
+		refreshTable();
 		addPopup.showAndWait();
 	}
+
+
 
 
 

@@ -32,12 +32,12 @@ public class ViewMenuController {
      * Text field for menu name
      */
     @FXML
-    private Text menuNameText;
+    private TextField menuNameTextField;
     /**
      * Text area for menu description
      */
     @FXML
-    private Text menuDescriptionText;
+    private TextArea MenuDescriptionTextArea;
     /**
      * Table column for menu item IDs
      */
@@ -144,8 +144,8 @@ public class ViewMenuController {
      * @param menu the menu to give the view menu popup
      */
     public void setMenuInfo(Menu menu) {
-        menuNameText.setText(menu.getTitle());
-        menuDescriptionText.setText(menu.getDescription());
+        menuNameTextField.setText(menu.getTitle());
+    	MenuDescriptionTextArea.setText(menu.getDescription());
         menuId = menu.getId();
         setCurrentMenuItems(menu);
         setAvailableMenuItems(menu);
@@ -351,6 +351,21 @@ public class ViewMenuController {
             }
             alert.showAndWait();
         }
+    }
+    
+    /**
+     * Called when the delete menu button is pressed
+     * Will delete this menu from the set of available menus
+     */
+    public void onDeleteMenu() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to remove this menu?", ButtonType.YES, ButtonType.NO);
+		Optional<ButtonType> selection = alert.showAndWait();
+		if (selection.isPresent() && selection.get() == ButtonType.YES) {
+			System.out.println(Managers.getMenuManager().getMenuSet().contains(Managers.getMenuManager().getMenu(1)));
+			Managers.getMenuManager().removeMenu(1);
+			System.out.println(Managers.getMenuManager().getMenuSet().contains(Managers.getMenuManager().getMenu(1)));
+			onCancel();
+		}
     }
 
     /**
