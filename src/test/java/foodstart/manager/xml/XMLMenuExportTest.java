@@ -1,23 +1,25 @@
 package foodstart.manager.xml;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import foodstart.manager.menu.MenuManager;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
 
 public class XMLMenuExportTest {
 	
@@ -38,9 +40,9 @@ public class XMLMenuExportTest {
 		HashMap<Ingredient, Integer> pickleMap = new HashMap<Ingredient, Integer>();
 		pickleMap.put(pickle, 2);
 		PermanentRecipe recipe = new PermanentRecipe(5678, "Pickled Pickle", "Pickle the pickle", 1.5f, pickleMap);
-		Set<PermanentRecipe> recipeList = new HashSet<PermanentRecipe>();
+		ArrayList<PermanentRecipe> recipeList = new ArrayList<PermanentRecipe>();
 		recipeList.add(recipe);
-		MenuItem menuItem = new MenuItem(9012, "A Pickled pickle", "TestDescription", recipeList, null);
+		MenuItem menuItem = new MenuItem(9012, "A Pickled pickle", "TestDescription", recipeList);
 		HashSet<MenuItem> items = new HashSet<MenuItem>();
 		items.add(menuItem);
 		

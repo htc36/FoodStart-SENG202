@@ -38,8 +38,8 @@ public class MenuItemManager {
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
 	 */
-	public void addMenuItem(int id, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
-		MenuItem menuItem = new MenuItem(id, name, description, variants, defaultVariant);
+	public void addMenuItem(int id, String name, String description, List<PermanentRecipe> variants) {
+		MenuItem menuItem = new MenuItem(id, name, description, variants);
 		this.menuItems.put(id, menuItem);
 	}
 
@@ -96,7 +96,11 @@ public class MenuItemManager {
 	 */
 	public float getApproxPrice(int id) {
 		MenuItem item = this.menuItems.get(id);
-		return item.getDefault().getPrice();
+		float sum = 0;
+		for (PermanentRecipe recipe : item.getVariants()) {
+			sum += recipe.getPrice();
+		}
+		return sum / item.getVariants().size();
 	}
 
 	/**
@@ -115,8 +119,7 @@ public class MenuItemManager {
 	public int generateNewId() {
 		return menuItems.keySet().size() == 0 ? 0 : Collections.max(menuItems.keySet()) + 1;
 	}
-
-	public void mutateMenuItem(int id, String name, String description, Set<PermanentRecipe> recipes) {
+	public void mutateMenuItem(int id, String name, String description, List<PermanentRecipe> recipes) {
 		MenuItem menuItem2 = this.menuItems.get(id);
 		if (menuItem2 != null) {
 			menuItem2.setName(name);
@@ -133,8 +136,8 @@ public class MenuItemManager {
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
 	 */
-	public void pushToBuffer(int id, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
-		MenuItem menuItem = new MenuItem(id, name, description, variants, defaultVariant);
+	public void pushToBuffer(int id, String name, String description, List<PermanentRecipe> variants) {
+		MenuItem menuItem = new MenuItem(id, name, description, variants);
 		this.buffer.put(id, menuItem);
 	}
 

@@ -94,53 +94,28 @@ public class PermanentRecipe extends Recipe {
 
     @Override
     public boolean equals(Object obj) {
-		System.out.println(0);
-		if (this == obj) {
-			System.out.println(5);
-			return true;
-		}
-		if (!super.equals(obj)) {
-			System.out.println(7);
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			System.out.println(getClass());
-			System.out.println(obj.getClass());
-
-			System.out.println(5);
-			return false;
-		}
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         PermanentRecipe other = (PermanentRecipe) obj;
-		System.out.println(1);
         if (displayName == null) {
-			if (other.displayName != null) {
-				return false;
-			}
-		} else if (!displayName.equals(other.displayName)) {
-			return false;
-		}
-		System.out.println(2);
-		if (id != other.id) {
-			return false;
-		}
-		System.out.println(3);
-		if (instructions == null) {
-			if (other.instructions != null) {
-				return false;
-			}
-		} else if (!instructions.equals(other.instructions)) {
-			return false;
-		}
+            if (other.displayName != null)
+                return false;
+        } else if (!displayName.equals(other.displayName))
+            return false;
+        if (id != other.id)
+            return false;
+        if (instructions == null) {
+            if (other.instructions != null)
+                return false;
+        } else if (!instructions.equals(other.instructions))
+            return false;
         return true;
     }
 
-	@Override
-	public int hashCode() {
-		return ((Integer) this.id).hashCode() + ((Float) this.price).hashCode() +
-				((this.displayName == null) ? 0 : this.displayName.hashCode()) +
-				((this.instructions == null) ? 0 : this.instructions.hashCode()) +
-				((super.ingredients == null) ? 0 : this.ingredients.hashCode());
-	}
 	
 	
 }

@@ -7,7 +7,6 @@
 		<description>Test description</description>
 		<items>
 			<item>
-                <default_id>0</default_id>
 				<item_id>0</item_id>
 				<name>Boring Burger</name>
 				<item_description>Test burger</item_description>
@@ -24,7 +23,6 @@
 		<description>Test description</description>
 		<items>
 			<item>
-                <default_id>0</default_id>
 				<item_id>0</item_id>
 				<name>Boring Burger</name>
 				<item_description>Test burger</item_description>

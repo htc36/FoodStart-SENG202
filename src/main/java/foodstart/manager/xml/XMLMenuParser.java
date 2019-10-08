@@ -14,7 +14,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,16 +77,14 @@ public class XMLMenuParser extends XMLParser {
 	 * @return the id of the menu item
 	 */
 	private int parseOneMenuItem(Element element) {
-		int defaultVariantId = Integer.parseInt(element.getElementsByTagName("default_id").item(0).getTextContent());
 		int itemId = Integer.parseInt(element.getElementsByTagName("item_id").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
 
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
-		Set<PermanentRecipe> recipes = parseRecipeList(recipeIds);
-		PermanentRecipe defaultVariant = Managers.getRecipeManager().getRecipeBuffer(defaultVariantId);
+		List<PermanentRecipe> recipes = parseRecipeList(recipeIds);
 
-		Managers.getMenuItemManager().pushToBuffer(itemId, name, description, recipes, defaultVariant);
+		Managers.getMenuItemManager().pushToBuffer(itemId, name, description, recipes);
 		return itemId;
 	}
 
@@ -95,8 +95,8 @@ public class XMLMenuParser extends XMLParser {
      * @return Set of recipes
 	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
 	 */
-	private Set<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
-		Set<PermanentRecipe> recipeList = new HashSet<PermanentRecipe>();
+	private List<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
+		List<PermanentRecipe> recipeList = new ArrayList<PermanentRecipe>();
 		for (int i = 0; i < recipeIds.getLength(); i++) {
 			Node node = recipeIds.item(i);
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {

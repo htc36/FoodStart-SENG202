@@ -15,12 +15,12 @@ public abstract class Recipe {
 	/**
 	 * The price of that the item costs
 	 */
-	protected float price;
+	private float price;
 
 	/**
 	 * A map of all ingredients/amounts that are part of the recipe
 	 */
-	protected Map<Ingredient, Integer> ingredients;
+	private Map<Ingredient, Integer> ingredients;
 
 	/**
 	 * Constructs an instance of the recipe class

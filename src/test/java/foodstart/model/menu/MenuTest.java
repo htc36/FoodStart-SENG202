@@ -1,27 +1,31 @@
 package foodstart.model.menu;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
 
 public class MenuTest {
 
 	private Menu testMenu, nullMenu;
 	private Set<MenuItem> menuItems, dummyItems;
 	private MenuItem testitem;
-	private Set<PermanentRecipe> recipes;
+	private List<PermanentRecipe> recipes;
 
     @Before
     public void setUp() throws Exception {
     	menuItems = new HashSet<MenuItem>();
     	dummyItems = new HashSet<MenuItem>();
-		recipes = new HashSet<PermanentRecipe>();
-		testitem = new MenuItem(0, "TestItem", "MenuItem test item", recipes, null);
+    	recipes = new ArrayList<PermanentRecipe>();
+        testitem = new MenuItem(0, "TestItem", "MenuItem test item", recipes);
     	testMenu = new Menu(menuItems, 0, "Summer Menu", "Base menu for the summer months");
     	nullMenu = new Menu(null, 0, null, null);
     }

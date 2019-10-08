@@ -6,10 +6,9 @@
 <!ELEMENT title (#PCDATA)>
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT items (item*)>
-        <!ELEMENT item (default_id, item_id, name, item_description, recipes)>
+<!ELEMENT item (item_id, name, item_description, recipes)>
 <!ELEMENT recipes (recipe_id*)>
 <!-- If is_prepared is true, recipe_id should be defined-->
-        <!ELEMENT default_id (#PCDATA)>
 <!ELEMENT item_id (#PCDATA)>
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT item_description (#PCDATA)>

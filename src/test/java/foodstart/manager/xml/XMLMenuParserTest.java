@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -56,11 +56,12 @@ public class XMLMenuParserTest {
 		assertEquals("Should have an item with ID 0", 0, item.getId());
 		assertEquals("Should have an item with name 'Boring Burger'", "Boring Burger", item.getName());
 		assertEquals("Should have an item with description 'Test burger'", "Test burger", item.getDescription());
-
-		Set<PermanentRecipe> variants = item.getVariants();
+		
+		List<PermanentRecipe> variants = item.getVariants();
 		assertEquals("Item should have 2 recipes", 2, variants.size());
-		assertTrue("Item should have a recipe with ID 1000", variants.stream().anyMatch(variant -> variant.getId() == 1000));
-		assertTrue("Item should have a recipe with ID 1001", variants.stream().anyMatch(variant -> variant.getId() == 1000));
+		assertTrue("Item should have a recipe with ID 1000", variants.get(0).getId() == 1000 || variants.get(1).getId() == 1000);
+		assertTrue("Item should have a recipe with ID 1001", variants.get(0).getId() == 1001 || variants.get(1).getId() == 1001);
+		assertTrue("Items should be in the same order as in XML", variants.get(0).getId() == 1000 && variants.get(1).getId() == 1001);
 	}
 	
 	@Test
