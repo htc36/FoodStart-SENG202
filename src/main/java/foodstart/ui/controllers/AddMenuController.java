@@ -227,7 +227,6 @@ public class AddMenuController {
         } else {
             closeSelf();
         }
-
     }
 
     /**
