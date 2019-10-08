@@ -210,6 +210,10 @@ public class OrderManager {
 			return null;
 		}
 	}
+	
+	public void removeAllOrders() {
+	    orders.clear();
+	}
 
 	/**
 	 * Pushes a new order to the buffer

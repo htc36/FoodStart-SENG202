@@ -2,6 +2,8 @@ package foodstart.model.order;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import foodstart.manager.Managers;
 import foodstart.manager.exceptions.InsufficientStockException;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.PaymentMethod;
@@ -153,11 +156,34 @@ public class OrderBuilderTest {
         testBuilder.removeItem(prUnavailable);
         assertFalse(testBuilder.getCurrentOrder().containsKey(prUnavailable));
     }
-    
-    public void testBuildNormal() {
-        assertEquals("Checking setup is correct:", 2, testBuilder.currentOrder.size());
+    /*
+     * leaving this until I figure out how do to implement this
+    @Test
+    public void testDeductStock() {
         
         
     }
-
+    
+    @Test
+    public void testCalculateRequiredStock() {
+        testBuilder.addItem(prAvailable, MAX_USES - 1);
+        Managers.getIngredientManager()
+    }
+    
+    @Test
+    public void testBuildNormal() {
+        String name = "Jom";
+        int id = Managers.getOrderManager().getOrders().keySet().size() == 0 ? 0
+                : Collections.max(Managers.getOrderManager().getOrders().keySet()) + 1;
+        while (Managers.getOrderManager().getOrder(id) != null) {
+            id++;
+        }
+        LocalDateTime current = LocalDateTime.now();
+        normalOrder = new Order(id, normOrderItems, name, current, PaymentMethod.CASH);
+        testBuilder.addItem(prAvailable, MAX_USES - 1);
+        testBuilder.build(name, PaymentMethod.CASH);
+        Managers.getOrderManager().getOrder(id).setTimePlaced(current);
+        assertEquals("Check order has been built: ", normalOrder, Managers.getOrderManager().getOrder(id));
+    }
+    */
 }
