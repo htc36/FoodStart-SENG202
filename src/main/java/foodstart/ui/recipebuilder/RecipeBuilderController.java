@@ -1,8 +1,5 @@
 package foodstart.ui.recipebuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.OnTheFlyRecipe;
@@ -15,18 +12,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for RecipeBuilder
@@ -245,11 +237,11 @@ public class RecipeBuilderController implements Refreshable {
 		for (PermanentRecipe recipe : menuItem.getVariants()) {
 			variantsDropdown.getItems().add(recipe.getDisplayName());
 		}
-		variantsDropdown.setValue(menuItem.getVariants().get(0).getDisplayName());
+		variantsDropdown.setValue(menuItem.getDefault().getDisplayName());
 
 		quantity = 1;
 
-		setVariant(menuItem.getVariants().get(0));
+		setVariant(menuItem.getDefault());
 	}
 
 	/**

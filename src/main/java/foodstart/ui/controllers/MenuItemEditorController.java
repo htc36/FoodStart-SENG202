@@ -5,8 +5,6 @@ import foodstart.manager.menu.MenuItemManager;
 import foodstart.manager.menu.RecipeManager;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
-import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,14 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Controls UI for recipe editor
@@ -201,7 +199,7 @@ public class MenuItemEditorController implements Refreshable {
 			alert.showAndWait();
 		} else{
 			MenuItemManager manager = Managers.getMenuItemManager();
-			List<PermanentRecipe> recipesList = new ArrayList<>();
+			Set<PermanentRecipe> recipesList = new HashSet<PermanentRecipe>();
 			recipesList.addAll(recipesSet);
 			if (manager.getMenuItems().containsKey(id)) {
 				manager.mutateMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);

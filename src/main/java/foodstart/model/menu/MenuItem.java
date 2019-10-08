@@ -1,7 +1,7 @@
 package foodstart.model.menu;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -23,10 +23,11 @@ public class MenuItem {
 	 */
 	private String description;
 
+	private PermanentRecipe defaultVariant;
 	/**
 	 * A set containing all the recipe variants of a menu item
 	 */
-	private List<PermanentRecipe> variants;
+	private Set<PermanentRecipe> variants;
 
 	/**
 	 * Constructs an instance of a menu item
@@ -36,11 +37,13 @@ public class MenuItem {
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
 	 */
-	public MenuItem(int databaseId, String name, String description, List<PermanentRecipe> variants) {
+	public MenuItem(int databaseId, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
 		this.id = databaseId;
 		this.name = name;
 		this.description = description;
 		this.variants = variants;
+		this.defaultVariant = defaultVariant;
+		this.variants.add(defaultVariant);
 	}
 
 	/**
@@ -99,7 +102,7 @@ public class MenuItem {
 	 *
 	 * @return variants
 	 */
-	public List<PermanentRecipe> getVariants() {
+	public Set<PermanentRecipe> getVariants() {
 		return variants;
 	}
 
@@ -120,13 +123,13 @@ public class MenuItem {
 	 * Sets the variants of the menu item
 	 * @param variants the possible variants of the menu item
 	 */
-	public void setVariants(List<PermanentRecipe> variants) {
+	public void setVariants(Set<PermanentRecipe> variants) {
 		this.variants = variants;
 	}
 	
     public MenuItem clone() {
-        List<PermanentRecipe> variantsCopy = new LinkedList<PermanentRecipe>(variants);
-        return new MenuItem(id, name, description, variantsCopy);
+		Set<PermanentRecipe> variantsCopy = new HashSet<>(variants);
+		return new MenuItem(id, name, description, variantsCopy, defaultVariant);
     }
 
     @Override
@@ -165,6 +168,10 @@ public class MenuItem {
 	 */
 	public void remove(PermanentRecipe removed) {
 		this.variants.remove(removed);
+	}
+
+	public PermanentRecipe getDefault() {
+		return this.defaultVariant;
 	}
 }
 
