@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sales SYSTEM "../../dtd/sales.dtd" >
+<sales>
+	<sale>
+		<id>0</id>
+		<name>Alex</name>
+		<date>
+			<year>2019</year>
+			<month>10</month>
+			<day>19</day>
+		</date>
+		<cost>5.90</cost>
+		<recipes>
+			<recipe>
+				<recipe_id>0</recipe_id>
+				<price>3.50</price>
+			</recipe>
+			<recipe>
+                <recipe_id>1</recipe_id>
+                <price>2.40</price>
+            </recipe>
+		</recipes>
+	</sale>
+	<sale>
+        <id>1</id>
+        <name>Jim</name>
+        <date>
+            <year>2019</year>
+            <month>10</month>
+            <day>19</day>
+        </date>
+        <cost>8.40</cost>
+        <recipes>
+            <recipe>
+                <recipe_id>2</recipe_id>
+                <price>6.00</price>
+            </recipe>
+            <recipe>
+                <recipe_id>1</recipe_id>
+                <price>2.40</price>
+            </recipe>
+        </recipes>
+    </sale>
+</sales>

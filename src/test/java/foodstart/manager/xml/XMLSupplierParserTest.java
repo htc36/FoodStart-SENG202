@@ -23,12 +23,6 @@ public class XMLSupplierParserTest {
     File dataFile;
     HashMap<Integer, Supplier> expectedSuppliers = new HashMap<Integer, Supplier>();
     Map<Integer, Supplier> actualSuppliers;
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        
-        
-    }
     
     @Before
     public void setUp() throws Exception {

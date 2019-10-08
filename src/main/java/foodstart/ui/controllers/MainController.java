@@ -106,7 +106,7 @@ public class MainController {
 	 * Shows the manage menus screen
 	 */
 	public void showManageAllMenus() {
-		rootPane.setCenter(manageAllMenus.getRoot());
+		changeView(manageAllMenus);
 	}
 
 	/**

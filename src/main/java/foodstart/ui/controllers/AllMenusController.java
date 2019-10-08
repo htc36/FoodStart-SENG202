@@ -6,6 +6,7 @@ import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
 import foodstart.ui.Main;
+import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -27,7 +28,7 @@ import java.io.IOException;
 /**
  * Controls ui for all menus screen
  */
-public class AllMenusController {
+public class AllMenusController implements Refreshable {
 	/**
 	 * Flow pane for menu display
 	 */
@@ -59,32 +60,18 @@ public class AllMenusController {
 
 	/**
 	 * Initialises the AllMenusController
+	 *
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
-		try {
-			addLoader.load();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		addPopup = new Stage();
-		addPopup.initModality(Modality.WINDOW_MODAL);
-		addPopup.setTitle("Add New Menu");
-		Scene addScene = new Scene(addLoader.getRoot());
-		addPopup.setScene(addScene);
-
-		populateAllMenus();
-
+		refreshTable();
 	}
 
 	/**
 	 * Populate the FlowPane with all menu items
 	 *
 	 */
-	public void populateAllMenus() {
+	public void refreshTable() {
 		flowPane.getChildren().clear();
         for (Menu menu : Managers.getMenuManager().getMenuSet()) {
 			flowPane.getChildren().add(createMenuBox(menu));
@@ -128,6 +115,8 @@ public class AllMenusController {
 			popupStage.setTitle("View Menu");
 			popupStage.setScene(scene);
 			popupStage.showAndWait();
+			refreshTable();
+		
 		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
@@ -142,9 +131,30 @@ public class AllMenusController {
 		return box;
 	}
 
+	/**
+	 * Calls to set up a add menu pop up which enables the user to build a new menu with
+	 * the available menu items
+	 *
+	 */
 	public void onAdd() {
+		refreshTable();
+		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));
+		try {
+			addLoader.load();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		((AddMenuController) addLoader.getController()).setUpMenuInfo();
+		addPopup = new Stage();
+		addPopup.initModality(Modality.WINDOW_MODAL);
+		addPopup.setTitle("Add New Menu");
+		Scene addScene = new Scene(addLoader.getRoot());
+		addPopup.setScene(addScene);
 		addPopup.showAndWait();
 	}
+
+
 
 
 
