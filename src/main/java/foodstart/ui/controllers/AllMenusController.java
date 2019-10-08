@@ -60,6 +60,7 @@ public class AllMenusController implements Refreshable {
 
 	/**
 	 * Initialises the AllMenusController
+	 *
 	 */
 	public void initialize() {
 		boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
@@ -130,6 +131,11 @@ public class AllMenusController implements Refreshable {
 		return box;
 	}
 
+	/**
+	 * Calls to set up a add menu pop up which enables the user to build a new menu with
+	 * the available menu items
+	 *
+	 */
 	public void onAdd() {
 		refreshTable();
 		addLoader = new FXMLLoader(getClass().getResource("addMenu.fxml"));

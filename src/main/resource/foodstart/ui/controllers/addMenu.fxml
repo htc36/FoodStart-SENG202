@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" styleClass="semidark" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.AddMenuController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.AddMenuController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.9999755859375" minWidth="-Infinity" prefWidth="382.73330078125" />
       <ColumnConstraints hgrow="NEVER" maxWidth="368.4000549316406" minWidth="0.0" percentWidth="5.0" prefWidth="49.399993896484375" />
@@ -89,7 +89,7 @@
          <children>
             <AnchorPane GridPane.rowIndex="1">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onCancel" text="Close" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#onCancel" text="Close" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
