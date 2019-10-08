@@ -129,6 +129,8 @@ public class AllMenusController implements Refreshable {
 			popupStage.setTitle("View Menu");
 			popupStage.setScene(scene);
 			popupStage.showAndWait();
+			refreshTable();
+		
 		});
 		FlowPane.setMargin(box, new Insets(5));
 		box.setBorder(new Border(
