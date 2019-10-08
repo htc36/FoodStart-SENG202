@@ -134,6 +134,9 @@ public class Managers {
 		menuItemManager.writeBuffer();
 	}
 
+	/**
+	 * Drops all data from the buffer
+	 */
 	public static void dropBuffer() {
 		ingredientManager.writeBuffer();
 		orderManager.dropBuffer();
