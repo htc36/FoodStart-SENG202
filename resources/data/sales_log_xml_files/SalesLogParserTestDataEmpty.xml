@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sales SYSTEM "sales_log.dtd" >
-<sales></sales>
+<!DOCTYPE sales SYSTEM "../../dtd/sales.dtd" >
+<sales>
+	<sale>
+		<id></id>
+		<name></name>
+		<date>
+			<year></year>
+			<month></month>
+			<day></day>
+		</date>
+		<cost></cost>
+		<recipes>
+			<recipe>
+				<recipe_id></recipe_id>
+				<price></price>
+			</recipe>
+		</recipes>
+	</sale>
+</sales>
