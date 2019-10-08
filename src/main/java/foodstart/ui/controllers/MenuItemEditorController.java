@@ -62,7 +62,8 @@ public class MenuItemEditorController implements Refreshable {
 	@FXML
 	TableColumn<PermanentRecipe, String> ingredientsCol;
 
-
+	@FXML
+	ComboBox<PermanentRecipe> defaultVariantCB;
 	@FXML
 	TextArea descriptionInput;
 
@@ -130,7 +131,7 @@ public class MenuItemEditorController implements Refreshable {
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
 		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
-
+		defaultVariantCB.setItems(observableRecipes);
 	}
 
 	/**
@@ -140,6 +141,7 @@ public class MenuItemEditorController implements Refreshable {
 	public void refreshTable() {
 		this.observableRecipes.setAll(recipesSet);
 	}
+
 	public void clearFields() {
 		title.setText("Add Menu Item");
 		removeButton.setVisible(false);
@@ -149,6 +151,7 @@ public class MenuItemEditorController implements Refreshable {
 		recipesSet.clear();
 		refreshTable();
 	}
+
 	public void setFields(MenuItem menuItem) {
 		title.setText("Edit Menu Item");
 		removeButton.setVisible(true);
@@ -158,7 +161,6 @@ public class MenuItemEditorController implements Refreshable {
 		recipesSet.clear();
 		recipesSet.addAll(menuItem.getVariants());
 		refreshTable();
-
 	}
 
 
@@ -197,14 +199,15 @@ public class MenuItemEditorController implements Refreshable {
 			Alert alert = new Alert(Alert.AlertType.ERROR, "The description field must have an input", ButtonType.OK);
 			alert.setHeaderText("Description field empty");
 			alert.showAndWait();
-		} else{
+		} else {
 			MenuItemManager manager = Managers.getMenuItemManager();
 			Set<PermanentRecipe> recipesList = new HashSet<PermanentRecipe>();
 			recipesList.addAll(recipesSet);
+			PermanentRecipe defaultVariant = defaultVariantCB.getValue();
 			if (manager.getMenuItems().containsKey(id)) {
 				manager.mutateMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);
 			}else {
-				manager.addMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);
+				manager.addMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList, defaultVariant);
 			}
 			closeSelf();
 		}

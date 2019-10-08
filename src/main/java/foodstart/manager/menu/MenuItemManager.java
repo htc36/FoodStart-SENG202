@@ -96,11 +96,7 @@ public class MenuItemManager {
 	 */
 	public float getApproxPrice(int id) {
 		MenuItem item = this.menuItems.get(id);
-		float sum = 0;
-		for (PermanentRecipe recipe : item.getVariants()) {
-			sum += recipe.getPrice();
-		}
-		return sum / item.getVariants().size();
+		return item.getDefault().getPrice();
 	}
 
 	/**

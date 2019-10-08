@@ -14,16 +14,16 @@
         <phone type="home"/>
     </supplier>
     <supplier>
-        <sid>3</sid>
+        <sid>5</sid>
         <name/>
         <address/>
         <phone type="home"/>
     </supplier>
     <supplier>
-        <sid>1</sid>
+        <sid>3</sid>
         <name/>
         <address/>
-        <phone type="work"/>
+        <phone type="home"/>
     </supplier>
     <supplier>
         <sid>2</sid>
@@ -32,9 +32,9 @@
         <phone type="mobile"/>
     </supplier>
     <supplier>
-        <sid>5</sid>
+        <sid>1</sid>
         <name/>
         <address/>
-        <phone type="home"/>
+        <phone type="work"/>
     </supplier>
 </suppliers>

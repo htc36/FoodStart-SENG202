@@ -43,7 +43,9 @@ public class MenuItem {
 		this.description = description;
 		this.variants = variants;
 		this.defaultVariant = defaultVariant;
-		this.variants.add(defaultVariant);
+		if (defaultVariant != null) {
+			this.variants.add(defaultVariant);
+		}
 	}
 
 	/**
@@ -134,31 +136,60 @@ public class MenuItem {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			System.out.println("0");
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			System.out.println("1");
+			return false;
+		}
         MenuItem other = (MenuItem) obj;
         if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (!description.equals(other.description))
-            return false;
-        if (id != other.id)
-            return false;
+			if (other.description != null) {
+				System.out.println("2");
+				return false;
+			}
+		} else if (!description.equals(other.description)) {
+			System.out.println("3");
+			return false;
+		}
+		if (id != other.id) {
+			System.out.println("4");
+			return false;
+		}
         if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
+			if (other.name != null) {
+				System.out.println("5");
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			System.out.println("6");
+			return false;
+		}
         if (variants == null) {
-            if (other.variants != null)
-                return false;
-        } else if (!variants.equals(other.variants))
-            return false;
+			if (other.variants != null) {
+				System.out.println("7");
+				return false;
+			}
+		} else if (!variants.equals(other.variants)) {
+			System.out.println("8");
+			System.out.println(variants.stream());
+			return false;
+		}
         return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return ((Integer) this.id).hashCode() +
+				((this.name == null) ? 0 : this.name.hashCode()) +
+				((this.description == null) ? 0 : this.description.hashCode()) +
+				((this.variants == null) ? 0 : this.variants.hashCode()) +
+				((this.defaultVariant == null) ? 0 : this.defaultVariant.hashCode());
 	}
 
 	/**
