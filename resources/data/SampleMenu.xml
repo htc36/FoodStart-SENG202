@@ -6,7 +6,6 @@
 	<description>Normal menu when nothing special is on</description>
 	<items>
 		<item>
-            <default_id>0</default_id>
 			<item_id>0</item_id>
 			<name>Boring Burger</name>
 			<item_description>A burger so boring it's just some cheese in a bun</item_description>
