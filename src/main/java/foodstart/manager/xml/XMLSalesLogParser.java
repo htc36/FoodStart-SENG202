@@ -84,12 +84,10 @@ public class XMLSalesLogParser extends XMLParser {
 							throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
 						}
 						ingredients.put(ingredient, ingredientQuantity);
+					} else if (ingredientNode.getNodeName().equalsIgnoreCase("otf_price")) {
+					    Element priceElement = (Element) dataNode;
+	                    price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
 					}
-				}
-
-				if (dataNode.getNodeName().equalsIgnoreCase("otf_price")) {
-					Element priceElement = (Element) dataNode;
-					price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
 				}
 			}
 		}

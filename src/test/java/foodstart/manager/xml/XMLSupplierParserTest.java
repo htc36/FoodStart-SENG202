@@ -23,6 +23,7 @@ public class XMLSupplierParserTest {
     File dataFile;
     HashMap<Integer, Supplier> expectedSuppliers = new HashMap<Integer, Supplier>();
     Map<Integer, Supplier> actualSuppliers;
+    static final String DIRECTORY = "resources/data/supplier_xml_files/";
     
     @Before
     public void setUp() throws Exception {
@@ -40,7 +41,7 @@ public class XMLSupplierParserTest {
 
     @Test
     public void importNormalDataTest() {
-        dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataNormal.xml");
+        dataFile = new File(DIRECTORY + "SupplierParserTestDataNormal.xml");
         persistence.importFile(dataFile, DataType.SUPPLIER);
         Managers.writeBuffer();
         expectedSuppliers = buildNormalSupplierMap();
@@ -53,7 +54,7 @@ public class XMLSupplierParserTest {
     
     @Test
     public void importWrongDataFormatTest() {
-        dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataWrongFormat.xml");
+        dataFile = new File(DIRECTORY + "SupplierParserTestDataWrongFormat.xml");
         try {
             persistence.importFile(dataFile, DataType.SUPPLIER);
             Managers.writeBuffer();
@@ -64,7 +65,7 @@ public class XMLSupplierParserTest {
     
     @Test
     public void importNoSuppliersDataTest() {
-        dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataNoSuppliers.xml");
+        dataFile = new File(DIRECTORY + "SupplierParserTestDataNoSuppliers.xml");
         persistence.importFile(dataFile, DataType.SUPPLIER);
         Managers.writeBuffer();
         assertEquals("SupplierManager should have no suppliers", 0, actualSuppliers.size());
@@ -72,7 +73,7 @@ public class XMLSupplierParserTest {
     
     @Test
     public void importEmptySuppliersDataTest() {
-        dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataEmptySuppliers.xml");
+        dataFile = new File(DIRECTORY + "SupplierParserTestDataEmptySuppliers.xml");
         try {
             persistence.importFile(dataFile, DataType.SUPPLIER);
             Managers.writeBuffer();
@@ -90,7 +91,7 @@ public class XMLSupplierParserTest {
     
     @Test
     public void importNonIntegerDataTest() {
-        dataFile = new File("resources/data/supplier_xml_files/SupplierParserTestDataNonIntegers.xml");
+        dataFile = new File(DIRECTORY + "SupplierParserTestDataNonIntegers.xml");
         try {
             persistence.importFile(dataFile, DataType.SUPPLIER);
             Managers.writeBuffer();
