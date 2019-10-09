@@ -10,6 +10,7 @@ import foodstart.model.order.Order;
 import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
@@ -71,18 +72,38 @@ public class AnalysisController implements Refreshable {
 				return String.valueOf(Math.round(arg0.floatValue() * 100F) / 100F);
 			}
 		});
+		
+		((ValueAxis<Number>) mainchart.getYAxis()).setAutoRanging(true);
+		((ValueAxis<Number>) mainchart.getXAxis()).setAutoRanging(false);
+		((NumberAxis) mainchart.getYAxis()).setForceZeroInRange(true);
+		
+		mainchart.getXAxis().setAnimated(false);
+		mainchart.getYAxis().setAnimated(false);
+		
+		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
+		mainchart.getData().clear();
+		mainchart.getData().add(series);
 	}
 
+	/**
+	 * Display a chart of the given chart type
+	 * @param chartType Type of chart to display
+	 */
 	public void displayChart(ChartType chartType) {
-		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
-
+		XYChart.Series<Number, Number> series = mainchart.getData().get(0);
+		series.getData().clear();
+		
 		int backDays = 365;
+		long backDay = 0;
+		Map<Long, Float> salesSummary = new HashMap<Long, Float>();
 		switch (chartType) {
 		case SALES_DOLLAR_MONTH:
 			backDays = 30;
 		case SALES_DOLLAR_YEAR:
-			long backDay = LocalDate.now().toEpochDay() - backDays;
-			Map<Long, Float> salesSummary = new HashMap<Long, Float>();
+			backDay = LocalDate.now().toEpochDay() - backDays;
+			for (long i = backDay; i < backDay + backDays; i++) {
+				salesSummary.put(i, 0F);
+			}
 			for (Order order : Managers.getOrderManager().getOrderSet()) {
 				long day = order.getTimePlaced().toLocalDate().toEpochDay();
 				if (day >= backDay) {
@@ -97,9 +118,31 @@ public class AnalysisController implements Refreshable {
 				series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
 			}
 			
-			((ValueAxis<Number>) mainchart.getYAxis()).setUpperBound(1);
-			((ValueAxis<Number>) mainchart.getYAxis()).setAutoRanging(true);
-			((ValueAxis<Number>) mainchart.getXAxis()).setAutoRanging(false);
+			((ValueAxis<Number>) mainchart.getXAxis()).setLowerBound(backDay);
+			((ValueAxis<Number>) mainchart.getXAxis()).setUpperBound(backDay + backDays);
+			mainchart.getYAxis().setLabel("Sales dollars");
+			break;
+		case SALES_QTY_MONTH:
+			backDays = 30;
+		case SALES_QTY_YEAR:
+			backDay = LocalDate.now().toEpochDay() - backDays;
+			for (long i = backDay; i < backDay + backDays; i++) {
+				salesSummary.put(i, 0F);
+			}
+			for (Order order : Managers.getOrderManager().getOrderSet()) {
+				long day = order.getTimePlaced().toLocalDate().toEpochDay();
+				if (day >= backDay) {
+					if (salesSummary.containsKey(day)) {
+						salesSummary.put(day, salesSummary.get(day) + 1);
+					} else {
+						salesSummary.put(day, 0F);
+					}
+				}
+			}
+			for (Map.Entry<Long, Float> entry : salesSummary.entrySet()) {
+				series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
+			}
+			
 			((ValueAxis<Number>) mainchart.getXAxis()).setLowerBound(backDay);
 			((ValueAxis<Number>) mainchart.getXAxis()).setUpperBound(backDay + backDays);
 			mainchart.getYAxis().setLabel("Sales dollars");
@@ -107,8 +150,7 @@ public class AnalysisController implements Refreshable {
 		default:
 			break;
 		}
-		mainchart.getData().clear();
-		mainchart.getData().add(series);
+		
 
 		mainchart.setTitle(chartType.getTitle());
 	}
@@ -118,12 +160,32 @@ public class AnalysisController implements Refreshable {
 		displayChart(chartType);
 	}
 
+	/**
+	 * Called when user selects sales dollar per year
+	 */
 	public void salesDollarYr() {
 		displayChart(ChartType.SALES_DOLLAR_YEAR);
 	}
 
+	/**
+	 * Called when user selects sales dollar per month
+	 */
 	public void salesDollarMonth() {
 		displayChart(ChartType.SALES_DOLLAR_MONTH);
+	}
+	
+	/**
+	 * Called when user selects sales qty per month
+	 */
+	public void salesQtyMonth() {
+		displayChart(ChartType.SALES_QTY_MONTH);
+	}
+	
+	/**
+	 * Called when user selects sales qty per year
+	 */
+	public void salesQtyYear() {
+		displayChart(ChartType.SALES_QTY_YEAR);
 	}
 
 	/**
@@ -139,10 +201,18 @@ public class AnalysisController implements Refreshable {
 
 		private final String title;
 
+		/**
+		 * Constructor for ChartType enum
+		 * @param title Title of graph when this is shown
+		 */
 		private ChartType(String title) {
 			this.title = title;
 		}
 
+		/**
+		 * Get the title of the graph of this type
+		 * @return
+		 */
 		public String getTitle() {
 			return this.title;
 		}
