@@ -9,12 +9,21 @@ import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -123,7 +132,21 @@ public class RecipeEditorController implements Refreshable {
 	 */
 	private int id;
 
-	/**
+    /**
+     * FXML loader for the edit recipe popup
+     */
+    private FXMLLoader editLoader;
+    /**
+     * The FXML for the edit recipe popup screen
+     */
+    private Parent editFXML;
+    /**
+     * The stage of the edit recipe popup screen
+     */
+    private Stage editPopup;
+
+
+    /**
 	 * Initialises the RecipeEditorController
 	 */
 	@FXML
@@ -143,6 +166,17 @@ public class RecipeEditorController implements Refreshable {
 		});
 		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) ->
 				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 1)))));
+        try {
+            editLoader = new FXMLLoader(getClass().getResource("editReicpeInstructions.fxml"));
+            editFXML = editLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Screen screen = Screen.getPrimary();
+        editPopup = new Stage();
+        editPopup.initModality(Modality.WINDOW_MODAL);
+        editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() / 4, screen.getVisualBounds().getHeight() / 2));
+
 	}
 
 	/**
@@ -192,6 +226,24 @@ public class RecipeEditorController implements Refreshable {
 		ingredientsCB.getSelectionModel().clearSelection();
 
 		refreshTable();
+	}
+	public void instructionsDoubleClickListener() {
+		instructionsInput.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+					if(mouseEvent.getClickCount() == 2){
+						if (editPopup.getOwner() == null) {
+							editPopup.initOwner(ingredientsTable.getScene().getWindow());
+						}
+						((EditRecipeInstructionsController) editLoader.getController()).setInstructionsText(instructionsInput.getText());
+						editPopup.showAndWait();
+						String newText = ((EditRecipeInstructionsController) editLoader.getController()).getNewText();
+						instructionsInput.setText(newText);
+					}
+				}
+			}
+		});
 	}
 	/**
 	 * Clears fields, used when wanting to add new item

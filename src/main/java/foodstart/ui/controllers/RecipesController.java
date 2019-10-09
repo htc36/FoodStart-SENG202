@@ -193,6 +193,7 @@ public class RecipesController implements Refreshable {
 				editPopup.initOwner(this.recipesTableView.getScene().getWindow());
 			}
 			((RecipeEditorController) editLoader.getController()).setRecipeAndFields(recipe);
+			((RecipeEditorController) editLoader.getController()).instructionsDoubleClickListener();
 			editPopup.showAndWait();
 			refreshTable();
 		}
@@ -205,6 +206,7 @@ public class RecipesController implements Refreshable {
             editPopup.initOwner(this.recipesTableView.getScene().getWindow());
         }
 		((RecipeEditorController) editLoader.getController()).clearFields();
+        ((RecipeEditorController) editLoader.getController()).instructionsDoubleClickListener();
         editPopup.showAndWait();
         refreshTable();
 
