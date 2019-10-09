@@ -37,6 +37,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#showSales" text="Sales Log" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Reports">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showAnalysis" text="Analysis" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
