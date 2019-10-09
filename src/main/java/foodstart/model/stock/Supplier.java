@@ -190,23 +190,16 @@ public class Supplier {
 		this.address = address;
 	}
 	
-    //TODO: figure out hashCode bug with model classes
-
-/*
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((address == null) ? 0 : address.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-        result = prime * result + ((phoneType == null) ? 0 : phoneType.hashCode());
-        result = prime * result + ((supplierName == null) ? 0 : supplierName.hashCode());
-        result = prime * result + ((url == null) ? 0 : url.hashCode());
-        return result;
+	    return ((Integer) id).hashCode() +
+			    ((address == null) ? 0 : address.hashCode()) +
+			    ((email == null) ? 0 : email.hashCode()) +
+			    ((phoneNumber == null) ? 0 : phoneNumber.hashCode()) +
+			    ((phoneType == null) ? 0 : phoneType.hashCode()) +
+			    ((supplierName == null) ? 0 : supplierName.hashCode()) +
+			    ((url == null) ? 0 : url.hashCode());
     }
-    */
 
     @Override
     public boolean equals(Object obj) {

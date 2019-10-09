@@ -178,24 +178,18 @@ public class Ingredient {
 	    Map<DietaryRequirement, Boolean> mapCopy = new HashMap<DietaryRequirement, Boolean>(safeFor);
 		return new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
 	}
-	
-    //TODO: figure out hashCode bug with model classes
 
 	@Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-       result = prime * result + id;
-        result = prime * result + kitchenStock;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((safeFor == null) ? 0 : safeFor.hashCode());
-        result = prime * result + truckStock;
-        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
-        return result;
+		return ((Integer) id).hashCode() +
+				((name == null) ? 0 : name.hashCode()) +
+				((safeFor == null) ? 0 : safeFor.hashCode()) +
+				((unit == null) ? 0 : unit.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
+	    System.out.println("1");
         if (this == obj)
             return true;
         if (obj == null)
@@ -203,7 +197,8 @@ public class Ingredient {
         if (getClass() != obj.getClass())
             return false;
         Ingredient other = (Ingredient) obj;
-        if (id != other.id)
+	    System.out.println("2");
+	    if (id != other.id)
             return false;
         if (kitchenStock != other.kitchenStock)
             return false;

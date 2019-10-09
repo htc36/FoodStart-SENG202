@@ -132,18 +132,6 @@ public abstract class Recipe {
 	 */
 	public abstract int getId();
 
-    //TODO: figure out hashCode bug with model classes
-	/*
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((ingredients == null) ? 0 : ingredients.hashCode());
-        result = prime * result + Float.floatToIntBits(price);
-        return result;
-    }
-    */
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

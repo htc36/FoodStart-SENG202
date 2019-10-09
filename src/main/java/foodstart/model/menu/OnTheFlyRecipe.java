@@ -72,17 +72,12 @@ public class OnTheFlyRecipe extends Recipe {
         Map<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>(getIngredients());
         return new OnTheFlyRecipe(basedOn.clone(), newIngredients, getPrice());
     }
-    //TODO: figure out hashCode bug with model classes
 
-	/*
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((basedOn == null) ? 0 : basedOn.hashCode());
-        return result;
+	    return ((this.basedOn == null) ? 0 : this.basedOn.hashCode()) +
+			    ((Float) this.price).hashCode();
     }
-    */
 
     @Override
     public boolean equals(Object obj) {

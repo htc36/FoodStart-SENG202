@@ -1,19 +1,5 @@
 package foodstart.model.order;
 
-import static org.junit.Assert.*;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.InsufficientStockException;
 import foodstart.model.DietaryRequirement;
@@ -24,6 +10,14 @@ import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.time.LocalDateTime;
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 public class OrderBuilderTest {
     
@@ -223,6 +217,8 @@ public class OrderBuilderTest {
         testBuilder.addItem(prMaxAvailable, countPRMax);
         testBuilder.addItem(prSomeAvailable, countPRSome);
         int expectedCheese = (countPRMax + countPRSome) * QTY_USED, expectedPotato = countPRSome * QTY_USED;
+        //System.out.println(testBuilder.calculateRequiredStock(ingrFull));
+        //System.out.println(testBuilder.currentOrder);
         assertEquals(expectedCheese, testBuilder.calculateRequiredStock(ingrFull));
         assertEquals(expectedPotato, testBuilder.calculateRequiredStock(ingrSome));
     }
@@ -235,6 +231,8 @@ public class OrderBuilderTest {
         testBuilder.addItem(prSomeAvailable, countPRSome);
         testBuilder.setEditing(prMaxAvailable, true);
         int expectedCheese = countPRSome * QTY_USED, expectedPotato = countPRSome * QTY_USED;
+        //System.out.println(testBuilder.currentOrder);
+        //System.out.println(testBuilder.calculateRequiredStock(ingrFull));
         assertEquals(expectedCheese, testBuilder.calculateRequiredStock(ingrFull));
         assertEquals(expectedPotato, testBuilder.calculateRequiredStock(ingrSome));
     }

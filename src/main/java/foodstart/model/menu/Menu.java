@@ -1,8 +1,6 @@
 package foodstart.model.menu;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 
@@ -145,19 +143,12 @@ public class Menu {
         return new Menu(itemsCopy, id, title, description);
     }
 
-    //TODO: figure out hashCode bug with model classes
-    /*
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((menuItems == null) ? 0 : menuItems.hashCode());
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        return result;
+	    return ((Integer) id).hashCode() +
+			    ((description == null) ? 0 : description.hashCode()) +
+			    ((title == null) ? 0 : title.hashCode());
     }
-    */
 
     @Override
     public boolean equals(Object obj) {
