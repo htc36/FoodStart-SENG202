@@ -236,7 +236,7 @@ public class ViewMenuController {
             return row;
         });
 
-        menuTable.setItems(FXCollections.observableArrayList(observableCurrentItems));
+        menuTable.setItems(observableCurrentItems);
     }
 
     /**
@@ -396,11 +396,6 @@ public class ViewMenuController {
     private void refreshTables() {
         populateCurrentMenuTable();
         populateAllMenuItemsTable();
-    }
-
-    public void onChanged() {
-    	System.out.println("temp");
-    
     }
     
 }
