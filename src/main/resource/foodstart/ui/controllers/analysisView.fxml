@@ -32,9 +32,8 @@
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#salesDollarYr" text="Sales dollars (last 1 year)" />
                               <MenuItem mnemonicParsing="false" onAction="#salesDollarMonth" text="Sales dollars (last 30 days)" />
-                              <MenuItem mnemonicParsing="false" text="Sales quantity (last 30 days)" />
-                              <MenuItem mnemonicParsing="false" text="Sales quantity (last 1 year)" />
-                              <MenuItem mnemonicParsing="false" text="Sales quantity (average last 7 days, hourly)" />
+                              <MenuItem mnemonicParsing="false" onAction="#salesQtyMonth" text="Sales quantity (last 30 days)" />
+                              <MenuItem mnemonicParsing="false" onAction="#salesQtyYear" text="Sales quantity (last 1 year)" />
                            </items>
                         </MenuButton>
                      </children>

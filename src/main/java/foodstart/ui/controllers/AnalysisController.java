@@ -90,12 +90,16 @@ public class AnalysisController implements Refreshable {
 		series.getData().clear();
 		
 		int backDays = 365;
+		long backDay = 0;
+		Map<Long, Float> salesSummary = new HashMap<Long, Float>();
 		switch (chartType) {
 		case SALES_DOLLAR_MONTH:
 			backDays = 30;
 		case SALES_DOLLAR_YEAR:
-			long backDay = LocalDate.now().toEpochDay() - backDays;
-			Map<Long, Float> salesSummary = new HashMap<Long, Float>();
+			backDay = LocalDate.now().toEpochDay() - backDays;
+			for (long i = backDay; i < backDay + backDays; i++) {
+				salesSummary.put(i, 0F);
+			}
 			for (Order order : Managers.getOrderManager().getOrderSet()) {
 				long day = order.getTimePlaced().toLocalDate().toEpochDay();
 				if (day >= backDay) {
@@ -103,6 +107,31 @@ public class AnalysisController implements Refreshable {
 						salesSummary.put(day, salesSummary.get(day) + order.getTotalCost());
 					} else {
 						salesSummary.put(day, order.getTotalCost());
+					}
+				}
+			}
+			for (Map.Entry<Long, Float> entry : salesSummary.entrySet()) {
+				series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
+			}
+			
+			((ValueAxis<Number>) mainchart.getXAxis()).setLowerBound(backDay);
+			((ValueAxis<Number>) mainchart.getXAxis()).setUpperBound(backDay + backDays);
+			mainchart.getYAxis().setLabel("Sales dollars");
+			break;
+		case SALES_QTY_MONTH:
+			backDays = 30;
+		case SALES_QTY_YEAR:
+			backDay = LocalDate.now().toEpochDay() - backDays;
+			for (long i = backDay; i < backDay + backDays; i++) {
+				salesSummary.put(i, 0F);
+			}
+			for (Order order : Managers.getOrderManager().getOrderSet()) {
+				long day = order.getTimePlaced().toLocalDate().toEpochDay();
+				if (day >= backDay) {
+					if (salesSummary.containsKey(day)) {
+						salesSummary.put(day, salesSummary.get(day) + 1);
+					} else {
+						salesSummary.put(day, 0F);
 					}
 				}
 			}
@@ -133,6 +162,14 @@ public class AnalysisController implements Refreshable {
 
 	public void salesDollarMonth() {
 		displayChart(ChartType.SALES_DOLLAR_MONTH);
+	}
+	
+	public void salesQtyMonth() {
+		displayChart(ChartType.SALES_QTY_MONTH);
+	}
+	
+	public void salesQtyYear() {
+		displayChart(ChartType.SALES_QTY_YEAR);
 	}
 
 	/**
