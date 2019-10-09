@@ -189,6 +189,24 @@ public class Supplier {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+    //TODO: figure out hashCode bug with model classes
+
+/*
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+        result = prime * result + ((phoneType == null) ? 0 : phoneType.hashCode());
+        result = prime * result + ((supplierName == null) ? 0 : supplierName.hashCode());
+        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        return result;
+    }
+    */
 
     @Override
     public boolean equals(Object obj) {
@@ -226,7 +244,8 @@ public class Supplier {
         if (url == null) {
             if (other.url != null)
                 return false;
-        } else return url.equals(other.url);
+        } else if (!url.equals(other.url))
+            return false;
         return true;
     }
     

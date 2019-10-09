@@ -179,12 +179,21 @@ public class Ingredient {
 		return new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
 	}
 	
+    //TODO: figure out hashCode bug with model classes
 
-	/**
-	 * Returns whether the target object's fields are equal to this one's.
-	 * @param target - the Ingredient object being compared with.
-	 * @return True if all fields between the objects are equal; false otherwise.
-	 */
+	@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+       result = prime * result + id;
+        result = prime * result + kitchenStock;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((safeFor == null) ? 0 : safeFor.hashCode());
+        result = prime * result + truckStock;
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        return result;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

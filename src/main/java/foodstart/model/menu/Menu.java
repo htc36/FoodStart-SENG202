@@ -145,6 +145,20 @@ public class Menu {
         return new Menu(itemsCopy, id, title, description);
     }
 
+    //TODO: figure out hashCode bug with model classes
+    /*
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((menuItems == null) ? 0 : menuItems.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+    */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
