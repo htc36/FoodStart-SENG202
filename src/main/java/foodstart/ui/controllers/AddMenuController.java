@@ -251,7 +251,13 @@ public class AddMenuController {
     }
 
     public void onResetMenuItems() {
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to reset both tables?");
+        Optional<ButtonType> selection = alert.showAndWait();
+        if (selection.isPresent() && selection.get() == ButtonType.OK) {
+            currentMenuItems.clear();
+            setUpMenuInfo();
+            changed = false;
+        }
     }
 
     public void onAddToMenus() {
