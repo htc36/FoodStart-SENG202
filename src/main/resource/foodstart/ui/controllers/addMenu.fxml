@@ -41,7 +41,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <TableView fx:id="menuTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="371.0" prefWidth="832.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+      <TableView fx:id="menuItemTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="371.0" prefWidth="832.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <columns>
             <TableColumn fx:id="tableIDColumn" maxWidth="2000.0" minWidth="30.0" prefWidth="-1.0" text="ID" />
             <TableColumn fx:id="tableNameColumn" editable="false" minWidth="60.0" prefWidth="-1.0" sortable="false" text="Name" />

@@ -7,6 +7,7 @@ import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
 import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -155,8 +156,9 @@ public class AllMenusController implements Refreshable {
 	}
 
 
+	public void importMenu() {
+	}
 
-
-
-
+	public void exportMenu() {
+	}
 }

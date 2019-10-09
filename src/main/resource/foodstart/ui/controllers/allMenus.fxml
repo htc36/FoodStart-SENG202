@@ -30,6 +30,8 @@
                      <children>
                         <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="Manage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
                            <items>
+                              <MenuItem fx:id="importButton" mnemonicParsing="false" onAction="#importMenu" text="Import" />
+                              <MenuItem fx:id="exportButton" mnemonicParsing="false" onAction="#exportMenu" text="Export" />
                               <MenuItem fx:id="addButton" mnemonicParsing="false" onAction="#onAdd" text="Add" />
                            </items>
                         </MenuButton>
