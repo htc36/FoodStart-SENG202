@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -129,6 +130,8 @@ public class AddMenuController {
         setAvailableMenuItems();
         observableAvailableItems = FXCollections.observableArrayList(currentAvailableMenuItems);
         populateAllMenuItemsTable();
+        observableCurrentItems = FXCollections.observableArrayList();
+        populateCurrentMenuTable();
     }
 
     /**
@@ -137,7 +140,7 @@ public class AddMenuController {
      * @return whether or not there have been changes
      */
     private boolean hasChanged() {
-        if (observableCurrentItems != null) {
+        if (!observableCurrentItems.isEmpty()) {
             changed = true;
             return true;
         } else {
@@ -156,22 +159,14 @@ public class AddMenuController {
      * Called to populate the current menu's menu items table view with the menu information
      */
     private void populateCurrentMenuTable() {
+        if (currentMenuItems != null) {
+        observableCurrentItems = FXCollections.observableArrayList(currentMenuItems);
+        menuItemTable.setItems(observableCurrentItems);
+
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        menuItemTable.setRowFactory( tv -> {
-            TableRow<MenuItem> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 & (! row.isEmpty())) {
-                    MenuItem menuItem = row.getItem();
-                }
-            });
-            return row;
-        });
-        observableCurrentItems = FXCollections.observableArrayList(currentMenuItems);
-
-        menuItemTable.setItems(FXCollections.observableArrayList(observableCurrentItems));
+        }
     }
 
     /**
@@ -207,8 +202,12 @@ public class AddMenuController {
             alert.setHeaderText("No menu item selected");
             alert.showAndWait();
         } else {
+
+            if (currentMenuItems == null) {
+                currentMenuItems = new HashSet<MenuItem>();
+            }
             changed = true;
-            observableCurrentItems.add(selectedMenuItem);
+            currentMenuItems.add(selectedMenuItem);
             observableAvailableItems.remove(selectedMenuItem);
             refreshTables();
         }
