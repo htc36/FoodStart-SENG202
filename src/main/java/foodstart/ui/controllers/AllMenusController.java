@@ -2,11 +2,15 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
+import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
+import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.FileImporter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -69,7 +73,7 @@ public class AllMenusController implements Refreshable {
 
 	/**
 	 * Populate the FlowPane with all menu items
-	 *
+	 *supplierTable
 	 */
 	public void refreshTable() {
 		flowPane.getChildren().clear();
@@ -155,8 +159,26 @@ public class AllMenusController implements Refreshable {
 	}
 
 
+	public void importMenu() {
+		Stage stage = (Stage) this.flowPane.getScene().getWindow();
+		FileImporter importer = new FileImporter(stage, "Open Menus File", DataType.MENU);
+		importer.execute();
+		refreshTable();
+	}
 
-
-
-
+	public void exportMenu() {
+		Stage stage = (Stage) this.flowPane.getScene().getWindow();
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save Menus File");
+		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
+		File selectedFile = fileChooser.showSaveDialog(stage);
+		if (selectedFile != null) {
+			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
+			try {
+				persist.exportFile(selectedFile, DataType.MENU);
+			} catch (ExportFailureException e) {
+				FXExceptionDisplay.showException(e, false);
+			}
+		}
+	}
 }
