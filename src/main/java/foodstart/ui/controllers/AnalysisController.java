@@ -85,6 +85,10 @@ public class AnalysisController implements Refreshable {
 		mainchart.getData().add(series);
 	}
 
+	/**
+	 * Display a chart of the given chart type
+	 * @param chartType Type of chart to display
+	 */
 	public void displayChart(ChartType chartType) {
 		XYChart.Series<Number, Number> series = mainchart.getData().get(0);
 		series.getData().clear();
@@ -156,18 +160,30 @@ public class AnalysisController implements Refreshable {
 		displayChart(chartType);
 	}
 
+	/**
+	 * Called when user selects sales dollar per year
+	 */
 	public void salesDollarYr() {
 		displayChart(ChartType.SALES_DOLLAR_YEAR);
 	}
 
+	/**
+	 * Called when user selects sales dollar per month
+	 */
 	public void salesDollarMonth() {
 		displayChart(ChartType.SALES_DOLLAR_MONTH);
 	}
 	
+	/**
+	 * Called when user selects sales qty per month
+	 */
 	public void salesQtyMonth() {
 		displayChart(ChartType.SALES_QTY_MONTH);
 	}
 	
+	/**
+	 * Called when user selects sales qty per year
+	 */
 	public void salesQtyYear() {
 		displayChart(ChartType.SALES_QTY_YEAR);
 	}
@@ -185,10 +201,18 @@ public class AnalysisController implements Refreshable {
 
 		private final String title;
 
+		/**
+		 * Constructor for ChartType enum
+		 * @param title Title of graph when this is shown
+		 */
 		private ChartType(String title) {
 			this.title = title;
 		}
 
+		/**
+		 * Get the title of the graph of this type
+		 * @return
+		 */
 		public String getTitle() {
 			return this.title;
 		}
