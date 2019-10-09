@@ -237,7 +237,17 @@ public class AddMenuController {
     }
 
     public void onRemoveMenuItem() {
-
+        MenuItem selectedMenuItem = menuItemTable.getSelectionModel().getSelectedItem();
+        if (selectedMenuItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the current menu table");
+            alert.setHeaderText("No menu item selected");
+            alert.showAndWait();
+        } else {
+            changed = true;
+            currentMenuItems.remove(selectedMenuItem);
+            observableAvailableItems.add(selectedMenuItem);
+            refreshTables();
+        }
     }
 
     public void onResetMenuItems() {
