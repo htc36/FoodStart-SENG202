@@ -1,9 +1,12 @@
 package foodstart.ui.controllers;
 
+import foodstart.analysis.SalesReporter;
 import foodstart.manager.Managers;
 import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -148,6 +151,24 @@ public class MainController {
 	 */
 	public void showAnalysis() {
 		changeView(analysisView);
+	}
+
+	/**
+	 * Writes a sales report
+	 */
+	public void writeSalesReport() {
+		SalesReporter report = new SalesReporter();
+		report.collectData();
+		boolean success = report.writeData();
+		if (success) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully wrote sales report to foodstart directory", ButtonType.OK);
+			alert.setHeaderText("Action successful");
+			alert.showAndWait();
+		} else {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Could not write sales report", ButtonType.OK);
+			alert.setHeaderText("Error writing sales report");
+			alert.showAndWait();
+		}
 	}
 	
 	/**
