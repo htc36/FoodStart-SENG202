@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Controls UI for recipe editor
@@ -161,7 +162,9 @@ public class RecipeEditorController implements Refreshable {
 	 */
 	private void populateCB() {
 		Set<Ingredient> ingredientsSet = Managers.getIngredientManager().getIngredientSet();
-		this.ingredientsCB.setItems(FXCollections.observableArrayList(ingredientsSet));
+		List<Ingredient> sortedIngredients = ingredientsSet.stream().collect(Collectors.toList());
+		Collections.sort(sortedIngredients, Comparator.comparing(Ingredient::getName));
+		this.ingredientsCB.setItems(FXCollections.observableArrayList(sortedIngredients));
 		this.ingredientsCB.setCellFactory(ComboBoxListCell.forListView(new IngredientStringConverter()));
 		this.ingredientsCB.setConverter(new IngredientStringConverter());
 	}
