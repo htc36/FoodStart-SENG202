@@ -237,11 +237,27 @@ public class AddMenuController {
     }
 
     public void onRemoveMenuItem() {
-
+        MenuItem selectedMenuItem = menuItemTable.getSelectionModel().getSelectedItem();
+        if (selectedMenuItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the current menu table");
+            alert.setHeaderText("No menu item selected");
+            alert.showAndWait();
+        } else {
+            changed = true;
+            currentMenuItems.remove(selectedMenuItem);
+            observableAvailableItems.add(selectedMenuItem);
+            refreshTables();
+        }
     }
 
     public void onResetMenuItems() {
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to reset both tables?");
+        Optional<ButtonType> selection = alert.showAndWait();
+        if (selection.isPresent() && selection.get() == ButtonType.OK) {
+            currentMenuItems.clear();
+            setUpMenuInfo();
+            changed = false;
+        }
     }
 
     public void onAddToMenus() {
