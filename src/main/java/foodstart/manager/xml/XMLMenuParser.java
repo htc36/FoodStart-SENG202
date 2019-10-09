@@ -171,11 +171,15 @@ public class XMLMenuParser extends XMLParser {
 	 */
 	private Element exportMenuItem(Document doc, MenuItem item) {
 		Element itemElement = doc.createElement("item");
-		
+
+		Element defaultId = doc.createElement("default_id");
+		defaultId.appendChild(doc.createTextNode(String.valueOf(item.getDefault().getId())));
+		itemElement.appendChild(defaultId);
+
 		Element itemId = doc.createElement("item_id");
 		itemId.appendChild(doc.createTextNode(String.valueOf(item.getId())));
 		itemElement.appendChild(itemId);
-		
+
 		Element itemName = doc.createElement("name");
 		itemName.appendChild(doc.createTextNode(item.getName()));
 		itemElement.appendChild(itemName);

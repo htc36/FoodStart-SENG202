@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,22 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.InventoryController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.AnalysisController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <TableView fx:id="inventoryView" prefHeight="665.0" prefWidth="1042.0" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="id" prefWidth="279.0" text="ID" />
-                <TableColumn fx:id="name" prefWidth="186.0" text="Name" />
-                  <TableColumn fx:id="truckStock" prefWidth="167.0" text="Truck Stock" />
-                  <TableColumn fx:id="kitchenStock" minWidth="0.0" prefWidth="178.0" text="Kitchen Stock" />
-                  <TableColumn fx:id="dietary" prefWidth="213.0" text="Dietary" />
-              </columns>
-            </TableView>
-         </center>
          <bottom>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
@@ -39,13 +28,12 @@
                <children>
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="Manage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                        <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="Report Type" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
                            <items>
-                              <MenuItem fx:id="importButton" mnemonicParsing="false" onAction="#importIngredients" text="Import" />
-                              <MenuItem fx:id="exportButton" mnemonicParsing="false" onAction="#exportIngredients" text="Export" />
-                              <MenuItem fx:id="addButton" mnemonicParsing="false" onAction="#addIngredient" text="Add" />
-                              <MenuItem fx:id="removeButton" mnemonicParsing="false" onAction="#removeIngredient" text="Remove" />
-                              <MenuItem fx:id="editButton" mnemonicParsing="false" onAction="#editIngredient" text="Edit" />
+                              <MenuItem mnemonicParsing="false" onAction="#salesDollarYr" text="Sales dollars (last 1 year)" />
+                              <MenuItem mnemonicParsing="false" onAction="#salesDollarMonth" text="Sales dollars (last 30 days)" />
+                              <MenuItem mnemonicParsing="false" onAction="#salesQtyMonth" text="Sales quantity (last 30 days)" />
+                              <MenuItem mnemonicParsing="false" onAction="#salesQtyYear" text="Sales quantity (last 1 year)" />
                            </items>
                         </MenuButton>
                      </children>
@@ -53,7 +41,7 @@
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </AnchorPane>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inventory">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Analysis">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -64,6 +52,16 @@
                </children>
             </GridPane>
          </bottom>
+         <center>
+            <LineChart fx:id="mainchart" legendVisible="false" BorderPane.alignment="CENTER">
+              <xAxis>
+                <NumberAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

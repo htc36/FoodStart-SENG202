@@ -40,7 +40,7 @@ public class XMLMenuExportTest {
 		PermanentRecipe recipe = new PermanentRecipe(5678, "Pickled Pickle", "Pickle the pickle", 1.5f, pickleMap);
 		Set<PermanentRecipe> recipeList = new HashSet<PermanentRecipe>();
 		recipeList.add(recipe);
-		MenuItem menuItem = new MenuItem(9012, "A Pickled pickle", "TestDescription", recipeList, null);
+		MenuItem menuItem = new MenuItem(9012, "A Pickled pickle", "TestDescription", recipeList, recipe);
 		HashSet<MenuItem> items = new HashSet<MenuItem>();
 		items.add(menuItem);
 		
@@ -56,7 +56,7 @@ public class XMLMenuExportTest {
 		
 		assertEquals("3456", menuNode.getElementsByTagName("menu_id").item(0).getTextContent());
 	}
-	
+
 	@Test
 	public void testExportOneMenuTitleCorrect() {
 		Element rootNode = (Element) doc.getElementsByTagName("menus").item(0);
