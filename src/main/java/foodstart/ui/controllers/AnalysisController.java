@@ -10,6 +10,7 @@ import foodstart.model.order.Order;
 import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
@@ -71,11 +72,23 @@ public class AnalysisController implements Refreshable {
 				return String.valueOf(Math.round(arg0.floatValue() * 100F) / 100F);
 			}
 		});
+		
+		((ValueAxis<Number>) mainchart.getYAxis()).setAutoRanging(true);
+		((ValueAxis<Number>) mainchart.getXAxis()).setAutoRanging(false);
+		((NumberAxis) mainchart.getYAxis()).setForceZeroInRange(true);
+		
+		mainchart.getXAxis().setAnimated(false);
+		mainchart.getYAxis().setAnimated(false);
+		
+		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
+		mainchart.getData().clear();
+		mainchart.getData().add(series);
 	}
 
 	public void displayChart(ChartType chartType) {
-		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
-
+		XYChart.Series<Number, Number> series = mainchart.getData().get(0);
+		series.getData().clear();
+		
 		int backDays = 365;
 		switch (chartType) {
 		case SALES_DOLLAR_MONTH:
@@ -97,9 +110,6 @@ public class AnalysisController implements Refreshable {
 				series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
 			}
 			
-			((ValueAxis<Number>) mainchart.getYAxis()).setUpperBound(1);
-			((ValueAxis<Number>) mainchart.getYAxis()).setAutoRanging(true);
-			((ValueAxis<Number>) mainchart.getXAxis()).setAutoRanging(false);
 			((ValueAxis<Number>) mainchart.getXAxis()).setLowerBound(backDay);
 			((ValueAxis<Number>) mainchart.getXAxis()).setUpperBound(backDay + backDays);
 			mainchart.getYAxis().setLabel("Sales dollars");
@@ -107,8 +117,7 @@ public class AnalysisController implements Refreshable {
 		default:
 			break;
 		}
-		mainchart.getData().clear();
-		mainchart.getData().add(series);
+		
 
 		mainchart.setTitle(chartType.getTitle());
 	}
