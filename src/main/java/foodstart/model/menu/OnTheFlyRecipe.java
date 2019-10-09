@@ -74,6 +74,12 @@ public class OnTheFlyRecipe extends Recipe {
     }
 
     @Override
+    public int hashCode() {
+	    return ((this.basedOn == null) ? 0 : this.basedOn.hashCode()) +
+			    ((Float) this.price).hashCode();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

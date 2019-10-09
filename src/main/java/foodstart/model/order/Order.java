@@ -322,6 +322,20 @@ public class Order {
 	    Map<Recipe, Integer> itemsCopy = new HashMap<Recipe, Integer>(items);
 	    return new Order(id, itemsCopy, customerName, timePlaced, paymentMethod);
 	}
+/*
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((customerName == null) ? 0 : customerName.hashCode());
+        result = prime * result + id;
+        result = prime * result + ((items == null) ? 0 : items.hashCode());
+        result = prime * result + ((paymentMethod == null) ? 0 : paymentMethod.hashCode());
+        result = prime * result + Float.floatToIntBits(price);
+        result = prime * result + ((timePlaced == null) ? 0 : timePlaced.hashCode());
+        return result;
+    }
+    */
 
     @Override
     public boolean equals(Object obj) {

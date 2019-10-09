@@ -178,15 +178,18 @@ public class Ingredient {
 	    Map<DietaryRequirement, Boolean> mapCopy = new HashMap<DietaryRequirement, Boolean>(safeFor);
 		return new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
 	}
-	
 
-	/**
-	 * Returns whether the target object's fields are equal to this one's.
-	 * @param target - the Ingredient object being compared with.
-	 * @return True if all fields between the objects are equal; false otherwise.
-	 */
+	@Override
+    public int hashCode() {
+		return ((Integer) id).hashCode() +
+				((name == null) ? 0 : name.hashCode()) +
+				((safeFor == null) ? 0 : safeFor.hashCode()) +
+				((unit == null) ? 0 : unit.hashCode());
+    }
+
     @Override
     public boolean equals(Object obj) {
+	    System.out.println("1");
         if (this == obj)
             return true;
         if (obj == null)
@@ -194,7 +197,8 @@ public class Ingredient {
         if (getClass() != obj.getClass())
             return false;
         Ingredient other = (Ingredient) obj;
-        if (id != other.id)
+	    System.out.println("2");
+	    if (id != other.id)
             return false;
         if (kitchenStock != other.kitchenStock)
             return false;

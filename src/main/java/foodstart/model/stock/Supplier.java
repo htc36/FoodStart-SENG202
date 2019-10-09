@@ -189,6 +189,17 @@ public class Supplier {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+    @Override
+    public int hashCode() {
+	    return ((Integer) id).hashCode() +
+			    ((address == null) ? 0 : address.hashCode()) +
+			    ((email == null) ? 0 : email.hashCode()) +
+			    ((phoneNumber == null) ? 0 : phoneNumber.hashCode()) +
+			    ((phoneType == null) ? 0 : phoneType.hashCode()) +
+			    ((supplierName == null) ? 0 : supplierName.hashCode()) +
+			    ((url == null) ? 0 : url.hashCode());
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -226,7 +237,8 @@ public class Supplier {
         if (url == null) {
             if (other.url != null)
                 return false;
-        } else return url.equals(other.url);
+        } else if (!url.equals(other.url))
+            return false;
         return true;
     }
     

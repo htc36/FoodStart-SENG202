@@ -1,8 +1,6 @@
 package foodstart.model.menu;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 
@@ -143,6 +141,13 @@ public class Menu {
     public Menu clone() {
         Set<MenuItem> itemsCopy = new HashSet<MenuItem>(menuItems);
         return new Menu(itemsCopy, id, title, description);
+    }
+
+    @Override
+    public int hashCode() {
+	    return ((Integer) id).hashCode() +
+			    ((description == null) ? 0 : description.hashCode()) +
+			    ((title == null) ? 0 : title.hashCode());
     }
 
     @Override

@@ -1,17 +1,5 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.menu.RecipeManager;
@@ -24,7 +12,16 @@ import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
-import foodstart.model.stock.Supplier;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public class XMLSalesLogParserTest {
     
@@ -83,8 +80,6 @@ public class XMLSalesLogParserTest {
         return expectedMap;
     }
     
-    //TODO: Figure out why this isn't working
-    @Ignore
     @Test
     public void testImportNormalSalesLogTest() {
         expectedOrders = buildNormalSalesLog();
