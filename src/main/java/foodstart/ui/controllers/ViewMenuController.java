@@ -386,7 +386,7 @@ public class ViewMenuController {
 		if (selection.isPresent() && selection.get() == ButtonType.YES) {
 			Managers.getMenuManager().removeMenu(menuId);
 			
-			onCancel();
+			stage.close();
 		}
     }
     
