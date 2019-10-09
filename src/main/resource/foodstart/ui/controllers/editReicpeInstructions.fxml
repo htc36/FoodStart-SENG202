@@ -35,7 +35,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="99.0" layoutY="1.0" mnemonicParsing="false" onAction="#closeSelf" text="Cancel" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                        <Button layoutX="99.0" layoutY="1.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>
