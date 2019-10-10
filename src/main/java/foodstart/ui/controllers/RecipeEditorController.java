@@ -189,6 +189,7 @@ public class RecipeEditorController implements Refreshable {
 		ingredientsTable.setItems(observableIngredients);
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
 		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(this.ingredients.get(cell.getValue()))));
+		ingredientsTable.setPlaceholder(new Label("No ingredients in this recipe, please add them below"));
 	}
 
 	/**
