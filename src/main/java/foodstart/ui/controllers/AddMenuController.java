@@ -2,14 +2,12 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.MenuManager;
-import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.HashSet;
@@ -100,7 +98,7 @@ public class AddMenuController {
     /**
      * A boolean to keep track of whether changes have been made to the tables or not
      */
-    private boolean changed = false;
+    public Boolean changed = false;
     /**
      * Error label to display any invalid entries
      */
@@ -129,9 +127,10 @@ public class AddMenuController {
     public void setUpMenuInfo() {
         setNewCode();
         setAvailableMenuItems();
+        setCurrentMenuItems();
         observableAvailableItems = FXCollections.observableArrayList(currentAvailableMenuItems);
         populateAllMenuItemsTable();
-        observableCurrentItems = FXCollections.observableArrayList();
+        observableCurrentItems = FXCollections.observableArrayList(currentMenuItems);
         populateCurrentMenuTable();
     }
 
@@ -157,17 +156,21 @@ public class AddMenuController {
     }
 
     /**
+     * Called to set the current menu items to be empty so that menu items can be added to it
+     */
+    private void setCurrentMenuItems() {
+        currentMenuItems = new HashSet<MenuItem>();
+    }
+
+    /**
      * Called to populate the current menu's menu items table view with the menu information
      */
     private void populateCurrentMenuTable() {
-        if (currentMenuItems != null) {
-        observableCurrentItems = FXCollections.observableArrayList(currentMenuItems);
-        menuItemTable.setItems(observableCurrentItems);
-
         tableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        }
+        menuItemTable.setItems(FXCollections.observableArrayList(observableCurrentItems));
+
     }
 
     /**
@@ -177,17 +180,6 @@ public class AddMenuController {
         availableIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         availableNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         availableDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        availableMenuItemsTable.setRowFactory( tv -> {
-            TableRow<MenuItem> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 & (! row.isEmpty())) {
-                    MenuItem menuItem = row.getItem();
-                }
-            });
-            return row;
-        });
-
         availableMenuItemsTable.setItems(FXCollections.observableArrayList(observableAvailableItems));
     }
 
@@ -202,13 +194,11 @@ public class AddMenuController {
             Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the available menu items table");
             alert.setHeaderText("No menu item selected");
             alert.showAndWait();
-        } else {
 
-            if (currentMenuItems == null) {
-                currentMenuItems = new HashSet<MenuItem>();
-            }
+
+        } else {
             changed = true;
-            currentMenuItems.add(selectedMenuItem);
+            observableCurrentItems.add(selectedMenuItem);
             observableAvailableItems.remove(selectedMenuItem);
             refreshTables();
         }
@@ -245,7 +235,7 @@ public class AddMenuController {
             alert.showAndWait();
         } else {
             changed = true;
-            currentMenuItems.remove(selectedMenuItem);
+            observableCurrentItems.remove(selectedMenuItem);
             observableAvailableItems.add(selectedMenuItem);
             refreshTables();
         }
@@ -263,7 +253,7 @@ public class AddMenuController {
 
     /**
      * Checks if the menu name text field is valid
-     * @return if the menu name is valid or not
+     * @return Boolean if the menu name is valid or not
      */
     private Boolean isValidMenuName() {
         if (nameTextField.getText().isEmpty()) {
@@ -276,6 +266,10 @@ public class AddMenuController {
         }
     }
 
+    /**
+     * Checks if the current menu items contains menu items and is not empty
+     * @return Boolean if the current menu items are not empty
+     */
     private Boolean isValidMenuItems() {
         if (currentMenuItems.isEmpty()) {
             errorLabel.setText("There must be menu items in your new menu");
@@ -290,7 +284,7 @@ public class AddMenuController {
 
     public void onAddToMenus() {
         if (observableCurrentItems.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot add menu because there are no menu items");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot add to menus because there are no menu items");
             alert.setHeaderText("No menu items");
             alert.showAndWait();
         } else if (isValidMenuItems() && isValidMenuName()) {
@@ -300,7 +294,9 @@ public class AddMenuController {
             clearFields();
         }
     }
-
+    /**
+     * Clears the contents in the text fields
+     */
     public void clearFields() {
         nameTextField.clear();
         descriptionTextField.clear();
