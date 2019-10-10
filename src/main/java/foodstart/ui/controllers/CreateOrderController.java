@@ -1,15 +1,10 @@
 package foodstart.ui.controllers;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import foodstart.manager.Managers;
 import foodstart.model.PaymentMethod;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
-import foodstart.model.menu.OnTheFlyRecipe;
-import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
+import foodstart.model.menu.*;
 import foodstart.model.order.OrderBuilder;
 import foodstart.ui.Refreshable;
 import foodstart.ui.recipebuilder.RecipeBuilder;
@@ -22,7 +17,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -38,9 +33,13 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Controller for Create Order panel
@@ -161,6 +160,9 @@ public class CreateOrderController implements Refreshable {
 			public boolean onRecipeComplete(Recipe recipe, int quantity) {
 				if (quantity == 0) return false;
 				if (orderBuilder.canAddItem(recipe, quantity)) {
+					if (recipe instanceof OnTheFlyRecipe) {
+						Managers.getRecipeManager().otfManager.addRecipe((OnTheFlyRecipe) recipe);
+					}
 					orderBuilder.addItem(recipe, quantity);
 					updateOrderItems();
 					return true;

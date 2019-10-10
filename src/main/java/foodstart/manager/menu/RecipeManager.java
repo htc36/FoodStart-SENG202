@@ -271,6 +271,12 @@ public class RecipeManager {
 			return id;
 		}
 
+		public void addRecipe(OnTheFlyRecipe recipe) {
+			if (recipe != null) {
+				this.onTheFlyRecipes.put(recipe.getId(), recipe);
+			}
+		}
+
 		/**
 		 * Returns the on the fly recipe with the given value, or null if it does not exist
 		 * @param id the internal id of the otf recipe
