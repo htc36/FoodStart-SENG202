@@ -1,8 +1,13 @@
 package foodstart.ui.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ImportFailureException;
+import foodstart.manager.xml.XMLPersistence;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import foodstart.ui.Main;
@@ -12,9 +17,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.util.Optional;
 
 public class FileImporter {
 
@@ -37,9 +39,12 @@ public class FileImporter {
 		}
 		Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
 		try {
+			if (persist instanceof XMLPersistence) {
+				((XMLPersistence) persist).copyDTDFiles(selectedFile.getParentFile(), false);
+			}
 			persist.importFile(selectedFile, dataType);
 			Managers.writeBuffer();
-		} catch (ImportFailureException e) {
+		} catch (Exception e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR, "", new ButtonType("Drop"), ButtonType.CLOSE);
 			alert.setTitle("Error importing file");
 			alert.setHeaderText("Could not import file");
