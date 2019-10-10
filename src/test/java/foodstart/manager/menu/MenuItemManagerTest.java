@@ -1,6 +1,7 @@
 package foodstart.manager.menu;
 
 import foodstart.model.Unit;
+import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
@@ -134,4 +135,32 @@ public class MenuItemManagerTest {
 		assertEquals(recipe1.getPrice(), testManager.getApproxPrice(1), 1e-100);
     }
 
+    @Test
+    public void testPushToBuffer() {
+        testManager.getMenuItems().clear();
+        MenuItem expected = new MenuItem(0, "test menu item", "a menu item test", recipeList, recipe1); 
+        testManager.pushToBuffer(0, "test menu item", "a menu item test", recipeList, recipe1);  
+        testManager.writeBuffer();
+        assertTrue(testManager.getMenuItems().containsValue(expected));
+    }
+    
+    @Test
+    public void testDropBuffer() {
+        testManager.getMenuItems().clear();
+        testManager.pushToBuffer(0, "test menu item", "a menu item test", recipeList, recipe1);  
+        testManager.dropBuffer();
+        testManager.writeBuffer();
+        assertTrue(testManager.getMenuItems().isEmpty());
+    }
+    
+    @Test
+    public void testGenerateIDNormal() {
+        assertEquals(1, testManager.generateNewId());
+    }
+    
+    @Test
+    public void testGenerateIDEmpty() {
+        testManager.getMenuItems().clear();
+        assertEquals(0, testManager.generateNewId());
+    }
 }

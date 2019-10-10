@@ -201,4 +201,32 @@ public class SupplierManagerTest {
         SupplierManager newManager = new SupplierManager();
         assertEquals(0, newManager.generateNewCode());
     }
+    
+    @Test
+    public void testPushToBufferByObject() {
+        manager.removeAllSuppliers();
+        Supplier testSupplier = new Supplier(3, "test", "1", PhoneType.HOME, "", "", "");
+        manager.pushToBuffer(testSupplier);
+        manager.writeBuffer();
+        assertTrue(manager.getSupplierSet().contains(testSupplier));
+    }
+    
+    @Test
+    public void testPushToBufferByFields() {
+        manager.removeAllSuppliers();
+        Supplier testSupplier = new Supplier(3, "test", "1", PhoneType.HOME, "", "", "");
+        manager.pushToBuffer(3, "test", "1", PhoneType.HOME, "", "", "");
+        manager.writeBuffer();
+        assertTrue(manager.getSupplierSet().contains(testSupplier));
+    }
+    
+    @Test
+    public void testDropBuffer() {
+        manager.removeAllSuppliers();
+        Supplier testSupplier = new Supplier(3, "test", "1", PhoneType.HOME, "", "", "");
+        manager.pushToBuffer(testSupplier);
+        manager.dropBuffer();
+        manager.writeBuffer();
+        assertTrue(manager.getSuppliers().isEmpty());
+    }
 }

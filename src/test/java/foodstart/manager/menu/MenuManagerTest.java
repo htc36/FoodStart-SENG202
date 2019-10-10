@@ -125,4 +125,55 @@ public class MenuManagerTest {
         assertEquals(3, items.size());
         assertEquals(2, menuManager.getMenuSet().size());
     }
+    
+    @Test
+    public void testRemoveMenu() {
+        menuManager.removeMenu(0);
+        assertTrue(menuManager.getMenus().isEmpty());
+    }
+    
+    @Test
+    public void testGenerateIDNormal() {
+        assertEquals(1, menuManager.generateNewID());
+    }
+    
+    @Test
+    public void testGenerateIDEmpty() {
+        menuManager.getMenus().clear();
+        assertEquals(0, menuManager.generateNewID());
+    }
+    
+    @Test
+    public void testSetCurrentMenu() {
+        menuManager.setCurrentMenu(0);
+        assertEquals(0, menuManager.getCurrentMenu());
+    }
+   
+    @Test
+    public void testSetCurrentMenuBadID() {
+        try {
+            menuManager.setCurrentMenu(1);
+            fail("Exception shoud have been thrown");
+        } catch (Exception e) {
+            
+        }
+    }
+    
+    @Test
+    public void testPushToBuffer() {
+        menuManager.getMenus().clear();
+        Menu expected = new Menu(itemManager.getMenuItemSet(), 0, "TestMenu", "A menu for testing");
+        menuManager.pushToBuffer(itemManager.getMenuItemSet(), 0, "TestMenu", "A menu for testing");
+        menuManager.writeBuffer();
+        assertTrue(menuManager.getMenus().containsValue(expected));
+    }
+    
+    @Test
+    public void testDropBuffer() {
+        menuManager.getMenus().clear();
+        menuManager.pushToBuffer(itemManager.getMenuItemSet(), 0, "TestMenu", "A menu for testing");
+        menuManager.dropBuffer();
+        menuManager.writeBuffer();
+        assertTrue(menuManager.getMenus().isEmpty());
+    }
 }

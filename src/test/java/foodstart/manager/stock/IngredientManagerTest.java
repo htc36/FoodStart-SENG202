@@ -1,8 +1,11 @@
 package foodstart.manager.stock;
 
 import foodstart.model.DietaryRequirement;
+import foodstart.model.PhoneType;
 import foodstart.model.Unit;
 import foodstart.model.stock.Ingredient;
+import foodstart.model.stock.Supplier;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -219,4 +222,22 @@ public class IngredientManagerTest {
 		Ingredient ingredient = manager.getIngredient(0);
 		assertEquals("TestIngredient", ingredient.getName());
 	}
+	
+    @Test
+    public void testPushToBuffer() {
+        manager.getIngredients().clear();
+        Ingredient testOrder = new Ingredient(Unit.UNITS, "test", 3, null, 0, 0);
+        manager.pushToBuffer(Unit.UNITS, "test", 3, null, 0, 0);
+        manager.writeBuffer();
+        assertTrue(manager.getIngredients().containsValue(testOrder));
+    }
+    
+    @Test
+    public void testDropBuffer() {
+        manager.getIngredients().clear();
+        manager.pushToBuffer(Unit.UNITS, "test", 3, null, 0, 0);
+        manager.dropBuffer();
+        manager.writeBuffer();
+        assertTrue(manager.getIngredients().isEmpty());
+    }
 }

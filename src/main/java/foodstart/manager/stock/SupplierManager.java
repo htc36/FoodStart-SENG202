@@ -157,7 +157,7 @@ public class SupplierManager {
 	 */
 	public void pushToBuffer(Supplier targetSupplier) {
 		if (targetSupplier != null) {
-			this.suppliers.put(targetSupplier.getId(), targetSupplier);
+			this.buffer.put(targetSupplier.getId(), targetSupplier);
 		}
 	}
 

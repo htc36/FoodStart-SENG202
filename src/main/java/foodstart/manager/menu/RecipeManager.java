@@ -73,6 +73,14 @@ public class RecipeManager {
 		PermanentRecipe recipe = new PermanentRecipe(id, name, instructions, price, ingredients);
 		this.recipes.put(id, recipe);
 	}
+	
+	/**
+	 * Adds the given permanent recipe to the map of recipes
+	 * @param recipe the permanent recipe added to the manager
+	 */
+	public void addRecipe(PermanentRecipe recipe) {
+        this.recipes.put(recipe.getId(), recipe);
+    }
 
 	/**
 	 * Gets a recipe by its id, or null if the recipe is not defined
@@ -172,6 +180,15 @@ public class RecipeManager {
 		for (MenuItem menuItem : menuItems) {
 			menuItem.remove(removed);
 		}
+	}
+	
+	/**
+	 * Removes all recipes
+	 */
+	public void removeAllRecipes() {
+	    for (Integer recipeID : new HashSet<Integer>(recipes.keySet())) {
+	        this.removeRecipe(recipeID);
+	    }
 	}
 	public void mutateRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients){
 		PermanentRecipe recipe = this.recipes.get(id);
