@@ -88,6 +88,11 @@ public class AddMenuController {
     @FXML
     private TextField descriptionTextField;
     /**
+     * Error label to display any invalid entries
+     */
+    @FXML
+    private Label errorLabel;
+    /**
      * Stage of the current screen
      */
     private Stage stage;
@@ -99,31 +104,22 @@ public class AddMenuController {
      * A boolean to keep track of whether changes have been made to the tables or not
      */
     public Boolean changed = false;
-    /**
-     * Error label to display any invalid entries
-     */
-    @FXML
-    private Label errorLabel;
+
 
     public void initialize() {
 
     }
 
-    public void setStage(Stage popupStage) {
-        stage = popupStage;
-        stage.setMinWidth(900);
-        stage.setMinHeight(650);
-        stage.setOnCloseRequest(event -> {
-            onCancel();
-            event.consume();
-        });
-    }
-
-
+    /**
+     * Generates a new id for the new menu
+     */
     public void setNewCode() {
         newMenuId = Managers.getMenuManager().generateNewID();
     }
 
+    /**
+     * Sets up the lists and tables related to adding menu items for the new menu
+     */
     public void setUpMenuInfo() {
         setNewCode();
         setAvailableMenuItems();
@@ -205,6 +201,36 @@ public class AddMenuController {
     }
 
     /**
+     * Removes a menu item in the current menu table
+     */
+    public void onRemoveMenuItem() {
+        MenuItem selectedMenuItem = menuItemTable.getSelectionModel().getSelectedItem();
+        if (selectedMenuItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the current menu table");
+            alert.setHeaderText("No menu item selected");
+            alert.showAndWait();
+        } else {
+            changed = true;
+            observableCurrentItems.remove(selectedMenuItem);
+            observableAvailableItems.add(selectedMenuItem);
+            refreshTables();
+        }
+    }
+
+    /**
+     * Resets the current menu items table and the available menu items table back to their initial state
+     */
+    public void onResetMenuItems() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to reset both tables?");
+        Optional<ButtonType> selection = alert.showAndWait();
+        if (selection.isPresent() && selection.get() == ButtonType.OK) {
+            currentMenuItems.clear();
+            setUpMenuInfo();
+            changed = false;
+        }
+    }
+
+    /**
      * Closes the menu popup on cancel
      */
     public void onCancel() {
@@ -223,32 +249,8 @@ public class AddMenuController {
      * Closes the stage
      */
     public void closeSelf() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
-    }
-
-    public void onRemoveMenuItem() {
-        MenuItem selectedMenuItem = menuItemTable.getSelectionModel().getSelectedItem();
-        if (selectedMenuItem == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "No menu item selected from the current menu table");
-            alert.setHeaderText("No menu item selected");
-            alert.showAndWait();
-        } else {
-            changed = true;
-            observableCurrentItems.remove(selectedMenuItem);
-            observableAvailableItems.add(selectedMenuItem);
-            refreshTables();
-        }
-    }
-
-    public void onResetMenuItems() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to reset both tables?");
-        Optional<ButtonType> selection = alert.showAndWait();
-        if (selection.isPresent() && selection.get() == ButtonType.OK) {
-            currentMenuItems.clear();
-            setUpMenuInfo();
-            changed = false;
-        }
     }
 
     /**
@@ -281,7 +283,9 @@ public class AddMenuController {
         }
     }
 
-
+    /**
+     * Adding the new menu to be stored into menu manager with all the other menus
+     */
     public void onAddToMenus() {
         if (observableCurrentItems.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot add to menus because there are no menu items");
@@ -294,6 +298,7 @@ public class AddMenuController {
             clearFields();
         }
     }
+
     /**
      * Clears the contents in the text fields
      */
