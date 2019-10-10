@@ -1,10 +1,15 @@
 package foodstart.ui.controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import foodstart.manager.Managers;
 import foodstart.model.PaymentMethod;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
-import foodstart.model.menu.*;
+import foodstart.model.menu.OnTheFlyRecipe;
+import foodstart.model.menu.PermanentRecipe;
+import foodstart.model.menu.Recipe;
 import foodstart.model.order.OrderBuilder;
 import foodstart.ui.Refreshable;
 import foodstart.ui.recipebuilder.RecipeBuilder;
@@ -17,15 +22,25 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Controller for Create Order panel
@@ -115,6 +130,17 @@ public class CreateOrderController implements Refreshable {
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
 		
 		orderTable.setPlaceholder(new Text("No items in this order, add one on the left"));
+		
+		orderTable.setRowFactory( tv -> {
+		    TableRow<Recipe> row = new TableRow<>();
+		    row.setOnMouseClicked(event -> {
+		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		            Recipe rowData = row.getItem();
+		            modifyItem(rowData);
+		        }
+		    });
+		    return row ;
+		});
 	}
 
 	/**
@@ -233,35 +259,43 @@ public class CreateOrderController implements Refreshable {
 	 * JavaFX calls this when the Modify button is clicked
 	 */
 	public void onModifyItem() {
-		for (Recipe recipe : orderTable.getSelectionModel().getSelectedItems()) {
-			editSessions++;
-			new RecipeBuilder(recipe, orderBuilder.getQuantity(recipe), new RecipeBuilderRunnable() {
-				@Override
-				public boolean onRecipeComplete(Recipe recipe, int quantity) {
-					if (quantity == 0) {
-						orderBuilder.setEditing(recipe, false);
+		for (Recipe originalrecipe : orderTable.getSelectionModel().getSelectedItems()) {
+			modifyItem(originalrecipe);
+		}
+	}
+	
+	/**
+	 * When the popup to modify an item should be created
+	 * @param originalrecipe Recipe to be modified
+	 */
+	private void modifyItem(Recipe originalrecipe) {
+		editSessions++;
+		new RecipeBuilder(originalrecipe, orderBuilder.getQuantity(originalrecipe), new RecipeBuilderRunnable() {
+			@Override
+			public boolean onRecipeComplete(Recipe recipe, int quantity) {
+				if (quantity == 0) {
+					orderBuilder.setEditing(recipe, false);
+					editSessions--;
+					return true;
+				} else {
+					if (orderBuilder.canAddItem(recipe, quantity)) {
+						orderBuilder.setEditing(originalrecipe, false);
+						orderBuilder.removeItem(originalrecipe);
+						orderBuilder.addItem(recipe, quantity);
+						updateOrderItems();
 						editSessions--;
 						return true;
 					} else {
-						if (orderBuilder.canAddItem(recipe, quantity)) {
-							orderBuilder.setEditing(recipe, false);
-							orderBuilder.removeItem(recipe);
-							orderBuilder.addItem(recipe, quantity);
-							updateOrderItems();
-							editSessions--;
-							return true;
-						} else {
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Insufficient Stock");
-							alert.setHeaderText("Cannot modify this item as there is insufficient stock");
-							alert.setContentText("Modify the order and try again");
-							alert.show();
-							return false;
-						}
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Insufficient Stock");
+						alert.setHeaderText("Cannot modify this item as there is insufficient stock");
+						alert.setContentText("Modify the order and try again");
+						alert.show();
+						return false;
 					}
 				}
-			}, orderBuilder);
-		}
+			}
+		}, orderBuilder);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
+import foodstart.ui.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -23,7 +24,7 @@ import java.io.IOException;
 /**
  * Controls the UI for the manage menu items screen
  */
-public class MenuItemsController {
+public class MenuItemsController implements Refreshable {
     /**
      * The flow pane to which the menu items are added
      */
@@ -147,6 +148,10 @@ public class MenuItemsController {
 
     }
 
-
-
+    /**
+     * Refreshes the flowpane with menu items
+     */
+    public void refreshTable() {
+        populateMenuItems(flowPane);
+    }
 }
