@@ -136,9 +136,12 @@ public class XMLPersistence extends Persistence {
 	 * @param directory Directory that the DTD files should be copied into
 	 * @throws IOException if an exception occurs during file stream actions
 	 */
-	public void copyDTDFiles(File directory) throws IOException {
+	public void copyDTDFiles(File directory, boolean overwrite) throws IOException {
 		for (DataType type : DataType.values()) {
 			File file = new File(directory.getAbsolutePath() + File.separator + type.name().toLowerCase() + ".dtd");
+			if (overwrite && file.exists()) {
+				continue;
+			}
 			InputStream dtdFile = getClass().getResourceAsStream("/foodstart/dtd/" + type.name().toLowerCase() + ".dtd");
 			if (dtdFile != null) {
 				FileOutputStream output = new FileOutputStream(file);
@@ -196,7 +199,7 @@ public class XMLPersistence extends Persistence {
 		}
 		XMLPersistence persistence = (XMLPersistence) Managers.getDefaultPersistence();
 		try {
-			persistence.copyDTDFiles(directory);
+			persistence.copyDTDFiles(directory, true);
 		} catch (IOException e) {
 			throw new ImportFailureException("Could not copy DTD files into target directory");
 		}

@@ -132,6 +132,7 @@ public class MenuItemEditorController implements Refreshable {
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
 		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
 		defaultVariantCB.setItems(observableRecipes);
+		recipesTable.setPlaceholder(new Label("No recipes in this menu item, please add some using 'Add Recipe'"));
 	}
 
 	/**
