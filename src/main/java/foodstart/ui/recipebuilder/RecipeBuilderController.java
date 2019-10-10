@@ -188,6 +188,7 @@ public class RecipeBuilderController implements Refreshable {
 					if (ingredient != null) {
 						Button removeButton = new Button("Remove");
 						removeButton.setPrefWidth(80);
+						removeButton.setPrefHeight(40);
 						removeButton.setOnAction((event) -> {
 							ingredientMap.remove(ingredient);
 							isEdited = true;
@@ -306,6 +307,7 @@ public class RecipeBuilderController implements Refreshable {
 			if (!spinnerMap.containsKey(ingredient)) {
 				Spinner<Integer> spinner = new Spinner<Integer>();
 				spinner.setEditable(true);
+				spinner.setPrefHeight(40);
 				int stock = builder.getStockFactoringCurrentOrder(ingredient);
 				if (stock == 0) {
 					spinner.setDisable(true);
