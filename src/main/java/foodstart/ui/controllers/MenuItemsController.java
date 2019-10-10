@@ -77,7 +77,7 @@ public class MenuItemsController implements Refreshable {
         Screen screen = Screen.getPrimary();
         editPopup = new Stage();
         editPopup.initModality(Modality.WINDOW_MODAL);
-        editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() /4, screen.getVisualBounds().getHeight() / 2));
+        editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() /4, screen.getVisualBounds().getHeight() / 1.75));
         boxBackground = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
         populateMenuItems(flowPane);
     }
