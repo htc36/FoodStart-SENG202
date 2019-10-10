@@ -1,5 +1,8 @@
 package foodstart.ui.recipebuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import foodstart.manager.Managers;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.OnTheFlyRecipe;
@@ -12,13 +15,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Controller for RecipeBuilder
@@ -111,7 +119,7 @@ public class RecipeBuilderController implements Refreshable {
 	 * Bitwise flags which should stop the user from being able to add the item to
 	 * the order. If this number is 0 then the order is valid and the 'Add to Order'
 	 * button should be clickable. - 0b00001 -> Price per unit is a valid, positive
-	 * number
+	 * number, 0b00010 -> Item has at least 1 ingredient
 	 */
 	private byte canProceed = 0;
 
@@ -183,6 +191,9 @@ public class RecipeBuilderController implements Refreshable {
 						removeButton.setOnAction((event) -> {
 							ingredientMap.remove(ingredient);
 							isEdited = true;
+							if (ingredientMap.size() == 0) {
+								setFinishableStatus(2, false);
+							}
 							refreshTable();
 						});
 						setGraphic(removeButton);
@@ -214,6 +225,8 @@ public class RecipeBuilderController implements Refreshable {
 				setFinishableStatus(1, false);
 			}
 		});
+		
+		ingredientTable.setPlaceholder(new Text("This recipe has no ingredients, add one from the dropdown box below"));
 	}
 
 	/**
@@ -372,6 +385,7 @@ public class RecipeBuilderController implements Refreshable {
 				alert.show();
 			} else {
 				isEdited = true;
+				setFinishableStatus(2, true);
 				this.ingredientMap.put(ingredient, 1);
 				refreshTable();
 			}

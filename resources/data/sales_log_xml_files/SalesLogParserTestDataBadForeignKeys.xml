@@ -9,8 +9,8 @@
 		<payment>eftpos</payment>
 		<recipes>
 			<recipe>
-				<recipe_id>recipe_id</recipe_id>
-				<quantity>quantity</quantity>
+				<recipe_id>-123124</recipe_id>
+				<quantity>1</quantity>
 			</recipe>
 		</recipes>
 	</sale></sales>
