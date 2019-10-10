@@ -79,21 +79,19 @@ public class XMLSalesLogParser extends XMLParser {
 						Element ingredientElement = (Element) ingredientNode;
 						int ingredientId = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_id").item(0).getTextContent());
 						int ingredientQuantity = Integer.parseInt(ingredientElement.getElementsByTagName("ingredient_quantity").item(0).getTextContent());
-						Ingredient ingredient = Managers.getIngredientManager().getIngredient(ingredientId);
+						Ingredient ingredient = Managers.getIngredientManager().getIngredientBuffered(ingredientId);
 						if (ingredient == null) {
 							throw new IDLeadsNowhereException(DataType.INGREDIENT, ingredientId);
 						}
 						ingredients.put(ingredient, ingredientQuantity);
+					} else if (ingredientNode.getNodeName().equalsIgnoreCase("otf_price")) {
+					    Element priceElement = (Element) dataNode;
+	                    price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
 					}
-				}
-
-				if (dataNode.getNodeName().equalsIgnoreCase("otf_price")) {
-					Element priceElement = (Element) dataNode;
-					price = Float.parseFloat(priceElement.getElementsByTagName("otf_price").item(0).getTextContent());
 				}
 			}
 		}
-		return Managers.getRecipeManager().otfManager.addRecipe(basis, ingredients, price);
+		return Managers.getRecipeManager().otfManager.pushToBuffer(basis, ingredients, price);
 	}
 
 	/**
@@ -112,7 +110,7 @@ public class XMLSalesLogParser extends XMLParser {
 				Element recipeEl = (Element) node;
 				int recipeId = Integer.parseInt(recipeEl.getElementsByTagName("recipe_id").item(0).getTextContent());
 				int quantity = Integer.parseInt(recipeEl.getElementsByTagName("quantity").item(0).getTextContent());
-				PermanentRecipe recipe = manager.getRecipe(recipeId);
+				PermanentRecipe recipe = manager.getRecipeBuffer(recipeId);
 				if (recipe == null) {
 					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 				}
@@ -120,7 +118,7 @@ public class XMLSalesLogParser extends XMLParser {
 				if (ingredientNodes.getLength() > 0) {
 					//Then it's an OTF Recipe
 					int onTheFlyRecipe = parseOTFRecipe(ingredientNodes, recipeId);
-					recipes.put(manager.otfManager.getRecipe(onTheFlyRecipe), quantity);
+					recipes.put(manager.otfManager.getOTFRecipeBuffered(onTheFlyRecipe), quantity);
 				} else {
 					recipes.put(recipe, quantity);
 				}
@@ -141,7 +139,7 @@ public class XMLSalesLogParser extends XMLParser {
 		float cost = Float.parseFloat(element.getElementsByTagName("cost").item(0).getTextContent());
 		PaymentMethod payment = PaymentMethod.matchNiceName(element.getElementsByTagName("payment").item(0).getTextContent());
 		Map<Recipe, Integer> recipes = getSaleItems(element);
-		Managers.getOrderManager().addOrder(id, recipes, name, date, payment, cost);
+		Managers.getOrderManager().pushToBuffer(id, recipes, name, date, payment, cost);
 	}
 
 	/**

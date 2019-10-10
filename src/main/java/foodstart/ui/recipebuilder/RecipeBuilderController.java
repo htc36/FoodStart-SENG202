@@ -119,7 +119,7 @@ public class RecipeBuilderController implements Refreshable {
 	 * Bitwise flags which should stop the user from being able to add the item to
 	 * the order. If this number is 0 then the order is valid and the 'Add to Order'
 	 * button should be clickable. - 0b00001 -> Price per unit is a valid, positive
-	 * number
+	 * number, 0b00010 -> Item has at least 1 ingredient
 	 */
 	private byte canProceed = 0;
 
@@ -186,11 +186,15 @@ public class RecipeBuilderController implements Refreshable {
 				} else {
 					Ingredient ingredient = Managers.getIngredientManager().getIngredient(item);
 					if (ingredient != null) {
-						Button removeButton = new Button("Remove");
+						Button removeButton = new Button("X");
 						removeButton.setPrefWidth(80);
+						removeButton.setPrefHeight(40);
 						removeButton.setOnAction((event) -> {
 							ingredientMap.remove(ingredient);
 							isEdited = true;
+							if (ingredientMap.size() == 0) {
+								setFinishableStatus(2, false);
+							}
 							refreshTable();
 						});
 						setGraphic(removeButton);
@@ -222,6 +226,8 @@ public class RecipeBuilderController implements Refreshable {
 				setFinishableStatus(1, false);
 			}
 		});
+		
+		ingredientTable.setPlaceholder(new Text("This recipe has no ingredients, add one from the dropdown box below"));
 	}
 
 	/**
@@ -245,11 +251,11 @@ public class RecipeBuilderController implements Refreshable {
 		for (PermanentRecipe recipe : menuItem.getVariants()) {
 			variantsDropdown.getItems().add(recipe.getDisplayName());
 		}
-		variantsDropdown.setValue(menuItem.getVariants().get(0).getDisplayName());
+		variantsDropdown.setValue(menuItem.getDefault().getDisplayName());
 
 		quantity = 1;
 
-		setVariant(menuItem.getVariants().get(0));
+		setVariant(menuItem.getDefault());
 	}
 
 	/**
@@ -301,6 +307,7 @@ public class RecipeBuilderController implements Refreshable {
 			if (!spinnerMap.containsKey(ingredient)) {
 				Spinner<Integer> spinner = new Spinner<Integer>();
 				spinner.setEditable(true);
+				spinner.setPrefHeight(40);
 				int stock = builder.getStockFactoringCurrentOrder(ingredient);
 				if (stock == 0) {
 					spinner.setDisable(true);
@@ -380,6 +387,7 @@ public class RecipeBuilderController implements Refreshable {
 				alert.show();
 			} else {
 				isEdited = true;
+				setFinishableStatus(2, true);
 				this.ingredientMap.put(ingredient, 1);
 				refreshTable();
 			}

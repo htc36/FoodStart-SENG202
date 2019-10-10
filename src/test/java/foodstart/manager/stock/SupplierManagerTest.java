@@ -178,6 +178,7 @@ public class SupplierManagerTest {
         assertEquals(2, returnVal.size());
     }
     
+    @Test
     public void testGetSuppliersMissingID() {
         Collection<Integer> missingIDs = new HashSet<Integer>();
         missingIDs.add(4542);

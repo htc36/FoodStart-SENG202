@@ -2,19 +2,30 @@ package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
 import foodstart.manager.menu.RecipeManager;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Controls UI for recipe editor
@@ -98,6 +109,12 @@ public class RecipeEditorController implements Refreshable {
 	TextField priceInput;
 
 	/**
+	 * Input field for instructions
+	 */
+	@FXML
+	TextArea instructionsInput;
+
+	/**
 	 * An observable list of ingredients for the table
 	 */
 	private ObservableList<Ingredient> observableIngredients;
@@ -115,19 +132,51 @@ public class RecipeEditorController implements Refreshable {
 	 */
 	private int id;
 
-	/**
+    /**
+     * FXML loader for the edit recipe popup
+     */
+    private FXMLLoader editLoader;
+    /**
+     * The FXML for the edit recipe popup screen
+     */
+    private Parent editFXML;
+    /**
+     * The stage of the edit recipe popup screen
+     */
+    private Stage editPopup;
+
+
+    /**
 	 * Initialises the RecipeEditorController
 	 */
 	@FXML
 	public void initialize() {
 		populateTable();
+		if (this.priceInput != null) {
+			this.priceInput.textProperty().addListener((observable, oldValue, newValue) -> {
+				if (!newValue.matches("\\d{0,7}([.]\\d{0,2})?")) {
+					priceInput.setText(oldValue);
+				}
+			});
+		}
 		this.ingredientQuantityInput.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (!newValue.matches("\\d{0,7}")) {
 				ingredientQuantityInput.setText(oldValue);
 			}
 		});
 		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) ->
-				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 0)))));
+				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 1)))));
+        try {
+            editLoader = new FXMLLoader(getClass().getResource("editReicpeInstructions.fxml"));
+            editFXML = editLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Screen screen = Screen.getPrimary();
+        editPopup = new Stage();
+        editPopup.initModality(Modality.WINDOW_MODAL);
+        editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() / 4, screen.getVisualBounds().getHeight() / 2));
+
 	}
 
 	/**
@@ -140,6 +189,7 @@ public class RecipeEditorController implements Refreshable {
 		ingredientsTable.setItems(observableIngredients);
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
 		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(this.ingredients.get(cell.getValue()))));
+		ingredientsTable.setPlaceholder(new Label("No ingredients in this recipe, please add them below"));
 	}
 
 	/**
@@ -147,7 +197,9 @@ public class RecipeEditorController implements Refreshable {
 	 */
 	private void populateCB() {
 		Set<Ingredient> ingredientsSet = Managers.getIngredientManager().getIngredientSet();
-		this.ingredientsCB.setItems(FXCollections.observableArrayList(ingredientsSet));
+		List<Ingredient> sortedIngredients = ingredientsSet.stream().collect(Collectors.toList());
+		Collections.sort(sortedIngredients, Comparator.comparing(Ingredient::getName));
+		this.ingredientsCB.setItems(FXCollections.observableArrayList(sortedIngredients));
 		this.ingredientsCB.setCellFactory(ComboBoxListCell.forListView(new IngredientStringConverter()));
 		this.ingredientsCB.setConverter(new IngredientStringConverter());
 	}
@@ -165,13 +217,47 @@ public class RecipeEditorController implements Refreshable {
 	/**
 	 * Sets the recipe and text fields
 	 */
-	public void setRecipeAndFields(Recipe recipe) {
+	public void setRecipeAndFields(PermanentRecipe recipe) {
 		this.id = recipe.getId();
 		this.recipe = recipe;
 		this.ingredients = new HashMap<>(recipe.getIngredients());
 		this.nameInput.setText(recipe.getDisplayName());
 		this.priceInput.setText(Float.toString(recipe.getPrice()));
+		this.instructionsInput.setText(recipe.getInstructions());
+		ingredientsCB.getSelectionModel().clearSelection();
+
 		refreshTable();
+	}
+	public void instructionsDoubleClickListener() {
+		instructionsInput.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+					if(mouseEvent.getClickCount() == 2){
+						if (editPopup.getOwner() == null) {
+							editPopup.initOwner(ingredientsTable.getScene().getWindow());
+						}
+						((EditRecipeInstructionsController) editLoader.getController()).setInstructionsText(instructionsInput.getText());
+						editPopup.showAndWait();
+						String newText = ((EditRecipeInstructionsController) editLoader.getController()).getNewText();
+						instructionsInput.setText(newText);
+					}
+				}
+			}
+		});
+	}
+	/**
+	 * Clears fields, used when wanting to add new item
+	 */
+	public void clearFields() {
+		this.id = Managers.getRecipeManager().generateNewId();
+		this.ingredients = new HashMap<>();
+		this.nameInput.clear();
+		this.priceInput.clear();
+		this.instructionsInput.clear();
+		ingredientsCB.getSelectionModel().clearSelection();
+		refreshTable();
+
 	}
 
 	/**
@@ -219,7 +305,12 @@ public class RecipeEditorController implements Refreshable {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not add ingredient as there ", ButtonType.OK);
 			alert.setHeaderText("No recipe selected");
 			alert.showAndWait();
-		} else {
+		} else if (Integer.parseInt(amount) == 0) {
+			Alert alert = new Alert(Alert.AlertType.WARNING, "You can not add an ingredient with amount 0", ButtonType.OK);
+			alert.setHeaderText("Amount error");
+			alert.showAndWait();
+		}
+		else {
 			Integer amountInt = Integer.parseInt(amount);
 			ingredients.put(ingredient, amountInt);
 		}
@@ -247,8 +338,20 @@ public class RecipeEditorController implements Refreshable {
 	}
 	@FXML
 	private void confirmFromRecipePage() {
-		Managers.getRecipeManager().mutateRecipe(id, nameInput.getText(), "", Float.parseFloat(priceInput.getText()), ingredients);
-		closeSelf();
+	    if (ingredients.isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "There must be at least one ingredient in the recipe", ButtonType.OK);
+			alert.setHeaderText("No ingredients selected");
+			alert.showAndWait();
+		} else {
+			RecipeManager manager = Managers.getRecipeManager();
+			if (manager.idExists(id)) {
+				manager.mutateRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+			} else {
+				manager.addRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);
+			}
+
+			closeSelf();
+		}
 	}
 
 	/**

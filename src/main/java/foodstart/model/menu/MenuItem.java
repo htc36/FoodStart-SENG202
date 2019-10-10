@@ -1,7 +1,7 @@
 package foodstart.model.menu;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -23,10 +23,11 @@ public class MenuItem {
 	 */
 	private String description;
 
+	private PermanentRecipe defaultVariant;
 	/**
 	 * A set containing all the recipe variants of a menu item
 	 */
-	private List<PermanentRecipe> variants;
+	private Set<PermanentRecipe> variants;
 
 	/**
 	 * Constructs an instance of a menu item
@@ -36,11 +37,15 @@ public class MenuItem {
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
 	 */
-	public MenuItem(int databaseId, String name, String description, List<PermanentRecipe> variants) {
+	public MenuItem(int databaseId, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
 		this.id = databaseId;
 		this.name = name;
 		this.description = description;
 		this.variants = variants;
+		this.defaultVariant = defaultVariant;
+		if (defaultVariant != null) {
+			this.variants.add(defaultVariant);
+		}
 	}
 
 	/**
@@ -99,7 +104,7 @@ public class MenuItem {
 	 *
 	 * @return variants
 	 */
-	public List<PermanentRecipe> getVariants() {
+	public Set<PermanentRecipe> getVariants() {
 		return variants;
 	}
 
@@ -120,42 +125,61 @@ public class MenuItem {
 	 * Sets the variants of the menu item
 	 * @param variants the possible variants of the menu item
 	 */
-	public void setVariants(List<PermanentRecipe> variants) {
+	public void setVariants(Set<PermanentRecipe> variants) {
 		this.variants = variants;
 	}
 	
     public MenuItem clone() {
-        List<PermanentRecipe> variantsCopy = new LinkedList<PermanentRecipe>(variants);
-        return new MenuItem(id, name, description, variantsCopy);
+		Set<PermanentRecipe> variantsCopy = new HashSet<>(variants);
+		return new MenuItem(id, name, description, variantsCopy, defaultVariant);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
         MenuItem other = (MenuItem) obj;
         if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (!description.equals(other.description))
-            return false;
-        if (id != other.id)
-            return false;
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!description.equals(other.description)) {
+			return false;
+		}
+		if (id != other.id) {
+			return false;
+		}
         if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
         if (variants == null) {
-            if (other.variants != null)
-                return false;
-        } else if (!variants.equals(other.variants))
-            return false;
+			if (other.variants != null) {
+				return false;
+			}
+		} else if (!variants.equals(other.variants)) {
+			return false;
+		}
         return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return ((Integer) this.id).hashCode() +
+				((this.name == null) ? 0 : this.name.hashCode()) +
+				((this.description == null) ? 0 : this.description.hashCode()) +
+				((this.variants == null) ? 0 : this.variants.hashCode()) +
+				((this.defaultVariant == null) ? 0 : this.defaultVariant.hashCode());
 	}
 
 	/**
@@ -165,6 +189,10 @@ public class MenuItem {
 	 */
 	public void remove(PermanentRecipe removed) {
 		this.variants.remove(removed);
+	}
+
+	public PermanentRecipe getDefault() {
+		return this.defaultVariant;
 	}
 }
 

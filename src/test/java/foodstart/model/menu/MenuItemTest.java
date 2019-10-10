@@ -1,97 +1,181 @@
 package foodstart.model.menu;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import foodstart.model.DietaryRequirement;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import foodstart.model.DietaryRequirement;
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 public class MenuItemTest {
 
-    private MenuItem testitem;
-    private List<PermanentRecipe> recipes;
+    private MenuItem testItem, nullItem;
+	private Set<PermanentRecipe> recipes, testRecipes, dummyRecipes;
 
     @Before
     public void setUp() throws Exception {
         Map<DietaryRequirement, Boolean> safeFor = new HashMap<DietaryRequirement, Boolean>();
         safeFor.put(DietaryRequirement.GLUTEN_FREE, true);
-        List<PermanentRecipe> recipes = new ArrayList<PermanentRecipe>();
+		Set<PermanentRecipe> recipes = new HashSet<PermanentRecipe>();
+		dummyRecipes = new HashSet<PermanentRecipe>();
         recipes.add(new PermanentRecipe(0, "Cheese", "method", 0, null));
         recipes.add(new PermanentRecipe(1, "Nuts", "method", 0, null));
         recipes.add(new PermanentRecipe(2, "Jesus", "method", 0, null));
-        testitem = new MenuItem(0, "TestItem", "MenuItem test item", recipes);
+		testRecipes = new HashSet<PermanentRecipe>();
+        testRecipes.add(new PermanentRecipe(0, "Cheese", "method", 0, null));
+        testRecipes.add(new PermanentRecipe(1, "Nuts", "method", 0, null));
+        testRecipes.add(new PermanentRecipe(2, "Jesus", "method", 0, null));
+		testItem = new MenuItem(0, "TestItem", "MenuItem test item", recipes, null);
+		nullItem = new MenuItem(0, null, null, null, null);
     }
 
     @Test
     public void getId() {
-    	assertEquals(testitem.getId(), 0);
+    	assertEquals(testItem.getId(), 0);
     }
 
     @Test
     public void setId() {
-    	testitem.setDatabaseId(5);
-    	assertEquals(testitem.getId(), 5);
+    	testItem.setDatabaseId(5);
+    	assertEquals(testItem.getId(), 5);
     }
 
     @Test
     public void getName() {
-    	assertEquals(testitem.getName(), "TestItem");
+    	assertEquals(testItem.getName(), "TestItem");
     }
 
     @Test
     public void setName() {
-    	testitem.setName("Hamburger");
-    	assertEquals(testitem.getName(), "Hamburger");
+    	testItem.setName("Hamburger");
+    	assertEquals(testItem.getName(), "Hamburger");
 
     }
 
     @Test
     public void getDescription() {
-    	assertEquals(testitem.getDescription(), "MenuItem test item");
+    	assertEquals(testItem.getDescription(), "MenuItem test item");
     }
 
     @Test
     public void setDescription() {
-    	testitem.setDescription("Juicy patty on a seasame seed bun");
-    	assertEquals(testitem.getDescription(), "Juicy patty on a seasame seed bun");
+    	testItem.setDescription("Juicy patty on a seasame seed bun");
+    	assertEquals(testItem.getDescription(), "Juicy patty on a seasame seed bun");
     }
 
     @Test
     public void getVariants() {
-    	testitem.setVariants(recipes);
-    	assertEquals((testitem.getVariants()), recipes);
+    	testItem.setVariants(recipes);
+    	assertEquals((testItem.getVariants()), recipes);
     }
 
     @Test
     public void setVariants() { 
-    	testitem.setVariants(recipes);
-    	assertEquals((testitem.getVariants()), recipes);
+    	testItem.setVariants(recipes);
+    	assertEquals((testItem.getVariants()), recipes);
 
     }
     
     @Test
     public void testGetVariantsAsString() {
-        String expected = "Cheese Nuts Jesus ", actual = testitem.getVariantsAsString();
-        Assert.assertEquals(expected, actual);
+		List<String> expected = Arrays.asList("Cheese", "Nuts", "Jesus");
+		List<String> actual = Arrays.asList(testItem.getVariantsAsString().split(" "));
+		assertEquals(expected.size(), actual.size());
+		assertEquals(new HashSet<String>(expected), new HashSet<String>(actual));
+    }
+    
+    @Test
+    public void testRemove(){
+        Assert.assertEquals(testItem.getVariants().size(), 3);
+        testItem.remove(new PermanentRecipe(0, "Cheese", "method", 0, null));
+        Assert.assertEquals(testItem.getVariants().size(), 2);
+        Assert.assertFalse(testItem.getVariants().contains(new PermanentRecipe(0, "Cheese", "method", 0, null)));
     }
     
     @Test
     public void testCloneBasic() {
-        MenuItem copy = testitem.clone();
-        Assert.assertEquals(testitem, copy);
+        MenuItem copy = testItem.clone();
+        Assert.assertEquals(testItem, copy);
     }
     
     @Test
     public void testCloneIsDeep() {
-        MenuItem copy = testitem.clone();
-        testitem.getVariants().clear();
-        Assert.assertNotEquals(testitem, copy); 
+        MenuItem copy = testItem.clone();
+        testItem.getVariants().clear();
+        Assert.assertNotEquals(testItem, copy); 
+    }
+    
+    @Test 
+    public void testEqualsIfSame() {
+        Object test2 = testItem;
+        assertSame(testItem, test2);
+        assertEquals(testItem, test2);
+    }
+    
+    @Test 
+    public void testNotEqualsIfNull() {
+        assertNotEquals(testItem, null);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentClass() {
+        Object notIngredient = new String("not an ingredient");
+        assertNotEquals(testItem, notIngredient);
+    }
+    
+    @Test 
+    public void testNotEqualsIfOnlySelfNullDescription() {
+		MenuItem other = new MenuItem(0, null, "", null, null);
+        assertNotEquals(nullItem, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentDescription() {
+		MenuItem other = new MenuItem(0, "TestItem", "MenuItem ", testRecipes, null);
+        assertNotEquals(testItem, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfOnlySelfNullName() {
+		MenuItem other = new MenuItem(0, "", null, null, null);
+        assertNotEquals(nullItem, other);
+    }
+    
+    @Test 
+    public void testEqualsIfDifferentName() {
+		MenuItem other = new MenuItem(0, "tem", "MenuItem test item", testRecipes, null);
+        assertNotEquals(testItem, other);
+    }
+    
+    @Test 
+    public void testEqualsIfDifferentID() {
+		MenuItem other = new MenuItem(5, "TestItem", "MenuItem test item", testRecipes, null);
+        assertNotEquals(testItem, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfOnlySelfNullVariants() {
+		MenuItem other = new MenuItem(0, null, null, dummyRecipes, null);
+        assertNotEquals(nullItem, other);
+    }
+    
+    @Test 
+    public void testEqualsIfDifferentVariants() {
+		MenuItem other = new MenuItem(0, "TestItem", "MenuItem test item", dummyRecipes, null);
+        assertNotEquals(testItem, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsNull() {
+		MenuItem other = new MenuItem(0, null, null, null, null);
+        assertEquals(nullItem, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsMatch() {
+		MenuItem other = new MenuItem(0, "TestItem", "MenuItem test item", testRecipes, null);
+        assertEquals(testItem, other);
     }
 }

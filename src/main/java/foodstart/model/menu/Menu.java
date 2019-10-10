@@ -1,8 +1,6 @@
 package foodstart.model.menu;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 
@@ -48,6 +46,18 @@ public class Menu {
 	}
 
 	/**
+	 * Constructs an instance of a menu
+	 * 
+	 * @param menu a menu to make a menu with		
+	 */
+	public Menu(Menu menu) {
+		this.menuItems = menu.getMenuItems();
+		this.id = menu.getId();
+		this.title = menu.getTitle();
+		this.description = menu.getDescription();	
+}
+
+	/**
 	 * Gets the id of the menu
 	 *
 	 * @return menu id
@@ -66,6 +76,14 @@ public class Menu {
 	}
 
 	/**
+	 * Sets the title of the menu
+	 * @param title the new title for the menu
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	/**
 	 * Gets the description of the menu
 	 *
 	 * @return menu description
@@ -74,6 +92,10 @@ public class Menu {
 		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	/**
 	 * Returns a set of all menu items
 	 *
@@ -119,6 +141,13 @@ public class Menu {
     public Menu clone() {
         Set<MenuItem> itemsCopy = new HashSet<MenuItem>(menuItems);
         return new Menu(itemsCopy, id, title, description);
+    }
+
+    @Override
+    public int hashCode() {
+	    return ((Integer) id).hashCode() +
+			    ((description == null) ? 0 : description.hashCode()) +
+			    ((title == null) ? 0 : title.hashCode());
     }
 
     @Override

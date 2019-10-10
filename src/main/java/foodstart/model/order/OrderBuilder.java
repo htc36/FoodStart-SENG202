@@ -172,11 +172,11 @@ public class OrderBuilder {
 	 */
 	public int calculateRequiredStock(Ingredient ingredient) {
 		int required = 0;
-		for (Map.Entry<Recipe, Integer> item : currentOrder.entrySet()) {
-			if (editing.contains(item.getKey()))
+		for (Recipe item : currentOrder.keySet()) {
+			if (editing.contains(item))
 				continue;
-			if (item.getKey().getIngredients().containsKey(ingredient)) {
-				required += item.getKey().getIngredients().get(ingredient) * item.getValue();
+			if (item.getIngredients().containsKey(ingredient)) {
+				required += item.getIngredients().get(ingredient) * currentOrder.get(item);
 			}
 		}
 		return required;

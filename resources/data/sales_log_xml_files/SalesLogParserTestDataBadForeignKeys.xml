@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sales SYSTEM "sales_log.dtd" >
+<sales>
+	<sale>
+		<id>1</id>
+		<name>blo</name>
+		<date>329185442</date>
+		<cost>15.69</cost>
+		<payment>eftpos</payment>
+		<recipes>
+			<recipe>
+				<recipe_id>-123124</recipe_id>
+				<quantity>1</quantity>
+			</recipe>
+		</recipes>
+	</sale></sales>

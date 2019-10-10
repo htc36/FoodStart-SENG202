@@ -120,4 +120,30 @@ public class Managers {
 				return getDefaultPersistence();
 		}
 	}
+
+	/**
+	 * Writes the buffers of all managers to the system
+	 */
+	public static void writeBuffer() {
+		ingredientManager.writeBuffer();
+		orderManager.writeBuffer();
+		supplierManager.writeBuffer();
+		recipeManager.writeBuffer();
+		recipeManager.otfManager.writeBuffer();
+		menuManager.writeBuffer();
+		menuItemManager.writeBuffer();
+	}
+
+	/**
+	 * Drops all data from the buffer
+	 */
+	public static void dropBuffer() {
+		ingredientManager.writeBuffer();
+		orderManager.dropBuffer();
+		supplierManager.dropBuffer();
+		recipeManager.dropBuffer();
+		recipeManager.otfManager.dropBuffer();
+		menuManager.dropBuffer();
+		menuItemManager.dropBuffer();
+	}
 }

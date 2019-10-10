@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sales SYSTEM "sales_log.dtd" >
+<sales>
+	<sale>
+		<id>not an integer</id>
+		<name>Jom</name>
+		<date>668512349</date>
+		<cost>15.50</cost>
+		<payment>cash</payment>
+		<recipes>
+			<recipe>
+				<recipe_id>1</recipe_id>
+				<quantity>3</quantity>
+			</recipe>
+			<recipe>
+				<recipe_id>2</recipe_id>
+				<ingredients>
+					<ingredient>
+						<ingredient_id>1</ingredient_id>
+						<ingredient_quantity>3</ingredient_quantity>
+					</ingredient>
+					<ingredient>
+						<ingredient_id>2</ingredient_id>
+						<ingredient_quantity>2</ingredient_quantity>
+					</ingredient>
+					<otf_price>7.50</otf_price>
+				</ingredients>
+				<quantity>2</quantity>
+			</recipe>
+			<recipe>
+				<recipe_id>3</recipe_id>
+				<quantity>2</quantity>
+			</recipe>
+		</recipes>
+	</sale></sales>

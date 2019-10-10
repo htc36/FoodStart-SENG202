@@ -18,11 +18,12 @@ import java.util.Map;
 
 public class OrderTest {
 
-	private Order testOrder;
+	private Order testOrder, nullOrder;
 	private Ingredient testIngredient;
 	private Recipe testRecipe, dummyRecipe;
 	private Map<Ingredient, Integer> testIngredients;
-	private Map<Recipe, Integer> testItems;
+	private Map<Recipe, Integer> testItems, noItems;
+	private LocalDateTime time;
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,9 +39,13 @@ public class OrderTest {
 		testRecipe = new PermanentRecipe(1, "TestRecipeName", "TestRecipeInstructions", 5, testIngredients);
 		testIngredients = new HashMap<Ingredient, Integer>(testIngredients);
         dummyRecipe = new PermanentRecipe(1,"Dummy", "Dummy Steps", 0, testIngredients);
+        noItems = new HashMap<Recipe, Integer>();
 		testItems = new HashMap<Recipe, Integer>();
 		testItems.put(testRecipe, 3);
-		testOrder = new Order(1, testItems, "TestCustomerName", LocalDateTime.now(), PaymentMethod.CASH);
+		time = LocalDateTime.now();
+		testOrder = new Order(1, testItems, "TestCustomerName", time, PaymentMethod.CASH);
+		nullOrder = new Order(0, noItems, null, null, null);
+		nullOrder.setItems(null);
 	}
 
 	@Test
@@ -177,9 +182,98 @@ public class OrderTest {
 	    Assert.assertEquals(testOrder, copy);	    
 	}
 	
+	@Test
 	public void testCloneIsDeepCopy() {
 	    Order copy = testOrder.clone();
 	    copy.getItems().put(testRecipe, 4);
 	    Assert.assertNotEquals(testOrder, copy);
 	}
+	
+	@Test
+	public void testEqualsIfSame() {
+        Object test2 = testOrder;
+        assertSame(testOrder, test2);
+        assertEquals(testOrder, test2);
+    }
+    
+    @Test 
+    public void testNotEqualsIfNull() {
+        assertNotEquals(nullOrder, null);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentClass() {
+        Object notOrder = new String("not an order");
+        assertNotEquals(testOrder, notOrder);
+    }
+    
+    @Test 
+    public void testNotEqualsIfOnlySelfNullName() {
+        Order other = new Order(0, noItems, "", null, null);
+        other.setItems(null);
+        assertNotEquals(nullOrder, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentName() {
+        Order other = new Order(1, testItems, "blah", time, PaymentMethod.CASH);
+        assertNotEquals(testOrder, other);
+    }
+
+    @Test 
+    public void testNotEqualsIfDifferentID() {
+        Order other = new Order(5, testItems, "TestCustomerName", time, PaymentMethod.CASH);
+        assertNotEquals(testOrder, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfOnlySelfNullItems() {
+        Order other = new Order(0, noItems, null, null, null);
+        assertNotEquals(nullOrder, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentItems() {
+        Order other = new Order(1, noItems, "TestCustomerName", time, PaymentMethod.CASH);
+        assertNotEquals(testOrder, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentPayment() {
+        Order other = new Order(1, testItems, "TestCustomerName", time, PaymentMethod.EFTPOS);
+        assertNotEquals(testOrder, other);
+    }   
+    
+    @Test 
+    public void testNotEqualsIfDifferentPrice() {
+        Order other = new Order(1, testItems, "TestCustomerName", time, PaymentMethod.CASH);
+        other.setPrice((float) 13245436.0);
+        assertNotEquals(testOrder, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfOnlySelfNullTime() {
+        Order other = new Order(0, noItems, null, time, null);
+        other.setItems(null);
+        assertNotEquals(nullOrder, other);
+    }
+    
+    @Test 
+    public void testNotEqualsIfDifferentTime() {
+        Order other = new Order(1, testItems, "TestCustomerName", LocalDateTime.now().plusMinutes(10), PaymentMethod.CASH);
+        assertNotEquals(testOrder, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsNull() {
+        Order other = new Order(0, noItems, null, null, null);
+        other.setItems(null);
+        assertEquals(nullOrder, other);
+    }
+    
+    @Test 
+    public void testEqualsIfAllFieldsEqual() {
+        Order other = new Order(1, testItems, "TestCustomerName", time, PaymentMethod.CASH);
+        assertEquals(testOrder, other);
+    }
 }

@@ -1,22 +1,21 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.model.DataType;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class XMLMenuParserTest {
 
@@ -32,6 +31,7 @@ public class XMLMenuParserTest {
 	public void setUp() throws Exception {
 		persistence = new XMLPersistence();
 		persistence.importFile(new File("resources/data/TestMenu1.xml"), DataType.MENU);
+		Managers.writeBuffer();
 	}
 
 	@Test
@@ -56,17 +56,17 @@ public class XMLMenuParserTest {
 		assertEquals("Should have an item with ID 0", 0, item.getId());
 		assertEquals("Should have an item with name 'Boring Burger'", "Boring Burger", item.getName());
 		assertEquals("Should have an item with description 'Test burger'", "Test burger", item.getDescription());
-		
-		List<PermanentRecipe> variants = item.getVariants();
+
+		Set<PermanentRecipe> variants = item.getVariants();
 		assertEquals("Item should have 2 recipes", 2, variants.size());
-		assertTrue("Item should have a recipe with ID 1000", variants.get(0).getId() == 1000 || variants.get(1).getId() == 1000);
-		assertTrue("Item should have a recipe with ID 1001", variants.get(0).getId() == 1001 || variants.get(1).getId() == 1001);
-		assertTrue("Items should be in the same order as in XML", variants.get(0).getId() == 1000 && variants.get(1).getId() == 1001);
+		assertTrue("Item should have a recipe with ID 1000", variants.stream().anyMatch(variant -> variant.getId() == 1000));
+		assertTrue("Item should have a recipe with ID 1001", variants.stream().anyMatch(variant -> variant.getId() == 1000));
 	}
 	
 	@Test
 	public void testImportMultipleMenus() {
 		persistence.importFile(new File("resources/data/TestMenu2.xml"), DataType.MENU);
+		Managers.writeBuffer();
 		assertTrue("Menu with ID 1 should exist", Managers.getMenuManager().getMenu(1) != null);
 		assertTrue("Menu with ID 2 should exist", Managers.getMenuManager().getMenu(2) != null);
 	}

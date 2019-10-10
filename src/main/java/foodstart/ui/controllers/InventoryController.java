@@ -1,10 +1,5 @@
 package foodstart.ui.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.Set;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
@@ -15,6 +10,7 @@ import foodstart.model.stock.Ingredient;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.FileImporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +24,11 @@ import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Controls the UI for the inventory screen
@@ -155,7 +156,7 @@ public class InventoryController implements Refreshable {
 
 
 	/**
-	 * Asks for confimation then removes selected item, if none selected display warning message
+	 * Asks for confirmation then removes selected item, if none selected display warning message
 	 */
 	public void removeIngredient() {
 		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
@@ -178,14 +179,8 @@ public class InventoryController implements Refreshable {
 	 */
 	public void importIngredients() {
 		Stage stage = (Stage) this.inventoryView.getScene().getWindow();
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Inventory File");
-		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
-		File selectedFile = fileChooser.showOpenDialog(stage);
-		if (selectedFile != null) {
-			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
-			persist.importFile(selectedFile, DataType.INGREDIENT);
-		}
+		FileImporter importer = new FileImporter(stage, "Open Inventory File", DataType.INGREDIENT);
+		importer.execute();
 		refreshTable();
 	}
 

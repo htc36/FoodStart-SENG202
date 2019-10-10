@@ -94,28 +94,43 @@ public class PermanentRecipe extends Recipe {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
         PermanentRecipe other = (PermanentRecipe) obj;
         if (displayName == null) {
-            if (other.displayName != null)
-                return false;
-        } else if (!displayName.equals(other.displayName))
-            return false;
-        if (id != other.id)
-            return false;
-        if (instructions == null) {
-            if (other.instructions != null)
-                return false;
-        } else if (!instructions.equals(other.instructions))
-            return false;
+			if (other.displayName != null) {
+				return false;
+			}
+		} else if (!displayName.equals(other.displayName)) {
+			return false;
+		}
+		if (id != other.id) {
+			return false;
+		}
+		if (instructions == null) {
+			if (other.instructions != null) {
+				return false;
+			}
+		} else if (!instructions.equals(other.instructions)) {
+			return false;
+		}
         return true;
     }
 
+	@Override
+	public int hashCode() {
+		return ((Integer) this.id).hashCode() + ((Float) this.price).hashCode() +
+				((this.displayName == null) ? 0 : this.displayName.hashCode()) +
+				((this.instructions == null) ? 0 : this.instructions.hashCode()) +
+				((super.ingredients == null) ? 0 : this.ingredients.hashCode());
+	}
 	
 	
 }

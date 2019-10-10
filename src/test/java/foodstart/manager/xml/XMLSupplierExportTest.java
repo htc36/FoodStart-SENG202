@@ -1,26 +1,22 @@
 package foodstart.manager.xml;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import foodstart.manager.Managers;
+import foodstart.model.DataType;
+import foodstart.model.PhoneType;
+import foodstart.model.stock.Supplier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import foodstart.manager.Managers;
-import foodstart.manager.stock.SupplierManager;
-import foodstart.model.DataType;
-import foodstart.model.PhoneType;
-import foodstart.model.stock.Supplier;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertTrue;
 
 public class XMLSupplierExportTest {
 
@@ -74,6 +70,7 @@ public class XMLSupplierExportTest {
     private boolean exportedFileMatchesExpected(File exportedFile, Map<Integer, Supplier> expectedSuppliers) {
         Managers.getSupplierManager().removeAllSuppliers();
         persistence.importFile(exportedFile, DataType.SUPPLIER);
+        Managers.writeBuffer();
         Map<Integer, Supplier> actualSuppliers = Managers.getSupplierManager().getSuppliers();
         if (actualSuppliers.size() != expectedSuppliers.size()) {
             return false;

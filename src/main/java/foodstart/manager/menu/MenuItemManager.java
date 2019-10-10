@@ -18,10 +18,16 @@ public class MenuItemManager {
 	private Map<Integer, MenuItem> menuItems;
 
 	/**
+	 * A buffer for putting MenuItems in before writing them to the manager
+	 */
+	private Map<Integer, MenuItem> buffer;
+
+	/**
 	 * Constructs an instance of a menu item manager.
 	 */
 	public MenuItemManager() {
 		this.menuItems = new HashMap<Integer, MenuItem>();
+		this.buffer = new HashMap<Integer, MenuItem>();
 	}
 
 	/**
@@ -32,8 +38,8 @@ public class MenuItemManager {
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
 	 */
-	public void addMenuItem(int id, String name, String description, List<PermanentRecipe> variants) {
-		MenuItem menuItem = new MenuItem(id, name, description, variants);
+	public void addMenuItem(int id, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
+		MenuItem menuItem = new MenuItem(id, name, description, variants, defaultVariant);
 		this.menuItems.put(id, menuItem);
 	}
 
@@ -90,11 +96,7 @@ public class MenuItemManager {
 	 */
 	public float getApproxPrice(int id) {
 		MenuItem item = this.menuItems.get(id);
-		float sum = 0;
-		for (PermanentRecipe recipe : item.getVariants()) {
-			sum += recipe.getPrice();
-		}
-		return sum / item.getVariants().size();
+		return item.getDefault().getPrice();
 	}
 
 	/**
@@ -108,5 +110,69 @@ public class MenuItemManager {
 		for (Menu menu : menus) {
 			menu.removeMenuItem(removed);
 		}
+	}
+
+	public int generateNewId() {
+		return menuItems.keySet().size() == 0 ? 0 : Collections.max(menuItems.keySet()) + 1;
+	}
+
+	public void mutateMenuItem(int id, String name, String description, Set<PermanentRecipe> recipes) {
+		MenuItem menuItem2 = this.menuItems.get(id);
+		if (menuItem2 != null) {
+			menuItem2.setName(name);
+			menuItem2.setDescription(description);
+			menuItem2.setVariants(recipes);
+		}
+	}
+
+	/**
+	 * Pushes a new menu item to the buffer
+	 *
+	 * @param id          the UID of the menu item
+	 * @param name        the name of the menu item
+	 * @param description a description of the menu item
+	 * @param variants    a set of all recipes that make up the menu item
+	 */
+	public void pushToBuffer(int id, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
+		MenuItem menuItem = new MenuItem(id, name, description, variants, defaultVariant);
+		this.buffer.put(id, menuItem);
+	}
+
+	/**
+	 * Adds the current data in the buffer to the modeled menus
+	 */
+	public void writeBuffer() {
+		this.menuItems.putAll(this.buffer);
+		buffer.clear();
+	}
+
+	/**
+	 * Drops the current data in the buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
+	}
+
+	/**
+	 * Returns the set of menu items from the IDs specified.
+	 * Also checks the buffer for items, checking it before the model
+	 *
+	 * @param ids the IDs of the menu items to fetch.
+	 * @return the set of menu items requested.
+	 */
+	public Set<MenuItem> getMenuItemsBuffered(Collection<Integer> ids) {
+		Set<MenuItem> items = new HashSet<MenuItem>();
+		for (int id : ids) {
+			MenuItem item = this.buffer.get(id);
+			if (item != null) {
+				items.add(item);
+			} else {
+				item = this.menuItems.get(id);
+			}
+			if (item != null) {
+				items.add(item);
+			}
+		}
+		return items;
 	}
 }

@@ -1,18 +1,5 @@
 package foodstart.manager.xml;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import foodstart.manager.Managers;
 import foodstart.manager.exceptions.IDLeadsNowhereException;
 import foodstart.manager.menu.MenuManager;
@@ -20,6 +7,15 @@ import foodstart.model.DataType;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Parses menu XML files
@@ -64,8 +60,8 @@ public class XMLMenuParser extends XMLParser {
 								menuItems.add(parseOneMenuItem((Element) menuItemNode));
 							}
 						}
-						Set<MenuItem> items = Managers.getMenuItemManager().getMenuItems(menuItems);
-						Managers.getMenuManager().addMenu(items, menuId, title, description);
+						Set<MenuItem> items = Managers.getMenuItemManager().getMenuItemsBuffered(menuItems);
+						Managers.getMenuManager().pushToBuffer(items, menuId, title, description);
 					}
 				}
 			}
@@ -79,14 +75,16 @@ public class XMLMenuParser extends XMLParser {
 	 * @return the id of the menu item
 	 */
 	private int parseOneMenuItem(Element element) {
+		int defaultVariantId = Integer.parseInt(element.getElementsByTagName("default_id").item(0).getTextContent());
 		int itemId = Integer.parseInt(element.getElementsByTagName("item_id").item(0).getTextContent());
 		String name = element.getElementsByTagName("name").item(0).getTextContent();
 		String description = element.getElementsByTagName("item_description").item(0).getTextContent();
 
 		NodeList recipeIds = element.getElementsByTagName("recipes").item(0).getChildNodes();
-		List<PermanentRecipe> recipes = parseRecipeList(recipeIds);
+		Set<PermanentRecipe> recipes = parseRecipeList(recipeIds);
+		PermanentRecipe defaultVariant = Managers.getRecipeManager().getRecipeBuffer(defaultVariantId);
 
-		Managers.getMenuItemManager().addMenuItem(itemId, name, description, recipes);
+		Managers.getMenuItemManager().pushToBuffer(itemId, name, description, recipes, defaultVariant);
 		return itemId;
 	}
 
@@ -97,13 +95,13 @@ public class XMLMenuParser extends XMLParser {
      * @return Set of recipes
 	 * @throws IDLeadsNowhereException if a recipe from a given ID is not defined
 	 */
-	private List<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
-		List<PermanentRecipe> recipeList = new ArrayList<PermanentRecipe>();
+	private Set<PermanentRecipe> parseRecipeList(NodeList recipeIds) {
+		Set<PermanentRecipe> recipeList = new HashSet<PermanentRecipe>();
 		for (int i = 0; i < recipeIds.getLength(); i++) {
 			Node node = recipeIds.item(i);
 			if (node.getNodeName().equalsIgnoreCase("recipe_id")) {
 				int recipeId = Integer.parseInt(node.getTextContent());
-				PermanentRecipe recipe = Managers.getRecipeManager().getRecipe(recipeId);
+				PermanentRecipe recipe = Managers.getRecipeManager().getRecipeBuffer(recipeId);
 				if (recipe == null) {
 					throw new IDLeadsNowhereException(DataType.RECIPE, recipeId);
 				}
@@ -173,11 +171,15 @@ public class XMLMenuParser extends XMLParser {
 	 */
 	private Element exportMenuItem(Document doc, MenuItem item) {
 		Element itemElement = doc.createElement("item");
-		
+
+		Element defaultId = doc.createElement("default_id");
+		defaultId.appendChild(doc.createTextNode(String.valueOf(item.getDefault().getId())));
+		itemElement.appendChild(defaultId);
+
 		Element itemId = doc.createElement("item_id");
 		itemId.appendChild(doc.createTextNode(String.valueOf(item.getId())));
 		itemElement.appendChild(itemId);
-		
+
 		Element itemName = doc.createElement("name");
 		itemName.appendChild(doc.createTextNode(item.getName()));
 		itemElement.appendChild(itemName);

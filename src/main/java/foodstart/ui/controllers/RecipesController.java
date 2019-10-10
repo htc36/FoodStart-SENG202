@@ -1,11 +1,5 @@
 package foodstart.ui.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
@@ -18,6 +12,7 @@ import foodstart.model.stock.Ingredient;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.FileImporter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +28,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Controls the UI of the recipe management screen
@@ -152,14 +153,8 @@ public class RecipesController implements Refreshable {
 	 */
 	public void importRecipe() {
 		Stage stage = (Stage) this.recipesTableView.getScene().getWindow();
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Recipe File");
-		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
-		File selectedFile = fileChooser.showOpenDialog(stage);
-		if (selectedFile != null) {
-			Persistence persist = Managers.getPersistence(DataFileType.getFromExtensions(fileChooser.getSelectedExtensionFilter().getExtensions()));
-			persist.importFile(selectedFile, DataType.RECIPE);
-		}
+		FileImporter importer = new FileImporter(stage, "Open Recipe File", DataType.RECIPE);
+		importer.execute();
 		refreshTable();
 	}
 
@@ -187,7 +182,7 @@ public class RecipesController implements Refreshable {
 	 */
 	@FXML
 	private void modifyRecipe() {
-		Recipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
+		PermanentRecipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
 		if (recipe == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not modify recipe as none was selected", ButtonType.OK);
 			alert.setHeaderText("No has been selected");
@@ -198,9 +193,24 @@ public class RecipesController implements Refreshable {
 				editPopup.initOwner(this.recipesTableView.getScene().getWindow());
 			}
 			((RecipeEditorController) editLoader.getController()).setRecipeAndFields(recipe);
+			((RecipeEditorController) editLoader.getController()).instructionsDoubleClickListener();
 			editPopup.showAndWait();
 			refreshTable();
 		}
+	}
+	/**
+	 * Calls add recipe popup
+	 */
+	@FXML void addRecipe() {
+        if (editPopup.getOwner() == null) {
+            editPopup.initOwner(this.recipesTableView.getScene().getWindow());
+        }
+		((RecipeEditorController) editLoader.getController()).clearFields();
+        ((RecipeEditorController) editLoader.getController()).instructionsDoubleClickListener();
+        editPopup.showAndWait();
+        refreshTable();
+
+
 	}
 
 }

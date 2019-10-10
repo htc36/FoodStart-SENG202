@@ -18,10 +18,16 @@ public class OrderManager {
 	private Map<Integer, Order> orders;
 
 	/**
+	 * A buffer for putting orders in before writing them to the system
+	 */
+	private Map<Integer, Order> buffer;
+
+	/**
 	 * Constructs a new instance of an order manager
 	 */
 	public OrderManager() {
 		this.orders = new HashMap<Integer, Order>();
+		this.buffer = new HashMap<Integer, Order>();
 	}
 
 	/**
@@ -58,6 +64,14 @@ public class OrderManager {
 		}
 		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
 		this.orders.put(id, order);
+	}
+	
+	/**
+	 * Adds the given Order object to the manager.
+	 * @param targetOrder the Order object to be added to the manager.
+	 */
+	public void addOrder(Order targetOrder) {
+	    orders.put(targetOrder.getId(), targetOrder);
 	}
 
 	/**
@@ -203,6 +217,77 @@ public class OrderManager {
 		} else {
 			return null;
 		}
+	}
+	
+	public void removeAllOrders() {
+	    orders.clear();
+	}
+
+	/**
+	 * Pushes a new order to the buffer
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 */
+	public void pushToBuffer(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod) {
+		if (items == null) {
+			items = new HashMap<Recipe, Integer>();
+		}
+		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
+		this.buffer.put(id, order);
+	}
+
+	/**
+	 * Pushes a new order to the buffer
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 */
+	public void pushToBuffer(int id, Map<Recipe, Integer> items, String customerName, LocalDateTime timePlaced, PaymentMethod paymentMethod) {
+		if (items == null) {
+			items = new HashMap<Recipe, Integer>();
+		}
+		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
+		this.buffer.put(id, order);
+	}
+
+	/**
+	 * Pushes a new order to the buffer
+	 *
+	 * @param id            The identifier code of the order
+	 * @param items         The items that have been ordered and their quantities
+	 * @param customerName  The name of the customer who made the order
+	 * @param timePlaced    The time that the order was placed
+	 * @param paymentMethod The payment method that the customer chose
+	 * @param cost          The total cost of the order
+	 */
+	public void pushToBuffer(int id, Map<Recipe, Integer> items, String customerName, long timePlaced, PaymentMethod paymentMethod, float cost) {
+		if (items == null) {
+			items = new HashMap<Recipe, Integer>();
+		}
+		Order order = new Order(id, items, customerName, timePlaced, paymentMethod, cost);
+		this.buffer.put(id, order);
+	}
+
+	/**
+	 * Adds the current data in the buffer to the modeled orders
+	 */
+	public void writeBuffer() {
+		this.orders.putAll(this.buffer);
+		buffer.clear();
+	}
+
+	/**
+	 * Drops the current data in the buffer
+	 */
+	public void dropBuffer() {
+		this.buffer.clear();
 	}
 }
 
