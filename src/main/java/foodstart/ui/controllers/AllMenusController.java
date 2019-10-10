@@ -156,6 +156,7 @@ public class AllMenusController implements Refreshable {
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setScene(addScene);
 		addPopup.showAndWait();
+		refreshTable();
 	}
 
 

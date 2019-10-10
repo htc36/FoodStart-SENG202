@@ -289,7 +289,11 @@ public class AddMenuController {
 
 
     public void onAddToMenus() {
-        if (isValidMenuItems() && isValidMenuName()) {
+        if (observableCurrentItems.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot add menu because there are no menu items");
+            alert.setHeaderText("No menu items");
+            alert.showAndWait();
+        } else if (isValidMenuItems() && isValidMenuName()) {
             MenuManager menuManager = Managers.getMenuManager();
             menuManager.addMenu(currentMenuItems, newMenuId, nameTextField.getText(), descriptionTextField.getText());
             closeSelf();
