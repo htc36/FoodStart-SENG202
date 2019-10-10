@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -129,6 +130,17 @@ public class CreateOrderController implements Refreshable {
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
 		
 		orderTable.setPlaceholder(new Text("No items in this order, add one on the left"));
+		
+		orderTable.setRowFactory( tv -> {
+		    TableRow<Recipe> row = new TableRow<>();
+		    row.setOnMouseClicked(event -> {
+		        if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+		            Recipe rowData = row.getItem();
+		            modifyItem(rowData);
+		        }
+		    });
+		    return row ;
+		});
 	}
 
 	/**
@@ -245,34 +257,42 @@ public class CreateOrderController implements Refreshable {
 	 */
 	public void onModifyItem() {
 		for (Recipe originalrecipe : orderTable.getSelectionModel().getSelectedItems()) {
-			editSessions++;
-			new RecipeBuilder(originalrecipe, orderBuilder.getQuantity(originalrecipe), new RecipeBuilderRunnable() {
-				@Override
-				public boolean onRecipeComplete(Recipe recipe, int quantity) {
-					if (quantity == 0) {
-						orderBuilder.setEditing(recipe, false);
+			modifyItem(originalrecipe);
+		}
+	}
+	
+	/**
+	 * When the popup to modify an item should be created
+	 * @param originalrecipe Recipe to be modified
+	 */
+	private void modifyItem(Recipe originalrecipe) {
+		editSessions++;
+		new RecipeBuilder(originalrecipe, orderBuilder.getQuantity(originalrecipe), new RecipeBuilderRunnable() {
+			@Override
+			public boolean onRecipeComplete(Recipe recipe, int quantity) {
+				if (quantity == 0) {
+					orderBuilder.setEditing(recipe, false);
+					editSessions--;
+					return true;
+				} else {
+					if (orderBuilder.canAddItem(recipe, quantity)) {
+						orderBuilder.setEditing(originalrecipe, false);
+						orderBuilder.removeItem(originalrecipe);
+						orderBuilder.addItem(recipe, quantity);
+						updateOrderItems();
 						editSessions--;
 						return true;
 					} else {
-						if (orderBuilder.canAddItem(recipe, quantity)) {
-							orderBuilder.setEditing(originalrecipe, false);
-							orderBuilder.removeItem(originalrecipe);
-							orderBuilder.addItem(recipe, quantity);
-							updateOrderItems();
-							editSessions--;
-							return true;
-						} else {
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Insufficient Stock");
-							alert.setHeaderText("Cannot modify this item as there is insufficient stock");
-							alert.setContentText("Modify the order and try again");
-							alert.show();
-							return false;
-						}
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Insufficient Stock");
+						alert.setHeaderText("Cannot modify this item as there is insufficient stock");
+						alert.setContentText("Modify the order and try again");
+						alert.show();
+						return false;
 					}
 				}
-			}, orderBuilder);
-		}
+			}
+		}, orderBuilder);
 	}
 
 	@Override
