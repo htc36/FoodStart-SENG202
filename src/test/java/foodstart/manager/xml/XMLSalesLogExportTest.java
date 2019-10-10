@@ -61,6 +61,8 @@ public class XMLSalesLogExportTest {
         persistence = new XMLPersistence();
         expectedOrders = new HashMap<Integer, Order>();
         actualOrders = Managers.getOrderManager().getOrders();
+        XMLPersistence dtdCopier = (XMLPersistence) persistence;
+        dtdCopier.copyDTDFiles(new File(DIRECTORY), true);
     }
 
     @After
