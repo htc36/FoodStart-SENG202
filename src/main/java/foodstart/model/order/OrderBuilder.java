@@ -175,12 +175,6 @@ public class OrderBuilder {
 		for (Recipe item : currentOrder.keySet()) {
 			if (editing.contains(item))
 				continue;
-			for (Ingredient i : item.getIngredients().keySet()) {
-				System.out.println("Hashes:");
-				System.out.println(i.hashCode() == ingredient.hashCode());
-				System.out.println("contains:");
-				System.out.println(item.getIngredients());
-			}
 			if (item.getIngredients().containsKey(ingredient)) {
 				required += item.getIngredients().get(ingredient) * currentOrder.get(item);
 			}
