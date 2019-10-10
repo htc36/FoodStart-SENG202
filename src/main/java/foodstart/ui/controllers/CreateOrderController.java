@@ -127,6 +127,8 @@ public class CreateOrderController implements Refreshable {
 			orderPaymentMethod.getItems().add(method.getNiceName());
 		}
 		orderPaymentMethod.setValue(PaymentMethod.values()[0].getNiceName());
+		
+		orderTable.setPlaceholder(new Text("No items in this order, add one on the left"));
 	}
 
 	/**
