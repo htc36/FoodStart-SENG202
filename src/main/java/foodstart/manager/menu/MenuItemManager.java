@@ -116,12 +116,13 @@ public class MenuItemManager {
 		return menuItems.keySet().size() == 0 ? 0 : Collections.max(menuItems.keySet()) + 1;
 	}
 
-	public void mutateMenuItem(int id, String name, String description, Set<PermanentRecipe> recipes) {
+	public void mutateMenuItem(int id, String name, String description, Set<PermanentRecipe> recipes, PermanentRecipe defaultVariant) {
 		MenuItem menuItem2 = this.menuItems.get(id);
 		if (menuItem2 != null) {
 			menuItem2.setName(name);
 			menuItem2.setDescription(description);
 			menuItem2.setVariants(recipes);
+			menuItem2.setDefaultVariant(defaultVariant);
 		}
 	}
 

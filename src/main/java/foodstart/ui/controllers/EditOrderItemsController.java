@@ -7,6 +7,7 @@ import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.RecipeStringConverter;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -21,7 +22,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
@@ -31,25 +31,6 @@ import java.util.*;
  * Controls the UI of the edit order items screen
  */
 public class EditOrderItemsController implements Refreshable {
-	/**
-	 * Converts a recipe to a string
-	 */
-	static class RecipeStringConverter extends StringConverter<PermanentRecipe> {
-		@Override
-		public String toString(PermanentRecipe recipe) {
-			if (recipe == null) {
-				return "Please select a recipe";
-			} else {
-				return recipe.getDisplayName();
-			}
-		}
-
-		@Override
-		public PermanentRecipe fromString(String s) {
-			return Managers.getRecipeManager().getRecipeByDisplayName(s);
-		}
-	}
-
 	/**
 	 * Button for confirming input
 	 */
@@ -168,6 +149,7 @@ public class EditOrderItemsController implements Refreshable {
 		this.recipesComboBox.setItems(FXCollections.observableArrayList(recipesSet));
 		this.recipesComboBox.setCellFactory(ComboBoxListCell.forListView(new RecipeStringConverter()));
 		this.recipesComboBox.setConverter(new RecipeStringConverter());
+		this.recipesComboBox.setPlaceholder(new Label("Please add a recipe"));
 	}
 
 	/**

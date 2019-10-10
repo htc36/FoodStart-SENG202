@@ -6,6 +6,7 @@ import foodstart.manager.menu.RecipeManager;
 import foodstart.model.menu.MenuItem;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.ui.Refreshable;
+import foodstart.ui.util.RecipeStringConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -132,6 +134,9 @@ public class MenuItemEditorController implements Refreshable {
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
 		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
 		defaultVariantCB.setItems(observableRecipes);
+		defaultVariantCB.setConverter(new RecipeStringConverter());
+		defaultVariantCB.setCellFactory(ComboBoxListCell.forListView(new RecipeStringConverter()));
+		defaultVariantCB.setPlaceholder(new Label("Please add a recipe"));
 		recipesTable.setPlaceholder(new Label("No recipes in this menu item, please add some using 'Add Recipe'"));
 	}
 
@@ -150,6 +155,7 @@ public class MenuItemEditorController implements Refreshable {
 		nameInput.clear();
 		descriptionInput.clear();
 		recipesSet.clear();
+		defaultVariantCB.getSelectionModel().clearSelection();
 		refreshTable();
 	}
 
@@ -162,6 +168,7 @@ public class MenuItemEditorController implements Refreshable {
 		recipesSet.clear();
 		recipesSet.addAll(menuItem.getVariants());
 		refreshTable();
+		defaultVariantCB.getSelectionModel().select(menuItem.getDefault());
 	}
 
 
@@ -201,13 +208,17 @@ public class MenuItemEditorController implements Refreshable {
 			Alert alert = new Alert(Alert.AlertType.ERROR, "The description field must have an input", ButtonType.OK);
 			alert.setHeaderText("Description field empty");
 			alert.showAndWait();
+		} else if (defaultVariantCB.getSelectionModel().isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "A default variant must be selected", ButtonType.OK);
+			alert.setHeaderText("No default variant");
+			alert.showAndWait();
 		} else {
 			MenuItemManager manager = Managers.getMenuItemManager();
 			Set<PermanentRecipe> recipesList = new HashSet<PermanentRecipe>();
 			recipesList.addAll(recipesSet);
 			PermanentRecipe defaultVariant = defaultVariantCB.getValue();
 			if (manager.getMenuItems().containsKey(id)) {
-				manager.mutateMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList);
+				manager.mutateMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList, defaultVariant);
 			}else {
 				manager.addMenuItem(id, nameInput.getText(), descriptionInput.getText(), recipesList, defaultVariant);
 			}
