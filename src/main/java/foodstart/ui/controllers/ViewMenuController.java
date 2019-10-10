@@ -348,7 +348,7 @@ public class ViewMenuController {
      * for the current menu
      */
     public void onApplyChanges() {
-        if (menuNameText.getText().isEmpty()) {
+        if (menuNameTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "THere is no menu title!");
             alert.setHeaderText("No menu title");
             alert.showAndWait();
@@ -364,11 +364,9 @@ public class ViewMenuController {
                 Menu currentMenu = menuManager.getMenu(menuId);
                 currentMenuItems.clear();
                 currentMenuItems.addAll(observableCurrentItems);
-                //menuManager.removeMenu(menuId);
                 currentMenu.setTitle(menuNameTextField.getText());
                 currentMenu.setDescription(MenuDescriptionTextArea.getText());
                 currentMenu.setMenuItems(currentMenuItems);
-                //menuManager.addMenu(currentMenuItems, currentMenu.getId(), currentMenu.getTitle(), currentMenu.getDescription());
                 alert.setTitle("Changes applied");
                 alert.setContentText("Changes made have been applied");
                 changed = false;
