@@ -186,7 +186,7 @@ public class RecipeBuilderController implements Refreshable {
 				} else {
 					Ingredient ingredient = Managers.getIngredientManager().getIngredient(item);
 					if (ingredient != null) {
-						Button removeButton = new Button("Remove");
+						Button removeButton = new Button("X");
 						removeButton.setPrefWidth(80);
 						removeButton.setPrefHeight(40);
 						removeButton.setOnAction((event) -> {

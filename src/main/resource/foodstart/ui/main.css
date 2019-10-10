@@ -54,3 +54,29 @@
     -fx-background-color: #0097A7;
     -fx-text-fill: white;
 }
+
+.button {
+	-fx-font-size: 14pt;
+}
+
+.button, .combo-box, .increment-arrow-button, .decrement-arrow-button {
+	-fx-border-width: 1px;
+	-fx-background-radius: 6px;
+	-fx-border-radius: 6px;
+	-fx-border-color: white;
+	-fx-background-color: linear-gradient(#00838F 0%, #006064 100%);
+	-fx-text-fill: white;
+}
+
+.increment-arrow, .arrow, .decrement-arrow {
+	-fx-background-color: white;
+}
+.increment-arrow-button, .decrement-arrow-button {
+	-fx-border-width: 0;
+	-fx-border-radius: 0;
+	-fx-background-radius: 2px;
+}
+
+.list-cell {
+	-fx-text-fill: white;
+}
