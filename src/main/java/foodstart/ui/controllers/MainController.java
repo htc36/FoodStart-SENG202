@@ -113,7 +113,7 @@ public class MainController {
 	 * Shows the manage menu items screen
 	 */
 	public void showManageMenuItems() {
-		rootPane.setCenter(manageMenuItems.getRoot());
+		changeView(manageMenuItems);
 	}
 
 	/**

@@ -82,7 +82,7 @@ public class ViewMenuController {
      * The list of menu items in the current menu that will be displayed in the table
      */
     private ObservableList<MenuItem> observableCurrentItems;
-    
+
     /**
      * The list of menu items available to be added to the menu that will be displayed in the table
      */
@@ -115,7 +115,7 @@ public class ViewMenuController {
      * A boolean to keep track of whether changes have been made to the tables or not
      */
     private boolean changed = false;
-    
+
 
     /**
      * Called when a menu box is clicked to be viewed
@@ -154,14 +154,14 @@ public class ViewMenuController {
         populateCurrentMenuTable();
         populateAllMenuItemsTable();
     }
-    
+
     /**
      * Called to set the current menu items in the menu
      */
     private void setCurrentMenuItems(Menu menu) {
         currentMenuItems = menu.getMenuItems();
     }
-    
+
     /**
      * Called to set the available menu items to be added to the menu
      */
@@ -328,10 +328,14 @@ public class ViewMenuController {
      * for the current menu
      */
     public void onApplyChanges() {
-        if (observableCurrentItems.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "There are no menu items in the menu!");
-                alert.setHeaderText("No menu items");
-                alert.showAndWait();
+        if (menuNameText.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "THere is no menu title!");
+            alert.setHeaderText("No menu title");
+            alert.showAndWait();
+        } else if (observableCurrentItems.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "There are no menu items in the menu!");
+            alert.setHeaderText("No menu items");
+            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
