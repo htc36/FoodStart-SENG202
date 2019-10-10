@@ -88,8 +88,6 @@ public class XMLSalesLogParserTest {
         Managers.writeBuffer();
         for (Integer id: expectedOrders.keySet()) {
             Order expected = expectedOrders.get(id), actual = actualOrders.get(id);
-            System.out.println(expected.getItems());
-            System.out.println(actual.getItems());
             assertEquals(String.format("Normal data ID%d import test", id), expected, actual);
         }
     }
