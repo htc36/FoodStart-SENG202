@@ -244,9 +244,9 @@ public class CreateOrderController implements Refreshable {
 	 * JavaFX calls this when the Modify button is clicked
 	 */
 	public void onModifyItem() {
-		for (Recipe recipe : orderTable.getSelectionModel().getSelectedItems()) {
+		for (Recipe originalrecipe : orderTable.getSelectionModel().getSelectedItems()) {
 			editSessions++;
-			new RecipeBuilder(recipe, orderBuilder.getQuantity(recipe), new RecipeBuilderRunnable() {
+			new RecipeBuilder(originalrecipe, orderBuilder.getQuantity(originalrecipe), new RecipeBuilderRunnable() {
 				@Override
 				public boolean onRecipeComplete(Recipe recipe, int quantity) {
 					if (quantity == 0) {
@@ -255,8 +255,8 @@ public class CreateOrderController implements Refreshable {
 						return true;
 					} else {
 						if (orderBuilder.canAddItem(recipe, quantity)) {
-							orderBuilder.setEditing(recipe, false);
-							orderBuilder.removeItem(recipe);
+							orderBuilder.setEditing(originalrecipe, false);
+							orderBuilder.removeItem(originalrecipe);
 							orderBuilder.addItem(recipe, quantity);
 							updateOrderItems();
 							editSessions--;
