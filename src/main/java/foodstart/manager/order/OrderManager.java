@@ -65,6 +65,14 @@ public class OrderManager {
 		Order order = new Order(id, items, customerName, timePlaced, paymentMethod);
 		this.orders.put(id, order);
 	}
+	
+	/**
+	 * Adds the given Order object to the manager.
+	 * @param targetOrder the Order object to be added to the manager.
+	 */
+	public void addOrder(Order targetOrder) {
+	    orders.put(targetOrder.getId(), targetOrder);
+	}
 
 	/**
 	 * Constructs and adds an order to the map of all orders

@@ -189,7 +189,6 @@ public class Ingredient {
 
     @Override
     public boolean equals(Object obj) {
-	    System.out.println("1");
         if (this == obj)
             return true;
         if (obj == null)
@@ -197,7 +196,6 @@ public class Ingredient {
         if (getClass() != obj.getClass())
             return false;
         Ingredient other = (Ingredient) obj;
-	    System.out.println("2");
 	    if (id != other.id)
             return false;
         if (kitchenStock != other.kitchenStock)

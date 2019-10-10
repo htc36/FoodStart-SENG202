@@ -101,17 +101,7 @@ public class OrderBuilderTest {
     @Test
     public void testCanAddExcessItems() {
         testBuilder.addItem(prMaxAvailable, 2);
-        //assertFalse(testBuilder.canAddItem(prMaxAvailable, MAX_USES));
-        HashMap<Ingredient, Integer> a = new HashMap<Ingredient, Integer>();
-        HashMap<MenuItem, Integer> b = new HashMap<MenuItem, Integer>();
-        a.put(ingrFull, 1);
-        for (Ingredient i: prMaxAvailable.getIngredients().keySet()) {
-            System.out.println(prMaxAvailable.getIngredients().containsKey(i));
-        }
-        Set<PermanentRecipe> bSet = new HashSet<PermanentRecipe>();
-        bSet.add((PermanentRecipe) prMaxAvailable);
-        MenuItem bKey = new MenuItem(0, "", "", bSet, (PermanentRecipe) prMaxAvailable);
-        
+        assertFalse(testBuilder.canAddItem(prMaxAvailable, MAX_USES));        
     }
     
     @Test
@@ -217,8 +207,6 @@ public class OrderBuilderTest {
         testBuilder.addItem(prMaxAvailable, countPRMax);
         testBuilder.addItem(prSomeAvailable, countPRSome);
         int expectedCheese = (countPRMax + countPRSome) * QTY_USED, expectedPotato = countPRSome * QTY_USED;
-        //System.out.println(testBuilder.calculateRequiredStock(ingrFull));
-        //System.out.println(testBuilder.currentOrder);
         assertEquals(expectedCheese, testBuilder.calculateRequiredStock(ingrFull));
         assertEquals(expectedPotato, testBuilder.calculateRequiredStock(ingrSome));
     }
@@ -231,8 +219,6 @@ public class OrderBuilderTest {
         testBuilder.addItem(prSomeAvailable, countPRSome);
         testBuilder.setEditing(prMaxAvailable, true);
         int expectedCheese = countPRSome * QTY_USED, expectedPotato = countPRSome * QTY_USED;
-        //System.out.println(testBuilder.currentOrder);
-        //System.out.println(testBuilder.calculateRequiredStock(ingrFull));
         assertEquals(expectedCheese, testBuilder.calculateRequiredStock(ingrFull));
         assertEquals(expectedPotato, testBuilder.calculateRequiredStock(ingrSome));
     }

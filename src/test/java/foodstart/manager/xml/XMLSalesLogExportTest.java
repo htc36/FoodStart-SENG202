@@ -1,9 +1,19 @@
 package foodstart.manager.xml;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
-import foodstart.manager.exceptions.IDLeadsNowhereException;
-import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.manager.menu.RecipeManager;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DataType;
@@ -14,25 +24,18 @@ import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.Recipe;
 import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * @author Alan Wang
+ *
+ */
+public class XMLSalesLogExportTest {
 
-import static org.junit.Assert.*;
-
-public class XMLSalesLogParserTest {
-    
     Persistence persistence;
     File dataFile;
     Map<Integer, Order> expectedOrders = new HashMap<Integer, Order>();
     Map<Integer, Order> actualOrders;
-    static final String DIRECTORY = "resources/data/sales_log_xml_files/", PREFIX = "SalesLogParserTestData";
+    static final String DIRECTORY = "resources/exported_test_files/", PREFIX = "SalesLogExportTest";
     static IngredientManager ingredientManager;
     static RecipeManager recipeManager;
     
@@ -83,59 +86,31 @@ public class XMLSalesLogParserTest {
         return expectedMap;
     }
     
+    private Map<Integer, Order> importExportedData(File exportedData) {
+        Managers.getOrderManager().removeAllOrders();
+        persistence.importFile(exportedData, DataType.SALES_LOG);
+        Managers.writeBuffer();
+        return Managers.getOrderManager().getOrders();
+    }
+
     @Test
-    public void testImportNormalSalesLog() {
+    public final void testExportSalesLogNormalData() {
         expectedOrders = buildNormalSalesLog();
+        for (Order order : expectedOrders.values()) {
+            Managers.getOrderManager().addOrder(order);
+        }
         dataFile = new File(DIRECTORY + PREFIX + "Normal.xml");
-        persistence.importFile(dataFile, DataType.SALES_LOG);
-        Managers.writeBuffer();
-        for (Integer id: expectedOrders.keySet()) {
-            Order expected = expectedOrders.get(id), actual = actualOrders.get(id);
-            assertEquals(String.format("Normal data ID%d import test", id), expected, actual);
-        }
+        persistence.exportFile(dataFile, DataType.SALES_LOG);
+        actualOrders = importExportedData(dataFile);
+        assertEquals(expectedOrders, actualOrders);
     }
     
     @Test
-    public void testImportEmptySalesLog() {
-        dataFile = new File(DIRECTORY + PREFIX + "Empty.xml");
-        persistence.importFile(dataFile, DataType.SALES_LOG);
-        Managers.writeBuffer();
-        assertEquals(0, actualOrders.size());
+    public final void testExportSalesLogEmptyData() {
+        dataFile = new File(DIRECTORY + PREFIX + "Normal.xml");
+        persistence.exportFile(dataFile, DataType.SALES_LOG);
+        actualOrders = importExportedData(dataFile);
+        assertEquals(expectedOrders, actualOrders);
     }
-    
-    @Test
-    public void testImportBadFormatSalesLog() {
-        boolean threwException = false;
-        try {
-            dataFile = new File(DIRECTORY + PREFIX + "BadFormat.xml");
-            persistence.importFile(dataFile, DataType.SALES_LOG);
-        } catch (ImportFailureException e) {
-            threwException = true;
-        }
-        assertTrue(threwException);
-    }
-    
-    @Test
-    public void testImportBadForeignKeysSalesLog() {
-        boolean threwException = false;
-        try {
-            dataFile = new File(DIRECTORY + PREFIX + "BadForeignKeys.xml");
-            persistence.importFile(dataFile, DataType.SALES_LOG);
-        } catch (IDLeadsNowhereException e) {
-            threwException = true;
-        }
-        assertTrue(threwException);
-    }
-    
-    @Test
-    public void testImportNonIntegerIDSalesLog() {
-        boolean threwException = false;
-        try {
-            dataFile = new File(DIRECTORY + PREFIX + "NonIntegerID.xml");
-            persistence.importFile(dataFile, DataType.SALES_LOG);
-        } catch (NumberFormatException e) {
-            threwException = true;
-        }
-        assertTrue(threwException);
-    }
+
 }

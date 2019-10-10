@@ -2,7 +2,7 @@
 <!DOCTYPE sales SYSTEM "sales_log.dtd" >
 <sales>
 	<sale>
-		<id>1</id>
+		<id>not an integer</id>
 		<name>Jom</name>
 		<date>668512349</date>
 		<cost>15.50</cost>

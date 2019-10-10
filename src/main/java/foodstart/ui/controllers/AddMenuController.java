@@ -1,6 +1,7 @@
 package foodstart.ui.controllers;
 
 import foodstart.manager.Managers;
+import foodstart.manager.menu.MenuManager;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
 import javafx.collections.FXCollections;
@@ -20,11 +21,6 @@ import java.util.Set;
  * Controls the UI for the add menu screen
  */
 public class AddMenuController {
-    /**
-     * Table for menu items in menu
-     */
-    @FXML
-    private Text menuNameText;
     /**
      * Table for the available menu items that are not already in the current menu
      */
@@ -105,6 +101,11 @@ public class AddMenuController {
      * A boolean to keep track of whether changes have been made to the tables or not
      */
     private boolean changed = false;
+    /**
+     * Error label to display any invalid entries
+     */
+    @FXML
+    private Label errorLabel;
 
     public void initialize() {
 
@@ -260,8 +261,49 @@ public class AddMenuController {
         }
     }
 
-    public void onAddToMenus() {
+    /**
+     * Checks if the menu name text field is valid
+     * @return if the menu name is valid or not
+     */
+    private Boolean isValidMenuName() {
+        if (nameTextField.getText().isEmpty()) {
+            errorLabel.setText("Menu name field cannot be empty");
+            errorLabel.setVisible(true);
+            return false;
+        } else {
+            errorLabel.setVisible(false);
+            return true;
+        }
+    }
 
+    private Boolean isValidMenuItems() {
+        if (currentMenuItems.isEmpty()) {
+            errorLabel.setText("There must be menu items in your new menu");
+            errorLabel.setVisible(true);
+            return false;
+        } else {
+            errorLabel.setVisible(false);
+            return true;
+        }
+    }
+
+
+    public void onAddToMenus() {
+        if (observableCurrentItems.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot add menu because there are no menu items");
+            alert.setHeaderText("No menu items");
+            alert.showAndWait();
+        } else if (isValidMenuItems() && isValidMenuName()) {
+            MenuManager menuManager = Managers.getMenuManager();
+            menuManager.addMenu(currentMenuItems, newMenuId, nameTextField.getText(), descriptionTextField.getText());
+            closeSelf();
+            clearFields();
+        }
+    }
+
+    public void clearFields() {
+        nameTextField.clear();
+        descriptionTextField.clear();
     }
 
     /**
