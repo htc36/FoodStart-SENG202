@@ -342,7 +342,20 @@ public class RecipeEditorController implements Refreshable {
 			Alert alert = new Alert(Alert.AlertType.ERROR, "There must be at least one ingredient in the recipe", ButtonType.OK);
 			alert.setHeaderText("No ingredients selected");
 			alert.showAndWait();
-		} else {
+		} else if (nameInput.getText().isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "The recipe must have a name", ButtonType.OK);
+			alert.setHeaderText("No name selected");
+			alert.showAndWait();
+		} else if (instructionsInput.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The recipe must have instructions", ButtonType.OK);
+            alert.setHeaderText("Instructions field empty");
+            alert.showAndWait();
+		} else if (priceInput.getText().isEmpty()) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "There recipe must have a price", ButtonType.OK);
+			alert.setHeaderText("Price field empty");
+			alert.showAndWait();
+		}
+		else {
 			RecipeManager manager = Managers.getRecipeManager();
 			if (manager.idExists(id)) {
 				manager.mutateRecipe(id, nameInput.getText(), instructionsInput.getText(), Float.parseFloat(priceInput.getText()), ingredients);

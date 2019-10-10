@@ -163,8 +163,22 @@ public class InventorySteps {
 
     @Then("The dietary requirement for {string} will have {string}")
     public void theDietaryRequirementForWillHave(String ingredientName, String dietaryRequirement) {
-        DietaryRequirement dietaryFlag = DietaryRequirement.matchDietaryRequirement(dietaryRequirement);
         Map<DietaryRequirement, Boolean> dietaryFlags = ingredientManager.getIngredientByName(ingredientName).getSafeFor();
-        assertTrue(dietaryFlags.get(dietaryFlag));
+        
+        List<String> listOfRequirements = Arrays.asList(dietaryRequirement.split(","));
+        for (String requirement : listOfRequirements) {
+        	assertTrue(dietaryFlags.get(DietaryRequirement.matchDietaryRequirement(requirement)));
+        }
     }
+    
+    @Then("The unit type for {string} is {string}")
+    public void theUnitTypeForIs(String ingredientName, String unitType) {
+        Unit unit = Unit.matchUnit(unitType);
+        Ingredient ingredient = ingredientManager.getIngredientByName(ingredientName);
+        assertEquals(ingredient.getUnit(), unit);
+    }
+    
+    
+    
+    
 }
