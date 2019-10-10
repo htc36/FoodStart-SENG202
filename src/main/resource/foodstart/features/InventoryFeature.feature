@@ -1,19 +1,12 @@
 Feature: Inventory feature
     Scenarios involving Ingredients
 
-    @skip_scenario
+    @skip_scenario # Manually Tested
     Scenario: View inventory(UC7)
         Given There are 2 ingredients in the inventory
         And An employee wants to view the 2 ingredients stored inventory
         When The inventory is displayed
         Then The ID, name, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
-
-
-    @skip_scenario # This scenario is not currently relevant
-    Scenario: Check ingredients that are low in quantity (UC7)
-        Given The list of ingredients are shown
-        When Ingredients are filtered out by stock
-        Then The ingredients will be displayed in ascending order of stocks available
 
 
     Scenario: Adding an ingredient to the list (UC12)
@@ -62,27 +55,33 @@ Feature: Inventory feature
         Then The truck stock for "Mayo" is 15
 
 
-    @skip_scenario
-    Scenario: Make an item unavailable due to an ingredient being sold out (UC4)
-        Given That ingredient "Lettuce" is in the inventory
-        And Its truck stock is 0
-        When An order is placed containing the ingredient "Lettuce"
-        Then An InsufficientStockException is thrown
+	
+	# Scenarios relating to editing the different fields of an ingredient
+	
+	@skip_scenario
+	Scenario: Editing the attributes of an ingredient in the inventory (UC12)
+		Given THere are 3 ingredients in the inventory
+		And The ingredient "Cucumber" is in the inventory"
+		And The ingredient's ID number is 3
+		When The ingredient with ID 3 has it's "Name,truck stock,kitchen stock" edited to be "Mushroom,300,500"
+		Then It will be stored under "Mushroom" in the inventory
+		And The truck stock for "Mushroom" is 300
+		And The kitchen stock for "Mushroom" is 500
 
-
-    @skip_scenario
-    Scenario: Editing an item in the inventory (UC12)
-        Given That ingredient "Mushroom" is in the inventory
-        And Its unit type is "GRAMS"
-        And Its truck stock is 50
-        And Its kitchen stock is 250
-        And Its dietary requirement is "VEGETARIAN"
-        And Its dietary requirement is "VEGAN"
-        When "Mushroom" is selected and its name is edited to "Fungus"
-        And Its unit type is changed to "UNITS"
-        And Its truck stock is changed to 25
-        And Its kitchen stock is changed to 200
-        And Its dietary requirement is changed to "NUT-FREE"
-        Then It will be stored under "Fungus" in the inventory with the changed fields
-
+	@skip_scenario
+    Scenario: Editing the name of an item in the inventory (UC12)
+    	Given There are 3 ingredients in the inventory
+    	And The ingredient "Cucumber" is in the inventory
+    	And The ingredient's ID number is 3
+    	When "Cucumber" is selected and edited so it's name is now "Gherkin"
+    	Then It will be stored under "Gherkin" in the inventory
+    	And The ID of "Gherkin" is 3
+    	
+	@skip_scenario
+    Scenario: Editing the truck stock of an item in the inventory (UC12) 
+        Given The ingredient "Cucumber" is in the inventory
+        And Its truck stock is 10
+        When "Cucumber" is selected and edited so it now has 300 in the truck stock
+        Then The ingredient "Cucumber" will have a truck stock of 300
+        
  
