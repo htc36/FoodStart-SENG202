@@ -42,7 +42,8 @@ Feature: Inventory feature
 		Given There are 3 ingredients in the inventory
 		And The ingredient "Edam Cheese" is in the inventory
 		And The ingredient's ID number is 0
-		When The attributes of the ingredient with ID 0 is edited by will either be the same or changed to their edited values
+		When The attributes of the ingredient with ID 0 is edited
+		Then it will either be the same or changed to their edited values
 		
 	# Scenarios relating to removing ingredients from the inventory (UC12)
 	

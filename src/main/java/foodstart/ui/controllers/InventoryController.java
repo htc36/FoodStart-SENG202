@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -94,6 +95,8 @@ public class InventoryController implements Refreshable {
 	public void initialize() {
 		editLoader = new FXMLLoader(getClass().getResource("editIngredient.fxml"));
 		addLoader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
+		inventoryView.setPlaceholder(new Text("There are no ingredients in the inventory. Import or add new ingredients below."));
+
 
 		try {
 			editLoader.load();
@@ -161,7 +164,7 @@ public class InventoryController implements Refreshable {
 	public void removeIngredient() {
 		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
 		if (ingredient == null) {
-			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not ingredient as none was selected", ButtonType.OK);
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove ingredient as none was selected", ButtonType.OK);
 			alert.setHeaderText("No ingredient selected");
 			alert.showAndWait();
 		} else {

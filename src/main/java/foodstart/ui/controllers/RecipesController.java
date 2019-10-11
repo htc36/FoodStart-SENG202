@@ -24,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -92,6 +93,7 @@ public class RecipesController implements Refreshable {
 	 */
 	@FXML
 	public void initialize() {
+		recipesTableView.setPlaceholder(new Text("There are no recipes. Import or add new recipes below."));
 		try {
 			editLoader = new FXMLLoader(getClass().getResource("PermanentRecipeEditor.fxml"));
 			editFXML = editLoader.load();
