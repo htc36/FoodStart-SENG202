@@ -2,6 +2,7 @@ package foodstart.ui.controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,12 +74,12 @@ public class AnalysisController implements Refreshable {
 			}
 		});
 		
-		((ValueAxis<Number>) mainchart.getYAxis()).setAutoRanging(true);
+		((ValueAxis<Number>) mainchart.getYAxis()).setAutoRanging(false);
 		((ValueAxis<Number>) mainchart.getXAxis()).setAutoRanging(false);
 		((NumberAxis) mainchart.getYAxis()).setForceZeroInRange(true);
 		
-		mainchart.getXAxis().setAnimated(false);
-		mainchart.getYAxis().setAnimated(false);
+		mainchart.getXAxis().setAnimated(true);
+		mainchart.getYAxis().setAnimated(true);
 		
 		XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
 		mainchart.getData().clear();
@@ -96,6 +97,8 @@ public class AnalysisController implements Refreshable {
 		int backDays = 365;
 		long backDay = 0;
 		Map<Long, Float> salesSummary = new HashMap<Long, Float>();
+		float greatest = 10.0F;
+		
 		switch (chartType) {
 		case SALES_DOLLAR_MONTH:
 			backDays = 30;
@@ -114,9 +117,7 @@ public class AnalysisController implements Refreshable {
 					}
 				}
 			}
-			for (Map.Entry<Long, Float> entry : salesSummary.entrySet()) {
-				series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
-			}
+			greatest = Collections.max(salesSummary.values());
 			
 			((ValueAxis<Number>) mainchart.getXAxis()).setLowerBound(backDay);
 			((ValueAxis<Number>) mainchart.getXAxis()).setUpperBound(backDay + backDays);
@@ -139,9 +140,7 @@ public class AnalysisController implements Refreshable {
 					}
 				}
 			}
-			for (Map.Entry<Long, Float> entry : salesSummary.entrySet()) {
-				series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
-			}
+			greatest = Collections.max(salesSummary.values());
 			
 			((ValueAxis<Number>) mainchart.getXAxis()).setLowerBound(backDay);
 			((ValueAxis<Number>) mainchart.getXAxis()).setUpperBound(backDay + backDays);
@@ -151,6 +150,18 @@ public class AnalysisController implements Refreshable {
 			break;
 		}
 		
+		for (XYChart.Data<Number, Number> data : series.getData()) {
+			if (salesSummary.containsKey(data.getXValue().longValue())) {
+				data.setYValue(salesSummary.get(data.getXValue().longValue()));
+				salesSummary.remove(data.getXValue().longValue());
+			}
+		}
+		for (Map.Entry<Long, Float> entry : salesSummary.entrySet()) {
+			series.getData().add(new XYChart.Data<Number, Number>(entry.getKey(), entry.getValue()));
+		}
+		
+		((ValueAxis<Number>) mainchart.getYAxis()).setLowerBound(0);
+		((ValueAxis<Number>) mainchart.getYAxis()).setUpperBound(Math.ceil(greatest / 10.0) * 10.0);
 
 		mainchart.setTitle(chartType.getTitle());
 	}
