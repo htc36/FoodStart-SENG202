@@ -80,3 +80,7 @@
 .list-cell {
 	-fx-text-fill: white;
 }
+
+.list-view .list-cell {
+	-fx-text-fill: black;
+}
