@@ -195,6 +195,7 @@ public class AddMenuController {
         } else {
             changed = true;
             observableCurrentItems.add(selectedMenuItem);
+            currentMenuItems.add(selectedMenuItem);
             observableAvailableItems.remove(selectedMenuItem);
             refreshTables();
         }
@@ -212,6 +213,7 @@ public class AddMenuController {
         } else {
             changed = true;
             observableCurrentItems.remove(selectedMenuItem);
+            currentMenuItems.remove(selectedMenuItem);
             observableAvailableItems.add(selectedMenuItem);
             refreshTables();
         }
@@ -259,11 +261,8 @@ public class AddMenuController {
      */
     private Boolean isValidMenuName() {
         if (nameTextField.getText().isEmpty()) {
-            errorLabel.setText("Menu name field cannot be empty");
-            errorLabel.setVisible(true);
             return false;
         } else {
-            errorLabel.setVisible(false);
             return true;
         }
     }
@@ -274,11 +273,8 @@ public class AddMenuController {
      */
     private Boolean isValidMenuItems() {
         if (currentMenuItems.isEmpty()) {
-            errorLabel.setText("There must be menu items in your new menu");
-            errorLabel.setVisible(true);
             return false;
         } else {
-            errorLabel.setVisible(false);
             return true;
         }
     }
@@ -287,9 +283,13 @@ public class AddMenuController {
      * Adding the new menu to be stored into menu manager with all the other menus
      */
     public void onAddToMenus() {
-        if (observableCurrentItems.isEmpty()) {
+        if (!isValidMenuItems()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Cannot add to menus because there are no menu items");
-            alert.setHeaderText("No menu items");
+            alert.setHeaderText("No Menu Items");
+            alert.showAndWait();
+        } else if (!isValidMenuName()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "The menu name field cannot be left empty");
+            alert.setHeaderText("Invalid Menu Name");
             alert.showAndWait();
         } else if (isValidMenuItems() && isValidMenuName()) {
             MenuManager menuManager = Managers.getMenuManager();
