@@ -191,8 +191,22 @@ public class MenuItem {
 		this.variants.remove(removed);
 	}
 
+	/**
+	 * Returns the default recipe variant of the menu item
+	 *
+	 * @return the default recipe variant of the menu item
+	 */
 	public PermanentRecipe getDefault() {
 		return this.defaultVariant;
+	}
+
+	/**
+	 * Sets the default recipe of a menu item
+	 *
+	 * @param defaultVariant the default recipe to set
+	 */
+	public void setDefaultVariant(PermanentRecipe defaultVariant) {
+		this.defaultVariant = defaultVariant;
 	}
 }
 
