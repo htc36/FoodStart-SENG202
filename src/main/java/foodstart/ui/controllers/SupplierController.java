@@ -20,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -100,6 +101,7 @@ public class SupplierController implements Refreshable {
 	 */
 	@FXML
 	public void initialize() {
+		supplierTable.setPlaceholder(new Text("There are no suppliers. Import or add new suppliers below."));
 		editLoader = new FXMLLoader(getClass().getResource("editSupplier.fxml"));
 		addLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));
 		try {

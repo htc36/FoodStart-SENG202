@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -99,6 +100,7 @@ public class SalesController implements Refreshable {
 	 */
 	@FXML
 	public void initialize() {
+		salesTableView.setPlaceholder(new Text("There are no sales in the sales log."));
 		try {
 			editorLoader = new FXMLLoader(getClass().getResource("editOrder.fxml"));
 			orderEditorFXML = editorLoader.load();
