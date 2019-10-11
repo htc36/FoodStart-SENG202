@@ -164,7 +164,7 @@ public class InventoryController implements Refreshable {
 	public void removeIngredient() {
 		Ingredient ingredient = inventoryView.getSelectionModel().getSelectedItem();
 		if (ingredient == null) {
-			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not ingredient as none was selected", ButtonType.OK);
+			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not remove ingredient as none was selected", ButtonType.OK);
 			alert.setHeaderText("No ingredient selected");
 			alert.showAndWait();
 		} else {
