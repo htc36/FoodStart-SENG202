@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -130,14 +131,13 @@ public class InventoryController implements Refreshable {
 		Set<Ingredient> ingredientSet = ingredientManager.getIngredientSet();
 		observableList = FXCollections.observableArrayList(ingredientSet);
 		inventoryView.setItems(observableList);
-		id.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
-		name.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
-		truckStock.setCellValueFactory(
-				cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getTruckStock())));
-		kitchenStock.setCellValueFactory(
-				cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getKitchenStock())));
+		id.setCellValueFactory(new PropertyValueFactory<>("id"));
+		name.setCellValueFactory(new PropertyValueFactory<>("name"));
+		truckStock.setCellValueFactory(new PropertyValueFactory<>("truckStock"));
+		kitchenStock.setCellValueFactory(new PropertyValueFactory<>("kitchenStock"));
 		dietary.setCellValueFactory(
-				cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId())));
+				cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId()))
+		);
 	}
 
 	/**

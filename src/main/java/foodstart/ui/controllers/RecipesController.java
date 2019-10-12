@@ -24,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -117,8 +118,9 @@ public class RecipesController implements Refreshable {
 		observableRecipes = FXCollections.observableArrayList(recipesSet);
 		
 		recipesTableView.setItems(observableRecipes);
-		recIDCol.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
-		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
+
+		recIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+		nameCol.setCellValueFactory(new PropertyValueFactory<>("displayName"));
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
 		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
 

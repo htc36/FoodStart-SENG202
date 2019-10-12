@@ -20,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -141,12 +142,12 @@ public class SupplierController implements Refreshable {
 		refreshTable();
 		supplierTable.setItems(observableSuppliers);
 
-		codeColumn.setCellValueFactory(cell -> new SimpleStringProperty(Integer.toString(cell.getValue().getId())));
-		supplierNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getSupplierName()));
-		addressColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress()));
-		websiteColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getUrl()));
-		emailColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEmail()));
-		phoneColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneNumber()));
+		codeColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		supplierNameColumn.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+		addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+		websiteColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
+		emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+		phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 		phoneTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPhoneType().name()));
 	}
 
