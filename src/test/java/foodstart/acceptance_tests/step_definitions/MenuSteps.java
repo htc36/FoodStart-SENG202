@@ -95,7 +95,7 @@ public class MenuSteps {
     public void the_recipe_costs(float price) {
         assertTrue(recipe.getPrice() == price);
     }
-    @When("The ingredient {string} is added with the unit quantity {int}")
+    @Given("The ingredient {string} is added with the unit quantity {int}")
     public void an_ingredient_is_added(String ingredient, int amount){
         Map<DietaryRequirement, Boolean> safeForTestIngredient = new HashMap<>();
         ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), ingredient, 8, safeForTestIngredient, 8, 10);

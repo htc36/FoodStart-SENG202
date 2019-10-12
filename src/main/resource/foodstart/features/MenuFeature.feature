@@ -19,13 +19,13 @@ Feature: Menu feature
 
     Scenario: Adding/removing ingredients from recipe (UC11)
         Given A recipe "HotDog" exists
-        When The ingredient "wrap" is added with the unit quantity 1
+        And The ingredient "wrap" is added with the unit quantity 1
         When The ingredient "bun" is removed
         Then The ingredients in the recipe "HotDog" are "wrap" and "sausage"
 
     Scenario: Editing recipe name and instuctions (UC11)
         Given A recipe "HotDog" exists
-        When The recipe "HotDog" is changed to "AmericanWiener"
+        And The recipe "HotDog" is changed to "AmericanWiener"
         When The recipe "AmericanWiener", instructions are changed to "Slot into bread hole"
         Then The recipe "AmericanWiener" has the instructions "Slot into bread hole"
 
