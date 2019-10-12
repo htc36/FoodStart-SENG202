@@ -10,3 +10,11 @@ generate_artifacts:
     artifacts:
         paths:
          - target/foodstart*.jar
+
+document:
+    stage: deploy
+    script:
+     - mvn javadoc:javadoc
+    artifacts:
+        paths:
+         - target/site/apidocs/*
