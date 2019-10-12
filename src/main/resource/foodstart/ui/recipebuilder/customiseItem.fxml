@@ -81,9 +81,9 @@
       <GridPane maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnSpan="3" GridPane.rowIndex="4">
         <columnConstraints>
           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="160.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="190.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="190.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="190.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" />
@@ -97,15 +97,15 @@
                   <Insets top="5.0" />
                </padding>
             </ComboBox>
-          <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onAddIngredient" prefHeight="40.0" prefWidth="150.0" text="Add Ingredient" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS">
+          <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onAddIngredient" prefHeight="40.0" prefWidth="180.0" text="Add Ingredient" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></Button>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelItem" prefHeight="40.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onCancelItem" prefHeight="40.0" prefWidth="180.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></Button>
-            <Button fx:id="btnAddToOrder" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onAddToOrder" prefHeight="40.0" prefWidth="150.0" text="Add to Order" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button fx:id="btnAddToOrder" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#onAddToOrder" prefHeight="40.0" prefWidth="180.0" text="Add to Order" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></Button>

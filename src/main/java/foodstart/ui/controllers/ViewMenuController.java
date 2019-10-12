@@ -204,6 +204,7 @@ public class ViewMenuController {
         Scene scene = new Scene(loader.getRoot());
 
         popupStage = new Stage();
+        popupStage.setResizable(false);
         popupStage.initModality(Modality.WINDOW_MODAL);
 
         ((ViewVariantsPopupController) loader.getController()).setStage(popupStage);
@@ -349,7 +350,7 @@ public class ViewMenuController {
      */
     public void onApplyChanges() {
         if (menuNameTextField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "THere is no menu title!");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "There is no menu title!");
             alert.setHeaderText("No menu title");
             alert.showAndWait();
         } else if (observableCurrentItems.isEmpty()) {

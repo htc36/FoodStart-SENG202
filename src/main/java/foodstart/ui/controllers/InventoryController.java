@@ -106,11 +106,13 @@ public class InventoryController implements Refreshable {
 			e.printStackTrace();
 		}
 		editPopup = new Stage();
+		editPopup.setResizable(false);
 		editPopup.initModality(Modality.WINDOW_MODAL);
 		Scene editScene = new Scene(editLoader.getRoot());
 		editPopup.setTitle("Edit Item");
 		editPopup.setScene(editScene);
 		addPopup = new Stage();
+		addPopup.setResizable(false);
 		addPopup.initModality(Modality.WINDOW_MODAL);
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setTitle("Add Item");

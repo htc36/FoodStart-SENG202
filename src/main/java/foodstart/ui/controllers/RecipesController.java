@@ -102,6 +102,7 @@ public class RecipesController implements Refreshable {
 		}
 		Screen screen = Screen.getPrimary();
 		editPopup = new Stage();
+		editPopup.setResizable(false);
 		editPopup.initModality(Modality.WINDOW_MODAL);
 		editPopup.setScene(new Scene(editFXML, screen.getVisualBounds().getWidth() /4, screen.getVisualBounds().getHeight() / 2));
 		populateTable();

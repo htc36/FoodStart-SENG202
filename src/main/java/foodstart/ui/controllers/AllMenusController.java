@@ -108,6 +108,7 @@ public class AllMenusController implements Refreshable {
 			Scene scene = new Scene(loader.getRoot());
 
 			popupStage = new Stage();
+			popupStage.setResizable(false);
 			popupStage.initModality(Modality.WINDOW_MODAL);
 
             ((ViewMenuController) loader.getController()).setStage(popupStage);
@@ -151,6 +152,7 @@ public class AllMenusController implements Refreshable {
 		}
 		((AddMenuController) addLoader.getController()).setUpMenuInfo();
 		addPopup = new Stage();
+		addPopup.setResizable(false);
 		addPopup.initModality(Modality.WINDOW_MODAL);
 		addPopup.setTitle("Add New Menu");
 		Scene addScene = new Scene(addLoader.getRoot());

@@ -112,6 +112,7 @@ public class SupplierController implements Refreshable {
 			e.printStackTrace();
 		}
 		editPopup = new Stage();
+		editPopup.setResizable(false);
 		editPopup.initModality(Modality.WINDOW_MODAL);
 		editPopup.setTitle("Edit Supplier");
 		Scene editScene = new Scene(editLoader.getRoot());
@@ -119,6 +120,7 @@ public class SupplierController implements Refreshable {
 
 
 		addPopup = new Stage();
+		addPopup.setResizable(false);
 		addPopup.initModality(Modality.WINDOW_MODAL);
 		addPopup.setTitle("Add New Supplier");
 		Scene addScene = new Scene(addLoader.getRoot());

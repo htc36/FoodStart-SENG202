@@ -103,6 +103,7 @@ public class OrderEditorController {
 		}
 		Screen screen = Screen.getPrimary();
 		popupStage = new Stage();
+		popupStage.setResizable(false);
 		popupStage.initModality(Modality.WINDOW_MODAL);
 		popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
 	}
