@@ -41,11 +41,6 @@ public class AddSupplierController {
     @FXML
     private TextField phoneTextField;
     /**
-     * Text area for supplier id
-     */
-    @FXML
-    private Text codeText;
-    /**
      * Combo box for supplier phone type
      */
     @FXML
@@ -88,11 +83,10 @@ public class AddSupplierController {
 
 
     /**
-     * Called when a new code must be generated and set in the code text box
+     * Called when a new code must be generated
      */
     public void setNewCode() {
         code = Managers.getSupplierManager().generateNewCode();
-        codeText.setText(Integer.toString(code));
     }
 
     /**
@@ -160,7 +154,6 @@ public class AddSupplierController {
         boolean validName = isValidSupplierName();
         if (validAddress && validPhone && validName) {
             SupplierManager supplierManager = Managers.getSupplierManager();
-            int code = Integer.parseInt(codeText.getText());
             supplierManager.removeSupplier(code);
             supplierManager.addSupplier(code, nameTextField.getText(), phoneTextField.getText(), phoneTypeComboBox.getValue(),
                     emailTextField.getText(), websiteTextField.getText(), addressTextField.getText());

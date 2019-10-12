@@ -93,10 +93,11 @@ public class InventoryController implements Refreshable {
 	 */
 	@FXML
 	public void initialize() {
-		editLoader = new FXMLLoader(getClass().getResource("editIngredient.fxml"));
+		editLoader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
 		addLoader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
 		inventoryView.setPlaceholder(new Text("There are no ingredients in the inventory. Import or add new ingredients below."));
-
+		addLoader.setController(new AddIngredientController());
+		editLoader.setController(new EditIngredientController());
 
 		try {
 			editLoader.load();
@@ -105,12 +106,15 @@ public class InventoryController implements Refreshable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		editPopup = new Stage();
+		editPopup.setResizable(false);
 		editPopup.initModality(Modality.WINDOW_MODAL);
 		Scene editScene = new Scene(editLoader.getRoot());
 		editPopup.setTitle("Edit Item");
 		editPopup.setScene(editScene);
 		addPopup = new Stage();
+		addPopup.setResizable(false);
 		addPopup.initModality(Modality.WINDOW_MODAL);
 		Scene addScene = new Scene(addLoader.getRoot());
 		addPopup.setTitle("Add Item");

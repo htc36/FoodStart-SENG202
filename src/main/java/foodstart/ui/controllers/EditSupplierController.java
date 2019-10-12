@@ -42,11 +42,6 @@ public class EditSupplierController {
     @FXML
     private TextField phoneTextField;
     /**
-     * Text area for the supplier ID
-     */
-    @FXML
-    private Text codeText;
-    /**
      * Combo box for supplier phone type
      */
     @FXML
@@ -66,6 +61,10 @@ public class EditSupplierController {
      */
     @FXML
     private Label phoneErrorLabel;
+    /**
+     * ID of supplier currently being edited
+     */
+    private int code;
 
 
     /**
@@ -86,7 +85,7 @@ public class EditSupplierController {
      * @param supplier the supplier to edit
      */
     public void setSupplier(Supplier supplier) {
-        codeText.setText(Integer.toString(supplier.getId()));
+    	code = supplier.getId();
         nameTextField.setText(supplier.getSupplierName());
         addressTextField.setText(supplier.getAddress());
         websiteTextField.setText(supplier.getUrl());
@@ -152,16 +151,15 @@ public class EditSupplierController {
     }
 
     /**
-     * Called when the confirm button is clicked
+     * Called when the submit button is clicked
      * Replaces the existing supplier with a new supplier with the retrieved information
      */
-    public void onConfirm() {
+    public void onSubmit() {
         boolean validAddress = isValidAddressName();
         boolean validPhone = isValidPhoneNumber();
         boolean validName = isValidSupplierName();
         if (validAddress && validPhone && validName) {
             SupplierManager supplierManager = Managers.getSupplierManager();
-            int code = Integer.parseInt(codeText.getText());
             supplierManager.removeSupplier(code);
             supplierManager.addSupplier(code, nameTextField.getText(), phoneTextField.getText(), phoneTypeComboBox.getValue(),
                     emailTextField.getText(), websiteTextField.getText(), addressTextField.getText());

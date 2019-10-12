@@ -13,19 +13,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.SalesController">
+<AnchorPane minHeight="650.0" minWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.SalesController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <TableView fx:id="salesTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="tranIDCol" prefWidth="174.0" text="ID" />
-                <TableColumn fx:id="nameCol" prefWidth="126.0" text="Name" />
-                  <TableColumn fx:id="timeCol" prefWidth="112.0" text="Time" />
-                  <TableColumn fx:id="dateCol" prefWidth="92.0" text="Date" />
-                  <TableColumn fx:id="priceCol" prefWidth="200.0" text="Price" />
-                  <TableColumn fx:id="paymentMethodCol" prefWidth="75.0" text="Payment Method" />
-                  <TableColumn fx:id="itemsCol" minWidth="100.0" prefWidth="392.0" text="Items" />
+                <TableColumn fx:id="tranIDCol" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="nameCol" minWidth="50.0" prefWidth="150.0" text="Name" />
+                  <TableColumn fx:id="timeCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Time" />
+                  <TableColumn fx:id="dateCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Date" />
+                  <TableColumn fx:id="priceCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Price" />
+                  <TableColumn fx:id="paymentMethodCol" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" text="Payment Method" />
+                  <TableColumn fx:id="itemsCol" minWidth="100.0" prefWidth="500.0" text="Items" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

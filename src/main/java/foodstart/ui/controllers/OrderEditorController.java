@@ -103,6 +103,7 @@ public class OrderEditorController {
 		}
 		Screen screen = Screen.getPrimary();
 		popupStage = new Stage();
+		popupStage.setResizable(false);
 		popupStage.initModality(Modality.WINDOW_MODAL);
 		popupStage.setScene(new Scene(orderEditorFXML, screen.getVisualBounds().getWidth() / 2, screen.getVisualBounds().getHeight() / 2));
 	}
@@ -132,8 +133,10 @@ public class OrderEditorController {
 		((EditOrderItemsController) editorLoader.getController()).setOrder(this.order);
 		((EditOrderItemsController) editorLoader.getController()).pushRecipes(newRecipes);
 		popupStage.showAndWait();
-		this.newRecipes = ((EditOrderItemsController) editorLoader.getController()).getNewRecipes();
-
+		Map<Recipe, Integer> tempRecipes = ((EditOrderItemsController) editorLoader.getController()).getNewRecipes();
+		if (tempRecipes != null) {
+			this.newRecipes = tempRecipes;
+		}
 	}
 
 	/**

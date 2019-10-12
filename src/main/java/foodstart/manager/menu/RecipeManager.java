@@ -180,6 +180,7 @@ public class RecipeManager {
 		for (MenuItem menuItem : menuItems) {
 			menuItem.remove(removed);
 		}
+		Managers.getOrderManager().removeRecipeFromOrders(removed);
 	}
 	
 	/**
@@ -203,6 +204,12 @@ public class RecipeManager {
 		return recipes.keySet().size() == 0 ? 0 : Collections.max(recipes.keySet()) + 1;
 	}
 
+	/**
+	 * Checks if a recipe with a given id exists in the system
+	 *
+	 * @param id the id to check for
+	 * @return true if there is a recipe with the given id; false otherwise
+	 */
 	public boolean idExists(int id) {
 		if (recipes.containsKey(id)) {
 			return true;
