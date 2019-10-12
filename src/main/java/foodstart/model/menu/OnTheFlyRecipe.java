@@ -93,7 +93,7 @@ public class OnTheFlyRecipe extends Recipe {
                 return false;
         } else if (!basedOn.equals(other.basedOn)) {
 	        return false;
-        } else if (super.equals(other)) {
+        } else if (!super.equals(other)) {
 	        return false;
         }
         return true;
