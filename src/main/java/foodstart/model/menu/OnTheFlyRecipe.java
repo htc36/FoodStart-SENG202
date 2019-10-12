@@ -91,12 +91,12 @@ public class OnTheFlyRecipe extends Recipe {
         if (basedOn == null) {
             if (other.basedOn != null)
                 return false;
-        } else if (!basedOn.equals(other.basedOn))
-            return false;
+        } else if (!basedOn.equals(other.basedOn)) {
+	        return false;
+        } else if (super.equals(other)) {
+	        return false;
+        }
         return true;
     }
-	
-	
-	
 }
 
