@@ -27,6 +27,8 @@ public class OrderSteps {
     private float recipeCost;
     private Ingredient ingredient1;
     private Ingredient ingredient2;
+    private Ingredient ingredient3;
+
     private Map<Ingredient, Integer> recipeIngredients;
     private OrderManager orderManager;
     private Order order;
@@ -52,6 +54,8 @@ public class OrderSteps {
 
         ingredient1 = new Ingredient(Unit.GRAMS, "Mayo", 1, safeForIngredient1, 150, 80);
         ingredient2 = new Ingredient(Unit.GRAMS, "Peanut Butter", 2, safeForIngredient2, 120, 45);
+        ingredient3 = new Ingredient(Unit.GRAMS, "Cheese", 3, safeForIngredient2, 120, 45);
+
 
         recipeIngredients.put(ingredient1, 2);
         recipeIngredients.put(ingredient2, 4);
@@ -286,4 +290,12 @@ public class OrderSteps {
         }
     }
 
+    @Given("A {string} contains {string}")
+    public void aContains(String recipeName, String ingredientName) {
+
+    }
+
+    @When("The customer wants to remove {string} from the {string}")
+    public void theCustomerWantsToRemoveFromThe(String arg0, String arg1) {
+    }
 }
