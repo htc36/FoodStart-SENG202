@@ -29,13 +29,21 @@ public class SupplierSteps {
      */
     private void createSupplierSet() {
         HashMap<Integer, Supplier> supplierSet = new HashMap<Integer, Supplier>();
-        Supplier CountUp = new Supplier(123, "Count Up", "0123456789", PhoneType.WORK,
+        Supplier countUp = new Supplier(0, "Count Up", "0123456789", PhoneType.WORK,
                 "onetwothree@countup.com", "www.countup.com", "1234 Five Road");
-        supplierSet.put(0, CountUp);
+        supplierSet.put(countUp.getId(), countUp);
 
-        Supplier UnderValue = new Supplier(1, "Under Value", "01111111", PhoneType.WORK,
+        Supplier underValue = new Supplier(1, "Under Value", "01111111", PhoneType.WORK,
                 "super@undervalue.com", "www.undervalue.com", "11 Costly Road");
-        supplierSet.put(1, UnderValue);
+        supplierSet.put(underValue.getId(), underValue);
+
+        Supplier freshPix = new Supplier(2, "Fresh PIX", "03-4567 1234", PhoneType.HOME,
+                "", "", "132 Cherry Street");
+        supplierSet.put(freshPix.getId(), freshPix);
+
+        Supplier tastyGreen = new Supplier(3, "Tasty Green", "0224567894", PhoneType.MOBILE,
+                "tasty@green.com", "", "32 Greens Road");
+        supplierSet.put(tastyGreen.getId(), tastyGreen);
 
         existingSupplierSet = supplierSet;
     }
@@ -174,5 +182,6 @@ public class SupplierSteps {
     public void itsCodeWillBe(Integer supplierCode) {
         assertEquals(supplierCode, code);
     }
+
 
 }
