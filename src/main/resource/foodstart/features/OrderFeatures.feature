@@ -8,15 +8,14 @@ Feature: Order feature
     When The customer "Sally" orders 1 "hamburger" and pays by "cash"
     Then The customer will be charged $5.00 total
 
-  Scenario Outline: Ordering a single item (UC4)
-    Given A <recipeName> costs <recipeCost>, which is a <recipeType>
+  Scenario Outline: Ordering single items (UC4)
+    Given A <recipeName> costs $<recipeCost>, which is a <recipeType>
     When The customer <customerName> orders <quantity> <recipeName> and pays by <paymentType>
-    Then The customer will be charged <totalCost> total
+    Then The customer will be charged $<totalCost> total
     Examples:
     | recipeName      | recipeCost  | recipeType          | customerName  | quantity | paymentType   | totalCost
     | "Hamburger"     | 5.00        | "permanent recipe"  | "Sally"       | 1        | "cash"        | 5.00
     | "Fries"         | 3.50        | "permanent recipe"  | "Johnny"      | 1        | "eftpos"      | 3.50
-    | "Custom Burger" | 7.80        | "on the fly recipe" | "Robert"      | 1        | "eftpos"      | 7.80
 
   Scenario: Ordering multiple items (UC4)
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
