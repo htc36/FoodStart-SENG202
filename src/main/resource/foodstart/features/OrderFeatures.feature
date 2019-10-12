@@ -1,15 +1,29 @@
 Feature: Order feature
     Scenarios involving orders
 
+   # Scenarios relating to adding a single item in an order
+
   Scenario: Ordering a single item (UC4)
     Given A "hamburger" costs $5.00, which is a "permanent recipe"
     When The customer "Sally" orders 1 "hamburger" and pays by "cash"
     Then The customer will be charged $5.00 total
 
+  Scenario Outline: Ordering a single item (UC4)
+    Given A <recipeName> costs <recipeCost>, which is a <recipeType>
+    When The customer <customerName> orders <quantity> <recipeName> and pays by <paymentType>
+    Then The customer will be charged <totalCost> total
+    Examples:
+    | recipeName      | recipeCost  | recipeType          | customerName  | quantity | paymentType   | totalCost
+    | "Hamburger"     | 5.00        | "permanent recipe"  | "Sally"       | 1        | "cash"        | 5.00
+    | "Fries"         | 3.50        | "permanent recipe"  | "Johnny"      | 1        | "eftpos"      | 3.50
+    | "Custom Burger" | 2.80        | "on the fly recipe" | "Johnny"      | 1        | "eftpos"      | 2.80
+
   Scenario: Ordering multiple items (UC4)
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
     When The customer "Sally" orders 1 "hamburger" and 1 "chips" and pays by "cash"
     Then The customer will be charged $8.50 total
+
+
 
   Scenario: Removing an item in the order (UC4)
     Given A "hamburger" costs $5.00, which is a "permanent recipe" and "chips" costs $3.50, which is a "permanent recipe"
@@ -19,10 +33,16 @@ Feature: Order feature
     And The customer will be charged $5.00 total
 
   @skip_scenario
-  Scenario: Editing ingredients in an item (UC5)
+  Scenario: Removing ingredients in an item (UC5)
       Given A "hamburger" contains "cheese"
       When The customer wants to remove "cheese" from the "hamburger"
       Then The "hamburger" has no "cheese"
+
+  @skip_scenario
+    Scenario: Adding ingredients in an item (UC5)
+      Given A "hamburger" does not already contain "mustard"
+      When The customer wants to add "mustard" to the "hamburger"
+      Then The "hamburger" will have "mustard"
 
   Scenario: Ordering the same item more than once (UC4)
     Given A "hamburger" costs $5.00, which is a "permanent recipe"
@@ -47,7 +67,7 @@ Feature: Order feature
 
   @skip_scenario
   Scenario: An item is sold out (UC4)
-      Given A customer wants a hamburger but is sold out
+      Given A "Hamburger" contains "cheese"
       When The employee is about to order the item
       Then The employee will not be able to place hamburger to the order
 

@@ -88,15 +88,11 @@ public class EditIngredientController {
 	 * Label for ingredient id display
 	 */
 	@FXML
-	private Label idDisplay;
+	private Label title;
 	/**
 	 * ID of the ingredient
 	 */
 	private int id;
-	/**
-	 * Model of the ingredient
-	 */
-	private Ingredient ingredient;
 
 	/**
 	 * Initialises the EditIngredientController
@@ -104,6 +100,7 @@ public class EditIngredientController {
 	@FXML
 	public void initialize() {
 		this.unitComboBox.setItems(FXCollections.observableArrayList(Unit.values()));
+		title.setText("Edit Item");
 	}
 
 
@@ -114,7 +111,7 @@ public class EditIngredientController {
      */
 	private boolean isInt(TextField input) {
 		try {
-			int value = Integer.parseInt(input.getText());
+			Integer.parseInt(input.getText());
 			return true;
 		} catch (NumberFormatException e) {
 			return false;
@@ -188,10 +185,8 @@ public class EditIngredientController {
 	 * @param ingredient the ingredient to be edited
 	 */
 	public void setIngredient(Ingredient ingredient) {
-		this.ingredient = ingredient;
 		if (ingredient != null) {
 			this.id = ingredient.getId();
-			idDisplay.setText(Integer.toString(id));
 			this.nameInput.setText(ingredient.getName());
 			this.truckStockInput.setText(Integer.toString(ingredient.getTruckStock()));
 			this.kitchenStockInput.setText(Integer.toString(ingredient.getKitchenStock()));

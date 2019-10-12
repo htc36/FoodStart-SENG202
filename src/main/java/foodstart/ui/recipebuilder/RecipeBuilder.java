@@ -30,7 +30,7 @@ public class RecipeBuilder {
 	/**
 	 * The JavaFX controller of the window this class spawns
 	 */
-	private final RecipeBuilderController controller;
+	private RecipeBuilderController controller;
 
 	/**
 	 * Builder is only used for stock checking
@@ -53,25 +53,7 @@ public class RecipeBuilder {
 	public RecipeBuilder(MenuItem baseItem, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
 		this.callback = callback;
 		this.orderBuilder = stockCheck;
-
-		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("customiseItem.fxml"));
-		try {
-			loader.load();
-		} catch (IOException e) {
-			FXExceptionDisplay.showException(e, false);
-		}
-
-		this.controller = loader.getController();
-		this.controller.setRecipeBuilder(this);
-
-		Scene scene = new Scene(loader.getRoot());
-		stage = new Stage();
-		stage.setTitle("Customise Item");
-		stage.setScene(scene);
-		stage.show();
-
-		stage.setOnCloseRequest((event) -> cancel());
-
+		init();
 		this.controller.populateFields(baseItem);
 	}
 
@@ -87,9 +69,15 @@ public class RecipeBuilder {
 	public RecipeBuilder(Recipe baseRecipe, int quantity, RecipeBuilderRunnable callback, OrderBuilder stockCheck) {
 		this.callback = callback;
 		this.orderBuilder = stockCheck;
-
 		orderBuilder.setEditing(baseRecipe, true);
-
+		init();
+		this.controller.populateFields(baseRecipe, quantity);
+	}
+	
+	/**
+	 * Initialise the window stuff for this recipe builder
+	 */
+	private void init() {
 		FXMLLoader loader = new FXMLLoader(this.getClass().getResource("customiseItem.fxml"));
 		try {
 			loader.load();
@@ -107,8 +95,6 @@ public class RecipeBuilder {
 		stage.show();
 
 		stage.setOnCloseRequest((event) -> cancel());
-
-		this.controller.populateFields(baseRecipe, quantity);
 	}
 
 	/**

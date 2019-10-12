@@ -289,5 +289,22 @@ public class OrderManager {
 	public void dropBuffer() {
 		this.buffer.clear();
 	}
+
+	/**
+	 * Removes a recipe from all modelled orders.
+	 * If the number of recipes in the order after deletion is 0, the order is deleted
+	 *
+	 * @param recipe the recipe to remove from the orders
+	 */
+	public void removeRecipeFromOrders(Recipe recipe) {
+		for (Order order : getOrderSet()) {
+			Map<Recipe, Integer> items = order.getItems();
+			items.remove(recipe);
+			order.setItems(items);
+			if (order.getItems().size() == 0) {
+				orders.remove(order.getId());
+			}
+		}
+	}
 }
 
