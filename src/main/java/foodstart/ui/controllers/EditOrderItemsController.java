@@ -218,50 +218,23 @@ public class EditOrderItemsController implements Refreshable {
 			alert.setHeaderText("No recipe selected");
 			alert.showAndWait();
 		} else {
-			Map<Ingredient, Integer> ingredients = recipe.getIngredients();
+			Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>(recipe.getIngredients());
+			float price = recipe.getPrice();
 			if (editPopup.getOwner() == null) {
 				editPopup.initOwner(this.recipesTableView.getScene().getWindow());
 			}
 			((RecipeEditorController) editLoader.getController()).setRecipe(recipe);
+			((RecipeEditorController) editLoader.getController()).getPrice();
 			editPopup.showAndWait();
 			Map<Ingredient, Integer> moddedIngredients = ((RecipeEditorController) editLoader.getController()).getIngredients();
-			float price = ((RecipeEditorController) editLoader.getController()).getPrice();
-			if (checkMaps(ingredients, moddedIngredients)) {
-				int otfID = Managers.getRecipeManager().otfManager.addRecipe(recipe.getId(), moddedIngredients, price);
-				items.put(Managers.getRecipeManager().otfManager.getRecipe(otfID), order.getItems().get(recipe));
+			float moddedPrice = ((RecipeEditorController) editLoader.getController()).getPrice();
+			if (moddedIngredients != null && (!ingredients.equals(moddedIngredients) || price != moddedPrice)) {
+				int otfID = Managers.getRecipeManager().otfManager.addRecipe(recipe.getId(), moddedIngredients, moddedPrice);
+				items.put(Managers.getRecipeManager().otfManager.getRecipe(otfID), items.get(recipe));
 				items.remove(recipe);
 			}
 			refreshTable();
 		}
-	}
-
-	/**
-	 * Compares two maps of ingredients to check is their key sets and values are the same
-	 * @param m1 the first map to check
-	 * @param m2 the second map to check
-	 * @return true if the maps are the same;false otherwise
-	 */
-	private boolean checkMaps(Map<Ingredient, Integer> m1, Map<Ingredient, Integer> m2) {
-		if (m1 != m2 && (m1 == null || m2 == null)) {
-			return false;
-		}
-		if (!m1.keySet().equals(m2.keySet())) {
-			return false;
-		}
-		for (Ingredient ingredient : m1.keySet()) {
-			if (!m1.get(ingredient).equals(m2.get(ingredient))) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Calls the view recipe details popup
-	 */
-	@FXML
-	private void viewRecipe() {
-
 	}
 
 	/**
@@ -301,9 +274,7 @@ public class EditOrderItemsController implements Refreshable {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not add recipe as there was none selected", ButtonType.OK);
 			alert.setHeaderText("No recipe selected");
 			alert.showAndWait();
-		} else if (this.items.containsKey(recipe)) {
-			//Do nothing
-		} else {
+		} else if (!this.items.containsKey(recipe)) {
 			this.items.put(recipe, 1);
 		}
 		refreshTable();
