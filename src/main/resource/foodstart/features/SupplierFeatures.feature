@@ -99,12 +99,12 @@ Feature: Supplier feature
         And Supplier with code <code> exists in the supplier list
         And Its code is <code>
         And Its name is <name>
-        And Its phone number is <phone>>
+        And Its phone number is <phone>
         And Its phone type is <type>
         And Its email is <email>
         And Its website is <url>
         And Its address is <address>
-        When The supplier with code <code> is edited to name <newName>", phone <newPhone>, type <newType>, email <newEmail>, website <newUrl>, address <newAddress>
+        When The supplier with code <code> is edited to name <newName>, phone <newPhone>, type <newType>, email <newEmail>, website <newUrl>, address <newAddress>
         Then Its code will be <code>
         And Its name will be <newName>
         And Its phone number will be <newPhone>
