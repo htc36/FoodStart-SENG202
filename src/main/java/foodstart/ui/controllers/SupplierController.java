@@ -102,8 +102,10 @@ public class SupplierController implements Refreshable {
 	@FXML
 	public void initialize() {
 		supplierTable.setPlaceholder(new Text("There are no suppliers. Import or add new suppliers below."));
-		editLoader = new FXMLLoader(getClass().getResource("editSupplier.fxml"));
+		editLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));
+		editLoader.setController(new EditSupplierController());
 		addLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));
+		addLoader.setController(new AddSupplierController());
 		try {
 			editLoader.load();
 			addLoader.load();
