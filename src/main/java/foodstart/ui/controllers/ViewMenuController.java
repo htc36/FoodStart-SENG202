@@ -1,25 +1,28 @@
 package foodstart.ui.controllers;
 
+import java.io.IOException;
+import java.util.Optional;
+import java.util.Set;
+
 import foodstart.manager.Managers;
 import foodstart.manager.menu.MenuManager;
 import foodstart.model.menu.Menu;
 import foodstart.model.menu.MenuItem;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Controls the UI for the view menu screen
@@ -133,8 +136,6 @@ public class ViewMenuController {
      */
     public void setStage(Stage popupStage) {
         stage = popupStage;
-        stage.setMinWidth(700);
-        stage.setMinHeight(400);
         stage.setOnCloseRequest(event -> {
             onCancel();
             event.consume();

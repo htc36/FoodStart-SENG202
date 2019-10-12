@@ -109,6 +109,8 @@ public class AllMenusController implements Refreshable {
 
 			popupStage = new Stage();
 			popupStage.setResizable(false);
+			popupStage.setMinWidth(950);
+			popupStage.setMinHeight(600);
 			popupStage.initModality(Modality.WINDOW_MODAL);
 
             ((ViewMenuController) loader.getController()).setStage(popupStage);
