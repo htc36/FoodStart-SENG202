@@ -85,10 +85,10 @@ public class AddIngredientController {
 	@FXML 
 	private Label unitBoxError;
 	/**
-	 * Label for displaying the id
+	 * Label for the title of the popup
 	 */
 	@FXML
-	private Label idDisplay;
+	private Label title;
 	/**
 	 * The id of the ingredient
 	 */
@@ -101,14 +101,14 @@ public class AddIngredientController {
 	public void initialize() {
 		setNewID();
 		this.unitComboBox.setItems(FXCollections.observableArrayList(Unit.values()));
+		title.setText("Add Item");
 	}
 
 	/**
-	 *Generates a new unique code and input it into the text box
+	 * Generates a new unique code
 	 */
 	public void setNewID() {
 		id = Managers.getIngredientManager().generateNewID();
-		idDisplay.setText(Integer.toString(id));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class AddIngredientController {
 	 */
 	private boolean isInt(TextField input) {
 		try {
-			int value = Integer.parseInt(input.getText());
+			Integer.parseInt(input.getText());
 			return true;
 		} catch (NumberFormatException e) {
 			return false;

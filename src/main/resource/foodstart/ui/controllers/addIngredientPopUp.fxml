@@ -13,39 +13,49 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane styleClass="semidark" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.AddIngredientController">
+<AnchorPane styleClass="semidark" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="444.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.0" minWidth="10.0" prefWidth="48.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="167.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="161.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="49.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" percentWidth="5.0" prefWidth="20.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" percentWidth="45.0" prefWidth="180.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" percentWidth="45.0" prefWidth="180.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" percentWidth="5.0" prefWidth="20.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="104.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="ID" GridPane.columnIndex="1" />
-                  <Label text="Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Truck Stock" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Kitchen Stock" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Diets safe for" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField fx:id="nameInput" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="unitComboBox" prefHeight="25.0" prefWidth="169.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="kitchenStockInput" prefHeight="25.0" prefWidth="32.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <TextField fx:id="truckStockInput" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <GridPane GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <Label text="Name" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label text="Truck Stock" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label text="Kitchen Stock" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label text="Dietary constraints" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <TextField fx:id="nameInput" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="2" />
+                  <ComboBox fx:id="unitComboBox" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="kitchenStockInput" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="truckStockInput" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <GridPane GridPane.columnIndex="2" GridPane.rowIndex="4">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="82.0" minWidth="10.0" prefWidth="49.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="121.0" minWidth="10.0" prefWidth="112.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -55,15 +65,21 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <CheckBox fx:id="vegan" mnemonicParsing="false" text="Vegan" GridPane.columnIndex="1" />
-                        <CheckBox fx:id="vegetarian" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Vegetarian" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <CheckBox fx:id="glutenFree" layoutX="10.0" layoutY="32.0" mnemonicParsing="false" text="Gluten Free" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <CheckBox fx:id="nutFree" layoutX="10.0" layoutY="66.0" mnemonicParsing="false" text="Nut Free" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <CheckBox fx:id="dairyFree" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" text="Dairy Free" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <CheckBox fx:id="vegan" mnemonicParsing="false" text="Vegan" />
+                        <CheckBox fx:id="vegetarian" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Vegetarian" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="glutenFree" layoutX="10.0" layoutY="32.0" mnemonicParsing="false" text="Gluten Free" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="nutFree" layoutX="10.0" layoutY="66.0" mnemonicParsing="false" text="Nut Free" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="dairyFree" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" text="Dairy Free" GridPane.rowIndex="4" />
                      </children>
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
                   </GridPane>
-                  <Label text="Unit Type" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="nameError" prefHeight="15.0" prefWidth="176.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label text="Unit Type" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label fx:id="nameError" prefHeight="15.0" prefWidth="176.0" textFill="RED" GridPane.columnIndex="1">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -74,7 +90,7 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label fx:id="kitchenStockError" layoutX="63.0" layoutY="72.0" prefHeight="48.0" prefWidth="172.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="kitchenStockError" layoutX="63.0" layoutY="72.0" prefHeight="48.0" prefWidth="172.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -85,7 +101,7 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label fx:id="truckStockError" layoutX="63.0" layoutY="58.0" prefHeight="15.0" prefWidth="176.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="truckStockError" layoutX="63.0" layoutY="58.0" prefHeight="15.0" prefWidth="176.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -96,7 +112,7 @@
                         <Insets top="30.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="unitBoxError" layoutX="63.0" layoutY="148.0" prefHeight="48.0" prefWidth="172.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="unitBoxError" layoutX="63.0" layoutY="148.0" prefHeight="48.0" prefWidth="172.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -107,30 +123,10 @@
                         <Insets top="30.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="idDisplay" GridPane.columnIndex="2" />
+                  <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#submit" prefHeight="40.0" prefWidth="180.0" style="-fx-font-size: 13;" text="Create" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                </children>
             </GridPane>
          </center>
-         <bottom>
-            <GridPane prefHeight="65.0" prefWidth="424.0" BorderPane.alignment="CENTER">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="296.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="220.0" minWidth="10.0" prefWidth="148.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="24.0" minHeight="9.0" prefHeight="18.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#submit" prefHeight="40.0" prefWidth="144.0" style="-fx-font-size: 13;" text="Submit" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </GridPane>
-         </bottom>
          <top>
             <GridPane prefHeight="45.0" prefWidth="424.0" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -142,9 +138,9 @@
                 <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="22.0" prefWidth="88.0" text="Add Item" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="title" prefHeight="3.0" prefWidth="200.0" text="Add Item" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                </children>

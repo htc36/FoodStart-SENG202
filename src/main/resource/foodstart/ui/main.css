@@ -7,39 +7,39 @@
 }
 
 .semidark {
-	-fx-background-color: #4DD0E1;
+    -fx-background-color: #4DD0E1;
 }
 
 .menuBar {
-	-fx-background-color: #4DD0E1;
+    -fx-background-color: #4DD0E1;
 }
 
 .light {
-	-fx-background-color: #E0F7FA;
+    -fx-background-color: #E0F7FA;
 }
 
 .table-view {
-	-fx-background-color: white;
-	-fx-background-insets: 0;
-	-fx-padding: 0;
-	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 8, 0, 0, 0);
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 8, 0, 0, 0);
 }
 
 .table-view .column-header-background, .table-view .filler {
-	-fx-background-color: linear-gradient(#00BCD4 0%, #0097A7 100%);
-	-fx-background-insets: 0;
-	-fx-padding: 0;
+    -fx-background-color: linear-gradient(#00BCD4 0%, #0097A7 100%);
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
 .table-view .column-header-background .label{
-	-fx-background-color: transparent;
-	-fx-text-fill: white;
-	-fx-background-insets: 0;
-	-fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
 .table-view .column-header {
-	-fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
 
 .table-row-cell{
@@ -47,7 +47,7 @@
 }
 
 .table-row-cell:odd{
-    -fx-background-color: #EDFDFF;  
+    -fx-background-color: #EDFDFF;
 }
 
 .table-row-cell:selected {
@@ -56,31 +56,37 @@
 }
 
 .button {
-	-fx-font-size: 14pt;
+    -fx-font-size: 14pt;
 }
 
 .button, .combo-box, .increment-arrow-button, .decrement-arrow-button {
-	-fx-border-width: 1px;
-	-fx-background-radius: 6px;
-	-fx-border-radius: 6px;
-	-fx-border-color: white;
-	-fx-background-color: linear-gradient(#00838F 0%, #006064 100%);
-	-fx-text-fill: white;
+    -fx-border-width: 1px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: white;
+    -fx-background-color: linear-gradient(#00838F 0%, #006064 100%);
+    -fx-text-fill: white;
 }
 
 .increment-arrow, .arrow, .decrement-arrow {
-	-fx-background-color: white;
+    -fx-background-color: white;
 }
 .increment-arrow-button, .decrement-arrow-button {
-	-fx-border-width: 0;
-	-fx-border-radius: 0;
-	-fx-background-radius: 2px;
+    -fx-border-width: 0;
+    -fx-border-radius: 0;
+    -fx-background-radius: 2px;
 }
 
 .list-cell {
-	-fx-text-fill: white;
+    -fx-text-fill: white;
 }
 
 .list-view .list-cell {
-	-fx-text-fill: black;
+    -fx-text-fill: black;
+}
+
+.split-pane-divider {
+    -fx-border-width: 1;
+    -fx-background-color: linear-gradient(from 0px 0px to 10px 0px, #00838F 0%, #006064 100%);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 4, 0, 0, 0);
 }
