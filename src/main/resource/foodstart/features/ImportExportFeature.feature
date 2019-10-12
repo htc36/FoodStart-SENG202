@@ -23,13 +23,13 @@ Feature: ImportExport feature
 
 
 	@skip_scenario
-	Scenario: Importing data uncessfully due to referenced objects not being in the system (UC15)
+	Scenario: Importing data unsuccessfully due to referenced objects not being in the system (UC15)
 		Given A file is of type <fileType>
 		And The file is a valid XML file
 		And An object that is referenced in the XML file is not in the system
 		When The user imports this file
 		Then The data is not imported successfully
-		And The user is notified that and error has occured while importing the file
+		And The user is notified that and error has occurred while importing the file
 		Examples:
 		| fileType		|
 		| "RECIPE"		|
@@ -79,7 +79,7 @@ Feature: ImportExport feature
         Then The data is exported to a file called <fileName>
         Examples:
         | dataType 		| fileName			|
-        | "INGREDEIENT"	| "ingredients.xml" |
+        | "INGREDIENT"	| "ingredients.xml" |
         | "RECIPE"		| "recipes.xml"		|
         | "MENU"		| "menu.xml"		|
         | "SUPPLIER"	| "suppliers.xml" 	|
@@ -94,7 +94,7 @@ Feature: ImportExport feature
     	And No data is exported
         Examples:
         | dataType 		| fileName			|
-        | "INGREDEIENT"	| "ingredients.xml" |
+        | "INGREDIENT"	| "ingredients.xml" |
         | "RECIPE"		| "recipes.xml"		|
         | "MENU"		| "menu.xml"		|
         | "SUPPLIER"	| "suppliers.xml" 	|
@@ -105,8 +105,8 @@ Feature: ImportExport feature
     @skip_scenario
     Scenario: Generating Sales Report (UC14)
     	Given The user wants to generate a sales report of the sales
-    	When The usere chooses to generate a sales report
-    	Then A sales report is generated in the foodstart directory 
+    	When The user chooses to generate a sales report
+    	Then A sales report is generated in the foodstart directory
     	And The file type is of a csv
     	And The file contains information on the recipes that have been sold for today
     	And Has their quantities that were sold today
