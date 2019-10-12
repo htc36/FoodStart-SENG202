@@ -144,6 +144,10 @@ public class RecipeEditorController implements Refreshable {
      * The stage of the edit recipe popup screen
      */
     private Stage editPopup;
+	/**
+	 * The price of the recipe
+	 */
+	private float price;
 
 
     /**
@@ -166,8 +170,8 @@ public class RecipeEditorController implements Refreshable {
 		});
 		this.ingredientsCB.valueProperty().addListener(((observableValue, ingredientSingleSelectionModel, t1) ->
 				ingredientQuantityInput.textProperty().setValue(Integer.toString(ingredients.getOrDefault(t1, 1)))));
-        try {
-            editLoader = new FXMLLoader(getClass().getResource("editReicpeInstructions.fxml"));
+		try {
+			editLoader = new FXMLLoader(getClass().getResource("editRecipeInstructions.fxml"));
             editFXML = editLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
@@ -212,6 +216,7 @@ public class RecipeEditorController implements Refreshable {
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
 		this.ingredients = new HashMap<>(recipe.getIngredients());
+		this.priceInput.setText(Float.toString(recipe.getPrice()));
 		refreshTable();
 	}
 
@@ -262,11 +267,12 @@ public class RecipeEditorController implements Refreshable {
 	}
 
 	/**
-	 * Sets the price of the recipe
-	 * @param price price of the recipe
+	 * Returns the new price of the recipe
+	 * @return the new price of the recipe
 	 */
-	public void setPrice(float price) {
-		//TODO
+	public float getPrice() {
+		this.price = Float.parseFloat(priceInput.getText());
+		return this.price;
 	}
 
 	/**
@@ -385,11 +391,11 @@ public class RecipeEditorController implements Refreshable {
 	}
 
 	/**
-	 * Returns the new price of the recipe
-	 * @return the new price of the recipe
+	 * Sets the price of the recipe
+	 * @param price price of the recipe
 	 */
-	public float getPrice() {
-		//TODO
-		return 0;
+	public void setPrice(float price) {
+		this.price = price;
+		this.priceInput.setText(Float.toString(this.price));
 	}
 }

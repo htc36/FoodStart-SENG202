@@ -133,8 +133,10 @@ public class OrderEditorController {
 		((EditOrderItemsController) editorLoader.getController()).setOrder(this.order);
 		((EditOrderItemsController) editorLoader.getController()).pushRecipes(newRecipes);
 		popupStage.showAndWait();
-		this.newRecipes = ((EditOrderItemsController) editorLoader.getController()).getNewRecipes();
-
+		Map<Recipe, Integer> tempRecipes = ((EditOrderItemsController) editorLoader.getController()).getNewRecipes();
+		if (tempRecipes != null) {
+			this.newRecipes = tempRecipes;
+		}
 	}
 
 	/**
