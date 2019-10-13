@@ -164,7 +164,7 @@ public class RecipeEditorController implements Refreshable {
 			});
 		}
 		this.ingredientQuantityInput.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!newValue.matches("\\d{0,7}")) {
+			if (!newValue.matches("\\d{0,20}")) {
 				ingredientQuantityInput.setText(oldValue);
 			}
 		});
