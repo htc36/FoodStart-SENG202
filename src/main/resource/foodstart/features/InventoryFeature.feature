@@ -41,13 +41,6 @@ Feature: Inventory feature
 		When An attempt is made to remove an ingredient
 		Then The user is notified that no ingredient has been selected to remove
 
-	Scenario: Removing an ingredient (UC12)
-		Given There are 3 ingredients in the inventory
-		And The ingredient "Cucumber" is in the inventory
-		And The ingredient's ID number is 3
-		When The ingredient "Cucumber" is manually removed
-		Then The ingredient ID 3 no longer exists in the inventory
-
 	Scenario Outline: Removing ingredients (UC12)
 		Given There are 3 ingredients in the inventory
 		And The ingredient <ingredientName> is in the inventory
