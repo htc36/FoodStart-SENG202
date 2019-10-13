@@ -37,7 +37,15 @@ Feature: Menu feature
         Then All 12 recipes are displayed with their IDs, name, price, and the ingredients required
 
     # Scenarios relating to the editing of menus 
-      
+
+    @skip_scenario # Manual testing
+    Scenario: Setting the current menu (UC9)
+        Given There are menus in the system
+        And The menu "Default Menu" is the current set menu
+        When The user selects "Summer Menu" to be the current set menu
+        Then The current set menu will be "Summer Menu"
+        And The corresponding menu items from "Summer Menu" will be shown when creating an order
+
     @skip_scenario # Manual testing
     Scenario: Menu editing (UC9)
         Given There are menus in the system
@@ -45,13 +53,20 @@ Feature: Menu feature
         And The menu has ID 0
         When The employee edits a specific menu set (i.e. add and remove menu items)
         Then The menu set is updated with the new information
+
+    @skip_scenario # Manual testing
+    Scenario: Attempting to close or set the current menu with unapplied changes (UC9)
+        Given Changes have been made to the menu
+        When The user attempts to close or set the current menu
+        Then The user is notified that there are unapplied changes
         
     @skip_scenario # Manual testing
     Scenario: Menu editing when there are no menus (UC9)
         Given There are no menus in the system
         When An attempt is made to edit a menu
         Then The user is unable to edit a menu
-        
+
+
     # Scenarios relating to the editing of menu items
         
     @skip_scenario # Manual testing
