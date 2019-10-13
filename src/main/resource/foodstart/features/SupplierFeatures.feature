@@ -1,26 +1,19 @@
 Feature: Supplier feature
     Some example scenarios involving suppliers
 
-    # Scenarios relating to the adding of suppliers
-
-    Scenario: Adding a supplier to the suppliers list (UC13)
+    @skip_scenario # Manually tested
+    Scenario: View suppliers in the supplier list(UC8)
         Given There are 2 suppliers in the suppliers list
-        And Supplier with code 1807 does not exist in the supplier list
-        And Its code is 1807
-        And Its name is "Pak'n'Slave"
-        And Its phone number is "025031807"
-        And Its phone type is "WORK"
-        And Its email is "trade@paknslave.com"
-        And Its website is "www.paknslave.com"
-        And Its address is "25 Traders Road"
-        When Supplier with code 1807 is manually added to the supplier list
-        Then It will be stored with code 1807 in the supplier list
-        And Its name will be "Pak'n'Slave"
-        And Its phone number will be "025031807"
-        And Its phone type will be "WORK"
-        And Its email will be "trade@paknslave.com"
-        And Its website will be "www.paknslave.com"
-        And Its address will be "25 Traders Road"
+        When The suppliers list is displayed
+        Then The code, name, phone number, phone type, email, website and address for all 2 suppliers are displayed
+
+    @skip_scenario # Manually tested
+    Scenario: View suppliers when there are no suppliers in the suppliers list (UC8)
+        Given There are 0 suppliers in the suppliers list
+        When The suppliers list is displayed
+        Then The user is notified that there are no suppliers currently in the inventory
+
+    # Scenarios relating to the adding of suppliers
 
     Scenario Outline: Adding suppliers to the suppliers list (UC13)
         Given There are 0 suppliers in the suppliers list
@@ -45,6 +38,7 @@ Feature: Supplier feature
         | 123  | "Fresh Choice" | "03-355 4432" | "WORK" | ""                           | "www.freshchoice.co.nz"   | "189 Papanui Rd"      |
         | 124  | "Woolworths"   | "0314361378"  | "WORK" | "admin@woolworths.co.nz"     | ""                        | "124 Market Place"    |
         | 125  | "Countdown"    | "03-375 0092" | "WORK" | ""                           |  ""                       | "44 Count Street"     |
+        | 1807 | "Pak'n'Slave"  | "025031807"   | "WORK" | "trade@paknslave.com"        | "www.paknslave.com"       | "25 Traders Road"     |
 
 
     @skip_scenario # Manually tested
@@ -54,6 +48,12 @@ Feature: Supplier feature
         Then The user is notified that there is required information that is missing
 
     # Scenarios relating to the removing of suppliers
+
+    @skip_scenario # Manually tested
+    Scenario: Removing a supplier when there are no suppliers (UC13)
+        Given There are 0 suppliers in the suppliers list
+        And An attempt is made to remove a supplier
+        Then The user is notified that no supplier has been selected to remove
 
     Scenario: Removing a supplier from the suppliers list (UC13)
         Given There are 2 suppliers in the suppliers list
@@ -75,24 +75,11 @@ Feature: Supplier feature
 
     # Scenarios relating to the editing of suppliers
 
-    Scenario: Editing the editable attributes of a supplier from the suppliers list (UC13)
-        Given There are 2 suppliers in the suppliers list
-        And Supplier with code 1 exists in the supplier list
-        And Its code is 1
-        And Its name is "Under Value"
-        And Its phone number is "01111111"
-        And Its phone type is "WORK"
-        And Its email is "super@undervalue.com"
-        And Its website is "www.undervalue.com"
-        And Its address is "11 Costly Road"
-        When The supplier with code 1 is edited to name "New Name", phone "123454321", type "MOBILE", email "old@newname.com", website "newname.com", address "1 New Street"
-        Then Its code will be 1
-        And Its name will be "New Name"
-        And Its phone number will be "123454321"
-        And Its phone type will be "MOBILE"
-        And Its email will be "old@newname.com"
-        And Its website will be "newname.com"
-        And Its address will be "1 New Street"
+    @skip_scenario # Manually tested
+    Scenario: Editing a supplier when there are no suppliers (UC13)
+        Given There are 0 suppliers in the suppliers list
+        And An attempt is made to edit a supplier
+        Then The user is notified that no supplier has been selected to edit
 
     Scenario Outline: Editing the editable attributes of suppliers from the suppliers list (UC13)
         Given There are 1 suppliers in the suppliers list
@@ -117,14 +104,3 @@ Feature: Supplier feature
         | 0    | "Count Up"     | "0123456789"   | "WORK"   | "onetwothree@countup.com" | "www.countup.com"     | "1234 Five Road"    | "Count Up"       | "0123456789"   | "WORK"   | "onetwothree@countup.com" | "www.countup.com"     | "1234 Five Road"      |
         | 0    | "Count Up"     | "0123456789"   | "WORK"   | "onetwothree@countup.com" | "www.countup.com"     | "1234 Five Road"    | "Count Up"       | "0123456789"   | "WORK"   | ""                        | ""                    | "1234 Five Road"      |
         | 0    | "Count Up"     | "0123456789"   | "WORK"   | "onetwothree@countup.com" | "www.countup.com"     | "1234 Five Road"    | "Count Down"     | "1111111111"   | "HOME"   | "threetwoone@countup.com" | "www.countdown.com"   | "5432 One Road"       |
-
-
-
-    @skip_scenario
-    Scenario: View suppliers (UC8)
-        Given An employee wants to view the suppliers list
-        And There are 2 suppliers in the suppliers list
-        When The suppliers list is displayed
-        Then The code, name, phone number, phone type, email, website and address for all 2 suppliers are displayed
-
-
