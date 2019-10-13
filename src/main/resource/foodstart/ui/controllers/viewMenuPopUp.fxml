@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="950.0" styleClass="semidark" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewMenuController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="semidark" stylesheets="@../main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="foodstart.ui.controllers.ViewMenuController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0" percentWidth="48.0" />
       <ColumnConstraints hgrow="NEVER" minWidth="10.0" percentWidth="4.0" />
@@ -28,8 +28,8 @@
    <children>
       <TableView fx:id="menuTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="371.0" prefWidth="832.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <columns>
-            <TableColumn fx:id="tableIDColumn" maxWidth="2000.0" minWidth="30.0" prefWidth="-1.0" text="ID" />
-            <TableColumn fx:id="tableNameColumn" editable="false" minWidth="60.0" prefWidth="-1.0" sortable="false" text="Name" />
+            <TableColumn fx:id="tableIDColumn" maxWidth="2000.0" minWidth="25.0" prefWidth="-1.0" text="ID" />
+            <TableColumn fx:id="tableNameColumn" editable="false" minWidth="125.0" prefWidth="-1.0" sortable="false" text="Name" />
             <TableColumn fx:id="tableDescriptionColumn" minWidth="250.0" prefWidth="-1.0" text="Description" />
          </columns>
          <columnResizePolicy>
@@ -38,8 +38,8 @@
       </TableView>
       <TableView fx:id="availableMenuItemsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="830.0" GridPane.rowIndex="3">
          <columns>
-            <TableColumn fx:id="availableIDColumn" maxWidth="2000.0" minWidth="30.0" prefWidth="-1.0" text="ID" />
-            <TableColumn fx:id="availableNameColumn" editable="false" minWidth="60.0" prefWidth="-1.0" sortable="false" text="Name" />
+            <TableColumn fx:id="availableIDColumn" maxWidth="2000.0" minWidth="25.0" prefWidth="15.0" text="ID" />
+            <TableColumn fx:id="availableNameColumn" editable="false" minWidth="125.0" prefWidth="-1.0" sortable="false" text="Name" />
             <TableColumn fx:id="availableDescriptionColumn" minWidth="250.0" prefWidth="-1.0" text="Description" />
          </columns>
          <columnResizePolicy>

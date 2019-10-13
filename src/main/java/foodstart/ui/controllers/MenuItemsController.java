@@ -144,6 +144,8 @@ public class MenuItemsController implements Refreshable {
             editPopup.initOwner(this.flowPane.getScene().getWindow());
         }
         ((MenuItemEditorController) editLoader.getController()).setFields(menuItem);
+        editPopup.setHeight(600);
+        editPopup.setWidth(800);
         editPopup.showAndWait();
         populateMenuItems(flowPane);
 

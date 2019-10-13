@@ -40,9 +40,9 @@
       </Text>
       <TableView fx:id="variantsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
         <columns>
-          <TableColumn fx:id="variantNameColumn" minWidth="50.0" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="variantPriceColumn" minWidth="50.0" prefWidth="75.0" text="Price" />
-            <TableColumn fx:id="variantIngredientsColumn" minWidth="250.0" prefWidth="75.0" text="Ingredients" />
+          <TableColumn fx:id="variantNameColumn" maxWidth="400.0" minWidth="150.0" prefWidth="150.0" text="Name" />
+          <TableColumn fx:id="variantPriceColumn" maxWidth="100.0" minWidth="60.0" prefWidth="60.0" text="Price" />
+            <TableColumn fx:id="variantIngredientsColumn" minWidth="400.0" prefWidth="450.0" text="Ingredients" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

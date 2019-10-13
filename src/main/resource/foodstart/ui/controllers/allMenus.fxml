@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -19,27 +18,15 @@
          <bottom>
             <GridPane BorderPane.alignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.0" minWidth="10.0" percentWidth="20.0" prefWidth="124.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" percentWidth="20.0" prefWidth="105.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
-                  <AnchorPane GridPane.columnIndex="1">
-                     <children>
-                        <MenuButton alignment="CENTER" mnemonicParsing="false" popupSide="TOP" text="Manage" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-                           <items>
-                              <MenuItem fx:id="importButton" mnemonicParsing="false" onAction="#importMenu" text="Import" />
-                              <MenuItem fx:id="exportButton" mnemonicParsing="false" onAction="#exportMenu" text="Export" />
-                              <MenuItem fx:id="addButton" mnemonicParsing="false" onAction="#onAdd" text="Add" />
-                           </items>
-                        </MenuButton>
-                     </children>
-                     <GridPane.margin>
-                        <Insets bottom="10.0" right="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </AnchorPane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Menu">
                      <font>
                         <Font size="30.0" />
@@ -48,6 +35,21 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Text>
+                  <Button fx:id="importButton" minWidth="130.0" mnemonicParsing="false" onAction="#importMenu" prefHeight="35.0" prefWidth="160.0" text="Import Menu" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button fx:id="exportButton" minWidth="130.0" mnemonicParsing="false" onAction="#exportMenu" prefHeight="35.0" prefWidth="160.0" text="Export Menu" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Button minWidth="130.0" mnemonicParsing="false" onAction="#onAdd" prefHeight="35.0" prefWidth="160.0" text="Add Menu" GridPane.columnIndex="3">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
                </children>
             </GridPane>
          </bottom>

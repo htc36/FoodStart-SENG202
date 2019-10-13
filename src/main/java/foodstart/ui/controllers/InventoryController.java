@@ -6,6 +6,7 @@ import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
+import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
@@ -20,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -102,6 +104,16 @@ public class InventoryController implements Refreshable {
 		editLoader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
 		addLoader = new FXMLLoader(getClass().getResource("addIngredientPopUp.fxml"));
 		inventoryView.setPlaceholder(new Text("There are no ingredients in the inventory. Import or add new ingredients below."));
+		inventoryView.setRowFactory( tv -> {
+            TableRow<Ingredient> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    inventoryView.getSelectionModel().select(row.getIndex());
+                    editIngredient();
+                }
+            });
+            return row ;
+        });
 		addLoader.setController(new AddIngredientController());
 		editLoader.setController(new EditIngredientController());
 

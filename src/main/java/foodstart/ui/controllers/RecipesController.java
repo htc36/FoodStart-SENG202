@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -95,6 +96,16 @@ public class RecipesController implements Refreshable {
 	@FXML
 	public void initialize() {
 		recipesTableView.setPlaceholder(new Text("There are no recipes. Import or add new recipes below."));
+		recipesTableView.setRowFactory( tv -> {
+            TableRow<PermanentRecipe> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    recipesTableView.getSelectionModel().select(row.getIndex());
+                    modifyRecipe();
+                }
+            });
+            return row ;
+        });
 		try {
 			editLoader = new FXMLLoader(getClass().getResource("PermanentRecipeEditor.fxml"));
 			editFXML = editLoader.load();
@@ -123,7 +134,6 @@ public class RecipesController implements Refreshable {
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("displayName"));
 		priceCol.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getPrice())));
 		ingredientsCol.setCellValueFactory(cell -> new SimpleStringProperty(manager.getIngredientsAsString(cell.getValue().getId())));
-
 	}
 
 	/**
@@ -199,6 +209,8 @@ public class RecipesController implements Refreshable {
 			}
 			((RecipeEditorController) editLoader.getController()).setRecipeAndFields(recipe);
 			((RecipeEditorController) editLoader.getController()).instructionsDoubleClickListener();
+			editPopup.setHeight(700);
+	        editPopup.setWidth(600);
 			editPopup.showAndWait();
 			refreshTable();
 		}
@@ -212,10 +224,10 @@ public class RecipesController implements Refreshable {
         }
 		((RecipeEditorController) editLoader.getController()).clearFields();
         ((RecipeEditorController) editLoader.getController()).instructionsDoubleClickListener();
+        editPopup.setHeight(700);
+        editPopup.setWidth(600);
         editPopup.showAndWait();
         refreshTable();
-
-
 	}
 
 }

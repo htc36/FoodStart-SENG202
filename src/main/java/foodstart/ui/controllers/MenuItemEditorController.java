@@ -183,6 +183,8 @@ public class MenuItemEditorController implements Refreshable {
 			editPopup.initOwner(this.addRecipeButton.getScene().getWindow());
 		}
 		((AllRecipesDisplayController) editLoader.getController()).refreshTable();
+		editPopup.setHeight(700);
+        editPopup.setWidth(650);
 		editPopup.showAndWait();
 		PermanentRecipe selectedRecipe = ((AllRecipesDisplayController) editLoader.getController()).getSelectedRecipe();
 		if (selectedRecipe != null) {

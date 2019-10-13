@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -38,6 +39,15 @@ public class AllMenusController implements Refreshable {
 	 */
 	@FXML
 	private FlowPane flowPane;
+	
+	@FXML
+	private Button importButton;
+	
+	@FXML
+    private Button exportButton;
+	
+	@FXML
+    private Button addButton;
 	/**
 	 * Loader for popup fxml
 	 */
@@ -109,8 +119,8 @@ public class AllMenusController implements Refreshable {
 
 			popupStage = new Stage();
 			popupStage.setResizable(false);
-			popupStage.setMinWidth(950);
-			popupStage.setMinHeight(600);
+			popupStage.setMinWidth(scene.getWidth());
+			popupStage.setMinHeight(scene.getHeight());
 			popupStage.initModality(Modality.WINDOW_MODAL);
 
             ((ViewMenuController) loader.getController()).setStage(popupStage);

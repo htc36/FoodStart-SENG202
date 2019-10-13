@@ -41,8 +41,8 @@ public class ViewVariantsPopupController {
 
     public void setStage(Stage popupStage) {
         stage = popupStage;
-        stage.setMinWidth(400);
-        stage.setMinHeight(300);
+        stage.setMinWidth(popupStage.getWidth());
+        stage.setMinHeight(popupStage.getHeight());
     }
 
     public void setMenuItem(MenuItem menuItem) {

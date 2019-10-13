@@ -5,6 +5,7 @@ import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
+import foodstart.model.stock.Ingredient;
 import foodstart.model.stock.Supplier;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
@@ -19,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
@@ -103,6 +105,16 @@ public class SupplierController implements Refreshable {
 	@FXML
 	public void initialize() {
 		supplierTable.setPlaceholder(new Text("There are no suppliers. Import or add new suppliers below."));
+		supplierTable.setRowFactory( tv -> {
+            TableRow<Supplier> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    supplierTable.getSelectionModel().select(row.getIndex());
+                    onEdit();
+                }
+            });
+            return row ;
+        });
 		editLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));
 		editLoader.setController(new EditSupplierController());
 		addLoader = new FXMLLoader(getClass().getResource("addSupplier.fxml"));

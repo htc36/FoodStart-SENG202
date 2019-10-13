@@ -7,6 +7,7 @@ import foodstart.manager.order.OrderManager;
 import foodstart.model.DataFileType;
 import foodstart.model.DataType;
 import foodstart.model.order.Order;
+import foodstart.model.stock.Ingredient;
 import foodstart.ui.FXExceptionDisplay;
 import foodstart.ui.Main;
 import foodstart.ui.Refreshable;
@@ -21,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -101,6 +103,16 @@ public class SalesController implements Refreshable {
 	@FXML
 	public void initialize() {
 		salesTableView.setPlaceholder(new Text("There are no sales in the sales log."));
+		salesTableView.setRowFactory( tv -> {
+            TableRow<Order> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    salesTableView.getSelectionModel().select(row.getIndex());
+                    editSale();
+                }
+            });
+            return row ;
+        });
 		try {
 			editorLoader = new FXMLLoader(getClass().getResource("editOrder.fxml"));
 			orderEditorFXML = editorLoader.load();
