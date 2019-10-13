@@ -1,8 +1,6 @@
 Feature: Menu feature
-    Scenarios involving the menu and their menu items and recipes 
-        
+    Scenarios involving the menu and their menu items and recipes
     # Scenarios relating to the displaying of menus, menu items, and recipes
-    
     @skip_scenario # Manual testing
     Scenario: All menus display (UC1)
         Given An employee is looking through different menu sets
@@ -116,15 +114,21 @@ Feature: Menu feature
         When The recipe "AmericanWiener", instructions are changed to "Slot into bread hole"
         Then The recipe "AmericanWiener" has the instructions "Slot into bread hole"
 
-	 	# Scenarios relating to the removing of recipes
-  
+   # Scenarios relating to the removing of recipes
     Scenario: Removing a recipe (UC11)
         Given A recipe "Small HotDog" exists
         When The recipe "Small HotDog" is removed
         Then The recipe "Small HotDog" does not exist
-  			
-  	@skip_scenario # Manual testing
-  	Scenario: Recipe removing when there are no recipes (UC11)
-        Given There are no recipes in the system
-        When An attempt is made to edit a recipe
-        Then The user is notified that no recipe has been selected to remove
+
+    Scenario: Menu Item display (UC2)
+        Given A recipe "Small HotDog" exists
+        And The menu item "HotDog" exists
+        When The recipe "Small HotDog" is added to the "HotDog" menu item
+        Then The corresponding recipe "Small HotDog " is displayed from "HotDog" menu item
+
+    Scenario: Menu Item display (UC2)
+        Given A recipe "Small HotDog" exists
+        And The menu item "HotDog" exists
+        And The recipe "Small HotDog" is added to the "HotDog" menu item
+        And The recipe "Small HotDog" is removed from the "HotDog" menu item
+        Then The corresponding recipe "" is displayed from "HotDog" menu item
