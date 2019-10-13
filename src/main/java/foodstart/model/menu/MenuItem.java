@@ -108,6 +108,14 @@ public class MenuItem {
 		return variants;
 	}
 
+	/**
+	 * Adds recipe variant to menuitem
+	 * @param recipe the variant to add
+	 */
+	public void addVariant(PermanentRecipe recipe) {
+		variants.add(recipe);
+	}
+
     /**
      * Gets the different variants of the menu item as a string
      *
