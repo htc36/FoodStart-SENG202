@@ -36,7 +36,7 @@ Feature: Order feature
       When The customer wants to remove "cheese" from the "hamburger"
       Then The "hamburger" has no "cheese"
 
-  @skip_scenario
+  @skip_scenario # Manually tested
     Scenario: Adding ingredients in an item (UC5)
       Given A "hamburger" does not already contain "mustard"
       When The customer wants to add "mustard" to the "hamburger"
@@ -47,7 +47,7 @@ Feature: Order feature
     When The customer "Sally" orders 8 "hamburger" and pays by "eftpos"
     Then The customer will be charged $40.00 total
 
-  @skip_scenario
+  @skip_scenario # Manually tested
   Scenario: Editing an order (UC4)
       Given The current order has 1 "orange slushy"
       When The flavour is edited to tropical
@@ -63,13 +63,23 @@ Feature: Order feature
     When The employee checks the if "sandwich" is "vegan"
     Then The "sandwich" should not be "vegan"
 
-  @skip_scenario
-  Scenario: An item is sold out (UC4)
+  @skip_scenario # Manually tested
+  Scenario: An ingredient used is completely sold out (UC4)
       Given A "Hamburger" contains "cheese"
-      When The employee is about to order the item
-      Then The employee will not be able to place hamburger to the order
+      And There is 0 "cheese" in the truck stock
+      When The employee tries to add the order
+      Then The employee will not be able to place "Hamburger" to the order
+      
+  @skip_scenario # Manually tested
+  Scenario: Insuffient quantity of an ingredient used in the recipe (UC4)
+      Given A "Hamburger" contains "cheese"
+      And There is 99 "cheese" in the truck stock
+      And The recipe "Hamburger" requires 100 "cheese"
+      When The employee tries to add the order
+      Then The employee will be notified that there is insufficient stock for "cheese"
+      And The employee can choose to add the order with just the current stock for "cheese" of 99
 
-  @skip_scenario
+  @skip_scenario # Manually tested
   Scenario: Finalising an order (UC4)
       Given Customer "Sally" ordered 1 "hamburger"
       And A "hamburger" costs $5.00
@@ -91,7 +101,7 @@ Feature: Order feature
       When The payment is finalised
       Then The payment is short by $3.50
 
-  @skip_scenario
+  @skip_scenario # Manually tested
   Scenario: View Sales Log (UC6)
       Given Customer "Sally" ordered 1 "hamburger"
       When The manager looks for "Sally" in the sales log
