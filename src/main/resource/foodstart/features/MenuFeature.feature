@@ -6,7 +6,6 @@ Feature: Menu feature
         When The price is changed to 7.50
         Then The recipe costs 7.5
 
-
     Scenario: Adding/removing ingredients from recipe (UC11)
         Given A recipe "Small HotDog" exists
         And The ingredient "wrap" is added with the unit quantity 1
@@ -27,7 +26,7 @@ Feature: Menu feature
     # Scenarios relating to the displaying of menus, menu items, and recipes
     
     @skip_scenario # Manual testing
-    Scenario: Specific menu display (UC1)
+    Scenario: All menus display (UC1)
         Given An employee is looking through different menu sets
         When The employee selects a specific menu set
         Then The corresponding menu is displayed including name of menu and all recipes 
@@ -44,6 +43,13 @@ Feature: Menu feature
         And There are 7 menu items in the system
         When The employee displays all menu items
         Then All 7 menu items are displayed with their names and the price of the default recipe
+        
+    @skip_scenario # Manual testing
+    Scenario: Specfic recipe display when adding/removing menu items in a recipe (UC3)
+        Given An employee wants to see the recipes of a menu item when viewing a menu
+        And The menu has menu items with recipes
+        When The employee chooses to display the recipes of a menu item
+        Then The correct recipe is displayed for that menu item
         
 		@skip_scenario # Manual testing
 		Scenario: Viewing all recipes (UC3) 
@@ -62,15 +68,27 @@ Feature: Menu feature
         When The employee edits a specific menu set (i.e add and remove)
         Then The menu set is updated with the new information
         
+	  @skip_scenario # Manual testing
+	  Scenario: Menu editing when there are no menu (UC9)
+	  		Given There are no menus in the system
+	  		When An attempt is made to edit a menu
+	  		Then The user is unable to edit a menu
+        
     # Scenarios relating to the editing of menu items
         
     @skip_scenario # Manual testing
-    Scenario: Menu Item editing (UC10)
+    Scenario: Menu item editing (UC10)
 	    	Given There are menu items in the system
 	    	And The menu item "Chicken Burger" exists
 	    	And The menu item has ID 4
 	    	When The menu item's editable attributes with ID 4 is edited
 	    	Then It will either be the same or changed to their edited value 
+	    	
+	  @skip_scenario # Manual testing
+	  Scenario: Menu item editing when there are no menu items (UC10)
+	  		Given There are no menu items in the system
+	  		When An attempt is made to edit a menu item
+	  		Then The user is unable to edit a menu item
         
     # Scenarios relating to the editing of recipes
         
