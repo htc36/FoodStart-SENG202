@@ -137,7 +137,6 @@ public class EditOrderItemsController implements Refreshable {
 		ingredientCol.setCellValueFactory(cell -> new SimpleStringProperty(recipeManager.getIngredientsAsString(cell.getValue())));
 		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(items.get(cell.getValue()).toString()));
 		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		//quantityCol.get
 		quantityCol.setOnEditCommit(e -> {
 			if (e.getNewValue().matches("\\d{0,20}")) {
 				items.put(e.getRowValue(), Integer.parseInt(e.getNewValue()));

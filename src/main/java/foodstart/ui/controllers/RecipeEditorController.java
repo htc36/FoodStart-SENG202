@@ -188,7 +188,6 @@ public class RecipeEditorController implements Refreshable {
 	 * Populates the table with data
 	 */
 	private void populateTable() {
-		RecipeManager recipeManager = Managers.getRecipeManager();
 		Set<Ingredient> ingredients = new HashSet<Ingredient>();
 		observableIngredients = FXCollections.observableArrayList(ingredients);
 		ingredientsTable.setItems(observableIngredients);
