@@ -45,17 +45,6 @@ public class Menu {
 		this.description = description;
 	}
 
-	/**
-	 * Constructs an instance of a menu
-	 * 
-	 * @param menu a menu to make a menu with		
-	 */
-	public Menu(Menu menu) {
-		this.menuItems = menu.getMenuItems();
-		this.id = menu.getId();
-		this.title = menu.getTitle();
-		this.description = menu.getDescription();	
-}
 
 	/**
 	 * Gets the id of the menu

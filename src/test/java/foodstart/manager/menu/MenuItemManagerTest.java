@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class MenuItemManagerTest {
 
     private MenuItemManager testManager;
-    private PermanentRecipe recipe1;
+    private PermanentRecipe recipe1, recipe2;
 	private Set<PermanentRecipe> recipeList;
 
     @Before
@@ -25,6 +25,7 @@ public class MenuItemManagerTest {
         Ingredient ingredient1 = new Ingredient(Unit.UNITS, "ingredient1", 0, null, 10, 20);
         ingredients1.put(ingredient1, 20);
         recipe1 = new PermanentRecipe(1, "recipe1", "Create recipe one", 5, ingredients1);
+        recipe2 = new PermanentRecipe(2, "recipe2", "Create recipe two", 3, ingredients1);
 		recipeList = new HashSet<PermanentRecipe>();
         recipeList.add(recipe1);
 		testManager.addMenuItem(0, "test menu item", "a menu item test", recipeList, recipe1);
@@ -162,5 +163,37 @@ public class MenuItemManagerTest {
     public void testGenerateIDEmpty() {
         testManager.getMenuItems().clear();
         assertEquals(0, testManager.generateNewId());
+    }
+    
+    @Test
+    public void testRemoveMenuItem() {
+        testManager.removeMenuItem(0);
+        assertTrue(testManager.getMenuItemSet().isEmpty());
+    }
+    
+    @Test
+    public void testMutateMenuItem() {
+        Set<PermanentRecipe> expectedRecipes= new HashSet<PermanentRecipe>();
+        expectedRecipes.add(recipe2);
+        MenuItem expected = new MenuItem(0, "mutant", "a mutant", expectedRecipes, recipe2);
+        testManager.mutateMenuItem(0, "mutant", "a mutant", expectedRecipes, recipe2);
+        assertEquals(expected, testManager.getMenuItem(0));
+    }
+    
+    @Test
+    public void testGetMenuItemsBuffered() {
+        Set<PermanentRecipe> expectedRecipes= new HashSet<PermanentRecipe>();
+        expectedRecipes.add(recipe2);
+        MenuItem expectedItem = new MenuItem(0, "test menu item", "a menu item test", recipeList, recipe1);
+        MenuItem bufferItem = new MenuItem(1, "in buffer", "put it in a buffer", expectedRecipes, recipe2);
+        testManager.pushToBuffer(1, "in buffer", "put it in a buffer", expectedRecipes, recipe2);
+        testManager.addMenuItem(1, "mutant", "a mutant", expectedRecipes, recipe2);
+        Set<MenuItem> expectedItems = new HashSet<MenuItem>();
+        expectedItems.add(bufferItem);
+        expectedItems.add(expectedItem);
+        Set<Integer> ids = new HashSet<Integer>();
+        ids.add(0);
+        ids.add(1);
+        assertEquals(expectedItems, testManager.getMenuItemsBuffered(ids));
     }
 }

@@ -2,6 +2,7 @@ package foodstart.manager.menu;
 
 import foodstart.manager.menu.RecipeManager;
 import foodstart.model.Unit;
+import foodstart.model.menu.Menu;
 import foodstart.model.menu.OnTheFlyRecipe;
 import foodstart.model.menu.PermanentRecipe;
 import foodstart.model.stock.Ingredient;
@@ -12,7 +13,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -192,5 +195,52 @@ public class RecipeManagerTest {
 	public void testOtfManagerGetRecipeInvalidId() {
 		assertNull(manager.otfManager.getRecipe(1024));
 	}
-
+	
+	@Test
+    public void testIDExistsTrue() {
+        assertTrue(manager.idExists(0));
+    }
+	
+	@Test
+    public void testIDExistsFalse() {
+	    assertFalse(manager.idExists(1247654));
+	}
+	
+	@Test
+    public void testGenerateIDNormal() {
+        assertEquals(1, manager.generateNewId());
+    }
+	
+	@Test
+    public void testGenerateIDEmpty() {
+	    manager.removeAllRecipes();
+        assertEquals(0, manager.generateNewId());
+    }
+	
+	@Test
+    public void testPushToBuffer() {
+        manager.getRecipes().clear();
+        PermanentRecipe expected = new PermanentRecipe(0, "mutant", "a mutant", 2.00f, new HashMap<Ingredient, Integer>());
+        manager.pushToBuffer(0, "mutant", "a mutant", 2.00f, new HashMap<Ingredient, Integer>());
+        manager.writeBuffer();
+        assertTrue(manager.getRecipes().containsValue(expected));
+    }
+    
+    @Test
+    public void testDropBuffer() {
+        manager.getRecipes().clear();
+        manager.pushToBuffer(0, "mutant", "a mutant", 2.00f, new HashMap<Ingredient, Integer>());
+        manager.dropBuffer();
+        manager.writeBuffer();
+        assertTrue(manager.getRecipes().isEmpty());
+    }
+	
+	@Test
+	public void testMutateRecipe() {
+	    manager.mutateRecipe(0, "mutant", "a mutant", 2.00f, new HashMap<Ingredient, Integer>());
+	    PermanentRecipe expected = new PermanentRecipe(0, "mutant", "a mutant", 2.00f, new HashMap<Ingredient, Integer>());
+	    Set<PermanentRecipe> expectedRecipes = new HashSet<PermanentRecipe>();
+	    expectedRecipes.add(expected);
+	    assertEquals(expectedRecipes, manager.getRecipeSet());
+	}
 }

@@ -24,6 +24,8 @@ public class OrderManagerTest {
 	OrderManager manager;
 	LocalDateTime testTime;
 	Map<Recipe, Integer> items;
+	PermanentRecipe permanentRecipe;
+	OnTheFlyRecipe otfRecipe;
 
 	@Before
 	public void setUp() {
@@ -33,9 +35,9 @@ public class OrderManagerTest {
 		Map<Ingredient, Integer> ingredients = new HashMap<Ingredient, Integer>();
 		ingredients.put(ingredient1, 10);
 		ingredients.put(ingredient2, 5);
-		PermanentRecipe permanentRecipe = new PermanentRecipe(0, "TestPermRecipe", "TestInstruction", 5, ingredients);
+		permanentRecipe = new PermanentRecipe(0, "TestPermRecipe", "TestInstruction", 5, ingredients);
 		Map<Ingredient, Integer> otfIngredients = new HashMap<Ingredient, Integer>(ingredients);
-		OnTheFlyRecipe otfRecipe = new OnTheFlyRecipe(permanentRecipe, otfIngredients, 45);
+		otfRecipe = new OnTheFlyRecipe(permanentRecipe, otfIngredients, 45);
 		items = new HashMap<Recipe, Integer>();
 		items.put(permanentRecipe, 5);
 		items.put(otfRecipe, 3);
@@ -212,4 +214,84 @@ public class OrderManagerTest {
 	public void testGetOrderRecipesInvalidId() {
 		assertNull(manager.getOrderRecipes(101));
 	}
+	
+    
+    @Test
+    public void testPushToBufferTimeObject() {
+        manager.removeAllOrders();
+        Order order2 = new Order(1, items, "Customer", testTime, PaymentMethod.CASH);
+        manager.pushToBuffer(1, items, "Customer", testTime, PaymentMethod.CASH);
+        manager.writeBuffer();
+        assertTrue(manager.getOrder(1).equals(order2));
+    }
+    
+    @Test
+    public void testPushToBufferTimeMs() {
+        manager.removeAllOrders();
+        Order order2 = new Order(1, items, "Customer", 10000000, PaymentMethod.CASH);
+        manager.pushToBuffer(1, items, "Customer", 10000000, PaymentMethod.CASH);
+        manager.writeBuffer();
+        assertTrue(manager.getOrder(1).equals(order2));
+    }
+    
+    @Test
+    public void testPushToBufferWithCost() {
+        manager.removeAllOrders();
+        Order order2 = new Order(1, items, "Customer", 10000000, PaymentMethod.CASH, (float) 12.50);
+        manager.pushToBuffer(1, items, "Customer", 10000000, PaymentMethod.CASH, (float) 12.50);
+        manager.writeBuffer();
+        assertTrue(manager.getOrder(1).equals(order2));
+    }
+    
+    @Test
+    public void testPushToBufferTimeObjectNullItems() {
+        manager.removeAllOrders();
+        Map<Recipe, Integer> empty = new HashMap<Recipe, Integer>();
+        Order order2 = new Order(1, empty, "Customer", testTime, PaymentMethod.CASH);
+        manager.pushToBuffer(1, null, "Customer", testTime, PaymentMethod.CASH);
+        manager.writeBuffer();
+        assertTrue(manager.getOrder(1).equals(order2));
+    }
+    
+    @Test
+    public void testPushToBufferTimeInMsNullItems() {
+        manager.removeAllOrders();
+        Map<Recipe, Integer> empty = new HashMap<Recipe, Integer>();
+        Order order2 = new Order(1, empty, "Customer", 10000000, PaymentMethod.CASH);
+        manager.pushToBuffer(1, null, "Customer", 10000000, PaymentMethod.CASH);
+        manager.writeBuffer();
+        assertTrue(manager.getOrder(1).equals(order2));
+    }
+    
+    @Test
+    public void testPushToBufferWithCostNullItems() {
+        manager.removeAllOrders();
+        Map<Recipe, Integer> empty = new HashMap<Recipe, Integer>();
+        Order order2 = new Order(1, empty, "Customer", 10000000, PaymentMethod.CASH, (float) 12.50);
+        manager.pushToBuffer(1, null, "Customer", 10000000, PaymentMethod.CASH, (float) 12.50);
+        manager.writeBuffer();
+        assertTrue(manager.getOrder(1).equals(order2));
+    }
+
+    @Test
+    public void testDropBuffer() {
+        manager.removeAllOrders();
+        manager.pushToBuffer(1, items, "Customer", 10000000, PaymentMethod.CASH);
+        manager.dropBuffer();
+        manager.writeBuffer();
+        assertTrue(manager.getOrders().isEmpty());
+    }
+    
+    @Test
+    public void testRemoveRecipeFromOrderNormal() {
+        manager.removeRecipeFromOrders(permanentRecipe);
+        assertFalse(manager.getOrder(0).getItems().containsKey(permanentRecipe));
+    }
+    
+    @Test
+    public void testRemoveRecipeFromOrderDeleteEmptyOrder() {
+        manager.removeRecipeFromOrders(permanentRecipe);
+        manager.removeRecipeFromOrders(otfRecipe);
+        assertTrue(manager.getOrders().isEmpty());
+    }
 }
