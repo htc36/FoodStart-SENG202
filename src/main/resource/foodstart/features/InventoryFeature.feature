@@ -23,7 +23,7 @@ Feature: Inventory feature
 		And The ingredient "Edam Cheese" is in the inventory
 		And The ingredient's ID number is 0
 		When The attributes of the ingredient with ID 0 is edited
-		Then it will either be the same or changed to their edited values
+		Then It will either be the same or changed to their edited values
 		
 	# Scenarios relating to removing ingredients from the inventory (UC12)
 	

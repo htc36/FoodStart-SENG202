@@ -1,5 +1,5 @@
 Feature: Menu feature
-    Scenarios involving the menu
+    Scenarios involving the menu and their menu items and recipes 
 
     Scenario: Editing recipe price (UC11)
         Given A recipe "Small HotDog" exists
@@ -23,21 +23,14 @@ Feature: Menu feature
         Given A recipe "Small HotDog" exists
         When The recipe "Small HotDog" is removed
         Then The recipe "Small HotDog" does not exist
-
-    Scenario: Menu Item display (UC2)
-        Given A recipe "Small HotDog" exists
-        And The menu item "HotDog" exists
-        When The recipe "Small HotDog" is added to the "HotDog" menu item
-        Then The corresponding recipe "Small HotDog" is displayed from "HotDog" menu item
         
-
+    # Scenarios relating to the displaying of menus, menu items, and recipes
     
     @skip_scenario # Manual testing
     Scenario: Specific menu display (UC1)
         Given An employee is looking through different menu sets
         When The employee selects a specific menu set
         Then The corresponding menu is displayed including name of menu and all recipes 
-       
        
     @skip_scenario # Manual testing
     Scenario: Specific menu display (UC1)
@@ -52,21 +45,45 @@ Feature: Menu feature
         When The employee displays all menu items
         Then All 7 menu items are displayed with their names and the price of the default recipe
         
-		@skip_scenario
-		Scenario: Viewing all recipes (UC3) # Manual testing
+		@skip_scenario # Manual testing
+		Scenario: Viewing all recipes (UC3) 
 	      Given An employee wants to see all the available recipes
 	      And There are 12 recipes in the system
 	      When The employee displays all recipes
 	      Then All 12 recipes are displayed with their IDs, name, price, and the ingredients required
        
-    @skip_scenario # Maunal testing
+    # Scenarios relating to the editing of menus 
+      
+    @skip_scenario # Manual testing
     Scenario: Menu editing (UC9)
-        Given An employee is looking through different menu sets
+        Given There are menus in the system
+        And The menu "Default Menu" exists
+        And The menu has ID 0
         When The employee edits a specific menu set (i.e add and remove)
         Then The menu set is updated with the new information
         
+    # Scenarios relating to the editing of menu items
+        
     @skip_scenario # Manual testing
     Scenario: Menu Item editing (UC10)
-        Given An employee is looking through menu items
-        When The employee edits a specific a menu item (i.e the description, name and recipes)
-        Then The corresponding menu item is updated with the new information
+	    	Given There are menu items in the system
+	    	And The menu item "Chicken Burger" exists
+	    	And The menu item has ID 4
+	    	When The menu item's editable attributes with ID 4 is edited
+	    	Then It will either be the same or changed to their edited value 
+        
+    # Scenarios relating to the editing of recipes
+        
+    @skip_scenario # Manual testing
+    Scenario: Recipe editing (UC11)
+	    	Given There are recipes in the system
+	    	And The recipe "Small Edam Cheeseburger" exists
+	    	And The recipe has ID 0
+	    	When The recipe's editable attributes with ID 0 is edited
+	    	Then It will either be the same or changed to their edited value 
+	    	
+  	@skip_scenario # Manual testing
+  	Scenario: Recipe editing when there are no recipes (UC11)
+  			Given There are no recipes in the system
+  			When An attempt is made to edit a recipe
+  			Then The user is notified that no recipe has been selected to remove
