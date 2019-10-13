@@ -8,7 +8,6 @@ import foodstart.model.order.Order;
 import foodstart.model.stock.Ingredient;
 import foodstart.ui.Refreshable;
 import foodstart.ui.util.RecipeStringConverter;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +21,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.*;
@@ -80,7 +78,7 @@ public class EditOrderItemsController implements Refreshable {
 	 * Table column for the recipe quantity
 	 */
 	@FXML
-	TableColumn<Recipe, Integer> quantityCol;
+	TableColumn<Recipe, String> quantityCol;
 	/**
 	 * Observable list of the recipes in the order for the table view
 	 */
@@ -137,9 +135,18 @@ public class EditOrderItemsController implements Refreshable {
 		recipesTableView.setItems(observableRecipes);
 		nameCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDisplayName()));
 		ingredientCol.setCellValueFactory(cell -> new SimpleStringProperty(recipeManager.getIngredientsAsString(cell.getValue())));
-		quantityCol.setCellValueFactory(cell -> new SimpleIntegerProperty(items.get(cell.getValue())).asObject());
-		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-		quantityCol.setOnEditCommit(e -> items.put(e.getRowValue(), e.getNewValue()));
+		quantityCol.setCellValueFactory(cell -> new SimpleStringProperty(items.get(cell.getValue()).toString()));
+		quantityCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		//quantityCol.get
+		quantityCol.setOnEditCommit(e -> {
+			if (e.getNewValue().matches("\\d{0,20}")) {
+				items.put(e.getRowValue(), Integer.parseInt(e.getNewValue()));
+			} else {
+				items.put(e.getRowValue(), Integer.parseInt(e.getOldValue()));
+			}
+			e.getTableColumn().setVisible(false);
+			e.getTableColumn().setVisible(true);
+		});
 	}
 
 	/**
