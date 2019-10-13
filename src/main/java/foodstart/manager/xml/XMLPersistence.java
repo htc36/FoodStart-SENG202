@@ -1,27 +1,5 @@
 package foodstart.manager.xml;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
 import foodstart.manager.Managers;
 import foodstart.manager.Persistence;
 import foodstart.manager.exceptions.ExportFailureException;
@@ -29,6 +7,18 @@ import foodstart.manager.exceptions.ImportFailureException;
 import foodstart.model.Constants;
 import foodstart.model.DataType;
 import foodstart.ui.FXExceptionDisplay;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses an XML file with a given DataType
@@ -134,6 +124,7 @@ public class XMLPersistence extends Persistence {
 	 * necessary
 	 *
 	 * @param directory Directory that the DTD files should be copied into
+	 * @param overwrite true if the files should be overwritten; false otherwise
 	 * @throws IOException if an exception occurs during file stream actions
 	 */
 	public void copyDTDFiles(File directory, boolean overwrite) throws IOException {

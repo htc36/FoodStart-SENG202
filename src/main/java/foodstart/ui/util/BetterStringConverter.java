@@ -6,8 +6,6 @@ import javafx.util.StringConverter;
 /**
  * A string converter that rejects non integer values
  * @author Alex Hobson
- * @date 01/10/2019
- *
  */
 public class BetterStringConverter extends StringConverter<Integer> {
 	

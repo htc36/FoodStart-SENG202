@@ -86,14 +86,24 @@ public class PermanentRecipe extends Recipe {
 	public int getId() {
 		return id;
 	}
-	
+
+	/**
+	 * Returns a clone of the recipe
+	 *
+	 * @return a clone of the recipe
+	 */
 	public PermanentRecipe clone() {
-	    Map<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>(getIngredients());
-	    return new PermanentRecipe(id, displayName, instructions, getPrice(), newIngredients);
+		Map<Ingredient, Integer> newIngredients = new HashMap<Ingredient, Integer>(getIngredients());
+		return new PermanentRecipe(id, displayName, instructions, getPrice(), newIngredients);
 	}
 
-    @Override
-    public boolean equals(Object obj) {
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -103,8 +113,8 @@ public class PermanentRecipe extends Recipe {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-        PermanentRecipe other = (PermanentRecipe) obj;
-        if (displayName == null) {
+		PermanentRecipe other = (PermanentRecipe) obj;
+		if (displayName == null) {
 			if (other.displayName != null) {
 				return false;
 			}
@@ -121,9 +131,13 @@ public class PermanentRecipe extends Recipe {
 		} else if (!instructions.equals(other.instructions)) {
 			return false;
 		}
-        return true;
-    }
+		return true;
+	}
 
+	/**
+	 * Returns the hash code of the recipe
+	 * @return the hash code of the recipe
+	 */
 	@Override
 	public int hashCode() {
 		return ((Integer) this.id).hashCode() + ((Float) this.price).hashCode() +

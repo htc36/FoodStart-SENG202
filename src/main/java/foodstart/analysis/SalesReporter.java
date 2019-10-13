@@ -18,12 +18,21 @@ import java.util.Map;
  */
 public class SalesReporter {
 
+	/**
+	 * A map of all recipes that have been sold to the amount sold
+	 */
 	private Map<Recipe, Integer> sales;
 
+	/**
+	 * Constructs an instance of a sales reporter
+	 */
 	public SalesReporter() {
 		sales = new HashMap<Recipe, Integer>();
 	}
 
+	/**
+	 * Collects the data for the sales report
+	 */
 	public void collectData() {
 		for (Order order : Managers.getOrderManager().getOrderSet()) {
 			Map<Recipe, Integer> recipes = order.getItems();
@@ -33,6 +42,10 @@ public class SalesReporter {
 		}
 	}
 
+	/**
+	 * Writes the data that has been collected to a CSV file
+	 * @return true if write was successful; false otherwise
+	 */
 	public boolean writeData() {
 		try {
 			File directory = new File(Constants.persistencePath);

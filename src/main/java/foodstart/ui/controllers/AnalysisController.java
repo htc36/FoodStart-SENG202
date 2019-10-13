@@ -1,11 +1,5 @@
 package foodstart.ui.controllers;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import foodstart.manager.Managers;
 import foodstart.model.order.Order;
 import foodstart.ui.Refreshable;
@@ -16,11 +10,16 @@ import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Controller class for analysis/graph view
  * 
  * @author Alex Hobson
- * @date 09/10/2019
  */
 public class AnalysisController implements Refreshable {
 

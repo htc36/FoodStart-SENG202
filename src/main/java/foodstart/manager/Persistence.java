@@ -7,9 +7,15 @@ import java.io.File;
 
 /**
  * Represents a possible persistence manager
- * @author Alex Hobson on 22/08/2019
+ * @author Alex Hobson
  */
 public abstract class Persistence {
+
+	/**
+	 *
+	 */
+	protected Persistence() {
+	}
 
 	/**
 	 * Reads and imports a specified file assuming it contains data of the specified

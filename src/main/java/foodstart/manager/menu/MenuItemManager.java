@@ -37,6 +37,7 @@ public class MenuItemManager {
 	 * @param name        the name of the menu item
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
+	 * @param defaultVariant the default recipe for the menu item
 	 */
 	public void addMenuItem(int id, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
 		MenuItem menuItem = new MenuItem(id, name, description, variants, defaultVariant);
@@ -127,10 +128,23 @@ public class MenuItemManager {
 		}
 	}
 
+	/**
+	 * Generates a new unique id for a menu item
+	 *
+	 * @return a new unique id for a menu item
+	 */
 	public int generateNewId() {
 		return menuItems.keySet().size() == 0 ? 0 : Collections.max(menuItems.keySet()) + 1;
 	}
 
+	/**
+	 * Mutates a menu item with a given id to have the given parameters
+	 * @param id the id of the menu item to change
+	 * @param name the name of the menu item
+	 * @param description the description of the menu item
+	 * @param recipes the recipes that make up the menu item
+	 * @param defaultVariant the default recipe of the menu item
+	 */
 	public void mutateMenuItem(int id, String name, String description, Set<PermanentRecipe> recipes, PermanentRecipe defaultVariant) {
 		MenuItem menuItem2 = this.menuItems.get(id);
 		if (menuItem2 != null) {
@@ -140,6 +154,12 @@ public class MenuItemManager {
 			menuItem2.setDefaultVariant(defaultVariant);
 		}
 	}
+
+	/**
+	 * Adds a recipe to the menu item with a given id
+	 * @param id the id of the menu item
+	 * @param recipe the recipe to add to the menu item
+	 */
 	public void addRecipeToMenuItem(int id, PermanentRecipe recipe) {
 		MenuItem menuItem = this.menuItems.get(id);
 		menuItem.addVariant(recipe);
@@ -152,6 +172,7 @@ public class MenuItemManager {
 	 * @param name        the name of the menu item
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
+	 * @param defaultVariant the default recipe for the menu item
 	 */
 	public void pushToBuffer(int id, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
 		MenuItem menuItem = new MenuItem(id, name, description, variants, defaultVariant);

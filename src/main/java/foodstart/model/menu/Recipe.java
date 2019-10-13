@@ -132,24 +132,30 @@ public abstract class Recipe {
 	 */
 	public abstract int getId();
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Recipe other = (Recipe) obj;
-        if (ingredients == null) {
-            if (other.ingredients != null)
-                return false;
-        } else if (!ingredients.equals(other.ingredients))
-            return false;
-        if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
-            return false;
-        return true;
-    }
+	/**
+	 * Returns true if the given object has the same parameters
+	 *
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Recipe other = (Recipe) obj;
+		if (ingredients == null) {
+			if (other.ingredients != null)
+				return false;
+		} else if (!ingredients.equals(other.ingredients))
+			return false;
+		if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
+			return false;
+		return true;
+	}
 	
 	
 }

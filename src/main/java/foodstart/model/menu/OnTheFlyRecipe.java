@@ -73,30 +73,40 @@ public class OnTheFlyRecipe extends Recipe {
         return new OnTheFlyRecipe(basedOn.clone(), newIngredients, getPrice());
     }
 
-    @Override
-    public int hashCode() {
-	    return ((this.basedOn == null) ? 0 : this.basedOn.hashCode()) +
-			    ((Float) this.price).hashCode();
-    }
+	/**
+	 * Returns the hash code of the recipe
+	 *
+	 * @return the hash code of the recipe
+	 */
+	@Override
+	public int hashCode() {
+		return ((this.basedOn == null) ? 0 : this.basedOn.hashCode()) +
+				((Float) this.price).hashCode();
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        OnTheFlyRecipe other = (OnTheFlyRecipe) obj;
-        if (basedOn == null) {
-            if (other.basedOn != null)
-                return false;
-        } else if (!basedOn.equals(other.basedOn)) {
-	        return false;
-        } else if (!super.equals(other)) {
-	        return false;
-        }
-        return true;
-    }
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OnTheFlyRecipe other = (OnTheFlyRecipe) obj;
+		if (basedOn == null) {
+			if (other.basedOn != null)
+				return false;
+		} else if (!basedOn.equals(other.basedOn)) {
+			return false;
+		} else if (!super.equals(other)) {
+			return false;
+		}
+		return true;
+	}
 }
 

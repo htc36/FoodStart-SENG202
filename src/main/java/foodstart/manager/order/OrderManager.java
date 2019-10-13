@@ -218,7 +218,10 @@ public class OrderManager {
 			return null;
 		}
 	}
-	
+
+	/**
+	 * Removes all orders from the order manager
+	 */
 	public void removeAllOrders() {
 	    orders.clear();
 	}

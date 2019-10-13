@@ -262,6 +262,13 @@ public class IngredientManager {
 		this.buffer.clear();
 	}
 
+	/**
+	 * Returns the ingredient with the id specified.
+	 * Also checks the buffer for ingredients, checking it before the model
+	 *
+	 * @param id the id of the ingredient to find
+	 * @return the ingredient found
+	 */
 	public Ingredient getIngredientBuffered(int id) {
 		Ingredient ingredient = this.buffer.get(id);
 		if (ingredient == null) {

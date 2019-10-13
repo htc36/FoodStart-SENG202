@@ -6,6 +6,12 @@ package foodstart.ui;
 public class Caller {
 
 	/**
+	 * Prevents creation of an instance of the Caller
+	 */
+	private Caller() {
+	}
+
+	/**
 	 * Main method for application
 	 * @param args the input arguments for the application
 	 */

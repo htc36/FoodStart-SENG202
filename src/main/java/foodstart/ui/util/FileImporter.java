@@ -17,12 +17,29 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.Optional;
 
+/**
+ * Allows for the importing and exporting of files via a gui
+ */
 public class FileImporter {
-
+	/**
+	 * The file chooser used to select a file
+	 */
 	private FileChooser fileChooser;
+	/**
+	 * The parent stage of the FileImporter
+	 */
 	private Stage parent;
+	/**
+	 * The DataType that is being imported
+	 */
 	private DataType dataType;
 
+	/**
+	 * Constructs a new instance of a file importer
+	 * @param parent the parent window of the importer
+	 * @param title the title of the importer window
+	 * @param dataType the data type that is being imported
+	 */
 	public FileImporter(Stage parent, String title, DataType dataType) {
 		this.fileChooser = new FileChooser();
 		this.parent = parent;
@@ -31,6 +48,9 @@ public class FileImporter {
 		fileChooser.getExtensionFilters().addAll(Main.generateFilters());
 	}
 
+	/**
+	 * Opens a new window for the user to select a file and then imports the file
+	 */
 	public void execute() {
 		File selectedFile = fileChooser.showOpenDialog(parent);
 		if (selectedFile == null) {

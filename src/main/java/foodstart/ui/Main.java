@@ -53,6 +53,12 @@ public class Main extends Application {
 	}
 
 	/**
+	 * Prevents creation of an instance of the Main class
+	 */
+	private Main() {
+	}
+
+	/**
 	 * Start the JavaFX application
 	 *
 	 * @param primaryStage

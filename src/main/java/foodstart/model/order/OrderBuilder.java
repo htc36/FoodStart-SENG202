@@ -13,7 +13,7 @@ import java.util.*;
  * Class that builds up an order and calculates whether a given item can be
  * added to the order with the current amount of stock in the truck
  *
- * @author Alex Hobson on 08/09/2019
+ * @author Alex Hobson
  */
 public class OrderBuilder {
 

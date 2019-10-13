@@ -221,6 +221,8 @@ public class RecipeEditorController implements Refreshable {
 
 	/**
 	 * Sets the recipe and text fields
+	 *
+	 * @param recipe the recipe to use to populate the fields with
 	 */
 	public void setRecipeAndFields(PermanentRecipe recipe) {
 		this.id = recipe.getId();

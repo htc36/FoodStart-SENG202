@@ -32,7 +32,6 @@ public class Ingredient {
 	 */
 	private Map<DietaryRequirement, Boolean> safeFor;
 
-
 	/**
 	 * The current stock available at the kitchen
 	 */
@@ -179,43 +178,53 @@ public class Ingredient {
 		return new Ingredient(unit, name, id, mapCopy, kitchenStock, truckStock);
 	}
 
+	/**
+	 * Returns the hash code of the ingredient
+	 *
+	 * @return the hash code of the ingredient
+	 */
 	@Override
-    public int hashCode() {
+	public int hashCode() {
 		return ((Integer) id).hashCode() +
 				((name == null) ? 0 : name.hashCode()) +
 				((safeFor == null) ? 0 : safeFor.hashCode()) +
 				((unit == null) ? 0 : unit.hashCode());
-    }
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Ingredient other = (Ingredient) obj;
-	    if (id != other.id)
-            return false;
-        if (kitchenStock != other.kitchenStock)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (safeFor == null) {
-            if (other.safeFor != null)
-                return false;
-        } else if (!safeFor.equals(other.safeFor))
-            return false;
-        if (truckStock != other.truckStock)
-            return false;
-        if (unit != other.unit)
-            return false;
-        return true;
-    }
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ingredient other = (Ingredient) obj;
+		if (id != other.id)
+			return false;
+		if (kitchenStock != other.kitchenStock)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (safeFor == null) {
+			if (other.safeFor != null)
+				return false;
+		} else if (!safeFor.equals(other.safeFor))
+			return false;
+		if (truckStock != other.truckStock)
+			return false;
+		if (unit != other.unit)
+			return false;
+		return true;
+	}
 
     /**
 	 * Checks if the ingredient is safe for some dietary requirement

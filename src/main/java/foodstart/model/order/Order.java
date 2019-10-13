@@ -17,35 +17,31 @@ import java.util.Map;
  */
 
 public class Order {
+
 	/**
 	 * The identifier code of the order
 	 */
-
 	private int id;
 
 	/**
 	 * The items that have been ordered and their quantities
 	 */
-
 	private Map<Recipe, Integer> items;
 
 
 	/**
 	 * The name of the customer who made the order
 	 */
-
 	private String customerName;
 
 	/**
 	 * The time that the order was placed
 	 */
-
 	private LocalDateTime timePlaced;
 
 	/**
 	 * The payment method that the customer chose
 	 */
-
 	private PaymentMethod paymentMethod;
 
 	/**
@@ -311,7 +307,6 @@ public class Order {
 		this.price = total;
 	}
 
-	
 	/**
 	 * Returns a deep copy of this order.
 	 * @return a deep copy of this order.
@@ -321,43 +316,53 @@ public class Order {
 	    return new Order(id, itemsCopy, customerName, timePlaced, paymentMethod);
 	}
 
-    @Override
-    public int hashCode() {
-	    return ((Integer) this.id).hashCode();
-    }
+	/**
+	 * Returns the hash code of the order
+	 *
+	 * @return the hash code of the order
+	 */
+	@Override
+	public int hashCode() {
+		return ((Integer) this.id).hashCode();
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Order other = (Order) obj;
-        if (customerName == null) {
-            if (other.customerName != null)
-                return false;
-        } else if (!customerName.equals(other.customerName))
-            return false;
-        if (id != other.id)
-            return false;
-        if (items == null) {
-            if (other.items != null)
-                return false;
-        } else if (!items.equals(other.items))
-            return false;
-        if (paymentMethod != other.paymentMethod)
-            return false;
-        if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
-            return false;
-        if (timePlaced == null) {
-            if (other.timePlaced != null)
-                return false;
-        } else if (!timePlaced.equals(other.timePlaced))
-            return false;
-        return true;
-    }
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (customerName == null) {
+			if (other.customerName != null)
+				return false;
+		} else if (!customerName.equals(other.customerName))
+			return false;
+		if (id != other.id)
+			return false;
+		if (items == null) {
+			if (other.items != null)
+				return false;
+		} else if (!items.equals(other.items))
+			return false;
+		if (paymentMethod != other.paymentMethod)
+			return false;
+		if (Float.floatToIntBits(price) != Float.floatToIntBits(other.price))
+			return false;
+		if (timePlaced == null) {
+			if (other.timePlaced != null)
+				return false;
+		} else if (!timePlaced.equals(other.timePlaced))
+			return false;
+		return true;
+	}
 
     /**
 	 * Sets the total price of the order, used if the cost of recipes changes

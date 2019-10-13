@@ -189,7 +189,12 @@ public class Supplier {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
+	/**
+	 * Returns the hash code of the supplier
+	 *
+	 * @return the hash code of the supplier
+	 */
     @Override
     public int hashCode() {
 	    return ((Integer) id).hashCode() +
@@ -201,46 +206,51 @@ public class Supplier {
 			    ((url == null) ? 0 : url.hashCode());
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Supplier other = (Supplier) obj;
-        if (address == null) {
-            if (other.address != null)
-                return false;
-        } else if (!address.equals(other.address))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (id != other.id)
-            return false;
-        if (phoneNumber == null) {
-            if (other.phoneNumber != null)
-                return false;
-        } else if (!phoneNumber.equals(other.phoneNumber))
-            return false;
-        if (phoneType != other.phoneType)
-            return false;
-        if (supplierName == null) {
-            if (other.supplierName != null)
-                return false;
-        } else if (!supplierName.equals(other.supplierName))
-            return false;
-        if (url == null) {
-            if (other.url != null)
-                return false;
-        } else if (!url.equals(other.url))
-            return false;
-        return true;
-    }
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Supplier other = (Supplier) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id != other.id)
+			return false;
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
+				return false;
+		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		if (phoneType != other.phoneType)
+			return false;
+		if (supplierName == null) {
+			if (other.supplierName != null)
+				return false;
+		} else if (!supplierName.equals(other.supplierName))
+			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
+		return true;
+	}
     
     /**
      * Returns a deep copy of this Supplier object.

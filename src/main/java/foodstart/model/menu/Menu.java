@@ -11,13 +11,11 @@ public class Menu {
 	/**
 	 * A set to keep all the menu items in
 	 */
-
 	private Set<MenuItem> menuItems;
 
 	/**
 	 * The name of the menu
 	 */
-
 	private int id;
 
 	/**
@@ -44,7 +42,6 @@ public class Menu {
 		this.title = title;
 		this.description = description;
 	}
-
 
 	/**
 	 * Gets the id of the menu
@@ -81,6 +78,11 @@ public class Menu {
 		return description;
 	}
 
+	/**
+	 * Sets the description of the menu
+	 *
+	 * @param description the description of the menu
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -126,20 +128,33 @@ public class Menu {
 		removed = this.menuItems.remove(item);
 		return removed;
 	}
-	
+
+	/**
+	 * Clones an instance of a menu
+	 * @return the clone of the menu
+	 */
     public Menu clone() {
         Set<MenuItem> itemsCopy = new HashSet<MenuItem>(menuItems);
         return new Menu(itemsCopy, id, title, description);
     }
 
-    @Override
+	/**
+	 * Returns the hash code of the menu
+	 * @return the hash code of the menu
+	 */
+	@Override
     public int hashCode() {
 	    return ((Integer) id).hashCode() +
 			    ((description == null) ? 0 : description.hashCode()) +
 			    ((title == null) ? 0 : title.hashCode());
-    }
+	}
 
-    @Override
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -167,7 +182,7 @@ public class Menu {
             return false;
         return true;
     }
-	
-	
+
+
 }
 

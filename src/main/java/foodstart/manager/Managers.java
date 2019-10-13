@@ -12,9 +12,15 @@ import foodstart.model.DataFileType;
 /**
  * Manager for all the managers
  *
- * @author Alex Hobson on 22/08/2019
+ * @author Alex Hobson
  */
 public class Managers {
+
+	/**
+	 * Prevents attempts to instantiate the Managers class
+	 */
+	private Managers() {
+	}
 
 	/**
 	 * Functions relevant to orders

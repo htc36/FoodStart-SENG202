@@ -191,15 +191,30 @@ public class RecipeManager {
 	        this.removeRecipe(recipeID);
 	    }
 	}
+
+	/**
+	 * Mutates a recipe with a given id to have the given parameters
+	 *
+	 * @param id           the id of the recipe to mutate
+	 * @param name         the name to give the recipe
+	 * @param instructions the instructions to give the recipe
+	 * @param price        the price to give the recipe
+	 * @param ingredients  the ingredients to give the recipe
+	 */
 	public void mutateRecipe(int id, String name, String instructions, float price, Map<Ingredient, Integer> ingredients){
 		PermanentRecipe recipe = this.recipes.get(id);
 		if (recipe != null) {
-		    recipe.setDisplayName(name);
-		    recipe.setPrice(price);
-		    recipe.setInstructions(instructions);
+			recipe.setDisplayName(name);
+			recipe.setPrice(price);
+			recipe.setInstructions(instructions);
 			recipe.setIngredients(ingredients);
 		}
 	}
+
+	/**
+	 * Generates a new unique id for a recipe
+	 * @return a new unique id for a recipe
+	 */
 	public int generateNewId() {
 		return recipes.keySet().size() == 0 ? 0 : Collections.max(recipes.keySet()) + 1;
 	}
@@ -236,7 +251,7 @@ public class RecipeManager {
 	 * Gets a permanent recipe from the system. First checks the buffer and then the model
 	 *
 	 * @param id the id of the recipe to get
-	 * @return
+	 * @return the recipe with the given id
 	 */
 	public PermanentRecipe getRecipeBuffer(int id) {
 		PermanentRecipe recipe = this.buffer.get(id);
@@ -295,6 +310,10 @@ public class RecipeManager {
 			return id;
 		}
 
+		/**
+		 * Adds a new on the fly recipe to the OTF manager
+		 * @param recipe the recipe to add to the manager
+		 */
 		public void addRecipe(OnTheFlyRecipe recipe) {
 			if (recipe != null) {
 				this.onTheFlyRecipes.put(recipe.getId(), recipe);
@@ -363,6 +382,12 @@ public class RecipeManager {
 			this.buffer.clear();
 		}
 
+		/**
+		 * Returns the otf recipe with the given id.
+		 * Also checks the buffer for recipes, checking it before the model
+		 * @param id the id of the recipe to find
+		 * @return the recipe with the given id
+		 */
 		public OnTheFlyRecipe getOTFRecipeBuffered(int id) {
 			OnTheFlyRecipe recipe = this.buffer.get(id);
 			if (recipe == null) {

@@ -36,6 +36,7 @@ public class MenuItem {
 	 * @param name        the name of the menu item
 	 * @param description a description of the menu item
 	 * @param variants    a set of all recipes that make up the menu item
+	 * @param defaultVariant the default recipe for the menu item
 	 */
 	public MenuItem(int databaseId, String name, String description, Set<PermanentRecipe> variants, PermanentRecipe defaultVariant) {
 		this.id = databaseId;
@@ -136,14 +137,24 @@ public class MenuItem {
 	public void setVariants(Set<PermanentRecipe> variants) {
 		this.variants = variants;
 	}
-	
-    public MenuItem clone() {
+
+	/**
+	 * Clones the menu item
+	 *
+	 * @return a clone of the menu item
+	 */
+	public MenuItem clone() {
 		Set<PermanentRecipe> variantsCopy = new HashSet<>(variants);
 		return new MenuItem(id, name, description, variantsCopy, defaultVariant);
-    }
+	}
 
-    @Override
-    public boolean equals(Object obj) {
+	/**
+	 * Returns true if the given object has the same parameters
+	 * @param obj the object to check against
+	 * @return true if the objects have equal parameters; false otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -153,8 +164,8 @@ public class MenuItem {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-        MenuItem other = (MenuItem) obj;
-        if (description == null) {
+		MenuItem other = (MenuItem) obj;
+		if (description == null) {
 			if (other.description != null) {
 				return false;
 			}
@@ -164,23 +175,27 @@ public class MenuItem {
 		if (id != other.id) {
 			return false;
 		}
-        if (name == null) {
+		if (name == null) {
 			if (other.name != null) {
 				return false;
 			}
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-        if (variants == null) {
+		if (variants == null) {
 			if (other.variants != null) {
 				return false;
 			}
 		} else if (!variants.equals(other.variants)) {
 			return false;
 		}
-        return true;
+		return true;
 	}
 
+	/**
+	 * Returns the hash code of the menu item
+	 * @return the hash code of the menu item
+	 */
 	@Override
 	public int hashCode() {
 		return ((Integer) this.id).hashCode() +
