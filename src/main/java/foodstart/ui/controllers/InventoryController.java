@@ -53,6 +53,11 @@ public class InventoryController implements Refreshable {
 	@FXML
 	private TableColumn<Ingredient, String> name;
 	/**
+	 * Table column for the ingredient unit
+	 */
+	@FXML
+	private TableColumn<Ingredient, String> unit;
+	/**
 	 * Table column for the ingredient truck stock
 	 */
 	@FXML
@@ -133,7 +138,9 @@ public class InventoryController implements Refreshable {
 		inventoryView.setItems(observableList);
 		id.setCellValueFactory(new PropertyValueFactory<>("id"));
 		name.setCellValueFactory(new PropertyValueFactory<>("name"));
-		truckStock.setCellValueFactory(new PropertyValueFactory<>("truckStock"));
+		unit.setCellValueFactory(
+				cell -> new SimpleStringProperty(cell.getValue().getUnit().name())
+		);		truckStock.setCellValueFactory(new PropertyValueFactory<>("truckStock"));
 		kitchenStock.setCellValueFactory(new PropertyValueFactory<>("kitchenStock"));
 		dietary.setCellValueFactory(
 				cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId()))
