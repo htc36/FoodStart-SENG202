@@ -29,13 +29,13 @@ Feature: Menu feature
         When The employee chooses to display the recipes of a menu item
         Then The correct recipe is displayed for that menu item
         
-		@skip_scenario # Manual testing
-		Scenario: Viewing all recipes (UC3) 
-	      Given An employee wants to see all the available recipes
-	      And There are 12 recipes in the system
-	      When The employee displays all recipes
-	      Then All 12 recipes are displayed with their IDs, name, price, and the ingredients required
-       
+    @skip_scenario # Manual testing
+    Scenario: Viewing all recipes (UC3)
+        Given An employee wants to see all the available recipes
+        And There are 12 recipes in the system
+        When The employee displays all recipes
+        Then All 12 recipes are displayed with their IDs, name, price, and the ingredients required
+
     # Scenarios relating to the editing of menus 
       
     @skip_scenario # Manual testing
@@ -46,43 +46,58 @@ Feature: Menu feature
         When The employee edits a specific menu set (i.e. add and remove menu items)
         Then The menu set is updated with the new information
         
-	  @skip_scenario # Manual testing
-	  Scenario: Menu editing when there are no menus (UC9)
-	  		Given There are no menus in the system
-	  		When An attempt is made to edit a menu
-	  		Then The user is unable to edit a menu
+    @skip_scenario # Manual testing
+    Scenario: Menu editing when there are no menus (UC9)
+        Given There are no menus in the system
+        When An attempt is made to edit a menu
+        Then The user is unable to edit a menu
         
     # Scenarios relating to the editing of menu items
         
     @skip_scenario # Manual testing
     Scenario: Menu item editing (UC10)
-	    	Given There are menu items in the system
-	    	And The menu item "Chicken Burger" exists
-	    	And The menu item has ID 4
-	    	When The menu item's editable attributes with ID 4 is edited
-	    	Then It will either be the same or changed to their edited value 
+        Given There are menu items in the system
+        And The menu item "Chicken Burger" exists
+        And The menu item has ID 4
+        When The menu item's editable attributes with ID 4 is edited
+        Then It will either be the same or changed to their edited value
 	    	
-	  @skip_scenario # Manual testing
-	  Scenario: Menu item editing when there are no menu items (UC10)
-	  		Given There are no menu items in the system
-	  		When An attempt is made to edit a menu item
-	  		Then The user is unable to edit a menu item
+    @skip_scenario # Manual testing
+    Scenario: Menu item editing when there are no menu items (UC10)
+        Given There are no menu items in the system
+        When An attempt is made to edit a menu item
+        Then The user is unable to edit a menu item
+        
+    # Scenarios relating to adding recipes
+    
+    Scenario Outline: Adding recipes (UC11)
+        Given A recipe <name> does not exist
+        And The recipe has an ID of <id>
+        When The recipe <name> is manually added
+        Then The recipe <name> exists in the recipes list
+        And The recipe <name> will have an ID of <id>
+        Examples:
+        | name            | id  |
+        | "Large HotDog"  | 100 |
+        | "Buffalo Wings" | 105 |
+        | "Mango Slushie" | 110 |
+
         
     # Scenarios relating to the editing of recipes
         
     @skip_scenario # Manual testing
     Scenario: Recipe editing (UC11)
-	    	Given There are recipes in the system
-	    	And The recipe "Small Edam Cheeseburger" exists
-	    	And The recipe has ID 0
-	    	When The recipe's editable attributes with ID 0 is edited
-	    	Then It will either be the same or changed to their edited value 
+        Given There are recipes in the system
+        And The recipe "Small Edam Cheeseburger" exists
+        And The recipe has ID 0
+        When The recipe's editable attributes with ID 0 is edited
+        Then It will either be the same or changed to their edited value
     	
   	@skip_scenario # Manual testing
   	Scenario: Recipe editing when there are no recipes (UC11)
-  			Given There are no recipes in the system
-  			And An attempt is made to edit a recipe
-  			Then The user is notified that no recipe has been selected to edit
+        Given There are no recipes in the system
+        And An attempt is made to edit a recipe
+        Then The user is notified that no recipe has been selected to edit
   			
     Scenario: Editing recipe price (UC11)
         Given A recipe "Small HotDog" exists
@@ -108,9 +123,8 @@ Feature: Menu feature
         When The recipe "Small HotDog" is removed
         Then The recipe "Small HotDog" does not exist
   			
-  			
   	@skip_scenario # Manual testing
   	Scenario: Recipe removing when there are no recipes (UC11)
-  			Given There are no recipes in the system
-  			When An attempt is made to edit a recipe
-  			Then The user is notified that no recipe has been selected to remove
+        Given There are no recipes in the system
+        When An attempt is made to edit a recipe
+        Then The user is notified that no recipe has been selected to remove

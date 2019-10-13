@@ -20,6 +20,7 @@ import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
@@ -27,62 +28,31 @@ public class MenuSteps {
     private RecipeManager recipeManager;
     private Map<DietaryRequirement, Boolean> safeFor = new HashMap<>();
     private Map<Ingredient, Integer> ingredientSet = new HashMap<>();
+    private Map<Ingredient, Integer> testIngredientSet = new HashMap<>();
     private PermanentRecipe recipe;
     private IngredientManager ingredientManager;
     private MenuItemManager menuItemManager;
+    private int recipeID;
+    private int testPrice = 10;
+
     @Before
     public void setup() {
         ingredientManager = new IngredientManager();
         recipeManager = new RecipeManager();
         menuItemManager = new MenuItemManager();
         safeFor.put(DietaryRequirement.matchDietaryRequirement("VEGAN"), true);
+        ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "test ingredient", 0, safeFor, 10,10);
         ingredientManager.addIngredient(Unit.matchUnit("Counts"), "sausage", 1, safeFor, 5, 10);
         ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "bun", 2, safeFor, 7,8);
         ingredientSet.put(ingredientManager.getIngredientByName("sausage"), 2);
         ingredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
+        ingredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
+        testIngredientSet.put(ingredientManager.getIngredientByName("test ingredient"), 1);
         recipeManager.addRecipe(2, "Small HotDog", "Place in bun", 5, ingredientSet );
+        recipeManager.addRecipe(0, "Test Recipe", "Testing purposes", 1, testIngredientSet);
         Set<PermanentRecipe> recipes = new HashSet<>();
         menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", recipes, null);
     }
-
-
-//    @Given("The recipe {string} is not in the menu")
-//    public void anEmployeeWantsToSeeARecipe(String recipeName) {
-//        this.recipeName = recipeName;
-//    }
-//    @Given("Its price is {float}")
-//    public void itsPriceIs(float price) { this.price = price; }
-//
-//    @Given("Its ingredients are {int} {string}s and {int} {string}")
-//    public void itsIngredientsAre(int ingredientAmount, String ingredientName, int ingredient2Amount, String ingredientName2) {
-//        this.safeFor.put(DietaryRequirement.matchDietaryRequirement("VEGAN"), true);
-//        ingredient = new Ingredient(Unit.matchUnit("GRAMS"), ingredientName, 1, safeFor, 5, 10);
-//        ingredient2 = new Ingredient(Unit.matchUnit("COUNTS"), ingredientName2, 2, safeFor, 7,8);
-//        ingredientSet.put(ingredient, ingredientAmount);
-//        ingredientSet.put(ingredient2, ingredient2Amount);
-//    }
-//    @Given ("Its id is {int}")
-//    public void itsIdIs(int id){
-//        this.id = id;
-//    }
-//    @Given ("Its instructions are {string}")
-//    public void itsInstructionsAre(String instructions) {
-//        this.instructions = instructions;
-//    }
-//
-//    @When("Recipe {string} is manually added")
-//    public void recipeIsManuallyAdded(String recipeName) {
-//        recipeManager.addRecipe(id, recipeName, instructions, price, ingredientSet);
-//    }
-//
-//    @Then("{string} that costs {float} with {int} {string}s and {int} {string}, id being {int}, instructions being {string}")
-//    public void theCorrespondingRecipeIsDisplayed(String name, float price, int amount, String iName, int amount2, String iName2, int id, String instructions) {
-//        PermanentRecipe recipe = recipeManager.getRecipe(id);
-//        assert(id == recipe.getId());
-//        assert(name.equals(recipe.getDisplayName()));
-//        assert(price == recipe.getPrice());
-//        assert(instructions.equals(recipe.getInstructions()));
-//    }
 
 
     @Given("A recipe {string} exists")
@@ -144,5 +114,31 @@ public class MenuSteps {
     public void the_recipe_is_added_to_the_menu_item(String recipeName, String menuItemName) {
         int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
         menuItemManager.addRecipeToMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
+    }
+    
+    @Given("A recipe {string} does not exist")
+    public void aRecipeDoesNotExist(String recipeName) {
+        assertNull(recipeManager.getRecipeByDisplayName(recipeName));
+    }
+
+    @Given("The recipe has an ID of {int}")
+    public void theRecipeHasAnIDOf(Integer recipeID) {
+        this.recipeID = recipeID;
+    }
+
+    @When("The recipe {string} is manually added")
+    public void theRecipeIsManuallyAdded(String recipeName) {
+        recipeManager.addRecipe(recipeID, recipeName, "Test instructions", testPrice, testIngredientSet);
+    }
+
+    @Then("The recipe {string} exists in the recipes list")
+    public void theRecipeExistsInTheRecipesList(String recipeName) {
+        assertNotNull(recipeManager.getRecipeByDisplayName(recipeName));
+    }
+
+    @Then("The recipe {string} will have an ID of {int}")
+    public void theRecipeWillHaveAnIDOf(String recipeName, Integer recipeID) {
+        Integer actualID = recipeManager.getRecipeByDisplayName(recipeName).getId();
+        assertEquals(recipeID, actualID);
     }
 }
