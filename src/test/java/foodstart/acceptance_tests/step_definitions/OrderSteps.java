@@ -2,6 +2,7 @@ package foodstart.acceptance_tests.step_definitions;
 
 import foodstart.manager.menu.RecipeManager;
 import foodstart.manager.order.OrderManager;
+import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.PaymentMethod;
 import foodstart.model.Unit;
@@ -35,6 +36,7 @@ public class OrderSteps {
     private Map<Recipe, Integer> orderItems;
     private int orderId;
     private RecipeManager recipeManager;
+    private IngredientManager ingredientManager;
     private boolean booleanReq;
 
 
@@ -62,6 +64,7 @@ public class OrderSteps {
         recipeManager = new RecipeManager();
         recipeManager.addRecipe(1, "Recipe Base", "Recipe Instructions",12.5f, recipeIngredients);
         orderManager = new OrderManager();
+        ingredientManager = new IngredientManager();
         orderItems = new HashMap<Recipe, Integer>();
 
     }
@@ -171,8 +174,6 @@ public class OrderSteps {
 
     @Then("The customer will be charged ${float} total")
     public void theCustomerWillBeCharged$Total(float totalCost) {
-        System.out.println(totalCost);
-        System.out.println(order.getTotalCost());
         assertTrue(totalCost == order.getTotalCost());
     }
 
@@ -292,25 +293,30 @@ public class OrderSteps {
     @Given("A {string} contains {string}")
     public void aContains(String recipeName, String ingredientName) {
         setUp();
-        recipeIngredients = new HashMap<>();
+        recipeIngredients = new HashMap<Ingredient, Integer>();
         Map<DietaryRequirement, Boolean> safeForIngredient = new HashMap<DietaryRequirement, Boolean>();
         safeForIngredient.put(DietaryRequirement.VEGETARIAN, true);
-        orderId = 3;
-        ingredient3 = new Ingredient(Unit.GRAMS, "cheese", orderId, safeForIngredient, 120, 45);
-        recipeIngredients.put(ingredient3, 1);
-        recipeManager.addRecipe(4, recipeName, "Recipe Instructions", 5f, recipeIngredients);
+        ingredientManager.addIngredient(Unit.GRAMS, ingredientName, 10, safeForIngredient, 120, 45);
+        recipeIngredients.put(ingredientManager.getIngredientByName(ingredientName), 1);
+        recipeManager.addRecipe(10, recipeName, "Recipe Instructions", 5f, recipeIngredients);
 
-        System.out.println();
-
-
+        assertTrue(recipeManager.getRecipeByDisplayName(recipeName).getIngredients().containsKey(ingredientManager.getIngredientByName(ingredientName)));
+        System.out.println(orderItems.size());
         orderItems.put(recipeManager.getRecipeByDisplayName(recipeName), 1);
-        System.out.println(orderItems.keySet());
-
-
+        orderId = 1;
+        order = new Order(orderId, orderItems, "Sam", LocalDateTime.now(), PaymentMethod.EFTPOS);
+        orderManager.addOrder(order);
     }
 
     @When("The customer wants to remove {string} from the {string}")
     public void theCustomerWantsToRemoveFromThe(String ingredientName, String recipeName) {
+        Recipe modifiedRecipe = recipeManager.getRecipeByDisplayName(recipeName);
+        modifiedRecipe.removeIngredient(ingredientManager.getIngredientByName(ingredientName));
+        orderManager.getOrder(orderId).removeItem(recipeManager.getRecipeByDisplayName(recipeName));
+        orderManager.getOrder(orderId).addItem(modifiedRecipe, 1);
+
+        orderManager.getOrder(orderId).getItems().get(recipeManager.getRecipeByDisplayName(recipeName));
+        assertFalse(recipeManager.getRecipeByDisplayName(recipeName).getIngredients().containsKey(ingredientManager.getIngredientByName(ingredientName)));
     }
 
     @Then("The {string} has no {string}")
