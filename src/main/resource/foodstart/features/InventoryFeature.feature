@@ -7,7 +7,7 @@ Feature: Inventory feature
     Scenario: Viewing the ingredients in the inventory (UC7)
         Given There are 2 ingredients in the inventory
         When The inventory is displayed
-        Then The ID, name, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
+        Then The ID, name, unit of measurement, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
         
     @skip_scenario # Manually Tested
 	Scenario: View inventory when there are 0 ingredients in the inventory (UC7)
