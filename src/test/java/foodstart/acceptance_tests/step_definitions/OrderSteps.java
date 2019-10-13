@@ -315,7 +315,7 @@ public class OrderSteps {
         orderManager.getOrder(orderId).removeItem(recipeManager.getRecipeByDisplayName(recipeName));
         orderManager.getOrder(orderId).addItem(modifiedRecipe, 1);
 
-        orderManager.getOrder(orderId).getItems().get(recipeManager.getRecipeByDisplayName(recipeName));
+        orderManager.getOrder(orderId).getItems().get(modifiedRecipe);
         assertFalse(recipeManager.getRecipeByDisplayName(recipeName).getIngredients().containsKey(ingredientManager.getIngredientByName(ingredientName)));
     }
 
