@@ -1,27 +1,5 @@
 Feature: Menu feature
     Scenarios involving the menu and their menu items and recipes 
-
-    Scenario: Editing recipe price (UC11)
-        Given A recipe "Small HotDog" exists
-        When The price is changed to 7.50
-        Then The recipe costs 7.5
-
-    Scenario: Adding/removing ingredients from recipe (UC11)
-        Given A recipe "Small HotDog" exists
-        And The ingredient "wrap" is added with the unit quantity 1
-        When The ingredient "bun" is removed
-        Then The ingredients in the recipe "Small HotDog" are "wrap" and "sausage"
-
-    Scenario: Editing recipe name and instuctions (UC11)
-        Given A recipe "Small HotDog" exists
-        And The recipe "Small HotDog" is changed to "AmericanWiener"
-        When The recipe "AmericanWiener", instructions are changed to "Slot into bread hole"
-        Then The recipe "AmericanWiener" has the instructions "Slot into bread hole"
-
-    Scenario: Removing a recipe (UC11)
-        Given A recipe "Small HotDog" exists
-        When The recipe "Small HotDog" is removed
-        Then The recipe "Small HotDog" does not exist
         
     # Scenarios relating to the displaying of menus, menu items, and recipes
     
@@ -65,11 +43,11 @@ Feature: Menu feature
         Given There are menus in the system
         And The menu "Default Menu" exists
         And The menu has ID 0
-        When The employee edits a specific menu set (i.e add and remove)
+        When The employee edits a specific menu set (i.e. add and remove menu items)
         Then The menu set is updated with the new information
         
 	  @skip_scenario # Manual testing
-	  Scenario: Menu editing when there are no menu (UC9)
+	  Scenario: Menu editing when there are no menus (UC9)
 	  		Given There are no menus in the system
 	  		When An attempt is made to edit a menu
 	  		Then The user is unable to edit a menu
@@ -99,9 +77,40 @@ Feature: Menu feature
 	    	And The recipe has ID 0
 	    	When The recipe's editable attributes with ID 0 is edited
 	    	Then It will either be the same or changed to their edited value 
-	    	
+    	
   	@skip_scenario # Manual testing
   	Scenario: Recipe editing when there are no recipes (UC11)
+  			Given There are no recipes in the system
+  			And An attempt is made to edit a recipe
+  			Then The user is notified that no recipe has been selected to edit
+  			
+    Scenario: Editing recipe price (UC11)
+        Given A recipe "Small HotDog" exists
+        When The price is changed to 7.50
+        Then The recipe costs 7.5
+
+    Scenario: Adding/removing ingredients from recipe (UC11)
+        Given A recipe "Small HotDog" exists
+        And The ingredient "wrap" is added with the unit quantity 1
+        When The ingredient "bun" is removed
+        Then The ingredients in the recipe "Small HotDog" are "wrap" and "sausage"
+
+    Scenario: Editing recipe name and instuctions (UC11)
+        Given A recipe "Small HotDog" exists
+        And The recipe "Small HotDog" is changed to "AmericanWiener"
+        When The recipe "AmericanWiener", instructions are changed to "Slot into bread hole"
+        Then The recipe "AmericanWiener" has the instructions "Slot into bread hole"
+
+	 	# Scenarios relating to the removing of recipes
+  
+    Scenario: Removing a recipe (UC11)
+        Given A recipe "Small HotDog" exists
+        When The recipe "Small HotDog" is removed
+        Then The recipe "Small HotDog" does not exist
+  			
+  			
+  	@skip_scenario # Manual testing
+  	Scenario: Recipe removing when there are no recipes (UC11)
   			Given There are no recipes in the system
   			When An attempt is made to edit a recipe
   			Then The user is notified that no recipe has been selected to remove
