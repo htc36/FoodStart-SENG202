@@ -54,6 +54,21 @@ public class MenuItemManager {
 	}
 
 	/**
+	 * Gets a menu item by its display name, or null if the menu item is not defined
+	 *
+	 * @param displayName The unique display name of the menu item
+	 * @return recipe The menu item that the name refers to, or null
+	 */
+	public MenuItem getMenuItemByDisplayName(String displayName) {
+		for (MenuItem menuItem : getMenuItems().values()) {
+			if (menuItem.getName().equals(displayName)) {
+				return menuItem;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Returns the map of all menu items modeled.
 	 *
 	 * @return the map of all menu items modeled
@@ -124,6 +139,10 @@ public class MenuItemManager {
 			menuItem2.setVariants(recipes);
 			menuItem2.setDefaultVariant(defaultVariant);
 		}
+	}
+	public void addRecipeToMenuItem(int id, PermanentRecipe recipe) {
+		MenuItem menuItem = this.menuItems.get(id);
+		menuItem.addVariant(recipe);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package foodstart.acceptance_tests.step_definitions;
 
+import foodstart.manager.menu.MenuItemManager;
 import foodstart.manager.menu.RecipeManager;
 import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DietaryRequirement;
@@ -13,7 +14,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -26,18 +29,20 @@ public class MenuSteps {
     private Map<Ingredient, Integer> ingredientSet = new HashMap<>();
     private PermanentRecipe recipe;
     private IngredientManager ingredientManager;
+    private MenuItemManager menuItemManager;
     @Before
     public void setup() {
         ingredientManager = new IngredientManager();
         recipeManager = new RecipeManager();
+        menuItemManager = new MenuItemManager();
         safeFor.put(DietaryRequirement.matchDietaryRequirement("VEGAN"), true);
         ingredientManager.addIngredient(Unit.matchUnit("Counts"), "sausage", 1, safeFor, 5, 10);
         ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "bun", 2, safeFor, 7,8);
         ingredientSet.put(ingredientManager.getIngredientByName("sausage"), 2);
         ingredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
-        recipeManager.addRecipe(2, "HotDog", "Place in bun", 5, ingredientSet );
-
-
+        recipeManager.addRecipe(2, "Small HotDog", "Place in bun", 5, ingredientSet );
+        Set<PermanentRecipe> recipes = new HashSet<>();
+        menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", recipes, null);
     }
 
 
@@ -130,6 +135,21 @@ public class MenuSteps {
     @Then("The recipe {string} does not exist")
     public void the_recipe_does_not_exist(String recipeName){
         assertFalse(recipeManager.getRecipes().containsValue(recipe));
+    }
+    @Given("The menu item {string} exists")
+    public void a_menu_item_exists(String menuItemName){
+        assertNotNull(menuItemManager.getMenuItemByDisplayName(menuItemName));
+    }
+    @When("The recipe {string} is added to the {string} menu item")
+    public void the_recipe_is_added_to_the_menu_item(String recipeName, String menuItemName) {
+        int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
+        menuItemManager.addRecipeToMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
+    }
+    @Then("The corresponding recipe {string} is displayed from {string} menu item")
+    public void the_corresponding_recipe_is_displayed_from_menuitem(String recipeName, String menuItemName) {
+        System.out.println(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString());
+        System.out.println(recipeName);
+        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString().equals(recipeName + ' '));
     }
 
     @Given("An employee is looking through menu items")
