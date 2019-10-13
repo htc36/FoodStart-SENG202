@@ -52,11 +52,13 @@ public class Main extends Application {
 		launch(args);
 	}
 
+
 	/**
 	 * Prevents creation of an instance of the Main class
 	 */
+	/*
 	private Main() {
-	}
+	} */
 
 	/**
 	 * Start the JavaFX application

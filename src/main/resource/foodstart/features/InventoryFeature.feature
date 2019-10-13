@@ -7,7 +7,7 @@ Feature: Inventory feature
     Scenario: Viewing the ingredients in the inventory (UC7)
         Given There are 2 ingredients in the inventory
         When The inventory is displayed
-        Then The ID, name, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
+        Then The ID, name, unit of measurement, truck stock, kitchen stock and dietary requirements for all 2 ingredients are displayed
         
     @skip_scenario # Manually Tested
 	Scenario: View inventory when there are 0 ingredients in the inventory (UC7)
@@ -40,13 +40,6 @@ Feature: Inventory feature
 		Given There are 0 ingredients in the inventory 
 		When An attempt is made to remove an ingredient
 		Then The user is notified that no ingredient has been selected to remove
-
-	Scenario: Removing an ingredient (UC12)
-		Given There are 3 ingredients in the inventory
-		And The ingredient "Cucumber" is in the inventory
-		And The ingredient's ID number is 3
-		When The ingredient "Cucumber" is manually removed
-		Then The ingredient ID 3 no longer exists in the inventory
 
 	Scenario Outline: Removing ingredients (UC12)
 		Given There are 3 ingredients in the inventory
