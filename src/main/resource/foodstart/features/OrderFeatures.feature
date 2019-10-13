@@ -31,7 +31,6 @@ Feature: Order feature
     Then Only 1 "hamburger" appears in the order and does not contain "chips"
     And The customer will be charged $5.00 total
 
-  @skip_scenario
   Scenario: Removing ingredients in an item (UC5)
       Given A "hamburger" contains "cheese"
       When The customer wants to remove "cheese" from the "hamburger"

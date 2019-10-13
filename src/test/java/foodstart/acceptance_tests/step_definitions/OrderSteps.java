@@ -54,13 +54,12 @@ public class OrderSteps {
 
         ingredient1 = new Ingredient(Unit.GRAMS, "Mayo", 1, safeForIngredient1, 150, 80);
         ingredient2 = new Ingredient(Unit.GRAMS, "Peanut Butter", 2, safeForIngredient2, 120, 45);
-        ingredient3 = new Ingredient(Unit.GRAMS, "Cheese", 3, safeForIngredient2, 120, 45);
 
 
         recipeIngredients.put(ingredient1, 2);
         recipeIngredients.put(ingredient2, 4);
 
-        recipeManager= new RecipeManager();
+        recipeManager = new RecipeManager();
         recipeManager.addRecipe(1, "Recipe Base", "Recipe Instructions",12.5f, recipeIngredients);
         orderManager = new OrderManager();
         orderItems = new HashMap<Recipe, Integer>();
@@ -292,10 +291,29 @@ public class OrderSteps {
 
     @Given("A {string} contains {string}")
     public void aContains(String recipeName, String ingredientName) {
+        setUp();
+        recipeIngredients = new HashMap<>();
+        Map<DietaryRequirement, Boolean> safeForIngredient = new HashMap<DietaryRequirement, Boolean>();
+        safeForIngredient.put(DietaryRequirement.VEGETARIAN, true);
+        orderId = 3;
+        ingredient3 = new Ingredient(Unit.GRAMS, "cheese", orderId, safeForIngredient, 120, 45);
+        recipeIngredients.put(ingredient3, 1);
+        recipeManager.addRecipe(4, recipeName, "Recipe Instructions", 5f, recipeIngredients);
+
+        System.out.println();
+
+
+        orderItems.put(recipeManager.getRecipeByDisplayName(recipeName), 1);
+        System.out.println(orderItems.keySet());
+
 
     }
 
     @When("The customer wants to remove {string} from the {string}")
-    public void theCustomerWantsToRemoveFromThe(String arg0, String arg1) {
+    public void theCustomerWantsToRemoveFromThe(String ingredientName, String recipeName) {
+    }
+
+    @Then("The {string} has no {string}")
+    public void theHasNo(String recipeName, String ingredientName) {
     }
 }
