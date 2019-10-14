@@ -2,26 +2,26 @@ Feature: Menu feature
     Scenarios involving the menu and their menu items and recipes
     # Scenarios relating to the displaying of menus, menu items, and recipes
     @skip_scenario # Manual testing
-    Scenario: All menus display (UC1)
-        Given An employee is looking through different menu sets
-        When The employee selects a specific menu set
-        Then The corresponding menu is displayed including name of menu and all recipes 
+    Scenario: Displaying all the menus (UC1)
+        Given That there are 2 different menu sets in the system
+        When The employee goes to view All Menus
+        Then The 2 different menu sets are displayed on the screen
        
     @skip_scenario # Manual testing
-    Scenario: Specific menu display (UC1)
+    Scenario: Displaying a specific menu (UC1)
         Given An employee is looking through different menu sets
-        When The employee selects a specific menu set
-        Then The corresponding menu is displayed including name of menu and all recipes
+        When The employee selects the "Default Menu" menu set
+        Then The "Default Menu" is displayed including its name and of its all recipes
         
     @skip_scenario # Manual testing
-    Scenario: All menu item display (UC2)
+    Scenario: Displaying all menu items (UC2)
         Given An employee wants to see all the available menu items
         And There are 7 menu items in the system
         When The employee displays all menu items
         Then All 7 menu items are displayed with their names and the price of the default recipe
         
     @skip_scenario # Manual testing
-    Scenario: Specfic recipe display when adding/removing menu items in a recipe (UC3)
+    Scenario: Specific recipe display when adding/removing menu items in a recipe (UC3)
         Given An employee wants to see the recipes of a menu item when viewing a menu
         And The menu has menu items with recipes
         When The employee chooses to display the recipes of a menu item
