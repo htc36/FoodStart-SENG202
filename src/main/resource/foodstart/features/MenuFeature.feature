@@ -21,14 +21,14 @@ Feature: Menu feature
         Then All 7 menu items are displayed with their names and the price of the default recipe
         
     @skip_scenario # Manual testing
-    Scenario: Specific recipe display when adding/removing menu items in a recipe (UC3)
+    Scenario: Displaying a specific recipe when adding/removing menu items in a recipe (UC3)
         Given An employee wants to see the recipes of a menu item when viewing a menu
         And The menu has menu items with recipes
         When The employee chooses to display the recipes of a menu item
         Then The correct recipe is displayed for that menu item
         
     @skip_scenario # Manual testing
-    Scenario: Viewing all recipes (UC3)
+    Scenario: Displaying all recipes (UC3)
         Given An employee wants to see all the available recipes
         And There are 12 recipes in the system
         When The employee displays all recipes
@@ -49,7 +49,7 @@ Feature: Menu feature
         Given There are menus in the system
         And The menu "Default Menu" exists
         And The menu has ID 0
-        When The employee edits a specific menu set (i.e. add and remove menu items)
+        When The employee edits and applies changes to a specific menu set by removing "Baked Beans" and adding "Hot Dog" and changing the name to "Festival Menu"
         Then The menu set is updated with the new information
 
     @skip_scenario # Manual testing
@@ -124,7 +124,7 @@ Feature: Menu feature
   	@skip_scenario # Manual testing
   	Scenario: Recipe editing when there are no recipes (UC11)
         Given There are no recipes in the system
-        And An attempt is made to edit a recipe
+        And An attempt is made to remove a recipe
         Then The user is notified that no recipe has been selected to edit
   			
     Scenario: Editing recipe price (UC11)
