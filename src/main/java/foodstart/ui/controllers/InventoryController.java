@@ -114,6 +114,8 @@ public class InventoryController implements Refreshable {
             });
             return row ;
         });
+		inventoryView.getSortOrder().clear();
+		inventoryView.getSortOrder().add(id);
 		addLoader.setController(new AddIngredientController());
 		editLoader.setController(new EditIngredientController());
 
@@ -138,6 +140,8 @@ public class InventoryController implements Refreshable {
 		addPopup.setTitle("Add Item");
 		addPopup.setScene(addScene);
 		populateTable();
+		
+		
 	}
 
 	/**
@@ -157,6 +161,8 @@ public class InventoryController implements Refreshable {
 		dietary.setCellValueFactory(
 				cell -> new SimpleStringProperty(ingredientManager.safeForString(cell.getValue().getId()))
 		);
+		inventoryView.getSortOrder().add(id);
+		inventoryView.sort();
 	}
 
 	/**

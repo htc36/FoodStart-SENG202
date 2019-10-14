@@ -85,11 +85,12 @@ public class PermanentRecipeTest {
     	burgerRecipe.addIngredient(yeast, 5);
     	assertTrue(ingredients.equals(burgerRecipe.getIngredients()));
     }
-    
-    @Ignore
+
     @Test
     public void removeIngredient() {
-    //	assertEquals()
+        burgerRecipe.addIngredient(yeast, 1);
+        burgerRecipe.removeIngredient(yeast);
+        assertFalse(burgerRecipe.getIngredients().containsKey(yeast));
     }
 
     @Test
