@@ -80,6 +80,12 @@ Feature: Menu feature
         Given There are no menu items in the system
         When An attempt is made to edit a menu item
         Then The user is unable to edit a menu item
+
+    Scenario: Adding a recipe to e menu item (UC10)
+        Given The menu item "HotDog" exists
+        And The menu item "HotDog" does not have the recipe "Test Recipe"
+        When The recipe "Test Recipe" is manually added to the menu item "HotDog"
+        Then The menu item "HotDog" has the recipe "Test Recipe"
         
     # Scenarios relating to adding recipes
     
@@ -115,7 +121,7 @@ Feature: Menu feature
     Scenario: Editing recipe price (UC11)
         Given A recipe "Small HotDog" exists
         When The price is changed to 7.50
-        Then The recipe costs 7.5
+        Then The recipe costs 7.50
 
     Scenario: Adding/removing ingredients from recipe (UC11)
         Given A recipe "Small HotDog" exists

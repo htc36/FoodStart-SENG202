@@ -152,4 +152,19 @@ public class MenuSteps {
         System.out.println(recipeName);
         assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString().equals(recipeName));
     }
+    @Given("The menu item {string} does not have the recipe {string}")
+    public void theMenuItemDoesNotHaveTheRecipe(String menuItemName, String recipeName) {
+        assertFalse(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariants().contains(recipeManager.getRecipeByDisplayName(recipeName)));
+    }
+
+    @When("The recipe {string} is manually added to the menu item {string}")
+    public void theRecipeIsManuallyAddedToTheMenuItem(String recipeName, String menuItemName) {
+        menuItemManager.getMenuItemByDisplayName(menuItemName).addVariant(recipeManager.getRecipeByDisplayName(recipeName));
+    }
+
+    @Then("The menu item {string} has the recipe {string}")
+    public void theMenuItemHasTheRecipe(String menuItemName, String recipeName) {
+        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariants().contains(recipeManager.getRecipeByDisplayName(recipeName)));
+    }
+
 }
