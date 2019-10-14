@@ -29,7 +29,7 @@ Feature: ImportExport feature
 		And An object that is referenced in the XML file is not in the system
 		When The user imports this file
 		Then The data is not imported successfully
-		And The user is notified that and error has occured while importing the file
+		And The user is notified that an error has occured while importing the file
 		Examples:
 		| fileType		|
 		| "RECIPE"		|
