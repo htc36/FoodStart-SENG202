@@ -109,3 +109,4 @@ Feature: Order feature
       Given Customer "Sally" ordered 1 "Chicken Burger"
       When The manager looks for "Sally" in the sales log
       Then All details are displayed i.e time, items sold, amounts and price
+

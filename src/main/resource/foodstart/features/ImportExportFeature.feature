@@ -23,7 +23,7 @@ Feature: ImportExport feature
 
 
 	@skip_scenario
-	Scenario Outline: Importing data uncessfully due to referenced objects not being in the system (UC15)
+	Scenario Outline: Importing data unsuccessfully due to referenced objects not being in the system (UC15)
 		Given A file is of type <fileType>
 		And The file is a valid XML file
 		And An object that is referenced in the XML file is not in the system
