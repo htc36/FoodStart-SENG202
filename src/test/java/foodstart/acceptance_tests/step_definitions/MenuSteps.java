@@ -6,7 +6,6 @@ import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -27,8 +26,9 @@ import static org.junit.Assert.assertNull;
 public class MenuSteps {
     private RecipeManager recipeManager;
     private Map<DietaryRequirement, Boolean> safeFor = new HashMap<>();
-    private Map<Ingredient, Integer> ingredientSet = new HashMap<>();
+    private Map<Ingredient, Integer> hotDogIngredientSet = new HashMap<>();
     private Map<Ingredient, Integer> testIngredientSet = new HashMap<>();
+    private Map<Ingredient, Integer> sausageIngredientSet = new HashMap<>();
     private PermanentRecipe recipe;
     private IngredientManager ingredientManager;
     private MenuItemManager menuItemManager;
@@ -44,14 +44,20 @@ public class MenuSteps {
         ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "test ingredient", 0, safeFor, 10,10);
         ingredientManager.addIngredient(Unit.matchUnit("Counts"), "sausage", 1, safeFor, 5, 10);
         ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "bun", 2, safeFor, 7,8);
-        ingredientSet.put(ingredientManager.getIngredientByName("sausage"), 2);
-        ingredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
-        ingredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
+        ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "magic pesto", 3, safeFor, 1000, 1000);
+        hotDogIngredientSet.put(ingredientManager.getIngredientByName("sausage"), 2);
+        hotDogIngredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
         testIngredientSet.put(ingredientManager.getIngredientByName("test ingredient"), 1);
-        recipeManager.addRecipe(2, "Small HotDog", "Place in bun", 5, ingredientSet );
+        sausageIngredientSet.put(ingredientManager.getIngredientByName("sausage"), 1);
+        recipeManager.addRecipe(2, "Small HotDog", "Place in bun", 5, hotDogIngredientSet);
         recipeManager.addRecipe(0, "Test Recipe", "Testing purposes", 1, testIngredientSet);
-        Set<PermanentRecipe> recipes = new HashSet<>();
-        menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", recipes, null);
+        recipeManager.addRecipe(1, "Sausage", "Just a sausage", 100, sausageIngredientSet);
+        Set<PermanentRecipe> hotDogRecipe = new HashSet<>();
+        hotDogRecipe.add(recipeManager.getRecipeByDisplayName("Sausage"));
+        Set<PermanentRecipe> magicFoodRecipe = new HashSet<>();
+        magicFoodRecipe.add(recipeManager.getRecipeByDisplayName("magic pesto"));
+        menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", hotDogRecipe, null);
+        menuItemManager.addMenuItem(0, "Magic Food", "Magic test food", magicFoodRecipe, null);
     }
 
     @Given("A recipe {string} exists")
@@ -145,11 +151,30 @@ public class MenuSteps {
         int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
         menuItemManager.removeRecipeFromMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
     }
-    @Then("The corresponding recipe {string} is displayed from {string} menu item")
-    public void the_corresponding_recipe_is_displayed_from_menuitem(String recipeName, String menuItemName) {
-        System.out.println(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString());
-        System.out.println(recipeName);
-        System.out.println(recipeName);
-        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString().equals(recipeName));
+
+    @Given("The menu item {string} does not have the recipe {string}")
+    public void theMenuItemDoesNotHaveTheRecipe(String menuItemName, String recipeName) {
+        assertFalse(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariants().contains(recipeManager.getRecipeByDisplayName(recipeName)));
     }
+
+    @When("The recipe {string} is manually added to the menu item {string}")
+    public void theRecipeIsManuallyAddedToTheMenuItem(String recipeName, String menuItemName) {
+        menuItemManager.getMenuItemByDisplayName(menuItemName).addVariant(recipeManager.getRecipeByDisplayName(recipeName));
+    }
+
+    @Then("The menu item {string} has the recipe {string}")
+    public void theMenuItemHasTheRecipe(String menuItemName, String recipeName) {
+        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariants().contains(recipeManager.getRecipeByDisplayName(recipeName)));
+    }
+
+    @When("The menu item {string} is removed from the system")
+    public void theMenuItemIsRemovedFromTheSystem(String menuItemName) {
+        menuItemManager.removeMenuItem(menuItemManager.getMenuItemByDisplayName(menuItemName).getId());
+    }
+
+    @Then("The menu item {string} does not exist")
+    public void theMenuItemDoesNotExist(String menuItemName) {
+        assertNull(menuItemManager.getMenuItemByDisplayName(menuItemName));
+    }
+
 }
