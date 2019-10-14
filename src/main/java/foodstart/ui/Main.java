@@ -51,15 +51,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-
-	/**
-	 * Prevents creation of an instance of the Main class
-	 */
-	/*
-	private Main() {
-	} */
-
+	
 	/**
 	 * Start the JavaFX application
 	 *
