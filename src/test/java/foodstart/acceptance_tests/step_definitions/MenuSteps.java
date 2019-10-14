@@ -6,7 +6,6 @@ import foodstart.manager.stock.IngredientManager;
 import foodstart.model.DietaryRequirement;
 import foodstart.model.Unit;
 import foodstart.model.menu.PermanentRecipe;
-import foodstart.model.menu.Recipe;
 import foodstart.model.stock.Ingredient;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -20,70 +19,46 @@ import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 public class MenuSteps {
     private RecipeManager recipeManager;
     private Map<DietaryRequirement, Boolean> safeFor = new HashMap<>();
-    private Map<Ingredient, Integer> ingredientSet = new HashMap<>();
+    private Map<Ingredient, Integer> hotDogIngredientSet = new HashMap<>();
+    private Map<Ingredient, Integer> testIngredientSet = new HashMap<>();
+    private Map<Ingredient, Integer> sausageIngredientSet = new HashMap<>();
     private PermanentRecipe recipe;
     private IngredientManager ingredientManager;
     private MenuItemManager menuItemManager;
+    private int recipeID;
+    private int testPrice = 10;
+
     @Before
     public void setup() {
         ingredientManager = new IngredientManager();
         recipeManager = new RecipeManager();
         menuItemManager = new MenuItemManager();
         safeFor.put(DietaryRequirement.matchDietaryRequirement("VEGAN"), true);
+        ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "test ingredient", 0, safeFor, 10,10);
         ingredientManager.addIngredient(Unit.matchUnit("Counts"), "sausage", 1, safeFor, 5, 10);
         ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "bun", 2, safeFor, 7,8);
-        ingredientSet.put(ingredientManager.getIngredientByName("sausage"), 2);
-        ingredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
-        recipeManager.addRecipe(2, "Small HotDog", "Place in bun", 5, ingredientSet );
-        Set<PermanentRecipe> recipes = new HashSet<>();
-        menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", recipes, null);
+        ingredientManager.addIngredient(Unit.matchUnit("COUNTS"), "magic pesto", 3, safeFor, 1000, 1000);
+        hotDogIngredientSet.put(ingredientManager.getIngredientByName("sausage"), 2);
+        hotDogIngredientSet.put(ingredientManager.getIngredientByName("bun"), 1);
+        testIngredientSet.put(ingredientManager.getIngredientByName("test ingredient"), 1);
+        sausageIngredientSet.put(ingredientManager.getIngredientByName("sausage"), 1);
+        recipeManager.addRecipe(2, "Small HotDog", "Place in bun", 5, hotDogIngredientSet);
+        recipeManager.addRecipe(0, "Test Recipe", "Testing purposes", 1, testIngredientSet);
+        recipeManager.addRecipe(1, "Sausage", "Just a sausage", 100, sausageIngredientSet);
+        Set<PermanentRecipe> hotDogRecipe = new HashSet<>();
+        hotDogRecipe.add(recipeManager.getRecipeByDisplayName("Sausage"));
+        Set<PermanentRecipe> magicFoodRecipe = new HashSet<>();
+        magicFoodRecipe.add(recipeManager.getRecipeByDisplayName("magic pesto"));
+        menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", hotDogRecipe, null);
+        menuItemManager.addMenuItem(0, "Magic Food", "Magic test food", magicFoodRecipe, null);
     }
-
-
-//    @Given("The recipe {string} is not in the menu")
-//    public void anEmployeeWantsToSeeARecipe(String recipeName) {
-//        this.recipeName = recipeName;
-//    }
-//    @Given("Its price is {float}")
-//    public void itsPriceIs(float price) { this.price = price; }
-//
-//    @Given("Its ingredients are {int} {string}s and {int} {string}")
-//    public void itsIngredientsAre(int ingredientAmount, String ingredientName, int ingredient2Amount, String ingredientName2) {
-//        this.safeFor.put(DietaryRequirement.matchDietaryRequirement("VEGAN"), true);
-//        ingredient = new Ingredient(Unit.matchUnit("GRAMS"), ingredientName, 1, safeFor, 5, 10);
-//        ingredient2 = new Ingredient(Unit.matchUnit("COUNTS"), ingredientName2, 2, safeFor, 7,8);
-//        ingredientSet.put(ingredient, ingredientAmount);
-//        ingredientSet.put(ingredient2, ingredient2Amount);
-//    }
-//    @Given ("Its id is {int}")
-//    public void itsIdIs(int id){
-//        this.id = id;
-//    }
-//    @Given ("Its instructions are {string}")
-//    public void itsInstructionsAre(String instructions) {
-//        this.instructions = instructions;
-//    }
-//
-//    @When("Recipe {string} is manually added")
-//    public void recipeIsManuallyAdded(String recipeName) {
-//        recipeManager.addRecipe(id, recipeName, instructions, price, ingredientSet);
-//    }
-//
-//    @Then("{string} that costs {float} with {int} {string}s and {int} {string}, id being {int}, instructions being {string}")
-//    public void theCorrespondingRecipeIsDisplayed(String name, float price, int amount, String iName, int amount2, String iName2, int id, String instructions) {
-//        PermanentRecipe recipe = recipeManager.getRecipe(id);
-//        assert(id == recipe.getId());
-//        assert(name.equals(recipe.getDisplayName()));
-//        assert(price == recipe.getPrice());
-//        assert(instructions.equals(recipe.getInstructions()));
-//    }
-
 
     @Given("A recipe {string} exists")
     public void a_recipe_exists(String recipeName) {
@@ -145,70 +120,61 @@ public class MenuSteps {
         int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
         menuItemManager.addRecipeToMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
     }
-    @Then("The corresponding recipe {string} is displayed from {string} menu item")
-    public void the_corresponding_recipe_is_displayed_from_menuitem(String recipeName, String menuItemName) {
-        System.out.println(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString());
-        System.out.println(recipeName);
-        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString().equals(recipeName + ' '));
+
+    @Given("A recipe {string} does not exist")
+    public void aRecipeDoesNotExist(String recipeName) {
+        assertNull(recipeManager.getRecipeByDisplayName(recipeName));
     }
 
-    @Given("An employee is looking through menu items")
-    public void anEmployeeIsLookingThroughMenuItems() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Given("The recipe has an ID of {int}")
+    public void theRecipeHasAnIDOf(Integer recipeID) {
+        this.recipeID = recipeID;
     }
 
-    @When("The employee selects a specific menu item")
-    public void theEmployeeSelectsASpecificMenuItem() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @When("The recipe {string} is manually added")
+    public void theRecipeIsManuallyAdded(String recipeName) {
+        recipeManager.addRecipe(recipeID, recipeName, "Test instructions", testPrice, testIngredientSet);
     }
 
-    @Then("The corresponding recipes of the menu item are displayed")
-    public void theCorrespondingRecipesVeganGFEtcOfTheMenuItemAreDisplayed() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("The recipe {string} exists in the recipes list")
+    public void theRecipeExistsInTheRecipesList(String recipeName) {
+        assertNotNull(recipeManager.getRecipeByDisplayName(recipeName));
     }
 
-    @When("The employee edits a specific a menu item")
-    public void theEmployeeEditsASpecificAMenuItemIETheDescriptionNameAndRecipes() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("The recipe {string} will have an ID of {int}")
+    public void theRecipeWillHaveAnIDOf(String recipeName, Integer recipeID) {
+        Integer actualID = recipeManager.getRecipeByDisplayName(recipeName).getId();
+        assertEquals(recipeID, actualID);
+    }
+    @When("The recipe {string} is removed from the {string} menu item")
+    public void the_recipe_is_removed_from_the_menu_item(String recipeName, String menuItemName) {
+        int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
+        menuItemManager.removeRecipeFromMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
     }
 
-    @Then("The corresponding menu item is updated with the new information")
-    public void theCorrespondingMenuItemIsUpdatedWithTheNewInformation() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Given("The menu item {string} does not have the recipe {string}")
+    public void theMenuItemDoesNotHaveTheRecipe(String menuItemName, String recipeName) {
+        assertFalse(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariants().contains(recipeManager.getRecipeByDisplayName(recipeName)));
     }
 
-    @Given("An employee is looking through different menu sets")
-    public void anEmployeeIsLookingThroughDifferentMenuSets() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @When("The recipe {string} is manually added to the menu item {string}")
+    public void theRecipeIsManuallyAddedToTheMenuItem(String recipeName, String menuItemName) {
+        menuItemManager.getMenuItemByDisplayName(menuItemName).addVariant(recipeManager.getRecipeByDisplayName(recipeName));
     }
 
-    @When("The employee selects a specific menu set")
-    public void theEmployeeSelectsASpecificMenuSet() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("The menu item {string} has the recipe {string}")
+    public void theMenuItemHasTheRecipe(String menuItemName, String recipeName) {
+        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariants().contains(recipeManager.getRecipeByDisplayName(recipeName)));
     }
 
-    @Then("The corresponding menu is displayed including name of menu and all recipes")
-    public void theCorrespondingMenuIsDisplayedIncludingNameOfMenuAndAllRecipes() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @When("The menu item {string} is removed from the system")
+    public void theMenuItemIsRemovedFromTheSystem(String menuItemName) {
+        menuItemManager.removeMenuItem(menuItemManager.getMenuItemByDisplayName(menuItemName).getId());
     }
 
-    @When("The employee edits a specific menu set")
-    public void theEmployeeEditsASpecificMenuSetIEAddAndRemove() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
+    @Then("The menu item {string} does not exist")
+    public void theMenuItemDoesNotExist(String menuItemName) {
+        assertNull(menuItemManager.getMenuItemByDisplayName(menuItemName));
     }
 
-    @Then("The menu set is updated with the new information")
-    public void theMenuSetIsUpdatedWithTheNewInformation() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new cucumber.api.PendingException();
-    }
 }

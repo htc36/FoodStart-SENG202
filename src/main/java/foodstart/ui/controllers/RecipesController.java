@@ -200,7 +200,7 @@ public class RecipesController implements Refreshable {
 		PermanentRecipe recipe = recipesTableView.getSelectionModel().getSelectedItem();
 		if (recipe == null) {
 			Alert alert = new Alert(Alert.AlertType.WARNING, "Could not modify recipe as none was selected", ButtonType.OK);
-			alert.setHeaderText("No has been selected");
+			alert.setHeaderText("No recipe has been selected");
 			alert.showAndWait();
 		} else {
 			Map<Ingredient, Integer> ingredients = recipe.getIngredients();
