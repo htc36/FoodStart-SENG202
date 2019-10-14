@@ -81,12 +81,21 @@ Feature: Menu feature
         When An attempt is made to edit a menu item
         Then The user is unable to edit a menu item
 
+    # Scenarios relating to the adding of menu items
+
     Scenario: Adding a recipe to e menu item (UC10)
         Given The menu item "HotDog" exists
         And The menu item "HotDog" does not have the recipe "Test Recipe"
         When The recipe "Test Recipe" is manually added to the menu item "HotDog"
         Then The menu item "HotDog" has the recipe "Test Recipe"
-        
+
+    # Scenarios relating to the removing of menu items
+
+    Scenario: A menu item from the system (UC10)
+        Given The menu item "Magic Food" exists
+        When The menu item "Magic Food" is removed from the system
+        Then The menu item "Magic Food" does not exist
+
     # Scenarios relating to adding recipes
     
     Scenario Outline: Adding recipes (UC11)
@@ -140,16 +149,3 @@ Feature: Menu feature
         Given A recipe "Small HotDog" exists
         When The recipe "Small HotDog" is removed
         Then The recipe "Small HotDog" does not exist
-
-    Scenario: Menu Item display (UC2)
-        Given A recipe "Small HotDog" exists
-        And The menu item "HotDog" exists
-        When The recipe "Small HotDog" is added to the "HotDog" menu item
-        Then The corresponding recipe "Small HotDog " is displayed from "HotDog" menu item
-
-    Scenario: Menu Item display (UC2)
-        Given A recipe "Small HotDog" exists
-        And The menu item "HotDog" exists
-        And The recipe "Small HotDog" is added to the "HotDog" menu item
-        And The recipe "Small HotDog" is removed from the "HotDog" menu item
-        Then The corresponding recipe "" is displayed from "HotDog" menu item
