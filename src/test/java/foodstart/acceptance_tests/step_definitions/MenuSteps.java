@@ -54,7 +54,6 @@ public class MenuSteps {
         menuItemManager.addMenuItem(1, "HotDog", "Different types of hotdogs", recipes, null);
     }
 
-
     @Given("A recipe {string} exists")
     public void a_recipe_exists(String recipeName) {
         recipe = recipeManager.getRecipeByDisplayName(recipeName);
@@ -115,7 +114,7 @@ public class MenuSteps {
         int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
         menuItemManager.addRecipeToMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
     }
-    
+
     @Given("A recipe {string} does not exist")
     public void aRecipeDoesNotExist(String recipeName) {
         assertNull(recipeManager.getRecipeByDisplayName(recipeName));
@@ -140,5 +139,17 @@ public class MenuSteps {
     public void theRecipeWillHaveAnIDOf(String recipeName, Integer recipeID) {
         Integer actualID = recipeManager.getRecipeByDisplayName(recipeName).getId();
         assertEquals(recipeID, actualID);
+    }
+    @When("The recipe {string} is removed from the {string} menu item")
+    public void the_recipe_is_removed_from_the_menu_item(String recipeName, String menuItemName) {
+        int id = menuItemManager.getMenuItemByDisplayName(menuItemName).getId();
+        menuItemManager.removeRecipeFromMenuItem(id, recipeManager.getRecipeByDisplayName(recipeName));
+    }
+    @Then("The corresponding recipe {string} is displayed from {string} menu item")
+    public void the_corresponding_recipe_is_displayed_from_menuitem(String recipeName, String menuItemName) {
+        System.out.println(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString());
+        System.out.println(recipeName);
+        System.out.println(recipeName);
+        assertTrue(menuItemManager.getMenuItemByDisplayName(menuItemName).getVariantsAsString().equals(recipeName));
     }
 }

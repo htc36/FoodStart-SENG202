@@ -164,6 +164,15 @@ public class MenuItemManager {
 		MenuItem menuItem = this.menuItems.get(id);
 		menuItem.addVariant(recipe);
 	}
+	/**
+	 * Removes a recipe from the menu item with a given id
+	 * @param id the id of the menu item
+	 * @param recipe the recipe to remove from the menu item
+	 */
+	public void removeRecipeFromMenuItem(int id, PermanentRecipe recipe) {
+		MenuItem menuItem = this.menuItems.get(id);
+		menuItem.removeVariant(recipe);
+	}
 
 	/**
 	 * Pushes a new menu item to the buffer

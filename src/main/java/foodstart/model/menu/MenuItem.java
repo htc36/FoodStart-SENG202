@@ -117,7 +117,15 @@ public class MenuItem {
 		variants.add(recipe);
 	}
 
-    /**
+	/**
+	 * Removes recipe variant from menuitem
+	 * @param recipe the variant to remove
+	 */
+	public void removeVariant(PermanentRecipe recipe) {
+		variants.remove(recipe);
+	}
+
+	/**
      * Gets the different variants of the menu item as a string
      *
      * @return output A string of the variants
